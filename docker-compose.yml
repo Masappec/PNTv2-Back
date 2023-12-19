@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+
+
+  auth_microservice:
+    build:
+      context: ./microservices/auth_service
+      dockerfile: local.Dockerfile
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db_auth
+    volumes:
+      - ./microservices/auth_service:/app
+    
+
+    environment:
+      - DB_HOST=db_auth
+      - DB_NAME=auth_database
+      - DB_USER=auth_user
+      - DB_PASSWORD=auth_password
+      
+
+  db_auth:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: auth_database
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+
+
+
+  api_gateway:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    volumes:
+      - ./api-gateway/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./microservices/auth_service/static:/usr/src/app/static/
+    depends_on:
+      - auth_microservice
+      - auth_microservice_duplicated
+      - auth_microservice_duplicated_new
+
+volumes:
+  auth_microservice:
+  auth_microservice_duplicated:
+  auth_microservice_duplicated_new:
