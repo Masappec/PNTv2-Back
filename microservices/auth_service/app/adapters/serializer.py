@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, JSONField, ListField
+from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, JSONField, ListField, PrimaryKeyRelatedField
 from app.domain.models import User, Permission, Role
 
 
@@ -11,11 +11,18 @@ class UserListSerializer(ModelSerializer):
 
 class UserCreateSerializer(ModelSerializer):
     
+    
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'first_name', 'last_name')
         
 
+
+class UserCreateAdminSerializer(ModelSerializer):
+    role_id = PrimaryKeyRelatedField(queryset=Role.objects.all())
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name', 'role_id')
 
 
 class UserLoginSerializer(ModelSerializer):

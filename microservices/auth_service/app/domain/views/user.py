@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from app.domain.services.user_service import UserService
 from app.adapters.impl.user_impl import UserRepositoryImpl
 from app.utils import StandardResultsSetPagination
-from app.adapters.serializer import UserListSerializer, UserCreateSerializer, MessageTransactional
+from app.adapters.serializer import UserListSerializer, UserCreateSerializer, MessageTransactional,UserCreateAdminSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -49,7 +49,7 @@ class UserCreateAPI(CreateAPIView):
     Returns:
         UserCreateAPI: An instance of the UserCreateAPI class.
     """
-    serializer_class = UserCreateSerializer
+    serializer_class = UserCreateAdminSerializer
     permission_classes = [IsAuthenticated]
 
     def __init__(self):

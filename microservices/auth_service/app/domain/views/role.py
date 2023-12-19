@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from app.domain.services.role_service import RoleService
 from app.adapters.impl.role_impl import RoleRepositoryImpl
 from app.adapters.serializer import RoleSerializer, RoleCreateSerializer
@@ -16,7 +16,7 @@ class RoleListAPI(ListAPIView):
         return self.role_service.get_roles()
         
         
-class RoleCreateAPI(APIView):
+class RoleCreateAPI(CreateAPIView):
     
     serializer_class = RoleCreateSerializer
     
