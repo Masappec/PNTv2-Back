@@ -20,7 +20,7 @@ services:
       - DB_PASSWORD=auth_password
 
     networks:
-      - auth_microservice_network
+      - pnt_network
       
 
   db_auth:
@@ -31,7 +31,7 @@ services:
       POSTGRES_PASSWORD: auth_password
 
     networks:
-      - auth_microservice_network
+      - pnt_network
 
 
 
@@ -45,7 +45,7 @@ services:
     depends_on:
       - auth_microservice
     networks:
-      - auth_microservice_network
+      - pnt_network
 
     
 
@@ -53,5 +53,5 @@ volumes:
   auth_microservice:
 
 networks:
-  auth_microservice_network:
+  pnt_network:
 
