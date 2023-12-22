@@ -43,7 +43,7 @@ services:
     volumes:
       - ./api-gateway/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./microservices/auth_service/static:/usr/src/app/static/
-      - .api-gateway/nginx/dist:/usr/share/nginx/html/
+      - ./api-gateway/nginx/dist:/usr/share/nginx/html/
     depends_on:
       - auth_microservice
     networks:
