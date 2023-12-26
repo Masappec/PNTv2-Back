@@ -30,3 +30,11 @@ class PermissionRepository(ABC):
     def get_permissions(self):
         pass
     
+    @abstractmethod
+    def get_permissions_by_role(self, role_id: int):
+        pass
+    
+    @abstractmethod
+    def get_permissions_by_user(self, user_id: int):
+        pass
+    

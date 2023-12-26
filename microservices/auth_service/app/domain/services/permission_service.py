@@ -27,3 +27,11 @@ class PermissionService:
     
     def get_permissions(self):
         return self.permission_repository.get_permissions()
+    
+    
+    def get_permissions_by_role(self, role_id: int):
+        return self.permission_repository.get_permissions_by_role(role_id)
+    
+    def get_permissions_by_user(self, user_id: int):
+        return self.permission_repository.get_permissions_by_user(user_id)
+    

@@ -1,19 +1,45 @@
 from rest_framework.generics import ListAPIView, CreateAPIView
 from app.domain.services.role_service import RoleService
 from app.adapters.impl.role_impl import RoleRepositoryImpl
-from app.adapters.serializer import RoleSerializer, RoleCreateSerializer
+from app.adapters.serializer import RoleListSerializer, RoleSerializer, RoleCreateSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 class RoleListAPI(ListAPIView):
-    serializer_class = RoleSerializer
-    
-    
+    serializer_class = RoleListSerializer
+
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
-        
+
     def get_queryset(self):
         return self.role_service.get_roles()
+
+    def get(self, request, *args, **kwargs):
+        """
+        Get a list of users.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        queryset = self.get_queryset()
+        search = request.query_params.get('search', None)
+        if search is not None:
+            queryset = queryset.filter(
+                Q(username__icontains=search) | Q(email__icontains=search))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True) 
+        return Response(serializer.data)
         
         
 class RoleCreateAPI(CreateAPIView):

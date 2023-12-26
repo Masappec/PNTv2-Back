@@ -2,28 +2,71 @@ from rest_framework.serializers import ModelSerializer, Serializer, CharField, I
 from app.domain.models import User, Permission, Role
 
 
-class UserListSerializer(ModelSerializer):
-    
-    class Meta:
-        model = User
-        exclude = ('password', 'is_superuser', 'is_staff', 'is_active', 'last_login', 'date_joined')
 
 
-class UserCreateSerializer(ModelSerializer):
+class GroupSerializer(ModelSerializer):
+        
+        class Meta:
+            model = Role
+            fields = ('id', 'name') 
+
+class UserListSerializer(Serializer):
+    id = IntegerField()
+    first_name = CharField(max_length=255,source='person.first_name')
+    last_name = CharField(max_length=255,source='person.last_name')
+    username = CharField(max_length=255)
+    email = CharField(max_length=255)
+    identification = CharField(max_length=255,source='person.identification')
+    phone = CharField(max_length=255,source='person.phone')
+    address = CharField(max_length=255,source='person.address')
+    city = CharField(max_length=255,source='person.city')
+    country = CharField(max_length=255,source='person.country')
+    province = CharField(max_length=255,source='person.province')
+    type_person = CharField(max_length=255,source='person.type_person')
+    groups = ListField(child=GroupSerializer(),source='group')
     
+
+
+
+
+
+class RegisterSerializer(Serializer):
     
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password', 'first_name', 'last_name')
+    first_name = CharField(max_length=255)
+    last_name = CharField(max_length=255)
+    username = CharField(max_length=255)
+    email = CharField(max_length=255)
+    password = CharField(max_length=255)
+    identification = CharField(max_length=255)
+    phone = CharField(max_length=255)
+    address = CharField(max_length=255)
+    city = CharField(max_length=255)
+    country = CharField(max_length=255)
+    province = CharField(max_length=255)
+    type_person = CharField(max_length=255)
         
 
 
-class UserCreateAdminSerializer(ModelSerializer):
-    role_id = PrimaryKeyRelatedField(queryset=Role.objects.all())
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'role_id')
 
+class UserCreateAdminSerializer(Serializer):
+    groups = ListField(child=PrimaryKeyRelatedField(queryset=Role.objects.all()))
+    first_name = CharField(max_length=255)
+    last_name = CharField(max_length=255)
+    username = CharField(max_length=255)
+    email = CharField(max_length=255)
+    identification = CharField(max_length=255)
+    phone = CharField(max_length=255)
+    address = CharField(max_length=255)
+    city = CharField(max_length=255)
+    country = CharField(max_length=255)
+    province = CharField(max_length=255)
+    type_person = CharField(max_length=255)
+    
+    
+    
+
+    
+    
 
 class UserLoginSerializer(ModelSerializer):
     
@@ -64,9 +107,14 @@ class RoleCreateSerializer(ModelSerializer):
         model = Role
         fields = ( 'name', 'permissions')
         
+class RoleListSerializer(Serializer):
+    id = IntegerField()
+    name = CharField(max_length=255)
+        
+        
         
 
 class MessageTransactional(Serializer):
-    message = CharField(max_length=100)
+    message = CharField(max_length=255)
     status = IntegerField()
-    data = JSONField()
+    json = JSONField()

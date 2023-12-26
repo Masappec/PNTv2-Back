@@ -38,4 +38,31 @@ class User(AbstractUser, BaseModel):
         verbose_name_plural = 'users'
         ordering = ['-created_at']
     
+
+class Person(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='person')
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    identification = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+    province = models.CharField(max_length=255)
+    type_person = models.CharField(max_length=255, choices=(
+        ('natural', 'Natural'),
+        ('juridica', 'Juridica'),
+    ))
+    
+    objects = models.Manager()
+    
+    
+    class Meta:
+        db_table = 'auth_person'
+        verbose_name = 'person'
+        verbose_name_plural = 'persons'
+        ordering = ['-id']
+
+    
     

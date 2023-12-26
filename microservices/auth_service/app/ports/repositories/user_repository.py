@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from app.domain.models import Role
+
 
 class UserRepository(ABC):
     """
@@ -47,4 +49,9 @@ class UserRepository(ABC):
         
     def login(self, user: dict):
         pass
-    
+    @abstractmethod
+    def assign_role(self, user_id: int, role_id: Role):
+        pass
+    @abstractmethod
+    def delete_permanent_user(self, user_id: int):
+        pass

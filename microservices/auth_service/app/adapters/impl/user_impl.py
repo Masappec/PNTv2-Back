@@ -1,6 +1,9 @@
 from app.ports.repositories.user_repository import UserRepository
-from app.domain.models import User
+from app.domain.models import Role, User
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.db.models import Prefetch
+
+
 class UserRepositoryImpl(UserRepository):
     """
     The UserRepositoryImpl class implements the UserRepository abstract base class.
@@ -9,7 +12,7 @@ class UserRepositoryImpl(UserRepository):
         UserRepository (UserRepository): The UserRepository class is an abstract 
         base class that defines methods for retrieving, creating,
         updating, and deleting user objects.
-        
+
     """
 
     def __init__(self):
@@ -17,7 +20,7 @@ class UserRepositoryImpl(UserRepository):
         The constructor for the UserRepositoryImpl class.
         """
         self.jwt_authentication = JWTAuthentication()
-    
+
     def get_user(self, user_id: int):
         """
         Get a user by id.
@@ -28,8 +31,14 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        return User.objects.get(pk=user_id)
-    
+        user = User.objects.prefetch_related('groups').prefetch_related('person').filter(is_active=True, pk=user_id).first()
+ 
+        # return user with groups name
+        group = [group for group in user.groups.all()]
+        #join list to string
+        user.group = group
+        return user
+
     def get_users(self):
         """
         Get a list of users.
@@ -37,7 +46,14 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        return User.objects.all()
+        users = User.objects.prefetch_related('groups').prefetch_related('person').filter(is_active=True)
+ 
+        # return user with groups name
+        for user in users:
+            group = [group for group in user.groups.all()]
+            #join list to string
+            user.group = group
+        return users
 
     def get_user_by_email(self, email: str):
         """
@@ -49,9 +65,12 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        
+
         return User.objects.get(email=email)
         
+        
+        
+
         
     def get_user_by_username(self, username: str):
         """
@@ -116,6 +135,14 @@ class UserRepositoryImpl(UserRepository):
         """
         return User.objects.filter(pk=user_id).update(is_active=False)
 
-    
     def login(self, user: dict):
         return self.jwt_authentication.authenticate(**user)
+
+    
+    def assign_role(self, user_id: int, role_id: Role):
+        #delete all roles for user
+        User.objects.get(pk=user_id).groups.clear()
+        return role_id.user_set.add(user_id)
+    
+    def delete_permanent_user(self, user_id: int):
+        return User.objects.filter(pk=user_id).delete()
