@@ -1,0 +1,19 @@
+[
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "ciudadano",
+        "permissions": [
+            25,
+            26,
+            27,
+            28,
+            21,
+            22,
+            23,
+            24
+        ]
+    }
+}
+]
