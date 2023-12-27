@@ -22,7 +22,6 @@ class UserListSerializer(Serializer):
     city = CharField(max_length=255,source='person.city')
     country = CharField(max_length=255,source='person.country')
     province = CharField(max_length=255,source='person.province')
-    type_person = CharField(max_length=255,source='person.type_person')
     groups = ListField(child=GroupSerializer(),source='group')
     
 
@@ -43,7 +42,6 @@ class RegisterSerializer(Serializer):
     city = CharField(max_length=255)
     country = CharField(max_length=255)
     province = CharField(max_length=255)
-    type_person = CharField(max_length=255)
         
 
 
@@ -60,7 +58,6 @@ class UserCreateAdminSerializer(Serializer):
     city = CharField(max_length=255)
     country = CharField(max_length=255)
     province = CharField(max_length=255)
-    type_person = CharField(max_length=255)
     
     
     

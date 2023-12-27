@@ -22,7 +22,6 @@ class BaseModel(models.Model):
 
 class Role(Group):
     
-    
     class Meta:
         proxy = True
         
@@ -50,10 +49,17 @@ class Person(models.Model):
     city = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     province = models.CharField(max_length=255)
-    type_person = models.CharField(max_length=255, choices=(
-        ('natural', 'Natural'),
-        ('juridica', 'Juridica'),
+    
+    
+    job = models.CharField(max_length=255, null=True, blank=True)
+    gender = models.CharField(max_length=255, null=True, blank=True, choices=(
+        ('masculino', 'Masculino'),
+        ('femenino', 'Femenino'),
     ))
+    race = models.CharField(max_length=255, null=True, blank=True)
+    disability = models.BooleanField(default=False)
+    
+    accept_terms = models.BooleanField(default=False)
     
     objects = models.Manager()
     

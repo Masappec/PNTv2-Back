@@ -55,3 +55,7 @@ class RoleRepository(ABC):
     @abstractmethod
     def remove_all_permissions(self, role_id: int):
         pass
+    
+    @abstractmethod
+    def delete_permanently(self, role_id: int):
+        pass
