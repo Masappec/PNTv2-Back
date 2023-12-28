@@ -36,3 +36,6 @@ class RoleService:
     
     def assign_permissions(self, role_id: int, permissions: list):
         return self.role_repository.assign_permissions(role_id, permissions)
+    
+    def role_has_users(self, role_id: int):
+        return self.role_repository.role_has_users(role_id)

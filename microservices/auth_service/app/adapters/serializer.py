@@ -97,12 +97,10 @@ class RoleSerializer(ModelSerializer):
         model = Role
         fields = ('id', 'name', 'permissions')
         
-class RoleCreateSerializer(ModelSerializer):
+class RoleCreateSerializer(Serializer):
     permissions = ListField(child=CharField())
-        
-    class Meta:
-        model = Role
-        fields = ( 'name', 'permissions')
+    name = CharField(max_length=255)
+
         
 class RoleListSerializer(Serializer):
     id = IntegerField()

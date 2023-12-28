@@ -95,3 +95,27 @@ class RoleDetailAPI(APIView):
     def get(self, request, pk):
         role = self.role_service.get_role(pk)
         return Response(RoleSerializer(role).data, status=status.HTTP_200_OK)
+    
+    
+    
+class RoleDeleteAPI(APIView):
+    
+    def __init__(self):
+        self.role_service = RoleService(role_repository=RoleRepositoryImpl())
+        
+    def delete(self, request, pk):
+        try:
+            has_users = self.role_service.role_has_users(pk)
+            if has_users:
+                raise Exception("El rol tiene usuarios asignados")
+            self.role_service.delete_permanently(pk)
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            res = MessageTransactional(data={
+                'message': str(e),
+                'status': '400',
+                'json': '{}'
+            })
+            res.is_valid(raise_exception=True)
+            
+            return Response(res.data, status=status.HTTP_400_BAD_REQUEST)

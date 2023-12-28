@@ -77,4 +77,11 @@ class RoleRepositoryImpl(RoleRepository):
 
 
     def delete_permanently(self, role_id: int):
-        return Role.objects.get(pk=role_id).delete()
+        try:
+            return Role.objects.get(pk=role_id).delete()
+        except Exception:
+            raise Exception("Rol no encontrado")
+        
+    def role_has_users(self, role_id: int):
+        role = Role.objects.get(pk=role_id)
+        return role.user_set.count() > 0

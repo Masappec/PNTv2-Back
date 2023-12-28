@@ -2,7 +2,7 @@ from django.urls import path
 from app.domain.views.user import UserListAPI, UserCreateAPI, UserUpdate,UserDeactivate
 from app.domain.views.auth import LoginApiView, RegisterApiView
 from app.domain.views.permission import PermissionListAPI
-from app.domain.views.role import RoleListAPI, RoleCreateAPI, RoleUpdateAPI, RoleDetailAPI
+from app.domain.views.role import RoleListAPI, RoleCreateAPI, RoleUpdateAPI, RoleDetailAPI,RoleDeleteAPI
 from rest_framework_simplejwt.views import  TokenRefreshView,TokenVerifyView
 
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
     path("role/create", RoleCreateAPI.as_view(), name="role-create"),
     path("role/update/<pk>", RoleUpdateAPI.as_view(), name="role-update"),
     path("role/detail/<pk>", RoleDetailAPI.as_view(), name="role-detail"),
+    path("role/delete/<pk>", RoleDeleteAPI.as_view(), name="role-delete"),
     
     
     path('login/', LoginApiView.as_view(), name='token_obtain_pair'),
