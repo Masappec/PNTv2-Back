@@ -12,6 +12,10 @@ class EstablishmentRepository(ABC):
     @abstractmethod
     def get_establishment_by_abbr(self, abbreviation: str):
         pass
+
+    @abstractmethod
+    def get_establishment_by_abbreviation(self, abbreviation: str):
+        pass
     
     @abstractmethod
     def get_establishment_by_name(self, name: str):
