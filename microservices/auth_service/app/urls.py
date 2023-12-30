@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from app.domain.views.user import UserListAPI, UserCreateAPI, UserUpdate,UserDeactivate
 from app.domain.views.auth import LoginApiView, RegisterApiView
 from app.domain.views.permission import PermissionListAPI
@@ -24,5 +24,6 @@ urlpatterns = [
     path('register/',RegisterApiView.as_view(), name='register'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path(r'password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 
 ]
