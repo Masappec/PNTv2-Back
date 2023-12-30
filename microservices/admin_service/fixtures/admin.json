@@ -1,0 +1,648 @@
+[
+{
+    "model": "app_admin.formfields",
+    "pk": 1,
+    "fields": {
+        "created_at": "2023-12-29T15:43:09.828Z",
+        "updated_at": "2023-12-29T15:44:14.756Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "identification",
+        "description": "Nmero de cdula Persona Superadministradora PNT DPE",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Superadministradora PNT DPE",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 2,
+    "fields": {
+        "created_at": "2023-12-29T15:44:04.749Z",
+        "updated_at": "2023-12-29T15:48:29.415Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "password",
+        "description": "Clave Persona Superadministradora PNT DPE",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Superadministradora PNT DPE",
+        "type_field": "password"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 3,
+    "fields": {
+        "created_at": "2023-12-29T15:44:46.374Z",
+        "updated_at": "2023-12-29T15:48:18.475Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "first_name",
+        "description": "Nombre(s) de la Persona Superadministradora PNT DPE",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Superadministradora PNT DPE",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 4,
+    "fields": {
+        "created_at": "2023-12-29T15:45:16.411Z",
+        "updated_at": "2023-12-29T15:45:16.411Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "last_name",
+        "description": "Apellido(s) de la Persona Superadministradora PNT DPE",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Superadministradora PNT DPE",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 5,
+    "fields": {
+        "created_at": "2023-12-29T15:46:26.665Z",
+        "updated_at": "2023-12-29T15:48:15.172Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "job",
+        "description": "Cargo de la Persona Superadministradora PNT DPE",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Superadministradora PNT DPE",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 6,
+    "fields": {
+        "created_at": "2023-12-29T15:46:53.245Z",
+        "updated_at": "2023-12-29T15:48:10.465Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "username",
+        "description": "Correo de la Persona Superadministradora PNT DPE",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Superadministradora PNT DPE",
+        "type_field": "email"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 7,
+    "fields": {
+        "created_at": "2023-12-29T15:52:47.791Z",
+        "updated_at": "2023-12-29T15:52:47.791Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "identification",
+        "description": "Nmero de cdula Persona Monitoreo PNT DPE",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Monitoreo DPE",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 8,
+    "fields": {
+        "created_at": "2023-12-29T15:53:35.447Z",
+        "updated_at": "2023-12-29T15:53:35.447Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "password",
+        "description": "Clave Persona Monitoreo PNT DPE",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Monitoreo DPE",
+        "type_field": "password"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 9,
+    "fields": {
+        "created_at": "2023-12-29T15:53:56.641Z",
+        "updated_at": "2023-12-29T15:53:56.641Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "first_name",
+        "description": "Nombre(s) de la Persona Monitoreo PNT DPE",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Monitoreo DPE",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 10,
+    "fields": {
+        "created_at": "2023-12-29T15:54:12.945Z",
+        "updated_at": "2023-12-29T15:54:12.945Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "last_name",
+        "description": "Apellido(s) de la Persona Monitoreo PNT DPE",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Monitoreo DPE",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 11,
+    "fields": {
+        "created_at": "2023-12-29T15:54:29.357Z",
+        "updated_at": "2023-12-29T15:54:29.357Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "job",
+        "description": "Cargo de la Persona Monitoreo PNT DPE",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Monitoreo DPE",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 12,
+    "fields": {
+        "created_at": "2023-12-29T15:54:46.864Z",
+        "updated_at": "2023-12-29T15:54:46.864Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "email",
+        "description": "Correo de la Persona Monitoreo PNT DPE",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Monitoreo DPE",
+        "type_field": "email"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 13,
+    "fields": {
+        "created_at": "2023-12-29T15:59:48.968Z",
+        "updated_at": "2023-12-29T15:59:48.968Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "identification",
+        "description": "Nmero de cdula Persona Supervisora PNT Institucin",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Supervisora PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 14,
+    "fields": {
+        "created_at": "2023-12-29T16:00:12.086Z",
+        "updated_at": "2023-12-29T16:00:12.086Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "password",
+        "description": "Clave Persona Supervisora PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Supervisora PNT",
+        "type_field": "password"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 15,
+    "fields": {
+        "created_at": "2023-12-29T16:00:32.460Z",
+        "updated_at": "2023-12-29T16:00:32.460Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "first_name",
+        "description": "Nombre(s) de la persona Supervisora PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Supervisora PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 16,
+    "fields": {
+        "created_at": "2023-12-29T16:00:45.961Z",
+        "updated_at": "2023-12-29T16:00:45.961Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "last_name",
+        "description": "Apellido(s) de la persona Supervisora PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Supervisora PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 17,
+    "fields": {
+        "created_at": "2023-12-29T16:01:01.192Z",
+        "updated_at": "2023-12-29T16:01:01.192Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "job",
+        "description": "Cargo de la persona Supervisora PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Supervisora PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 18,
+    "fields": {
+        "created_at": "2023-12-29T16:01:21.829Z",
+        "updated_at": "2023-12-29T16:01:21.829Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "username",
+        "description": "Correo de la persona Supervisora PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Supervisora PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 19,
+    "fields": {
+        "created_at": "2023-12-29T16:09:10.992Z",
+        "updated_at": "2023-12-29T16:09:10.992Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "identification",
+        "description": "Nmero de cdula Persona Carga PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Carga PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 20,
+    "fields": {
+        "created_at": "2023-12-29T16:09:30.105Z",
+        "updated_at": "2023-12-29T16:09:30.105Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "password",
+        "description": "Clave Persona Carga PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Carga PNT",
+        "type_field": "password"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 21,
+    "fields": {
+        "created_at": "2023-12-29T16:09:49.119Z",
+        "updated_at": "2023-12-29T16:09:49.119Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "first_name",
+        "description": "Nombre(s) de la persona Carga PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Carga PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 22,
+    "fields": {
+        "created_at": "2023-12-29T16:10:06.909Z",
+        "updated_at": "2023-12-29T16:10:06.909Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "last_name",
+        "description": "Apellido(s) de la persona Carga PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Carga PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 23,
+    "fields": {
+        "created_at": "2023-12-29T16:10:21.978Z",
+        "updated_at": "2023-12-29T16:10:21.978Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "job",
+        "description": "Cargo de la persona Carga PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Carga PNT",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 24,
+    "fields": {
+        "created_at": "2023-12-29T16:10:44.596Z",
+        "updated_at": "2023-12-29T16:10:44.596Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "username",
+        "description": "Correo de la persona Carga PNT Institucin",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Carga PNT",
+        "type_field": "email"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 25,
+    "fields": {
+        "created_at": "2023-12-29T16:24:37.539Z",
+        "updated_at": "2023-12-29T16:24:37.539Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "identification",
+        "description": "Nmero de cdula",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 26,
+    "fields": {
+        "created_at": "2023-12-29T16:24:54.730Z",
+        "updated_at": "2023-12-29T16:24:54.730Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "password",
+        "description": "Contrasea",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "password"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 27,
+    "fields": {
+        "created_at": "2023-12-29T16:25:17.841Z",
+        "updated_at": "2023-12-29T16:25:17.841Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "first_name",
+        "description": "Nombre(s)",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 28,
+    "fields": {
+        "created_at": "2023-12-29T16:25:34.495Z",
+        "updated_at": "2023-12-29T16:25:34.495Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "last_name",
+        "description": "Apellido(s)",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 29,
+    "fields": {
+        "created_at": "2023-12-29T16:25:52.559Z",
+        "updated_at": "2023-12-29T16:25:52.559Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "username",
+        "description": "Correo",
+        "form_type": "Usuario",
+        "model": "User",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 30,
+    "fields": {
+        "created_at": "2023-12-29T16:26:14.707Z",
+        "updated_at": "2023-12-29T16:26:14.707Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "phone",
+        "description": "Telfono de contacto",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "tel"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 31,
+    "fields": {
+        "created_at": "2023-12-29T16:26:48.088Z",
+        "updated_at": "2023-12-29T16:26:48.088Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "gender",
+        "description": "Gnero",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 32,
+    "fields": {
+        "created_at": "2023-12-29T16:27:50.803Z",
+        "updated_at": "2023-12-29T16:27:50.803Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "age_range",
+        "description": "Rango de edad",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 33,
+    "fields": {
+        "created_at": "2023-12-29T16:28:04.612Z",
+        "updated_at": "2023-12-29T16:28:04.612Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "city",
+        "description": "Ciudad",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 34,
+    "fields": {
+        "created_at": "2023-12-29T16:28:20.028Z",
+        "updated_at": "2023-12-29T16:28:20.028Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "province",
+        "description": "Provincia",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 35,
+    "fields": {
+        "created_at": "2023-12-29T16:28:32.783Z",
+        "updated_at": "2023-12-29T16:28:32.783Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "race",
+        "description": "Autoidentificacin",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "text"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 36,
+    "fields": {
+        "created_at": "2023-12-29T16:28:53.966Z",
+        "updated_at": "2023-12-29T16:28:53.966Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "disability",
+        "description": "Discapacidad",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "checkbox"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 37,
+    "fields": {
+        "created_at": "2023-12-29T16:29:20.676Z",
+        "updated_at": "2023-12-29T16:29:20.676Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "accept_terms",
+        "description": "Poltica de proteccin de datos personales",
+        "form_type": "Usuario",
+        "model": "Person",
+        "is_active": true,
+        "role": "Ciudadano",
+        "type_field": "checkbox"
+    }
+},
+{
+    "model": "app_admin.formfields",
+    "pk": 38,
+    "fields": {
+        "created_at": "2023-12-30T00:23:08.417Z",
+        "updated_at": "2023-12-30T00:23:08.417Z",
+        "deleted": false,
+        "deleted_at": null,
+        "name": "name",
+        "description": "Nombre Completo de la Institucin",
+        "form_type": "Entidad",
+        "model": "Establishment",
+        "is_active": true,
+        "role": "DPE",
+        "type_field": "text"
+    }
+}
+]

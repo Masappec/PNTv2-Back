@@ -21,6 +21,27 @@ services:
 
     networks:
       - pnt_network
+
+
+  admin_microservice:
+    build:
+      context: ./microservices/admin_service
+      dockerfile: Dockerfile
+    ports:
+      - "8002"
+    depends_on:
+      - db_auth
+    volumes:
+      - ./microservices/admin_service:/app
+
+    environment:
+      - DB_HOST=db_auth
+      - DB_NAME=auth_database
+      - DB_USER=auth_user
+      - DB_PASSWORD=auth_password
+
+    networks:
+      - pnt_network
       
 
   db_auth:
@@ -51,6 +72,7 @@ services:
 
 volumes:
   auth_microservice:
+  admin_microservice:
 
 networks:
   pnt_network:
