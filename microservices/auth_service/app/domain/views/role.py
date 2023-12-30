@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, CreateAPIView
 from app.domain.services.role_service import RoleService
 from app.adapters.impl.role_impl import RoleRepositoryImpl
-from app.adapters.serializer import RoleListSerializer, RoleSerializer, RoleCreateSerializer
+from app.adapters.serializer import RoleListSerializer, RoleSerializer, RoleCreateSerializer, MessageTransactional
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -50,10 +50,25 @@ class RoleCreateAPI(CreateAPIView):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
         
     def post(self, request):
-        role = self.serializer_class(data=request.data)
-        role.is_valid(raise_exception=True)
-        res = self.role_service.create_role(role.validated_data)
-        return Response(RoleSerializer(res).data, status=status.HTTP_201_CREATED)
+        role_created=None
+        try:
+            role = self.serializer_class(data=request.data)
+            role.is_valid(raise_exception=True)
+            role_created = self.role_service.create_role(role.validated_data)
+            return Response(RoleSerializer(role_created).data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            if role_created is not None:
+                self.role_service.delete_permanently(role_created.id)
+                
+            
+            res = MessageTransactional(data={
+                'message': str(e),
+                'status': '400',
+                'json': '{}'
+            })
+            res.is_valid(raise_exception=True)
+            
+            return Response(res.data, status=status.HTTP_400_BAD_REQUEST)
     
     
 class RoleUpdateAPI(APIView):
@@ -80,3 +95,27 @@ class RoleDetailAPI(APIView):
     def get(self, request, pk):
         role = self.role_service.get_role(pk)
         return Response(RoleSerializer(role).data, status=status.HTTP_200_OK)
+    
+    
+    
+class RoleDeleteAPI(APIView):
+    
+    def __init__(self):
+        self.role_service = RoleService(role_repository=RoleRepositoryImpl())
+        
+    def delete(self, request, pk):
+        try:
+            has_users = self.role_service.role_has_users(pk)
+            if has_users:
+                raise Exception("El rol tiene usuarios asignados")
+            self.role_service.delete_permanently(pk)
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            res = MessageTransactional(data={
+                'message': str(e),
+                'status': '400',
+                'json': '{}'
+            })
+            res.is_valid(raise_exception=True)
+            
+            return Response(res.data, status=status.HTTP_400_BAD_REQUEST)

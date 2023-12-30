@@ -76,7 +76,6 @@ class PersonService:
             'city': person.validated_data['city'],
             'country': person.validated_data['country'],
             'province': person.validated_data['province'],
-            'type_person': person.validated_data['type_person'],
         }
         return self.person_repository.create_person(data)
     

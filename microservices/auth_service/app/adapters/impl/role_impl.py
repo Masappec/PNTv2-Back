@@ -15,10 +15,14 @@ class RoleRepositoryImpl(RoleRepository):
         return Role.objects.get(name=name)
 
     def create_role(self, role: dict):
-        return Role.objects.create(**role)
+        return Role.objects.create(name=role["name"])
 
     def update_role(self, role_id: int, role: dict):
-        return Role.objects.filter(pk=role_id).update(**role)
+        role_ = Role.objects.get(pk=role_id)
+        role_.name = role["name"]
+        role_.save()
+        return role_
+        
 
     def get_roles(self):
         return Role.objects.all()
@@ -39,7 +43,7 @@ class RoleRepositoryImpl(RoleRepository):
         """
         role = self.get_role(role_id)
 
-        per = Permission.objects.filter(code__in=permissions)
+        per = Permission.objects.filter(codename__in=permissions)
         for p in per:
             role.permissions.add(p)
 
@@ -70,3 +74,14 @@ class RoleRepositoryImpl(RoleRepository):
     
     def remove_all_permissions(self, role_id: int):
         return Role.objects.get(pk=role_id).permissions.clear()
+
+
+    def delete_permanently(self, role_id: int):
+        try:
+            return Role.objects.get(pk=role_id).delete()
+        except Exception:
+            raise Exception("Rol no encontrado")
+        
+    def role_has_users(self, role_id: int):
+        role = Role.objects.get(pk=role_id)
+        return role.user_set.count() > 0

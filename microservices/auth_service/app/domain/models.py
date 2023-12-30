@@ -22,7 +22,6 @@ class BaseModel(models.Model):
 
 class Role(Group):
     
-    
     class Meta:
         proxy = True
         
@@ -45,23 +44,32 @@ class Person(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     identification = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
-    province = models.CharField(max_length=255)
-    type_person = models.CharField(max_length=255, choices=(
-        ('natural', 'Natural'),
-        ('juridica', 'Juridica'),
+    phone = models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    province = models.CharField(max_length=255, null=True, blank=True)
+    
+    
+    job = models.CharField(max_length=255, null=True, blank=True)
+    gender = models.CharField(max_length=255, null=True, blank=True, choices=(
+        ('masculino', 'Masculino'),
+        ('femenino', 'Femenino'),
+        ('otro', 'Otro')
     ))
+    age_range = models.CharField(max_length=255, null=True, blank=True)
+    race = models.CharField(max_length=255, null=True, blank=True)
+    disability = models.BooleanField(default=False)
+    
+    accept_terms = models.BooleanField(default=False)
     
     objects = models.Manager()
     
     
     class Meta:
         db_table = 'auth_person'
-        verbose_name = 'person'
-        verbose_name_plural = 'persons'
+        verbose_name = 'Datos Personales'
+        verbose_name_plural = 'Datos Personales'
         ordering = ['-id']
 
     
