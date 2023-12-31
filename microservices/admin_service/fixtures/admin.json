@@ -2,39 +2,46 @@
 
 {
   "model": "auth.permission",
+  "pk": 133,
   "fields": {
     "name": "Puede crear usuario ciudadano",
+    "content_type": 6,
     "codename": "add_user_ciudadano"
   }
 },
 {
   "model": "auth.permission",
+  "pk": 134,
   "fields": {
     "name": "Puede crear usuario Carga PNT",
-    "content_type": 1,
+    "content_type": 6,
     "codename": "add_user_carga_pnt"
   }
 },
 {
   "model": "auth.permission",
+  "pk": 135,
   "fields": {
     "name": "Puede crear usuario Supervisora PNT",
+    "content_type": 6,
     "codename": "add_user_supervisora_pnt"
   }
 },
-
 {
   "model": "auth.permission",
+  "pk": 136,
   "fields": {
     "name": "Puede crear usuario Monitoreo DPE",
+    "content_type": 6,
     "codename": "add_user_monitoreo_dpe"
   }
 },
 {
   "model": "auth.permission",
-  "pk": 1,
+  "pk": 137,
   "fields": {
     "name": "Puede crear usuario Supervisora PNT DPE",
+    "content_type": 6,
     "codename": "add_user_monitoreo_pnt_dpe"
   }
 },
@@ -321,7 +328,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "identification",
-    "description": "Número de cédula Persona Supervisora PNT Institucin",
+    "description": "Número de cédula Persona Supervisora PNT Institución",
     "form_type": "Usuario",
     "model": "Person",
     "is_active": true,
@@ -339,7 +346,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "password",
-    "description": "Clave Persona Supervisora PNT Institucin",
+    "description": "Clave Persona Supervisora PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -357,7 +364,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "first_name",
-    "description": "Nombre(s) de la persona Supervisora PNT Institucin",
+    "description": "Nombre(s) de la persona Supervisora PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -375,7 +382,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "last_name",
-    "description": "Apellido(s) de la persona Supervisora PNT Institucin",
+    "description": "Apellido(s) de la persona Supervisora PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -393,7 +400,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "job",
-    "description": "Cargo de la persona Supervisora PNT Institucin",
+    "description": "Cargo de la persona Supervisora PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -411,7 +418,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "username",
-    "description": "Correo de la persona Supervisora PNT Institucin",
+    "description": "Correo de la persona Supervisora PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -429,7 +436,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "identification",
-    "description": "Némero de cédula Persona Carga PNT Institucin",
+    "description": "Número de cédula Persona Carga PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -447,7 +454,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "password",
-    "description": "Clave Persona Carga PNT Institucin",
+    "description": "Clave Persona Carga PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -465,7 +472,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "first_name",
-    "description": "Nombre(s) de la persona Carga PNT Institucin",
+    "description": "Nombre(s) de la persona Carga PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -483,7 +490,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "last_name",
-    "description": "Apellido(s) de la persona Carga PNT Institucin",
+    "description": "Apellido(s) de la persona Carga PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -501,7 +508,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "job",
-    "description": "Cargo de la persona Carga PNT Institucin",
+    "description": "Cargo de la persona Carga PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
@@ -519,7 +526,7 @@
     "deleted": false,
     "deleted_at": null,
     "name": "username",
-    "description": "Correo de la persona Carga PNT Institucin",
+    "description": "Correo de la persona Carga PNT Institución",
     "form_type": "Usuario",
     "model": "User",
     "is_active": true,
