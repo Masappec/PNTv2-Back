@@ -1,3 +1,13 @@
 **/venv/
 **/__pycache__/
 **/.vscode/
+microservices/auth_service/.idea/inspectionProfiles/profiles_settings.xml
+microservices/auth_service/.idea/misc.xml
+microservices/auth_service/.idea/modules.xml
+microservices/auth_service/.idea/vcs.xml
+microservices/auth_service/.idea/auth_service.iml
+microservices/admin_service/.idea/modules.xml
+microservices/admin_service/.idea/misc.xml
+microservices/admin_service/.idea/inspectionProfiles/Project_Default.xml
+microservices/admin_service/.idea/admin_service.iml
+microservices/admin_service/.idea/vcs.xml
