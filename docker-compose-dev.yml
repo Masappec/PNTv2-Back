@@ -4,9 +4,9 @@ services:
   auth_microservice:
     build:
       context: ./microservices/auth_service
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
-      - "8000"
+      - "8000:8000"
     depends_on:
       - db_auth
     volumes:
@@ -26,9 +26,9 @@ services:
   admin_microservice:
     build:
       context: ./microservices/admin_service
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
-      - "8001"
+      - "8001:8001"
     depends_on:
       - db_auth
     volumes:

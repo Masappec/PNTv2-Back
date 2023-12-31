@@ -7,14 +7,19 @@ class EstablishmentService:
     def __init__(self, establishment_repository: EstablishmentRepository):
         self.establishment_repository = establishment_repository
 
-    def create_establishment(self, establishment: dict):
-        return self.establishment_repository.create_establishment(establishment)
+    def create_establishment(self, establishment: dict, file):
+        try:
+            return self.establishment_repository.create_establishment(establishment, file)
+        except ObjectDoesNotExist:
+            raise ValueError("Instiución no existe")
+        except Exception as e:
+            raise e
     
     def get_establishment(self, establishment_id: int):
         return self.establishment_repository.get_establishment(establishment_id)
     
     def get_establishments(self):
-        return self.establishment_repository.get_establishments()
+        return self.establishment_repository.get_all_establishments()
     
     def update_establishment(self, establishment_id: int, establishment: dict):
         try:

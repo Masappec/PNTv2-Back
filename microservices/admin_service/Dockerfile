@@ -33,7 +33,7 @@ RUN set -ex && \
 COPY . /code
 
 # Expone el puerto 8000
-EXPOSE 8000
+EXPOSE 8001
 
 # Configura el punto de entrada para tu aplicación
 ENTRYPOINT [ "sh", "/code/entrypoint.sh" ]

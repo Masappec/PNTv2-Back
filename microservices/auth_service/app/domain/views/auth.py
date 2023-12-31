@@ -94,7 +94,7 @@ class RegisterApiView(CreateAPIView):
             
             self.person_service.assign_user(person.pk, user.pk)
             
-            role = self.role_service.get_role_by_name('ciudadano')
+            role = self.role_service.get_role_by_name('Ciudadano')
             self.user_service.assign_role(user.pk, role)
             user = self.user_service.get_user_by_id(user.pk)
             res = MessageTransactional(data={

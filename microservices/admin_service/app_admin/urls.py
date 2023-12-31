@@ -1,6 +1,6 @@
 from django.urls import path,include
 from app_admin.domain.views.establishment import EstablishmentListAPI, EstablishmentCreateAPI, EstablismentUpdate, EstablishmentDeactive
-
+from app_admin.domain.views.form_fields import FormField
 
 urlpatterns = [
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('establishment/update/<pk>', EstablismentUpdate.as_view(), name=''),
     path('establishment/delete/<pk>', EstablishmentDeactive.as_view(), name=''),
 
+    path('public/form-fields/', FormField.as_view(), name='form-fields'),
 ]

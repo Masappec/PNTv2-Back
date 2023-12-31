@@ -1,7 +1,7 @@
 from app_admin.ports.repositories.establishment_repository import EstablishmentRepository
 from app_admin.domain.models import Establishment
 from datetime import datetime
-
+from django.utils import timezone
 class EstablishmentRepositoryImpl(EstablishmentRepository):
     
     
@@ -31,14 +31,27 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         return Establishment.objects.get(id=establishment_id).lawenforcement_set.first()
     
     
-    def create_establishment(self, establishment: dict):
-        return Establishment.objects.create(**establishment)
+    def create_establishment(self, establishment: dict, file):
+        return Establishment.objects.create(
+            name=establishment['name'],
+            abbreviation=establishment['abbreviation'],
+            deleted=False,
+            created_at=datetime.now(),
+            updated_at=datetime.now(),
+            code=establishment['code'],
+            logo = file,
+            highest_authority=establishment['highest_authority'],
+            first_name_authority=establishment['first_name_authority'],
+            last_name_authority=establishment['last_name_authority'],
+            job_authority=establishment['job_authority'],
+                
+        )
     
     
     def delete_establishment(self, establishment_id: int):
         establishment = Establishment.objects.get(id=establishment_id)
         establishment.deleted = True
-        establishment.deleted_at = datetime.now()
+        establishment.deleted_at = timezone.now()
         establishment.save()
         return establishment
     
@@ -91,3 +104,6 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         establishment.accesstoinformation_set.all().update(deleted=True, deleted_at=datetime.now())
         establishment.save()
         return establishment
+    
+    def get_establishment_by_abbreviation(self, abbreviation: str):
+        return Establishment.objects.get(abbreviation=abbreviation)

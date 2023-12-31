@@ -11,6 +11,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
 
+from app_admin.domain.service.access_information_service import AccessInformationService
+from app_admin.adapters.impl.access_information_impl import AccessInformationImpl
+
 class EstablishmentListAPI(ListAPIView):
     
     pagination_class = StandardResultsSetPagination
@@ -80,6 +83,7 @@ class EstablishmentCreateAPI(APIView):
         The constructor for the EstablishmentCreateAPI class.
         """
         self.establishment_service = EstablishmentService(EstablishmentRepositoryImpl())
+        self.access_info = AccessInformationService(AccessInformationImpl())
 
     @swagger_auto_schema(
         operation_description="Create a establishment",
@@ -87,7 +91,9 @@ class EstablishmentCreateAPI(APIView):
             201: output_serializer_class,
             400: MessageTransactional
         },
-        request_body=serializer_class
+        request_body=serializer_class,
+        #form data
+        
     )
     def post(self, request, *args, **kwargs):
         """
@@ -102,12 +108,13 @@ class EstablishmentCreateAPI(APIView):
             object: The response object.
         """
         data=self.serializer_class(data=request.data)
+        file = request.FILES['logo']
         data.is_valid(raise_exception=True)
         establishment = None
         try:
-            establishment = self.establishment_service.create_establishment(data)
-
-            establishment = self.establishment_service.get_establishment(establishment.id)
+            establishment = self.establishment_service.create_establishment(data.data, file)
+            access= self.access_info.create_access_information(data.data)
+            self.access_info.assign_establishment_to_access_information(access.id, establishment.id)
 
             res = MessageTransactional(
                 data={
@@ -119,9 +126,9 @@ class EstablishmentCreateAPI(APIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-            print(establishment)
             if establishment is not None:
                 self.establishment_service.delete_establishment(establishment.id)
+            print(e)
             res = MessageTransactional(
                 data={
                     'message': str(e),

@@ -82,6 +82,7 @@ class FormFields(BaseModel):
     form_type = models.CharField(max_length=255)
     model = models.CharField(max_length=255, null=True, blank=True)
     is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0)
     role = models.CharField(max_length=255, null=True, blank=True)
     type_field = models.CharField(max_length=255, null=True, blank=True, choices=(
         ('text', 'Texto'),

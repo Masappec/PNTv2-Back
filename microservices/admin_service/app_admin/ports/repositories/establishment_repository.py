@@ -37,7 +37,7 @@ class EstablishmentRepository(ABC):
     
     
     @abstractmethod
-    def create_establishment(self, establishment: dict):
+    def create_establishment(self, establishment: dict, file):
         pass
     
     

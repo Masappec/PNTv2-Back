@@ -68,7 +68,7 @@ class UserService:
         try:
             data = {
                 'username': user.validated_data['username'],
-                'email': user.validated_data['email'],
+                'email': user.validated_data['username'],
                 'password': user.validated_data['password'],
                 'first_name': user.validated_data['first_name'],
                 'last_name': user.validated_data['last_name'],

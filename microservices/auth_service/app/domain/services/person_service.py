@@ -72,11 +72,16 @@ class PersonService:
             'last_name': person.validated_data['last_name'],
             'identification': person.validated_data['identification'],
             'phone': person.validated_data['phone'],
-            'address': person.validated_data['address'],
+            'address': person.validated_data['city'],
             'city': person.validated_data['city'],
-            'country': person.validated_data['country'],
+            'race': person.validated_data['race'],
+            'disability': person.validated_data['disability'] if 'disability' in person.validated_data else False,
+            'age_range': person.validated_data['age_range'],
             'province': person.validated_data['province'],
+            'accept_terms': person.validated_data['accept_terms'] if 'accept_terms' in person.validated_data else False,
         }
+        if data['accept_terms'] == False:
+            raise Exception('Debe aceptar los terminos y condiciones')
         return self.person_repository.create_person(data)
     
     def assign_user(self, person_id: int, user_id: int):

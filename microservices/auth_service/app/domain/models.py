@@ -47,7 +47,7 @@ class Person(models.Model):
     phone = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
-    country = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True,default='Ecuador')
     province = models.CharField(max_length=255, null=True, blank=True)
     
     
