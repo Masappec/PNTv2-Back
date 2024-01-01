@@ -107,3 +107,6 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
     
     def get_establishment_by_abbreviation(self, abbreviation: str):
         return Establishment.objects.get(abbreviation=abbreviation)
+    
+    
+    

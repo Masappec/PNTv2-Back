@@ -42,3 +42,19 @@ class FormFieldsListSerializer(ModelSerializer):
     class Meta:
         model = FormFields
         fields = '__all__'
+        
+        
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        
+        content_type = instance.content_type
+        if content_type is None:
+            return representation
+        object_id = instance.object_id
+        related_model = content_type.model_class()
+        related_instances = related_model.objects.all().values('id', 'name')
+        option_values = [related_instance for related_instance in related_instances]
+
+        representation['options'] = option_values
+
+        return representation

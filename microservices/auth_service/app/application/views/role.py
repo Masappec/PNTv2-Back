@@ -6,8 +6,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
+from rest_framework.permissions import IsAuthenticated
+from app.utils.permission import HasPermission
 class RoleListAPI(ListAPIView):
     serializer_class = RoleListSerializer
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.view_role'
 
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
@@ -45,6 +49,8 @@ class RoleListAPI(ListAPIView):
 class RoleCreateAPI(CreateAPIView):
     
     serializer_class = RoleCreateSerializer
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.add_role'
     
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
@@ -74,6 +80,8 @@ class RoleCreateAPI(CreateAPIView):
 class RoleUpdateAPI(APIView):
 
     serializer_class = RoleCreateSerializer
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.change_role'
 
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
@@ -86,7 +94,9 @@ class RoleUpdateAPI(APIView):
         
 
 class RoleDetailAPI(APIView):
-    
+
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.view_role'
 
         
     def __init__(self):
@@ -99,6 +109,9 @@ class RoleDetailAPI(APIView):
     
     
 class RoleDeleteAPI(APIView):
+    
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.delete_role'
     
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
@@ -122,6 +135,9 @@ class RoleDeleteAPI(APIView):
         
         
 class RoleListAvaliable(APIView):
+    
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.view_role'
     
         
     def __init__(self):

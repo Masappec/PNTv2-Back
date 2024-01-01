@@ -2,7 +2,7 @@ from app.ports.repositories.user_repository import UserRepository
 from app.adapters.serializer import RegisterSerializer, UserCreateAdminSerializer
 import random
 import string
-
+from shared.tasks.user_task import send_user_created_event
 from app.domain.models import Role
 
 class UserService:
@@ -93,11 +93,13 @@ class UserService:
         data = {
             'username': user.validated_data['username'],
             'email': user.validated_data['username'],
-            'password': self.generate_password(),
+            'password': user.validated_data['password'] if user.validated_data['password'] else self.generate_password(),
             'first_name': user.validated_data['first_name'],
             'last_name': user.validated_data['last_name'],
         }
-        return self.user_repository.create_user(data)
+        user_ = self.user_repository.create_user(data)
+        send_user_created_event.delay(user_.id, user.validated_data['establishment_id'])
+        return user_
 
     def update_user(self, user_id: int, user: UserCreateAdminSerializer):
         """

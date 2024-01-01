@@ -70,3 +70,7 @@ class Person(models.Model):
         verbose_name_plural = 'Datos Personales'
         ordering = ['-id']
 
+
+
+
+

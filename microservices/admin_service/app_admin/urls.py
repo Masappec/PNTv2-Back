@@ -1,6 +1,6 @@
 from django.urls import path,include
-from app_admin.domain.views.establishment import EstablishmentListAPI, EstablishmentCreateAPI, EstablismentUpdate, EstablishmentDeactive
-from app_admin.domain.views.form_fields import FormField
+from app_admin.application.views.establishment import EstablishmentListAPI, EstablishmentCreateAPI, EstablismentUpdate, EstablishmentDeactive
+from app_admin.application.views.form_fields import FormField
 
 urlpatterns = [
 

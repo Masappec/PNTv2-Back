@@ -11,6 +11,7 @@ from django.db.models import Q
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from app.adapters.impl.role_impl import RoleRepositoryImpl
+from app.utils.permission import HasPermission
 
 from app.domain.services.role_service import RoleService
 from app.adapters.impl.person_impl import PersonRepositoryImpl
@@ -29,6 +30,8 @@ class UserListAPI(ListAPIView):
     """
     pagination_class = StandardResultsSetPagination
     serializer_class = UserListSerializer
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.view_user'
 
     def __init__(self):
         """
@@ -85,8 +88,8 @@ class UserCreateAPI(APIView):
         UserCreateAPI: An instance of the UserCreateAPI class.
     """
     serializer_class = UserCreateAdminSerializer
-    permission_classes = [IsAuthenticated]
-    
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.add_user'      
     output_serializer_class = UserCreateResponseSerializer
 
     def __init__(self):
@@ -146,21 +149,23 @@ class UserCreateAPI(APIView):
             self.role_service.is_valid_role_and_establishment(group_first, data.validated_data['establishment_id'])
 
             #obtiene el usuario con los datos de la persona
-            user = self.user_service.get_user_by_id(user.id)
 
             #serializa la respuesta
             data_response =  self.output_serializer_class(data={
-                'id': user['id'],
-                'first_name': user['first_name'],
-                'last_name': user['last_name'],
-                'username': user['username'],
-                'email': user['email'],
+                'id': user.id,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'username': user.username,
+                'email': user.email,
                 'identification': person.identification,
                 'phone': person.phone,
                 'city': person.city,
                 'country': person.country,
                 'province': person.province,
-                'group': user['group']
+                'group': [{
+                    'id': group.id,
+                    'name': group.name
+                } for group in user.groups.all()],
             })
             data_response.is_valid(raise_exception=True)
             res = MessageTransactional(
@@ -173,11 +178,10 @@ class UserCreateAPI(APIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
+            print("Error:", str(e))
             if user is not None:
-                if user is type(dict):
-                    self.user_service.delete_permanent_user(user['id'])
-                else:
-                    self.user_service.delete_permanent_user(user.id)
+                
+                self.user_service.delete_permanent_user(user.id)
             res = MessageTransactional(
                 data={
                     'message': str(e),
@@ -206,7 +210,8 @@ class UserUpdate(APIView):
         UserUpdate: An instance of the UserUpdate class.
     """
     serializer_class = UserCreateAdminSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.change_user'
 
     def __init__(self):
         """
@@ -256,7 +261,8 @@ class UserDeactivate(APIView):
         UserDeactivate: An instance of the UserDeactivate class.
     """
     permission_classes = [IsAuthenticated]
-    
+    permission_classes = [IsAuthenticated , HasPermission]
+    permission_required = 'auth.delete_user'
     
 
     def __init__(self):

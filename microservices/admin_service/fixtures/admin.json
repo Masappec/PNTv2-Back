@@ -1,50 +1,6 @@
 [
 
-  {
-    "model": "auth.permission",
-    "pk": 133,
-    "fields": {
-      "name": "Puede crear usuario ciudadano",
-      "content_type": 6,
-      "codename": "add_user_ciudadano"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 134,
-    "fields": {
-      "name": "Puede crear usuario Carga PNT",
-      "content_type": 6,
-      "codename": "add_user_carga_pnt"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 135,
-    "fields": {
-      "name": "Puede crear usuario Supervisora PNT",
-      "content_type": 6,
-      "codename": "add_user_supervisora_pnt"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 136,
-    "fields": {
-      "name": "Puede crear usuario Monitoreo DPE",
-      "content_type": 6,
-      "codename": "add_user_monitoreo_dpe"
-    }
-  },
-  {
-    "model": "auth.permission",
-    "pk": 137,
-    "fields": {
-      "name": "Puede crear usuario Supervisora PNT DPE",
-      "content_type": 6,
-      "codename": "add_user_monitoreo_pnt_dpe"
-    }
-  },
+ 
   {
     "model": "auth.group",
     "pk": 6,
@@ -120,7 +76,9 @@
       "role": "Superadministradora PNT DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_monitoreo_pnt_dpe"
+      "permission_required": "add_user_monitoreo_pnt_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -140,7 +98,9 @@
       "role": "Superadministradora PNT DPE",
       "type_field": "password",
       "options": null,
-      "permission_required": "add_user_monitoreo_pnt_dpe"
+      "permission_required": "add_user_monitoreo_pnt_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -160,7 +120,9 @@
       "role": "Superadministradora PNT DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_monitoreo_pnt_dpe"
+      "permission_required": "add_user_monitoreo_pnt_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -180,7 +142,9 @@
       "role": "Superadministradora PNT DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_monitoreo_pnt_dpe"
+      "permission_required": "add_user_monitoreo_pnt_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -200,7 +164,9 @@
       "role": "Superadministradora PNT DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_monitoreo_pnt_dpe"
+      "permission_required": "add_user_monitoreo_pnt_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -220,7 +186,9 @@
       "role": "Superadministradora PNT DPE",
       "type_field": "email",
       "options": null,
-      "permission_required": "add_user_monitoreo_pnt_dpe"
+      "permission_required": "add_user_monitoreo_pnt_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -240,7 +208,9 @@
       "role": "Monitoreo DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_monitoreo_dpe"
+      "permission_required": "add_user_monitoreo_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -260,7 +230,9 @@
       "role": "Monitoreo DPE",
       "type_field": "password",
       "options": null,
-      "permission_required": "add_user_monitoreo_dpe"
+      "permission_required": "add_user_monitoreo_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -280,7 +252,9 @@
       "role": "Monitoreo DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_monitoreo_dpe"
+      "permission_required": "add_user_monitoreo_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -300,7 +274,9 @@
       "role": "Monitoreo DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_monitoreo_dpe"
+      "permission_required": "add_user_monitoreo_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -320,7 +296,9 @@
       "role": "Monitoreo DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_monitoreo_dpe"
+      "permission_required": "add_user_monitoreo_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -328,10 +306,10 @@
     "pk": 12,
     "fields": {
       "created_at": "2023-12-29T15:54:46.864Z",
-      "updated_at": "2023-12-29T15:54:46.864Z",
+      "updated_at": "2024-01-01T21:27:47.176Z",
       "deleted": false,
       "deleted_at": null,
-      "name": "email",
+      "name": "username",
       "description": "Correo de la Persona Monitoreo PNT DPE",
       "form_type": "Usuario",
       "model": "User",
@@ -340,7 +318,9 @@
       "role": "Monitoreo DPE",
       "type_field": "email",
       "options": null,
-      "permission_required": "add_user_monitoreo_dpe"
+      "permission_required": "add_user_monitoreo_dpe",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -360,7 +340,9 @@
       "role": "Supervisora PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_supervisora_pnt"
+      "permission_required": "add_user_supervisora_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -380,7 +362,9 @@
       "role": "Supervisora PNT",
       "type_field": "password",
       "options": null,
-      "permission_required": "add_user_supervisora_pnt"
+      "permission_required": "add_user_supervisora_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -400,7 +384,9 @@
       "role": "Supervisora PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_supervisora_pnt"
+      "permission_required": "add_user_supervisora_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -420,7 +406,9 @@
       "role": "Supervisora PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_supervisora_pnt"
+      "permission_required": "add_user_supervisora_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -440,7 +428,9 @@
       "role": "Supervisora PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_supervisora_pnt"
+      "permission_required": "add_user_supervisora_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -460,28 +450,9 @@
       "role": "Supervisora PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_supervisora_pnt"
-    }
-  },
-  {
-    "model": "app_admin.formfields",
-    "pk": 19,
-    "fields": {
-      "created_at": "2023-12-29T16:09:10.992Z",
-      "updated_at": "2023-12-29T16:09:10.992Z",
-      "deleted": false,
-      "deleted_at": null,
-      "name": "establishment",
-      "description": "Institución",
-      "form_type": "Usuario",
-      "model": "User",
-      "is_active": true,
-      "order": 0,
-      "role": "Carga PNT",
-      "type_field": "select",
-      "options": null,
-      "permission_required": "add_user_carga_pnt",
-      "content_type":35
+      "permission_required": "add_user_supervisora_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -501,7 +472,9 @@
       "role": "Carga PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_carga_pnt"
+      "permission_required": "add_user_carga_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -521,7 +494,9 @@
       "role": "Carga PNT",
       "type_field": "password",
       "options": null,
-      "permission_required": "add_user_carga_pnt"
+      "permission_required": "add_user_carga_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -541,7 +516,9 @@
       "role": "Carga PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_carga_pnt"
+      "permission_required": "add_user_carga_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -561,7 +538,9 @@
       "role": "Carga PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_carga_pnt"
+      "permission_required": "add_user_carga_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -581,7 +560,9 @@
       "role": "Carga PNT",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_carga_pnt"
+      "permission_required": "add_user_carga_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -601,7 +582,9 @@
       "role": "Carga PNT",
       "type_field": "email",
       "options": null,
-      "permission_required": "add_user_carga_pnt"
+      "permission_required": "add_user_carga_pnt",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -621,7 +604,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -641,7 +626,9 @@
       "role": "Ciudadano",
       "type_field": "password",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -661,7 +648,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -681,7 +670,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -701,7 +692,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -721,7 +714,9 @@
       "role": "Ciudadano",
       "type_field": "tel",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -741,7 +736,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -761,7 +758,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -781,7 +780,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -801,7 +802,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -821,7 +824,9 @@
       "role": "Ciudadano",
       "type_field": "text",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -841,7 +846,9 @@
       "role": "Ciudadano",
       "type_field": "checkbox",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -861,7 +868,9 @@
       "role": "Ciudadano",
       "type_field": "checkbox",
       "options": null,
-      "permission_required": "add_user_ciudadano"
+      "permission_required": "add_user_ciudadano",
+      "content_type": null,
+      "object_id": null
     }
   },
   {
@@ -881,7 +890,75 @@
       "role": "DPE",
       "type_field": "text",
       "options": null,
-      "permission_required": null
+      "permission_required": null,
+      "content_type": null,
+      "object_id": null
+    }
+  },
+  {
+    "model": "app_admin.formfields",
+    "pk": 39,
+    "fields": {
+      "created_at": "2024-01-01T16:43:50.894Z",
+      "updated_at": "2024-01-01T16:43:50.895Z",
+      "deleted": false,
+      "deleted_at": null,
+      "name": "establishment_id",
+      "description": "Institución a la que pertenece",
+      "form_type": "Usuario",
+      "model": "User",
+      "is_active": true,
+      "order": 7,
+      "role": "Carga PNT",
+      "type_field": "select",
+      "options": null,
+      "permission_required": "add_user_carga_pnt",
+      "content_type": 11,
+      "object_id": null
+    }
+  },
+  {
+    "model": "app_admin.formfields",
+    "pk": 41,
+    "fields": {
+      "created_at": "2024-01-01T20:39:26.023Z",
+      "updated_at": "2024-01-01T20:41:47.446Z",
+      "deleted": false,
+      "deleted_at": null,
+      "name": "establishment_id",
+      "description": "Institución a la que pertenece",
+      "form_type": "Usuario",
+      "model": "User",
+      "is_active": true,
+      "order": 7,
+      "role": "Monitoreo DPE",
+      "type_field": "select",
+      "options": null,
+      "permission_required": "add_user_monitoreo_dpe",
+      "content_type": 11,
+      "object_id": null
+    }
+  },
+  {
+    "model": "app_admin.formfields",
+    "pk": 42,
+    "fields": {
+      "created_at": "2024-01-01T20:41:21.642Z",
+      "updated_at": "2024-01-01T20:41:21.642Z",
+      "deleted": false,
+      "deleted_at": null,
+      "name": "establishment_id",
+      "description": "Institución a la que pertenece",
+      "form_type": "Usuario",
+      "model": "User",
+      "is_active": true,
+      "order": 7,
+      "role": "Supervisora PNT",
+      "type_field": "select",
+      "options": null,
+      "permission_required": "add_user_supervisora_pnt",
+      "content_type": 11,
+      "object_id": null
     }
   }
   ]

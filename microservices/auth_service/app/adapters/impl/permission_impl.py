@@ -22,7 +22,7 @@ class PermissionRepositoryImpl(PermissionRepository):
         return Permission.objects.filter(pk=permission_id).update(**permission)
     
     def get_permissions(self):
-        return Permission.objects.all().exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session'])
+        return Permission.objects.all().exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session','django_rest_passwordresettoken'])
     
     def get_permissions_by_role(self, role_id: int):
         return Permission.objects.filter(group__id=role_id).exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session'])

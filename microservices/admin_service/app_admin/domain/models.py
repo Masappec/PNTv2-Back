@@ -18,6 +18,20 @@ class BaseModel(models.Model):
         abstract = True
         
         verbose_name = 'BaseModel'
+        
+        
+class UserEstablishment(BaseModel):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+    establishment = models.ForeignKey('Establishment', on_delete=models.CASCADE, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    
+    objects = models.Manager()
+    
+    class Meta:
+        verbose_name = 'Usuario por Institución'
+        verbose_name_plural = 'Usuarios por Institución'
+
+
 
 class Establishment(BaseModel):
     

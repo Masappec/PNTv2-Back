@@ -1,8 +1,8 @@
 from django.urls import path,include
-from app.domain.views.user import UserListAPI, UserCreateAPI, UserUpdate,UserDeactivate
-from app.domain.views.auth import LoginApiView, RegisterApiView
-from app.domain.views.permission import PermissionListAPI
-from app.domain.views.role import RoleListAPI, RoleCreateAPI, RoleUpdateAPI, RoleDetailAPI,RoleDeleteAPI,RoleListAvaliable
+from app.application.views.user import UserListAPI, UserCreateAPI, UserUpdate,UserDeactivate
+from app.application.views.auth import LoginApiView, RegisterApiView
+from app.application.views.permission import PermissionListAPI
+from app.application.views.role import RoleListAPI, RoleCreateAPI, RoleUpdateAPI, RoleDetailAPI,RoleDeleteAPI,RoleListAvaliable
 from rest_framework_simplejwt.views import  TokenRefreshView,TokenVerifyView
 
 urlpatterns = [

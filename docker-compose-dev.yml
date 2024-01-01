@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+
+
+  redis_db:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - pnt_network
+
+
+
   auth_microservice:
     build:
       context: ./microservices/auth_service
@@ -9,18 +20,23 @@ services:
       - "8000:8000"
     depends_on:
       - db_auth
+      - redis_db
     volumes:
       - ./microservices/auth_service:/app
-    
+
 
     environment:
       - DB_HOST=db_auth
       - DB_NAME=auth_database
       - DB_USER=auth_user
       - DB_PASSWORD=auth_password
+      - CELERY_BROKER_URL=redis://redis_db:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
 
     networks:
       - pnt_network
+
+  
 
 
   admin_microservice:
@@ -31,6 +47,7 @@ services:
       - "8001:8001"
     depends_on:
       - db_auth
+      - redis_db
     volumes:
       - ./microservices/admin_service:/app
 
@@ -39,6 +56,8 @@ services:
       - DB_NAME=auth_database
       - DB_USER=auth_user
       - DB_PASSWORD=auth_password
+      - CELERY_BROKER_URL=redis://redis_db:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
 
     networks:
       - pnt_network
@@ -67,6 +86,9 @@ services:
       - auth_microservice
     networks:
       - pnt_network
+
+
+  
 
     
 

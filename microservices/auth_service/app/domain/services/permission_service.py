@@ -26,7 +26,25 @@ class PermissionService:
     
     
     def get_permissions(self):
-        return self.permission_repository.get_permissions()
+        permissions = self.permission_repository.get_permissions()
+        
+        for permission in permissions:
+            description = permission.name.replace('Can ', 'Puede ')\
+                                            .replace('add', 'agregar')\
+                                            .replace('change', 'editar')\
+                                            .replace('delete', 'eliminar')\
+                                            .replace('view', 'ver')\
+                                            .replace('_', ' ')\
+                                            .replace('group', 'Rol')\
+                                            .replace('user', 'Usuario')\
+                                            .replace('permission', 'Permiso')\
+                                                
+            permission.name = description
+            
+        return permissions
+                                            
+                                            
+        
     
     
     def get_permissions_by_role(self, role_id: int):
