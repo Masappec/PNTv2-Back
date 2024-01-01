@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, CreateAPIView
 from app.domain.services.role_service import RoleService
 from app.adapters.impl.role_impl import RoleRepositoryImpl
-from app.adapters.serializer import RoleListSerializer, RoleSerializer, RoleCreateSerializer, MessageTransactional
+from app.adapters.serializer import RoleListSerializer, RoleSerializer, RoleCreateSerializer, MessageTransactional,RoleListAvailableSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -119,3 +119,15 @@ class RoleDeleteAPI(APIView):
             res.is_valid(raise_exception=True)
             
             return Response(res.data, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+class RoleListAvaliable(APIView):
+    
+        
+    def __init__(self):
+        self.role_service = RoleService(role_repository=RoleRepositoryImpl())
+        
+    def get(self, request):
+        user_id = request.user.pk
+        roles = self.role_service.get_roles_available_by_user(user_id)
+        return Response(RoleListAvailableSerializer(roles,many=True).data, status=status.HTTP_200_OK)

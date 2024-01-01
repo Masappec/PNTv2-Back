@@ -7,8 +7,6 @@ from django.db import models
 
 
 
-
-
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -72,5 +70,3 @@ class Person(models.Model):
         verbose_name_plural = 'Datos Personales'
         ordering = ['-id']
 
-    
-    

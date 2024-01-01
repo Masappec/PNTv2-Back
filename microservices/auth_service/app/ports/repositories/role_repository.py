@@ -63,3 +63,12 @@ class RoleRepository(ABC):
     @abstractmethod
     def role_has_users(self, role_id: int):
         pass
+    
+    
+    @abstractmethod
+    def get_roles_available_by_user(self, user_id: int):
+        pass
+    
+    @abstractmethod
+    def is_valid_role_and_establishment(self, role_id: int, establishment_id: int):
+        pass

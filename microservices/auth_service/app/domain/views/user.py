@@ -1,9 +1,10 @@
+import json
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView,DestroyAPIView
 from rest_framework.views import APIView
 from app.domain.services.user_service import UserService
 from app.adapters.impl.user_impl import UserRepositoryImpl
 from app.utils import StandardResultsSetPagination
-from app.adapters.serializer import UserListSerializer, RegisterSerializer, MessageTransactional,UserCreateAdminSerializer
+from app.adapters.serializer import UserListSerializer, RegisterSerializer, MessageTransactional,UserCreateAdminSerializer, UserCreateResponseSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
@@ -86,7 +87,7 @@ class UserCreateAPI(APIView):
     serializer_class = UserCreateAdminSerializer
     permission_classes = [IsAuthenticated]
     
-    output_serializer_class = UserListSerializer
+    output_serializer_class = UserCreateResponseSerializer
 
     def __init__(self):
         """
@@ -107,7 +108,7 @@ class UserCreateAPI(APIView):
     )
     def post(self, request, *args, **kwargs):
         """
-        Create a user.
+        Crea un usuario.
 
         Args:
             request (object): The request object.
@@ -117,35 +118,66 @@ class UserCreateAPI(APIView):
         Returns:
             object: The response object.
         """
-        data = self.serializer_class(data=request.data)
-        data.is_valid(raise_exception=True)
         user = None
         person = None
         try:
-            
-            user = self.user_service.create_user_admin(data)
-            person = self.person_service.create_person(data)
-            self.person_service.assign_user(person.pk, user.pk)
-            for group in data.validated_data['groups']:
+            data = self.serializer_class(data=request.data)
+            data.is_valid(raise_exception=True)
 
+            
+            #crea el usuario
+            user = self.user_service.create_user_admin(data)
+            
+            #crea los datos de la persona
+            person = self.person_service.create_person(data)
+            
+            #asigna el usuario a la persona
+            self.person_service.assign_user(person.pk, user.pk)
+            
+            #asigna el rol al usuario
+            for group in data.validated_data['groups']:
                 self.user_service.assign_role(user.id, group)
                 
-            user = self.user_service.get_user_by_id(user.id)
+            group_first = user.groups.all().first().id if user.groups.all().first() is not None else 0
+                
             
+
+            #verifica si el rol y el establecimiento son validos
+            self.role_service.is_valid_role_and_establishment(group_first, data.validated_data['establishment_id'])
+
+            #obtiene el usuario con los datos de la persona
+            user = self.user_service.get_user_by_id(user.id)
+
+            #serializa la respuesta
+            data_response =  self.output_serializer_class(data={
+                'id': user['id'],
+                'first_name': user['first_name'],
+                'last_name': user['last_name'],
+                'username': user['username'],
+                'email': user['email'],
+                'identification': person.identification,
+                'phone': person.phone,
+                'city': person.city,
+                'country': person.country,
+                'province': person.province,
+                'group': user['group']
+            })
+            data_response.is_valid(raise_exception=True)
             res = MessageTransactional(
                 data={
                     'message': 'Usuario creado correctamente',
                     'status': 201,
-                    'json':self.output_serializer_class(user).data
+                    'json':data_response.data
                 }
             )
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-            print(user)
             if user is not None:
-                print(user.id)
-                self.user_service.delete_permanent_user(user.id)
+                if user is type(dict):
+                    self.user_service.delete_permanent_user(user['id'])
+                else:
+                    self.user_service.delete_permanent_user(user.id)
             res = MessageTransactional(
                 data={
                     'message': str(e),

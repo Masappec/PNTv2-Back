@@ -30,10 +30,12 @@ class LoginApiView(TokenObtainPairView):
 
         # Agrega datos adicionales del usuario a la respuesta
         user_data = self.get_user_data(request)
-        response.data['user'] = UserLoginSerializer(user_data).data
+        user_data['user_permissions'] = self.get_permissions_by_user(user_data['id'])
+        data = UserLoginSerializer(data=user_data)
+        data.is_valid(raise_exception=True)
+        response.data['user'] = data.data
         
-        response.data['user']['user_permissions'] = self.get_permissions_by_user(user_data.id)
-
+        
         return response
 
     def get_user_data(self, request):

@@ -10,6 +10,21 @@ class GroupSerializer(ModelSerializer):
             model = Role
             fields = ('id', 'name') 
 
+class UserCreateResponseSerializer(Serializer):
+    id = IntegerField()
+    first_name = CharField(max_length=255,source='person.first_name')
+    last_name = CharField(max_length=255,source='person.last_name')
+    username = CharField(max_length=255)
+    email = CharField(max_length=255)
+    identification = CharField(max_length=255,source='person.identification')
+    phone = CharField(max_length=255,source='person.phone')
+    city = CharField(max_length=255,source='person.city')
+    country = CharField(max_length=255,source='person.country')
+    province = CharField(max_length=255,source='person.province')
+    group = ListField(child=JSONField(),allow_null=True)
+    
+
+
 class UserListSerializer(Serializer):
     id = IntegerField()
     first_name = CharField(max_length=255,source='person.first_name')
@@ -21,9 +36,7 @@ class UserListSerializer(Serializer):
     city = CharField(max_length=255,source='person.city')
     country = CharField(max_length=255,source='person.country')
     province = CharField(max_length=255,source='person.province')
-    groups = ListField(child=GroupSerializer(),source='group')
-    
-
+    group = ListField(child=GroupSerializer(),allow_null=True)
 
 
 
@@ -51,29 +64,33 @@ class UserCreateAdminSerializer(Serializer):
     first_name = CharField(max_length=255)
     last_name = CharField(max_length=255)
     username = CharField(max_length=255)
-    email = CharField(max_length=255)
+    password = CharField(max_length=255,allow_null=True,allow_blank=True)
     identification = CharField(max_length=255)
     phone = CharField(max_length=255)
-    address = CharField(max_length=255)
     city = CharField(max_length=255)
-    country = CharField(max_length=255)
     province = CharField(max_length=255)
-    
+    job = CharField(max_length=255,allow_null=True,allow_blank=True)
+    establishment_id = IntegerField(allow_null=True)
+    race = CharField(max_length=255,allow_null=True,allow_blank=True)
+    age_range = CharField(max_length=255,allow_null=True,allow_blank=True)
+    accept_terms = BooleanField(default=True,allow_null=True)
     
     
 
     
     
 
-class UserLoginSerializer(ModelSerializer):
+class UserLoginSerializer(Serializer):
+
+    id = IntegerField()
+    is_superuser = BooleanField()
+    username = CharField(max_length=255)
+    first_name = CharField(max_length=255,allow_null=True,allow_blank=True)
+    last_name = CharField(max_length=255,allow_null=True,allow_blank=True)
+    email = CharField(max_length=255)
+    group = ListField(child=JSONField())
+    user_permissions = ListField(child=JSONField())
     
-    class Meta:
-        model = User
-        
-        exclude = ('password', 'is_staff', 'is_active', 'last_login', 'date_joined')
-        
-        
-        
         
 
 class PermissionSerializer(ModelSerializer):
@@ -113,3 +130,10 @@ class MessageTransactional(Serializer):
     message = CharField(max_length=255)
     status = IntegerField()
     json = JSONField()
+    
+    
+
+class RoleListAvailableSerializer(Serializer):
+    id = IntegerField()
+    name = CharField(max_length=255)
+    permission_required = CharField(max_length=255)

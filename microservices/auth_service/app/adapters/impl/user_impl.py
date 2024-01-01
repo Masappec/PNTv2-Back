@@ -32,11 +32,17 @@ class UserRepositoryImpl(UserRepository):
             User: The user object.
         """
         user = User.objects.prefetch_related('groups').prefetch_related('person').filter(is_active=True, pk=user_id).first()
+
  
         # return user with groups name
-        group = [group for group in user.groups.all()]
-        #join list to string
-        user.group = group
+        
+        groups = [{
+            'id': group.id,
+            'name': group.name
+            } for group in user.groups.all()]
+        user = user.__dict__
+        user['group'] = groups
+        
         return user
 
     def get_users(self):
@@ -82,7 +88,19 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        return User.objects.get(username=username)
+        user = User.objects.prefetch_related('groups').prefetch_related('person').filter(is_active=True, username=username).first()
+
+ 
+        # return user with groups name
+        
+        groups = [{
+            'id': group.id,
+            'name': group.name
+            } for group in user.groups.all()]
+        user = user.__dict__
+        user['group'] = groups
+        
+        return user
 
     def create_user(self, user: dict):
         """

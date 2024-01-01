@@ -92,7 +92,7 @@ class UserService:
         """
         data = {
             'username': user.validated_data['username'],
-            'email': user.validated_data['email'],
+            'email': user.validated_data['username'],
             'password': self.generate_password(),
             'first_name': user.validated_data['first_name'],
             'last_name': user.validated_data['last_name'],
@@ -164,7 +164,8 @@ class UserService:
         """
         try:
             return self.user_repository.get_user_by_username(username)
-        except Exception:
+        except Exception as e:
+            print(e)
             raise ValueError("User not found")
     def login(self, user: dict):
         """
@@ -211,3 +212,6 @@ class UserService:
             User: The user object.
         """
         return self.user_repository.delete_permanent_user(user_id)
+    
+    
+   

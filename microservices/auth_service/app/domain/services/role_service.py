@@ -39,3 +39,27 @@ class RoleService:
     
     def role_has_users(self, role_id: int):
         return self.role_repository.role_has_users(role_id)
+    
+    
+    def get_roles_available_by_user(self, user_id: int):
+        try:
+            return self.role_repository.get_roles_available_by_user(user_id)
+        
+        except Exception as e:
+            print(e)
+            raise Exception("Roles no disponibles")
+        
+    def is_valid_role_and_establishment(self, role_id: int, establishment_id: int):
+
+        """
+        The function deletes a user object using the provided user id.
+
+        Args:
+            user_id (int): The id of the user to delete.
+
+        Returns:
+            User: The user object.
+        """
+        is_valid = self.role_repository.is_valid_role_and_establishment(role_id, establishment_id)
+        if not is_valid:
+            raise ValueError("No es posible asignar el rol al usuario de esta institución")

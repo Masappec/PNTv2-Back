@@ -1,6 +1,6 @@
 from app.ports.repositories.role_repository import RoleRepository
-from app.domain.models import Role, Permission
-
+from app.domain.models import Role, Permission, User
+from django.db import connection
 
 class RoleRepositoryImpl(RoleRepository):
     """
@@ -85,3 +85,58 @@ class RoleRepositoryImpl(RoleRepository):
     def role_has_users(self, role_id: int):
         role = Role.objects.get(pk=role_id)
         return role.user_set.count() > 0
+    
+    
+    def get_roles_available_by_user(self, user_id: int):
+        role_permissions = {
+            'add_user_ciudadano':'Ciudadano',
+            'add_user_carga_pnt':'Carga PNT',
+            'add_user_supervisora_pnt':'Supervisora PNT',
+            'add_user_monitoreo_dpe':'Monitoreo DPE',
+            'add_user_monitoreo_pnt_dpe':'Superadministradora PNT DPE'
+        }
+        
+        user = User.objects.get(pk=user_id)
+        permissions = user.groups.values_list('permissions__codename', flat=True)
+        roles = []
+        
+        if user.is_superuser:
+            for p in role_permissions.keys():
+                roles.append(role_permissions[p])
+        else:
+            for p in permissions:
+                if p in role_permissions.keys():
+                    roles.append(role_permissions[p])
+            
+        roles_objects = Role.objects.filter(name__in=roles)
+        dict_result = []
+        for r in roles_objects:
+            dict_result.append({
+                'id': r.id,
+                'name': r.name,
+                'permission_required': role_permissions
+            })
+            
+        
+        return dict_result
+        
+    
+    def is_valid_role_and_establishment(self, role_id: int, establishment_id: int):
+        
+        role = Role.objects.get(pk=role_id)
+        if role.name == 'Ciudadano' and establishment_id == 0:
+            return True
+        
+        
+        
+        with  connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM app_admin_establishment WHERE id = %s", [establishment_id])
+            row = cursor.fetchone()
+            
+            if row is None:
+                return False
+            
+         
+        return role_id > 0 and establishment_id > 0
+            
+            

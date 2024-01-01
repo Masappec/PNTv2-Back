@@ -55,3 +55,4 @@ class UserRepository(ABC):
     @abstractmethod
     def delete_permanent_user(self, user_id: int):
         pass
+    
