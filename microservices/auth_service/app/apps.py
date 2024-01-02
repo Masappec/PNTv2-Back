@@ -1,4 +1,6 @@
 from django.apps import AppConfig
+from django.db.models.signals import post_migrate
+from django.db import DEFAULT_DB_ALIAS
 
 
 class AppConfig(AppConfig):
@@ -7,5 +9,13 @@ class AppConfig(AppConfig):
 
     
     def ready(self):
+        post_migrate.connect(self.create_custom_permissions_handler, sender=self)
+
+        
+    def create_custom_permissions_handler(self, **kwargs):
+            # Verifica si la señal post_migrate es para la base de datos predeterminada
+        if kwargs.get('using', DEFAULT_DB_ALIAS) != DEFAULT_DB_ALIAS:
+            return
+
         from app.utils.config import create_custom_permissions
         create_custom_permissions()

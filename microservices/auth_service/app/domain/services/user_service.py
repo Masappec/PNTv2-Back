@@ -118,11 +118,12 @@ class UserService:
         """
         data = {
             'username': user.validated_data['username'],
-            'email': user.validated_data['email'],
-            'password': user.validated_data['password'],
+            'email': user.validated_data['username'],
             'first_name': user.validated_data['first_name'],
             'last_name': user.validated_data['last_name'],
         }
+        if user.validated_data['password']:
+            data['password'] = user.validated_data['password']
         
         return self.user_repository.update_user(user_id, data)
 
@@ -137,6 +138,19 @@ class UserService:
             User: The user object.
         """
         return self.user_repository.delete_user(user_id)
+    
+    
+    def active_user(self, user_id: int):
+        """
+        The function deletes a user object using the provided user id.
+
+        Args:
+            user_id (int): The id of the user to delete.
+
+        Returns:
+            User: The user object.
+        """
+        return self.user_repository.active_user(user_id)
 
     def get_user_by_email(self, email: str):
         """
@@ -216,4 +230,17 @@ class UserService:
         return self.user_repository.delete_permanent_user(user_id)
     
     
-   
+    def get_user_object(self, user_id: int):
+        """
+        Get a user by id.
+
+        Args:
+            user_id (int): The id of the user to retrieve.
+
+        Returns:
+            User: The user object.
+        """
+        try:
+            return self.user_repository.get_user_object(user_id)
+        except Exception:
+            raise ValueError("Usuario no encontrado")

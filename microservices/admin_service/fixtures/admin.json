@@ -1,64 +1,6 @@
 [
 
- 
-  {
-    "model": "auth.group",
-    "pk": 6,
-    "fields": {
-      "name": "Ciudadano",
-      "permissions": []
-    }
-  },
-  {
-    "model": "auth.group",
-    "pk": 7,
-    "fields": {
-      "name": "Carga PNT",
-      "permissions": []
-    }
-  },
-  {
-    "model": "auth.group",
-    "pk": 8,
-    "fields": {
-      "name": "Supervisora PNT",
-      "permissions": []
-    }
-  },
-  {
-    "model": "auth.group",
-    "pk": 9,
-    "fields": {
-      "name": "Monitoreo DPE",
-      "permissions": []
-    }
-  },
-  {
-    "model": "auth.group",
-    "pk": 10,
-    "fields": {
-      "name": "Superadministradora PNT DPE",
-      "permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 1,
-    "fields": {
-      "password": "pbkdf2_sha256$600000$ixyNcjYRBWCS8thwAebPPY$+lkrSA/8WgysyT8tx8LGOaOXLuyVdK4TzIMtpj0aH3E=",
-      "last_login": "2023-12-31T18:08:50.737Z",
-      "is_superuser": true,
-      "username": "anderson",
-      "first_name": "",
-      "last_name": "",
-      "email": "anderson@gmail.com",
-      "is_staff": true,
-      "is_active": true,
-      "date_joined": "2023-12-21T16:25:03.247Z",
-      "groups": [],
-      "user_permissions": []
-    }
-  },
+
   {
     "model": "app_admin.formfields",
     "pk": 1,

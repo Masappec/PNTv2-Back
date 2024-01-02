@@ -33,3 +33,10 @@ class PersonRepositoryImpl(PersonRepository):
 
     def delete_permament_person(self, person_id: int):
         return Person.objects.filter(pk=person_id).delete()
+    
+    def update_person_by_user_id(self, user_id: int, person: dict):
+        person_result = Person.objects.filter(user_id=user_id)
+        person_result.update(**person)
+        return person_result.first()
+        
+        

@@ -12,17 +12,16 @@ class GroupSerializer(ModelSerializer):
 
 class UserCreateResponseSerializer(Serializer):
     id = IntegerField()
-    first_name = CharField(max_length=255,source='person.first_name')
-    last_name = CharField(max_length=255,source='person.last_name')
+    first_name = CharField(max_length=255,source='person.first_name',allow_null=True,allow_blank=True)
+    last_name = CharField(max_length=255,source='person.last_name',allow_null=True,allow_blank=True)
     username = CharField(max_length=255)
     email = CharField(max_length=255)
-    identification = CharField(max_length=255,source='person.identification')
+    identification = CharField(max_length=255,source='person.identification',allow_null=True,allow_blank=True)
     phone = CharField(max_length=255,source='person.phone',allow_null=True,allow_blank=True)
     city = CharField(max_length=255,source='person.city',allow_null=True,allow_blank=True)
     country = CharField(max_length=255,source='person.country',allow_null=True,allow_blank=True)
     province = CharField(max_length=255,source='person.province',allow_null=True,allow_blank=True)
     group = ListField(child=JSONField(),allow_null=True)
-    
 
 
 class UserListSerializer(Serializer):
@@ -37,6 +36,7 @@ class UserListSerializer(Serializer):
     country = CharField(max_length=255,source='person.country')
     province = CharField(max_length=255,source='person.province')
     group = ListField(child=GroupSerializer(),allow_null=True)
+    is_active = BooleanField()
 
 
 

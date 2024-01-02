@@ -31,10 +31,11 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        user = User.objects.prefetch_related('groups').prefetch_related('person').filter(is_active=True, pk=user_id).first()
+        user = User.objects.prefetch_related('groups').prefetch_related('person').filter(pk=user_id).first()
 
  
         # return user with groups name
+        
         
         groups = [{
             'id': group.id,
@@ -45,6 +46,21 @@ class UserRepositoryImpl(UserRepository):
         
         return user
 
+
+
+    def get_user_object(self, user_id: int):
+        """
+        Get a user by id.
+
+        Args:
+            user_id (int): The id of the user to retrieve.
+
+        Returns:
+            User: The user object.
+        """
+        user = User.objects.get(pk=user_id)
+        return user
+
     def get_users(self):
         """
         Get a list of users.
@@ -52,7 +68,7 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        users = User.objects.prefetch_related('groups').prefetch_related('person').filter(is_active=True)
+        users = User.objects.prefetch_related('groups').prefetch_related('person')
  
         # return user with groups name
         for user in users:
@@ -164,3 +180,7 @@ class UserRepositoryImpl(UserRepository):
     
     def delete_permanent_user(self, user_id: int):
         return User.objects.filter(pk=user_id).delete()
+    
+
+    def active_user(self, user_id: int):
+        return User.objects.filter(pk=user_id).update(is_active=True)

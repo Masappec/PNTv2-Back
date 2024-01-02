@@ -2,7 +2,7 @@
 
 from app.ports.repositories.person_repository import PersonRepository
 from app.adapters.serializer import RegisterSerializer
-
+from rest_framework.serializers import Serializer
 
 class PersonService:
     
@@ -109,3 +109,29 @@ class PersonService:
             Person: The person object.
         """
         return self.person_repository.delete_permament_person(person_id)
+    
+    
+    def update_person_by_user_id(self, user_id: int, person: Serializer):
+        """
+        Update a person.
+
+        Args:
+            user_id (int): The id of the user to update.
+            person (dict): The person data to update.
+
+        Returns:
+            Person: The person object.
+        """
+        data = {
+            'first_name': person.validated_data['first_name'],
+            'last_name': person.validated_data['last_name'],
+            'identification': person.validated_data['identification'],
+            'phone': person.validated_data['phone'],
+            'address': person.validated_data['city'],
+            'city': person.validated_data['city'],
+            'race': person.validated_data['race'],
+            'disability': person.validated_data['disability'] if 'disability' in person.validated_data else False,
+            'age_range': person.validated_data['age_range'],
+            'province': person.validated_data['province'],
+        }
+        return self.person_repository.update_person_by_user_id(user_id, data)

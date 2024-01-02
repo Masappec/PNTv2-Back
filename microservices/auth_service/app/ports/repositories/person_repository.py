@@ -40,3 +40,8 @@ class PersonRepository(ABC):
     
     def delete_permament_person(self, person_id: int):
         pass
+    
+
+    @abstractmethod
+    def update_person_by_user_id(self, user_id: int, person: dict):
+        pass

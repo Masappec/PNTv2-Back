@@ -1,5 +1,5 @@
 from django.urls import path,include
-from app.application.views.user import UserListAPI, UserCreateAPI, UserUpdate,UserDeactivate
+from app.application.views.user import UserListAPI, UserCreateAPI, UserUpdate,UserDeactivate, UserDetail
 from app.application.views.auth import LoginApiView, RegisterApiView
 from app.application.views.permission import PermissionListAPI
 from app.application.views.role import RoleListAPI, RoleCreateAPI, RoleUpdateAPI, RoleDetailAPI,RoleDeleteAPI,RoleListAvaliable
@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import  TokenRefreshView,TokenVerifyView
 
 urlpatterns = [
     path('user/list', UserListAPI.as_view(), name='user-list'),
+    path('user/detail/<pk>', UserDetail.as_view(), name='user-detail'),
     path('user/create', UserCreateAPI.as_view(), name='user-create'),
     path('user/update/<pk>', UserUpdate.as_view(), name=""),
     path("user/delete/<pk>", UserDeactivate.as_view(), name=""),

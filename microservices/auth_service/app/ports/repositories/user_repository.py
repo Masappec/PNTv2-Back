@@ -43,6 +43,9 @@ class UserRepository(ABC):
         pass
     
     @abstractmethod
+    def get_user_object(self, user_id: int):
+        pass
+    @abstractmethod
     def get_users(self):
         pass
 
@@ -56,3 +59,6 @@ class UserRepository(ABC):
     def delete_permanent_user(self, user_id: int):
         pass
     
+    @abstractmethod
+    def active_user(self, user_id: int):
+        pass
