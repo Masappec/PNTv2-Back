@@ -88,17 +88,17 @@ class RegisterApiView(CreateAPIView):
         data.is_valid(raise_exception=True)
         user = None
         person = None
-        
+        user_obj=None
         try:
-            user = self.user_service.create_user(data)
+            user_obj = self.user_service.create_user(data)
             
             person = self.person_service.create_person(data)
             
-            self.person_service.assign_user(person.pk, user.pk)
+            self.person_service.assign_user(person.pk, user_obj.pk)
             
             role = self.role_service.get_role_by_name('Ciudadano')
-            self.user_service.assign_role(user.pk, role)
-            user = self.user_service.get_user_by_id(user.pk)
+            self.user_service.assign_role(user_obj.pk, role)
+            user = self.user_service.get_user_by_id(user_obj.pk)
             res = MessageTransactional(data={
                 'message': 'Usuario creado exitosamente',
                 'status': 201,
@@ -110,8 +110,9 @@ class RegisterApiView(CreateAPIView):
             print(e)
             if person is not None:
                 self.person_service.delete_permament_person(person.id)
-            if user is not None:
-                self.user_service.delete_user(user.id)
+            if user_obj is not None:
+                self.user_service.delete_user(user_obj.id)
+            
                 
             res = MessageTransactional(data={
                 'message': e.__str__(),
