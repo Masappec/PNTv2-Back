@@ -75,7 +75,7 @@ class UserService:
             }
             return self.user_repository.create_user(data)
         except Exception as e:
-
+            print("Error", e)
             raise ValueError("Ya existe un usuario con ese correo o nombre de usuario")
     
     def create_user_admin(self,user:UserCreateAdminSerializer):

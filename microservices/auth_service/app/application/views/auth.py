@@ -1,7 +1,7 @@
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from app.adapters.serializer import MessageTransactional, RegisterSerializer, UserLoginSerializer, UserListSerializer
+from app.adapters.serializer import MessageTransactional, RegisterSerializer, UserLoginSerializer, UserCreateResponseSerializer
 from app.domain.services.user_service import UserService
 from app.adapters.impl.user_impl import UserRepositoryImpl
 from rest_framework.response import Response
@@ -99,19 +99,35 @@ class RegisterApiView(CreateAPIView):
             role = self.role_service.get_role_by_name('Ciudadano')
             self.user_service.assign_role(user_obj.pk, role)
             user = self.user_service.get_user_by_id(user_obj.pk)
+
+            data = UserCreateResponseSerializer(data={
+                'id': user_obj.pk,
+                'first_name': user_obj.first_name,
+                'last_name': user_obj.last_name,
+                'username': user_obj.username,
+                'email': user_obj.email,
+                'identification': person.identification,
+                'phone': person.phone,
+                'city': person.city,
+                'country': person.country,
+                'province': person.province,
+                'group': user['group']
+            })
+            print(user)
+            data.is_valid(raise_exception=True)
             res = MessageTransactional(data={
                 'message': 'Usuario creado exitosamente',
                 'status': 201,
-                'json': UserListSerializer(user).data
+                'json': data.data
             })
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-            print(e)
+            print(e )
             if person is not None:
                 self.person_service.delete_permament_person(person.id)
             if user_obj is not None:
-                self.user_service.delete_user(user_obj.id)
+                self.user_service.delete_permanent_user(user_obj.id)
             
                 
             res = MessageTransactional(data={
