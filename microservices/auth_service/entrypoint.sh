@@ -1,4 +1,5 @@
 cd code && \
+export PYTHONPATH=/code:$PYTHONPATH
 
 # Esperar a que Celery esté listo antes de iniciar Gunicorn
 # Iniciar Gunicorn primero
