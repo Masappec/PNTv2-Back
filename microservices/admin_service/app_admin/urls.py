@@ -1,10 +1,12 @@
 from django.urls import path,include
-from app_admin.application.views.establishment import EstablishmentListAPI, EstablishmentCreateAPI, EstablismentUpdate, EstablishmentDeactive
+from app_admin.application.views.establishment import EstablishmentListAPI, EstablishmentDetail,\
+    EstablishmentCreateAPI, EstablismentUpdate, EstablishmentDeactive
 from app_admin.application.views.form_fields import FormField
 
 urlpatterns = [
 
     path('establishment/list', EstablishmentListAPI.as_view(), name='establishment-list'),
+    path('establishment/detail/<pk>', EstablishmentDetail.as_view(), name='establishment-detail'),
     path('establishment/create', EstablishmentCreateAPI.as_view(), name='establishment-create'),
     path('establishment/update/<pk>', EstablismentUpdate.as_view(), name=''),
     path('establishment/delete/<pk>', EstablishmentDeactive.as_view(), name=''),

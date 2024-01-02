@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from app_admin.domain.models import Establishment
+
 
 class EstablishmentRepository(ABC):
     
@@ -50,7 +52,7 @@ class EstablishmentRepository(ABC):
         pass
     
     @abstractmethod
-    def update_establishment(self, establishment_id: int, establishment: dict):
+    def update_establishment(self, establishment_id: int, establishment: dict) -> Establishment:
         pass
     
     
@@ -81,7 +83,12 @@ class EstablishmentRepository(ABC):
         pass
     
     
+    @abstractmethod
+    def update_logo(self, establishment_id: int, file):
+        pass
     
+    def activa_or_deactivate_establishment(self, establishment_id: int):
+        pass
     
     
     

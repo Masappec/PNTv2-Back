@@ -1,41 +1,11 @@
 
 
-from app_admin.domain.models import AccessToInformation
+from app_admin.domain.models import AccessToInformation, Establishment
 from app_admin.ports.repositories.access_information_repository import AccessInformationRepository
-
+from django.shortcuts import get_object_or_404
 
 class AccessInformationImpl(AccessInformationRepository):
     
-    
-    '''    
-    @abstractmethod
-    def get_access_information(self, access_information_id: int):
-        pass
-    
-    @abstractmethod
-    def create_access_information(self, access_information: dict):
-        pass
-    @abstractmethod
-    def update_access_information(self, access_information_id: int, access_information: dict):
-        pass
-    @abstractmethod
-    def delete_access_information(self, access_information_id: int):
-        pass
-    @abstractmethod
-    def get_all_access_information(self):
-        pass
-    @abstractmethod
-    def get_all_access_information_by_establishment(self, establishment_id: int):
-        pass
-    @abstractmethod
-    def assign_establishment_to_access_information(self, access_information_id: int, establishment_id: int):
-        pass
-    @abstractmethod
-    def remove_establishment_to_access_information(self, access_information_id: int, establishment_id: int):
-        pass
-    @abstractmethod
-    def get_all_access_information_by_establishment_and_pedagogy_area(self, establishment_id: int, pedagogy_area_id: int):
-        pass'''
         
     def get_access_information(self, access_information_id: int):
         return AccessToInformation.objects.get(pk=access_information_id)
@@ -61,9 +31,9 @@ class AccessInformationImpl(AccessInformationRepository):
         return AccessToInformation.objects.filter(is_active=True, establishment_id=establishment_id)
     
     
-    def assign_establishment_to_access_information(self, access_information_id: int, establishment_id: int):
+    def assign_establishment_to_access_information(self, access_information_id: int, establishment: Establishment):
         access = AccessToInformation.objects.get(pk=access_information_id)
-        access.establishment_id = establishment_id
+        access.establishment.add(establishment)
         access.save()
         
     def remove_establishment_to_access_information(self, access_information_id: int, establishment_id: int):
@@ -75,5 +45,9 @@ class AccessInformationImpl(AccessInformationRepository):
     
         
     
-    
+    def update_access_information_by_establishment_id(self, establishment_id: int, access_information: dict):
+        establishment = get_object_or_404(Establishment, id=establishment_id)
+        access_information_selected = establishment.accesstoinformation_set.all()
+        access_information_selected.update(**access_information)
+        return access_information_selected.first()
     

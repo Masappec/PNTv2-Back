@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from app_admin.ports.repositories.establishment_repository import EstablishmentRepository
 from app_admin.domain.models import Establishment
 from datetime import datetime
@@ -13,7 +14,9 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         return Establishment.objects.get(abbreviation=abbreviation)
     
     def get_first_access_to_information(self, establishment_id: int):
-        return Establishment.objects.get(id=establishment_id).accesstoinformation_set.first()
+        establishment = get_object_or_404(Establishment, pk=establishment_id)
+        access = establishment.accesstoinformation_set.all().first()
+        return access
     
     
     def get_establishment_by_name(self, name: str):
@@ -32,18 +35,20 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
     
     
     def create_establishment(self, establishment: dict, file):
+        code = Establishment.objects.all().count() + 1
         return Establishment.objects.create(
             name=establishment['name'],
             abbreviation=establishment['abbreviation'],
             deleted=False,
             created_at=datetime.now(),
             updated_at=datetime.now(),
-            code=establishment['code'],
+            code=code,
             logo = file,
             highest_authority=establishment['highest_authority'],
             first_name_authority=establishment['first_name_authority'],
             last_name_authority=establishment['last_name_authority'],
             job_authority=establishment['job_authority'],
+            email_authority=establishment['email_authority'],
                 
         )
     
@@ -86,11 +91,27 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         law.save()
         
     def update_establishment(self, establishment_id: int, establishment: dict):
+        
+        print(establishment)
+        establishment_selected = Establishment.objects.filter(id=establishment_id)
+        establishment_selected.update(
+            name=establishment['name'],
+            abbreviation=establishment['abbreviation'],
+            updated_at=datetime.now(),
+            highest_authority=establishment['highest_authority'],
+            first_name_authority=establishment['first_name_authority'],
+            last_name_authority=establishment['last_name_authority'],
+            job_authority=establishment['job_authority'],
+            email_authority=establishment['email_authority'],
+        )
+        return establishment_selected.first()
+    
+    
+    def update_logo(self, establishment_id: int, file):
         establishment = Establishment.objects.get(id=establishment_id)
-        establishment.update(**establishment)
+        establishment.logo = file
+        establishment.save()
         return establishment
-    
-    
     
     
     def remove_all_law_enforcement(self, establishment_id: int):
@@ -109,4 +130,9 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         return Establishment.objects.get(abbreviation=abbreviation)
     
     
-    
+    def activa_or_deactivate_establishment(self, establishment_id: int):
+        establishment = Establishment.objects.get(id=establishment_id)
+        establishment.is_active = not establishment.is_active
+        establishment.deleted_at = datetime.now()
+        establishment.save()
+        return establishment

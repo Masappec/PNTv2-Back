@@ -9,6 +9,8 @@ class EstablishmentService:
 
     def create_establishment(self, establishment: dict, file):
         try:
+            
+            
             return self.establishment_repository.create_establishment(establishment, file)
         except ObjectDoesNotExist:
             raise ValueError("Instiución no existe")
@@ -68,3 +70,27 @@ class EstablishmentService:
         except ObjectDoesNotExist:
             raise ValueError("Instiución no existe")
         
+        
+    def get_first_access_to_information(self, establishment_id: int):
+        try:
+            return self.establishment_repository.get_first_access_to_information(establishment_id)
+        except ObjectDoesNotExist:
+            raise ValueError("Instiución no existe")
+        
+    def get_first_law_enforcement(self, establishment_id: int):
+        try:
+            return self.establishment_repository.get_first_law_enforcement(establishment_id)
+        except ObjectDoesNotExist:
+            raise ValueError("Instiución no existe")
+        
+    def update_logo(self, establishment_id: int, file):
+        try:
+            return self.establishment_repository.update_logo(establishment_id, file)
+        except ObjectDoesNotExist:
+            raise ValueError("Instiución no existe")
+        
+    def activa_or_deactivate_establishment(self, establishment_id: int):
+        try:
+            return self.establishment_repository.activa_or_deactivate_establishment(establishment_id)
+        except ObjectDoesNotExist:
+            raise ValueError("Instiución no existe")

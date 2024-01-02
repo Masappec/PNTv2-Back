@@ -36,7 +36,7 @@ class UserEstablishment(BaseModel):
 class Establishment(BaseModel):
     
     name = models.CharField(max_length=255)
-    code = models.CharField(max_length=255, null=True, blank=True)
+    code = models.CharField(max_length=255, null=True, blank=True, unique=True)
     abbreviation = models.CharField(max_length=255)
     logo = models.ImageField(upload_to='establishment')
     highest_authority = models.CharField(max_length=255)
@@ -44,6 +44,7 @@ class Establishment(BaseModel):
     last_name_authority = models.CharField(max_length=255)
     job_authority = models.CharField(max_length=255)
     email_authority = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
     
     
     objects = models.Manager()
@@ -51,6 +52,11 @@ class Establishment(BaseModel):
     class Meta:
         verbose_name = 'Institución'
         verbose_name_plural = 'Instituciones'
+        
+    #generate code secuence
+    
+    
+    
         
         
         

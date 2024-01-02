@@ -2,6 +2,7 @@
 
 from app_admin.ports.repositories.access_information_repository import AccessInformationRepository
 from django.core.exceptions import ObjectDoesNotExist
+from app_admin.domain.models import Establishment
 
 class AccessInformationService:
     
@@ -48,9 +49,9 @@ class AccessInformationService:
             raise ValueError("Información de acceso no existe")
         
         
-    def assign_establishment_to_access_information(self, access_information_id: int, establishment_id: int):
+    def assign_establishment_to_access_information(self, access_information_id: int, establishment: Establishment):
         try:
-            return self.access_information_repository.assign_establishment_to_access_information(access_information_id, establishment_id)
+            return self.access_information_repository.assign_establishment_to_access_information(access_information_id, establishment)
         except ObjectDoesNotExist:
             raise ValueError("Información de acceso no existe")
         
@@ -63,4 +64,11 @@ class AccessInformationService:
         
         
     
-    
+    def update_access_information_by_establishment_id(self, establishment_id: int, access_information: dict):
+        try:
+            data = {
+                'email': access_information['email_accesstoinformation'],
+            }
+            return self.access_information_repository.update_access_information_by_establishment_id(establishment_id, data)
+        except ObjectDoesNotExist:
+            raise ValueError("Información de acceso no existe")
