@@ -14,6 +14,11 @@ WORKDIR /code
 
 # Copia los archivos de configuración de Nginx y certificados SSL a la imagen
 
+# Descargar wait-for-it.sh
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /code/wait-for-it.sh
+
+# Dar permisos de ejecución
+RUN chmod +x /code/wait-for-it.sh
 
 # Copia los archivos de requerimientos de Python
 COPY requirements.txt /tmp/requirements.txt
