@@ -5,6 +5,7 @@ import random
 import string
 from shared.tasks.user_task import send_user_created_event
 from app.domain.models import Role
+from django.contrib.auth.hashers import make_password
 
 class UserService:
     """
@@ -24,12 +25,40 @@ class UserService:
 
 
     def register_cityzen_user(self, user: dict):
+        """
+        la funcion registra un usuario ciudadano.
+        tomando datos de la vista de registro de la aplicacion web
+
+        Args:
+            user (dict): el parametro user es un diccionario que contiene los datos del usuario a registrar
+            user = {
+                "first_name": "string",
+                "last_name": "string",
+                "username": "string",
+                "password": "string",
+                "identification": "string",
+                "phone": "string",
+                "province": "string",
+                "gender": "string",
+                "age_range": "string",
+                "city": "string",
+                "race": "string",
+                "accept_terms": true,
+                "disability": true
+            }
+
+        Returns:
+            User: Retorna un objeto usuario con los datos del usuario registrado
+        """
+        user['email'] = user['username']
+        user['password'] = make_password(user['password'])
+
         data =  self.user_repository.register_cityzen_user(user)
         return json.loads(data)
 
     def get_user_by_id(self, user_id: int):
         """
-        Get a user by id.
+        Obtienes un usuario por id
 
         Args:
             user_id (int): The id of the user to retrieve.

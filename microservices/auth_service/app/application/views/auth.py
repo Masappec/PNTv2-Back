@@ -90,19 +90,7 @@ class RegisterApiView(CreateAPIView):
         person = None
         user_obj=None
         try:
-            #user_obj = self.user_service.create_user(data)
-            
-            #person = self.person_service.create_person(data)
-            
-            #self.person_service.assign_user(person.pk, user_obj.pk)
-            
-            #role = self.role_service.get_role_by_name('Ciudadano')
-            #self.user_service.assign_role(user_obj.pk, role)
-            
-            #user = self.user_service.get_user_by_id(user_obj.pk)
-            data.validated_data['email'] = data.validated_data['username']
-            print(data.validated_data)
-            
+           
             user = self.user_service.register_cityzen_user(data.validated_data)
 
             data = UserCreateResponseSerializer(data=user)
