@@ -55,6 +55,7 @@ class RegisterSerializer(Serializer):
     city = CharField(max_length=255)
     race = CharField(max_length=255)
     accept_terms = BooleanField()
+    disability = BooleanField()
     
 
 

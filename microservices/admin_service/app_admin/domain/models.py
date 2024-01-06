@@ -13,6 +13,9 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
     deleted = models.BooleanField(default=False, null=True, blank=True)
     deleted_at = models.DateTimeField(null=True, blank=True, default=None)
+    user_created = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_created')
+    user_updated = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_updated')
+    user_deleted = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_deleted')
     
     class Meta:
         abstract = True
@@ -189,3 +192,67 @@ class NormativeDocument(BaseModel):
         
     def __str__(self):
         return self.title
+    
+    
+    
+
+class Configuration(BaseModel):
+    
+    name = models.CharField(max_length=255)
+    value = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+    type_config = models.CharField(max_length=255, null=True, blank=True)
+    
+    objects = models.Manager()
+    
+    class Meta:
+        verbose_name = 'Configuración'
+        verbose_name_plural = 'Configuraciones'
+        permissions = (
+            ('can_view_configuration', 'Can view configuration'),
+            
+        )
+        
+    def __str__(self):
+        return self.name
+    
+    #permisos personalizados
+    
+    
+
+class Email(BaseModel):
+    from_email = models.CharField(max_length=255)
+    to_email = models.CharField(max_length=255)
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    status = models.CharField(max_length=255, null=True, blank=True, choices=(
+        ('pending', 'Pendiente'),
+        ('sent', 'Enviado'),
+        ('error', 'Error'),
+    ))
+    error = models.TextField(null=True, blank=True)
+    bcc = models.CharField(max_length=255, null=True, blank=True)
+    cc = models.CharField(max_length=255, null=True, blank=True)
+    reply_to = models.CharField(max_length=255, null=True, blank=True)
+    
+    objects = models.Manager()
+    
+    class Meta:
+        verbose_name = 'Email'
+        verbose_name_plural = 'Emails'
+        
+    def __str__(self):
+        return self.subject
+    
+    
+    @staticmethod
+    def STATUS_PENDING():
+        return 'pending'
+    
+    @staticmethod
+    def STATUS_SENT():
+        return 'sent'
+    
+    @staticmethod
+    def STATUS_ERROR():
+        return 'error'

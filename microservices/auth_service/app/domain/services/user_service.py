@@ -1,3 +1,4 @@
+import json
 from app.ports.repositories.user_repository import UserRepository
 from app.adapters.serializer import RegisterSerializer, UserCreateAdminSerializer
 import random
@@ -20,6 +21,11 @@ class UserService:
             create, update, and delete user objects.
         """
         self.user_repository = user_repository
+
+
+    def register_cityzen_user(self, user: dict):
+        data =  self.user_repository.register_cityzen_user(user)
+        return json.loads(data)
 
     def get_user_by_id(self, user_id: int):
         """

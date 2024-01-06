@@ -66,6 +66,8 @@ services:
 
   db_auth:
     image: postgres:latest
+    ports:
+      - "5433:5432"
     environment:
       POSTGRES_DB: auth_database
       POSTGRES_USER: auth_user

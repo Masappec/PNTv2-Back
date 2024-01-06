@@ -90,29 +90,22 @@ class RegisterApiView(CreateAPIView):
         person = None
         user_obj=None
         try:
-            user_obj = self.user_service.create_user(data)
+            #user_obj = self.user_service.create_user(data)
             
-            person = self.person_service.create_person(data)
+            #person = self.person_service.create_person(data)
             
-            self.person_service.assign_user(person.pk, user_obj.pk)
+            #self.person_service.assign_user(person.pk, user_obj.pk)
             
-            role = self.role_service.get_role_by_name('Ciudadano')
-            self.user_service.assign_role(user_obj.pk, role)
-            user = self.user_service.get_user_by_id(user_obj.pk)
+            #role = self.role_service.get_role_by_name('Ciudadano')
+            #self.user_service.assign_role(user_obj.pk, role)
+            
+            #user = self.user_service.get_user_by_id(user_obj.pk)
+            data.validated_data['email'] = data.validated_data['username']
+            print(data.validated_data)
+            
+            user = self.user_service.register_cityzen_user(data.validated_data)
 
-            data = UserCreateResponseSerializer(data={
-                'id': user_obj.pk,
-                'first_name': user_obj.first_name,
-                'last_name': user_obj.last_name,
-                'username': user_obj.username,
-                'email': user_obj.email,
-                'identification': person.identification,
-                'phone': person.phone,
-                'city': person.city,
-                'country': person.country,
-                'province': person.province,
-                'group': user['group']
-            })
+            data = UserCreateResponseSerializer(data=user)
             print(user)
             data.is_valid(raise_exception=True)
             res = MessageTransactional(data={
@@ -123,7 +116,7 @@ class RegisterApiView(CreateAPIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-            print(e )
+            print("Error", e)
             if person is not None:
                 self.person_service.delete_permament_person(person.id)
             if user_obj is not None:

@@ -23,6 +23,18 @@ class UserRepository(ABC):
         """
         pass
 
+
+
+    @abstractmethod
+    def register_cityzen_user(self, user: dict):
+        """
+        The function `register_cityzen_user` is an abstract method that takes a dictionary `user` as input and does
+        not have an implementation.
+        
+        :param user: A dictionary representing the user data
+        :type user: dict
+        """
+        pass
     @abstractmethod
     def get_user_by_email(self, email: str):
         pass

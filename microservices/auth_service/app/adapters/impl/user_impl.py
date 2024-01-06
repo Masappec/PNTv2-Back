@@ -21,6 +21,11 @@ class UserRepositoryImpl(UserRepository):
         """
         self.jwt_authentication = JWTAuthentication()
 
+
+
+    def register_cityzen_user(self, user: dict):
+        
+        return User.register_citizen_user(**user)
     def get_user(self, user_id: int):
         """
         Get a user by id.
