@@ -16,7 +16,6 @@ class BaseModel(models.Model):
     user_created = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_created')
     user_updated = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_updated')
     user_deleted = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_deleted')
-    
     class Meta:
         abstract = True
         
