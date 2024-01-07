@@ -71,6 +71,11 @@ services:
       - pnt_network
 
 
+  mongo_db:
+    image: mongo:latest
+    networks:
+      - pnt_network
+
 
   api_gateway:
     image: nginx:latest

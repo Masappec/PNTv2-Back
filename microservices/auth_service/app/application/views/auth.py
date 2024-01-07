@@ -1,17 +1,19 @@
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from app.adapters.serializer import MessageTransactional, RegisterSerializer, UserLoginSerializer, UserCreateResponseSerializer
-from app.domain.services.user_service import UserService
-from app.adapters.impl.user_impl import UserRepositoryImpl
+
 from rest_framework.response import Response
-from app.adapters.impl.person_impl import PersonRepositoryImpl
+
 
 from app.domain.services.person_service import PersonService
 from app.adapters.impl.role_impl import RoleRepositoryImpl
 from app.domain.services.role_service import RoleService
 from app.adapters.impl.permission_impl import PermissionRepositoryImpl
 from app.domain.services.permission_service import PermissionService
+from app.adapters.serializer import MessageTransactional, RegisterSerializer, UserLoginSerializer, UserCreateResponseSerializer
+from app.domain.services.user_service import UserService
+from app.adapters.impl.user_impl import UserRepositoryImpl
+from app.adapters.impl.person_impl import PersonRepositoryImpl
+
 
 class LoginApiView(TokenObtainPairView):
     """

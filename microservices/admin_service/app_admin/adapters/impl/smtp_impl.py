@@ -28,6 +28,8 @@ class StmpImpl(SmtpRepository):
             email.created_at = datetime.now()
             email.status = Email.STATUS_PENDING()
             email.save()
+            
+        
             message = mail.EmailMessage(
                 subject=email.subject,
                 body=html_content,
@@ -55,9 +57,10 @@ class StmpImpl(SmtpRepository):
         try:
             email.status = Email.STATUS_PENDING()
             email.save()
+            html_content = render_to_string(template, context)
             message = mail.EmailMessage(
                 subject=email.subject,
-                body=template,
+                body=html_content,
                 from_email=email.from_email,
                 to=email.to,
                 bcc=email.bcc,
