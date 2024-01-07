@@ -94,7 +94,6 @@ class RegisterApiView(CreateAPIView):
             user = self.user_service.register_cityzen_user(data.validated_data)
 
             data = UserCreateResponseSerializer(data=user)
-            print(user)
             data.is_valid(raise_exception=True)
             res = MessageTransactional(data={
                 'message': 'Usuario creado exitosamente',
@@ -104,7 +103,6 @@ class RegisterApiView(CreateAPIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-            print("Error", e)
             if person is not None:
                 self.person_service.delete_permament_person(person.id)
             if user_obj is not None:

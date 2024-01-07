@@ -1,6 +1,6 @@
 from django.db.models import ImageField
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, JSONField, PrimaryKeyRelatedField
-from app_admin.domain.models import Establishment, FormFields
+from app_admin.domain.models import Configuration, Establishment, FormFields
 
 
 class EstablishmentListSerializer(ModelSerializer):
@@ -73,3 +73,18 @@ class FormFieldsListSerializer(ModelSerializer):
         representation['options'] = option_values
 
         return representation
+    
+
+class ConfigurationResponseSerializer(ModelSerializer):
+    
+    class Meta:
+        model = Configuration
+        fields = ['id','name', 'value']
+        
+
+
+class ConfigurationSerializer(ModelSerializer):
+    
+    class Meta:
+        model = Configuration
+        fields = ['name', 'value']

@@ -26,3 +26,6 @@ class SmtpRepository(ABC):
     
     def get_email_backend(self) -> EmailBackend:
         pass
+    
+    def get_config(self) -> list:
+        pass
