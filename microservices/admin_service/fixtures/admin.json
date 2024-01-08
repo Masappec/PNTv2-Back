@@ -1,6 +1,4 @@
 [
-
-
   {
     "model": "app_admin.formfields",
     "pk": 1,
@@ -902,6 +900,90 @@
       "content_type": 11,
       "object_id": null
     }
+  },
+  {
+    "model": "app_admin.configuration",
+    "pk": 1,
+    "fields": {
+      "created_at": "2024-01-07T14:50:02.542Z",
+      "updated_at": "2024-01-07T14:50:02.542Z",
+      "deleted": false,
+      "deleted_at": null,
+      "user_created": 1,
+      "user_updated": null,
+      "user_deleted": null,
+      "name": "HOST",
+      "value": "smtp-relay.brevo.com",
+      "is_active": true,
+      "type_config": "SMTP"
+    }
+  },
+  {
+    "model": "app_admin.configuration",
+    "pk": 2,
+    "fields": {
+      "created_at": "2024-01-07T14:50:16.316Z",
+      "updated_at": "2024-01-07T14:50:16.316Z",
+      "deleted": false,
+      "deleted_at": null,
+      "user_created": null,
+      "user_updated": null,
+      "user_deleted": null,
+      "name": "PORT",
+      "value": "587",
+      "is_active": true,
+      "type_config": "SMTP"
+    }
+  },
+  {
+    "model": "app_admin.configuration",
+    "pk": 3,
+    "fields": {
+      "created_at": "2024-01-07T14:50:36.365Z",
+      "updated_at": "2024-01-07T14:50:36.365Z",
+      "deleted": false,
+      "deleted_at": null,
+      "user_created": null,
+      "user_updated": null,
+      "user_deleted": null,
+      "name": "USER",
+      "value": "anderson.sinaluisa@gmail.com",
+      "is_active": true,
+      "type_config": "SMTP"
+    }
+  },
+  {
+    "model": "app_admin.configuration",
+    "pk": 4,
+    "fields": {
+      "created_at": "2024-01-07T14:50:52.461Z",
+      "updated_at": "2024-01-07T14:50:52.461Z",
+      "deleted": false,
+      "deleted_at": null,
+      "user_created": null,
+      "user_updated": null,
+      "user_deleted": null,
+      "name": "PASSWORD",
+      "value": "83vLrXsKAk45G9ST",
+      "is_active": true,
+      "type_config": "SMTP"
+    }
+  },
+  {
+    "model": "app_admin.configuration",
+    "pk": 5,
+    "fields": {
+      "created_at": "2024-01-07T14:51:48.948Z",
+      "updated_at": "2024-01-07T14:51:57.804Z",
+      "deleted": false,
+      "deleted_at": null,
+      "user_created": null,
+      "user_updated": null,
+      "user_deleted": null,
+      "name": "USE_TLS",
+      "value": "False",
+      "is_active": true,
+      "type_config": "SMTP"
+    }
   }
-  ]
-  
+]

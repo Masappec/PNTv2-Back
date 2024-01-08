@@ -29,7 +29,13 @@ class PermissionRepositoryImpl(PermissionRepository):
     
     
     def get_permissions_by_user(self, user_id: int):
-        user = User.objects.get(pk=user_id).groups.all()
+        user = User.objects.get(pk=user_id)
+        
+        group = user.groups.all()
+        
+        if user.is_superuser:
+            return Permission.objects.all().exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session']).values('codename')
         
         
-        return Permission.objects.filter(group__in=user).exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session']).values('codename')
+        
+        return Permission.objects.filter(group__in=group).exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session']).values('codename')

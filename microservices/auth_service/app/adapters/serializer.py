@@ -1,4 +1,5 @@
-from rest_framework.serializers import ModelSerializer, Serializer, CharField, BooleanField, IntegerField, JSONField, ListField, PrimaryKeyRelatedField
+from rest_framework.serializers import ModelSerializer, Serializer, CharField, \
+    BooleanField, IntegerField, JSONField, ListField, PrimaryKeyRelatedField, EmailField
 from app.domain.models import User, Permission, Role
 
 
@@ -45,7 +46,7 @@ class RegisterSerializer(Serializer):
     
     first_name = CharField(max_length=255)
     last_name = CharField(max_length=255)
-    username = CharField(max_length=255)
+    username = EmailField(max_length=255)
     password = CharField(max_length=255)
     identification = CharField(max_length=255)
     phone = CharField(max_length=255)

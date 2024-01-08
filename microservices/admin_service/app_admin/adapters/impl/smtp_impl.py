@@ -11,9 +11,21 @@ import app_admin.utils.contants as constants
 class StmpImpl(SmtpRepository):
     
     
-    def send_email(self, email: Email, user_created: int):
-        email.user_created__id = user_created
-        email.save()
+    def send_email(self, to_email: str, subject: str, body: str,bcc:str, cc:str, reply_to:str,user_id:int):
+        email_from = self.get_config()[constants.KEY_USER_SMTP]
+        
+        return Email.objects.create(
+            from_email=email_from,
+            to_email=to_email,
+            subject=subject,
+            body=body,
+            bcc=bcc,
+            cc=cc,
+            reply_to=reply_to,
+            status=Email.STATUS_PENDING(),
+            user_created_id=user_id
+        )
+        
         
         
     
@@ -34,7 +46,7 @@ class StmpImpl(SmtpRepository):
                 subject=email.subject,
                 body=html_content,
                 from_email=email.from_email,
-                to=email.to,
+                to=[email.to_email],
                 bcc=email.bcc,
                 cc=email.cc,
                 attachments=attachments,
@@ -55,20 +67,22 @@ class StmpImpl(SmtpRepository):
     
     def send_email_with_template_and_context(self, email: Email, template: str, context: dict):
         try:
+            html_content = render_to_string(template, context)
+            email.body = html_content
             email.status = Email.STATUS_PENDING()
             email.save()
-            html_content = render_to_string(template, context)
             message = mail.EmailMessage(
                 subject=email.subject,
                 body=html_content,
                 from_email=email.from_email,
-                to=email.to,
+                to=[email.to_email],
                 bcc=email.bcc,
                 cc=email.cc,
                 reply_to=email.reply_to,
                 )
             
-            self.get_email_backend().send_messages([message])
+            backend = self.get_email_backend()
+            backend.send_messages([message])
             email.status = Email.STATUS_SENT()
             email.save()
             
@@ -79,36 +93,32 @@ class StmpImpl(SmtpRepository):
             raise e
     
     def setup(self, config: dict):
-        config_save = Configuration.objects.filter(active=True, type_config=constants.KEY_SMTP_CONFIG)
+        config_save = Configuration.objects.filter(is_active=True, type_config=constants.KEY_SMTP_CONFIG)
 
         user = config_save.filter(name=constants.KEY_USER_SMTP).first()
-        if 'user' in config:
-            user.value = config['user']
+        if constants.KEY_USER_SMTP in config:
+            user.value = config[constants.KEY_USER_SMTP]
             user.save()
             
-        if 'password' in config:
+        if constants.KEY_PASSWORD_SMTP in config:
             password = config_save.filter(name=constants.KEY_PASSWORD_SMTP).first()
-            password.value = config['password']
+            password.value = config[constants.KEY_PASSWORD_SMTP]
             password.save()
             
-        password = config_save.filter(name=constants.KEY_PASSWORD_SMTP).first()
-        if 'password' in config:
-            password.value = config['password']
-            password.save()
         host = config_save.filter(name=constants.KEY_HOST_SMTP).first()
-        if 'host' in config:
-            host.value = config['host']
+        if constants.KEY_HOST_SMTP in config:
+            host.value = config[constants.KEY_HOST_SMTP]
             host.save()
         port = config_save.filter(name=constants.KEY_PORT_SMTP).first()
         
-        if 'port' in config:
-            port.value = config['port']
+        if constants.KEY_PORT_SMTP in config:
+            port.value = config[constants.KEY_PORT_SMTP]
             port.save()
         
         use_tls = config_save.filter(name=constants.KEY_USE_TLS_SMTP).first()
         
-        if 'use_tls' in config:
-            use_tls.value = config['use_tls']
+        if constants.KEY_USE_TLS_SMTP in config:
+            use_tls.value = config[constants.KEY_USE_TLS_SMTP]
             use_tls.save()
         
         
@@ -118,7 +128,7 @@ class StmpImpl(SmtpRepository):
     
     def get_email_backend(self):
         try:
-            config = Configuration.objects.filter(active=True, type_config=constants.KEY_SMTP_CONFIG)
+            config = Configuration.objects.filter(is_active=True, type_config=constants.KEY_SMTP_CONFIG)
             
             user = config.filter(name=constants.KEY_USER_SMTP).first()
             password = config.filter(name=constants.KEY_PASSWORD_SMTP).first()
@@ -135,12 +145,16 @@ class StmpImpl(SmtpRepository):
                 timeout=25,
                 
             )
-        except Exception:
-            raise Exception('No existe configuracion de SMTP')
+        except Exception as e:
+            raise Exception('Error al obtener configuración de SMTP')
         
     def get_config(self):
-        config = Configuration.objects.filter(active=True, type_config=constants.KEY_SMTP_CONFIG)
+        config = Configuration.objects.filter(is_active=True, type_config=constants.KEY_SMTP_CONFIG)
         config_dict = {}
         for item in config:
             config_dict[item.name] = item.value
         return config_dict
+    
+    def get_config_list_obj(self):
+        config = Configuration.objects.filter(is_active=True, type_config=constants.KEY_SMTP_CONFIG)
+        return config

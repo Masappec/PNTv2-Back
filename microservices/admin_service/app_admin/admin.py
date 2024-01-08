@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app_admin.domain.models import FormFields, Establishment, UserEstablishment, LawEnforcement, AccessToInformation
+from app_admin.domain.models import FormFields, Establishment, UserEstablishment, LawEnforcement, AccessToInformation, Email,Configuration
 
 # Register your models here.
 
@@ -9,3 +9,5 @@ admin.site.register(Establishment)
 admin.site.register(UserEstablishment)
 admin.site.register(LawEnforcement)
 admin.site.register(AccessToInformation)
+admin.site.register(Email)
+admin.site.register(Configuration)

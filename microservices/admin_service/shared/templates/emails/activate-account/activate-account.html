@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperación de Contraseña</title>
+    <title>Activación de Cuenta</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,7 +26,6 @@
 
         h2 {
             color: #333;
-            margin-bottom: 20px;
         }
 
         p {
@@ -36,12 +34,8 @@
         }
 
         a {
-            color: white;
+            color: #007bff;
             text-decoration: none;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 4px;
-            display: inline-block;
         }
 
         a:hover {
@@ -51,15 +45,12 @@
 </head>
 <body>
     <div class="container">
-        <h2>Recuperación de Contraseña</h2>
-        <p>Hola {{ username }},</p>
-        <p>Recibes este correo porque has solicitado restablecer tu contraseña en nuestro sitio.</p>
-        <p>Por favor, haz clic en el siguiente enlace para completar el proceso de recuperación de contraseña:</p>
-        <p><a href="{{reset_password_url}}">Restablecer Contraseña</a></p>
-        <p>Si no has solicitado este restablecimiento, puedes ignorar este correo y tu contraseña permanecerá sin cambios.</p>
+        <h2>Activación de Cuenta</h2>
+        <p>Bienvenido a nuestro sitio. Para activar tu cuenta, por favor haz clic en el siguiente enlace:</p>
+        <p><a href="{{ activate_account_url }}">Activar Cuenta</a></p>
+        <p>Si no has solicitado esta activación, puedes ignorar este correo.</p>
         <p>Gracias,</p>
         <p>El equipo de nuestro sitio</p>
     </div>
 </body>
 </html>
-

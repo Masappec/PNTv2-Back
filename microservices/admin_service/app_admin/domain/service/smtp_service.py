@@ -11,8 +11,8 @@ class SmtpService:
         self.smtp_repository = smtp_repository
 
         
-    def send_email(self, email: Email):
-        return self.smtp_repository.send_email(email)
+    def send_email(self,  to_email: str, subject: str, body: str,bcc:str, cc:str, reply_to:str,user_id:int):
+        return self.smtp_repository.send_email( to_email, subject, body, bcc, cc, reply_to, user_id)
     
     def send_email_with_template(self, email: Email, template: str, user_created: str, attachments: list):
         return self.smtp_repository.send_email_with_template(email, template, user_created, attachments)
@@ -31,3 +31,6 @@ class SmtpService:
     
     def get_config(self):
         return self.smtp_repository.get_config()
+    
+    def get_config_list_obj(self):
+        return self.smtp_repository.get_config_list_obj()

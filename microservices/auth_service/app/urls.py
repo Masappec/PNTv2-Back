@@ -1,6 +1,6 @@
 from django.urls import path,include
 from app.application.views.user import UserListAPI, UserCreateAPI, UserUpdate,UserDeactivate, UserDetail
-from app.application.views.auth import LoginApiView, RegisterApiView
+from app.application.views.auth import LoginApiView, RegisterApiView, ActivateAccountApiView
 from app.application.views.permission import PermissionListAPI
 from app.application.views.role import RoleListAPI, RoleCreateAPI, RoleUpdateAPI, RoleDetailAPI,RoleDeleteAPI,RoleListAvaliable
 from rest_framework_simplejwt.views import  TokenRefreshView,TokenVerifyView
@@ -27,5 +27,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path(r'password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('activate/<uidb64>/<token>/', ActivateAccountApiView.as_view(), name='activate'),
 
 ]
