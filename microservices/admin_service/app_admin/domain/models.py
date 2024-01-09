@@ -1,6 +1,6 @@
 
 
-from django.db import models
+from django.db import connection, models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
@@ -157,6 +157,16 @@ class FrequentlyAskedQuestions(BaseModel):
     class Meta:
         verbose_name = 'Pregunta Frecuente'
         verbose_name_plural = 'Preguntas Frecuentes'
+
+    @staticmethod
+    def register_faq(question, answer, user):
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT admin_register_frequently_asked_questions(%s, %s, %s)",[
+                question, answer, user
+            ])
+
+            row = cursor.fetchone()
+            return row[0]
         
 
 
@@ -172,6 +182,16 @@ class TutorialVideo(BaseModel):
     class Meta:
         verbose_name = 'Video Tutorial'
         verbose_name_plural = 'Videos Tutoriales'
+
+    @staticmethod
+    def register_tutorialvideo(title, description, url, user):
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT admin_register_tutorial_video(%s, %s, %s, %s)", [
+                title, description, url, user
+            ])
+
+            row = cursor.fetchone()
+            return row[0]
         
     def __str__(self):
         return self.title
@@ -188,6 +208,16 @@ class NormativeDocument(BaseModel):
     class Meta:
         verbose_name = 'Documento Normativo'
         verbose_name_plural = 'Documentos Normativos'
+
+    @staticmethod
+    def register_normative_document(title, description, url, user):
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT admin_register_normative_document(%s, %s, %s, %s)", [
+                title, description, url, user
+            ])
+
+            row = cursor.fetchone()
+            return row[0]
         
     def __str__(self):
         return self.title
