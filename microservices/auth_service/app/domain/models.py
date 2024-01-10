@@ -36,27 +36,34 @@ class User(AbstractUser, BaseModel):
     def register_citizen_user(username, email, password, first_name, last_name, identification, phone,
                               city, race, disability, age_range, province, gender, accept_terms):
 
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT auth_register_citizen_user(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", [
-                username,
-                email,
-                password,
-                first_name,
-                last_name,
-                identification,
-                phone,
-                city,
-                race,
-                disability ,
-                age_range,
-                province,
-                gender,
-                accept_terms,
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT auth_register_citizen_user(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", [
+                    username,
+                    email,
+                    password,
+                    first_name,
+                    last_name,
+                    identification,
+                    phone,
+                    city,
+                    race,
+                    disability ,
+                    age_range,
+                    province,
+                    gender,
+                    accept_terms,
 
-            ])
+                ])
 
-            row = cursor.fetchone()
-            return row[0]
+                row = cursor.fetchone()
+                
+                return row[0]
+        except Exception as e:
+            print(e)
+            return None
+        finally:
+            cursor.close()
 
 
 class Person(models.Model):

@@ -20,7 +20,7 @@ def create_procedure_admin_register_tutorialvideo(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('app', '0015_create_function_admin_register_frequently_asked_questions'),
+        ('app_admin', '0015_create_function_admin_register_frequently_asked_questions'),
     ]
 
     operations = [

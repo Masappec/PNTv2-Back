@@ -20,7 +20,7 @@ def create_procedure_admin_register_frequently(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('app', '0014_accesstoinformation_user_created_and_more'),
+        ('app_admin', '0014_accesstoinformation_user_created_and_more'),
     ]
 
     operations = [
