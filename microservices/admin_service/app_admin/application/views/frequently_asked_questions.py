@@ -28,18 +28,31 @@ class FrequentlyAskedQuestionsView(APIView):
     def post(self, request):
         data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
+        try:
+            frequently_asked_questions = self.frequently_asked_questions_service.register_faq(data.data)
+            data_response = self.output_serializer_class(data=frequently_asked_questions)
+            data_response.is_valid(raise_exception=True)
+            res = MessageTransactional(
+                data={
+                    'message': 'Datos creados correctamente',
+                    'status': 201,
+                    'json': data_response.data
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=201)
+        except Exception as e:
+            print("Error:", str(e))
 
-        frequently_asked_questions = self.frequently_asked_questions_service.register_faq(data.data)
-        data_response = self.output_serializer_class(data=frequently_asked_questions)
-        data_response.is_valid(raise_exception=True)
-        res = MessageTransactional(
-            data={
-                'message': 'Datos creados correctamente',
-                'status': 201,
-                'json': data_response.data
-            }
-        )
-        res.is_valid(raise_exception=True)
-        return Response(res.data, status=201)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+
+            return Response(res.data, status=400)
 
 
