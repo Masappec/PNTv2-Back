@@ -30,6 +30,8 @@ services:
       - DB_PASSWORD=auth_password
       - CELERY_BROKER_URL=redis://redis_db:6379/0
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+      - FRONTEND_PASSWORD_CONFIRMATION_URL=http://44.221.168.184/auth/reset-password/:token
+      - FRONTEND_ACTIVATE_ACCOUNT_URL=http://44.221.168.184/auth/activate-account/:uidb64/:token
 
     networks:
       - pnt_network

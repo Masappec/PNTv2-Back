@@ -70,7 +70,6 @@ services:
     ports:
       - "5433:5432"
     environment:
-      DATABASE_HOST: 127.0.0.1
       POSTGRES_DB: auth_database
       POSTGRES_USER: auth_user
       POSTGRES_PASSWORD: auth_password
@@ -78,18 +77,6 @@ services:
     networks:
       - pnt_network
 
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=postgres
-      - PGADMIN_DEFAULT_EMAIL=admin@postgres.com
-      - PGADMIN_LISTEN_PORT=81
-    ports:
-      - 81:81
-    depends_on:
-      - db_auth
-    networks:
-      - pnt_network
 
 
 

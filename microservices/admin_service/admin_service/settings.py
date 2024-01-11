@@ -66,8 +66,8 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 
-FRONTEND_PASSWORD_CONFIRMATION_URL = 'http://localhost:5173/auth/reset-password/:token'
-FRONTEND_ACTIVATE_ACCOUNT_URL = 'http://localhost:5173/auth/activate-account/:uidb64/:token'
+FRONTEND_PASSWORD_CONFIRMATION_URL = os.getenv('FRONTEND_PASSWORD_CONFIRMATION_URL','http://localhost:5173/auth/reset-password/:token')
+FRONTEND_ACTIVATE_ACCOUNT_URL = os.getenv('FRONTEND_ACTIVATE_ACCOUNT_URL','http://localhost:5173/auth/activate-account/:uidb64/:token')
 
 TEMPLATES = [
     {
