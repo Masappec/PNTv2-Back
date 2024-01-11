@@ -1,4 +1,5 @@
 from django.db.models import ImageField
+from rest_framework.fields import ListField
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, JSONField, PrimaryKeyRelatedField
 from app_admin.domain.models import Configuration, Establishment, FormFields
 
@@ -49,7 +50,14 @@ class MessageTransactional(Serializer):
     message = CharField(max_length=255)
     status = IntegerField()
     json = JSONField()
-    
+
+class FrequentlyAskeeQuestionsSerializer(Serializer):
+    question = CharField(max_length=255)
+    answer = CharField(max_length=255)
+    user = IntegerField()
+
+class FrequentlyAskedQuestionsSerializerBody(Serializer):
+    faq = ListField(child=JSONField())
 
 class FormFieldsListSerializer(ModelSerializer):
     
