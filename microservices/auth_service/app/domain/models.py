@@ -11,6 +11,7 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(null=True, blank=True)
+    ip = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         abstract = True

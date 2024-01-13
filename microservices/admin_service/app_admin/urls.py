@@ -3,7 +3,8 @@ from app_admin.application.views.establishment import EstablishmentListAPI, Esta
     EstablishmentCreateAPI, EstablismentUpdate, EstablishmentDeactive
 from app_admin.application.views.form_fields import FormField
 from app_admin.application.views.smtp import SMTPGET,SMTPUPDATE
-
+from app_admin.application.views.frequently_asked_questions import FrequentlyAskedQuestionsView
+from app_admin.application.views.pedagogy_area import PedagogyAreaCreateView, PedagogyAreaView
 urlpatterns = [
 
     path('establishment/list', EstablishmentListAPI.as_view(), name='establishment-list'),
@@ -18,4 +19,8 @@ urlpatterns = [
     
     path('smtp/', SMTPGET.as_view(), name='smtp'),
     path('smtp/update', SMTPUPDATE.as_view(), name='smtp-update'),
+    
+    path('pedagogy-area/create', PedagogyAreaCreateView.as_view(), name='pedagogy-area-create'),
+    path('pedagogy-area/view', PedagogyAreaView.as_view(), name='pedagogy-area-list'),
+    
 ]
