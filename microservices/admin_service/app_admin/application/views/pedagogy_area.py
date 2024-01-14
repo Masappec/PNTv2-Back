@@ -49,6 +49,8 @@ class PedagogyAreaCreateView(APIView):
 
             pedagogy_area = self.service.create(
                 faq, tutorial, normative, user_id)
+            
+            
 
             output_serializer = self.output_serializer_class(pedagogy_area)
             
