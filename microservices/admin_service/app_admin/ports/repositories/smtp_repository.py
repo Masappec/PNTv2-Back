@@ -6,7 +6,7 @@ from django.core.mail.backends.smtp import EmailBackend
 
 class SmtpRepository(ABC):
     @abstractmethod
-    def send_email(self, email: Email) -> Email:
+    def send_email(self, to_email: str, subject: str, body: str,bcc:str, cc:str, reply_to:str,user_id:int) -> Email:
         pass
     
     
@@ -25,4 +25,10 @@ class SmtpRepository(ABC):
     
     
     def get_email_backend(self) -> EmailBackend:
+        pass
+    
+    def get_config(self) -> list:
+        pass
+    
+    def get_config_list_obj(self) -> list:
         pass

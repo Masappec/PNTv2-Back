@@ -64,10 +64,15 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
 ]
+
+
+FRONTEND_PASSWORD_CONFIRMATION_URL = os.getenv('FRONTEND_PASSWORD_CONFIRMATION_URL','http://localhost:5173/auth/reset-password/:token')
+FRONTEND_ACTIVATE_ACCOUNT_URL = os.getenv('FRONTEND_ACTIVATE_ACCOUNT_URL','http://localhost:5173/auth/activate-account/:uidb64/:token')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,7 +122,7 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
     
 }
-
+CELERY_IMPORTS = ('shared.tasks.user_task','shared.tasks.auth_task')
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
