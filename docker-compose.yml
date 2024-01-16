@@ -101,6 +101,5 @@ volumes:
 
 networks:
   pnt_network:
-    external: true
-    name: pnt_network
+    driver: bridge
 
