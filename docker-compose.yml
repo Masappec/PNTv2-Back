@@ -101,5 +101,4 @@ volumes:
 
 networks:
   pnt_network:
-    external: true
 
