@@ -101,4 +101,6 @@ volumes:
 
 networks:
   pnt_network:
+    external:
+      name: pnt_network
 
