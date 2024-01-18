@@ -62,7 +62,7 @@ services:
 
   entity_microservice:
     build:
-      context: ./microservices/entity_service
+      context: ./microservices/entities_service
       dockerfile: Dockerfile
     ports:
       - "8002"
@@ -70,7 +70,7 @@ services:
       - db_auth
       - redis_db
     volumes:
-      - ./microservices/entity_service:/app
+      - ./microservices/entities_service:/app
     
     networks:
       - pnt_network
