@@ -39,6 +39,30 @@ services:
 
   
 
+  entity_microservice:
+    build:
+      context: ./microservices/entities_service
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8002:8000"
+    depends_on:
+      - db_auth
+      - auth_microservice
+      - redis_db
+    volumes:
+      - ./microservices/entities_service:/app
+
+    environment:
+      - DB_HOST=db_auth
+      - DB_NAME=auth_database
+      - DB_USER=auth_user
+      - DB_PASSWORD=auth_password
+      - CELERY_BROKER_URL=redis://redis_db:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+
+    networks:
+      - pnt_network
+
 
   admin_microservice:
     build:

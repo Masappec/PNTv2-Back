@@ -60,6 +60,23 @@ services:
       - pnt_network
 
 
+  entity_microservice:
+    build:
+      context: ./microservices/entity_service
+      dockerfile: Dockerfile
+    ports:
+      - "8002"
+    depends_on:
+      - db_auth
+      - redis_db
+    volumes:
+      - ./microservices/entity_service:/app
+    
+    networks:
+      - pnt_network
+    
+
+
  
       
 
