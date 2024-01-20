@@ -10,6 +10,9 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
     def get_all_establishments(self):
         return Establishment.objects.all()
     
+    def get_public_establishment(self):
+        return Establishment.objects.filter(is_active=True)
+    
     def get_establishment_by_abbr(self, abbreviation: str):
         return Establishment.objects.get(abbreviation=abbreviation)
     

@@ -20,7 +20,6 @@ class EstablishmentListAPI(ListAPIView):
     
     pagination_class = StandardResultsSetPagination
     serializer_class = EstablishmentListSerializer
-    
 
     def __init__(self):
         """
@@ -54,7 +53,7 @@ class EstablishmentListAPI(ListAPIView):
         queryset = self.get_queryset()
         search = request.query_params.get('search', None)
         if search is not None:
-            queryset = queryset.filter(Q(username__icontains=search) | Q(email__icontains=search))
+            queryset = queryset.filter(Q(name__icontains=search) | Q(abbreviation__icontains=search))
         
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -64,6 +63,11 @@ class EstablishmentListAPI(ListAPIView):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
     
+    
+
+
+
+
 class EstablishmentCreateAPI(APIView):
     """
         Endpoint para crear Entidad.

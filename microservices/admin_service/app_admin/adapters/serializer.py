@@ -5,10 +5,15 @@ from app_admin.domain.models import Configuration, Establishment, FormFields, Fr
 
 
 class EstablishmentListSerializer(ModelSerializer):
-
+    
     class Meta:
         model = Establishment
         fields = '__all__'
+        
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['logo'] = instance.logo.url
+        return representation
 
 
 class EstablishmentCreateSerializer(Serializer):

@@ -14,10 +14,13 @@ class StandardResultsSetPagination(PageNumberPagination):
     
     def get_paginated_response(self, data):
         return Response({
-            'total': self.page.paginator.count,
+            'total': self.page.paginator.object_list.count(),
             'limit': self.page.paginator.per_page,
             'results': data,
             'current': self.page.number,
             'next': self.page.next_page_number() if self.page.has_next() else None,
             'previous': self.page.previous_page_number() if self.page.has_previous() else None,
+            'total_pages': self.page.paginator.num_pages,
+            'from' : self.page.start_index(),
+            'to' : self.page.end_index(),
         })

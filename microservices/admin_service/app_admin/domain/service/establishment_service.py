@@ -20,6 +20,9 @@ class EstablishmentService:
     def get_establishment(self, establishment_id: int):
         return self.establishment_repository.get_establishment(establishment_id)
     
+    def get_public_establishment(self):
+        return self.establishment_repository.get_public_establishment()
+    
     def get_establishments(self):
         return self.establishment_repository.get_all_establishments()
     

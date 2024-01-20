@@ -9,24 +9,28 @@ class Publication(BaseModel):
     is_active = models.BooleanField(default=True, null=True, blank=True)
     tag = models.ManyToManyField('Tag', blank=True, related_name='publication_tag')
     establishment = models.ForeignKey('EstablishmentExtended', on_delete=models.CASCADE, null=True, blank=True, related_name='publication_establishment')
+    type_publication = models.ForeignKey('TypePublication', on_delete=models.CASCADE, null=True, blank=True, related_name='publication_type_publication')
+    file_publication = models.ManyToManyField('FilePublication', blank=True, related_name='publication_file_publication')
+    objects = models.Manager()
     
-
+    
 
 class FilePublication(BaseModel):
     
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     url_download = models.FileField(upload_to='publications/', null=True, blank=True)
-    publication = models.ForeignKey('Publication', on_delete=models.CASCADE, null=True, blank=True, related_name='file_publication_publication')
     is_active = models.BooleanField(default=True, null=True, blank=True)
-    
+
+    objects = models.Manager()
 
 class TypePublication(BaseModel):
     
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    publication = models.ForeignKey('Publication', on_delete=models.CASCADE, null=True, blank=True, related_name='type_publication_publication')
     is_active = models.BooleanField(default=True, null=True, blank=True)
+    
+    objects = models.Manager()
     
     
 class Tag(BaseModel):
@@ -35,5 +39,6 @@ class Tag(BaseModel):
     description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(default=True, null=True, blank=True)
     
+    objects = models.Manager()
 
     
