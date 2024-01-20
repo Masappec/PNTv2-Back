@@ -35,7 +35,6 @@ class TypeFormatsSerializer(serializers.ModelSerializer):
                 'id',
                 'name',
                 'description',
-                'url_download',
             )
 class PublicationPublicSerializer(serializers.Serializer):
     """Publication serializer."""
@@ -51,7 +50,7 @@ class PublicationPublicSerializer(serializers.Serializer):
     created_at = serializers.DateTimeField()
     updated_at = serializers.DateTimeField()
     deleted_at = serializers.DateTimeField()
-    user_created = serializers.CharField(source='user_created.username', read_only=True, required=False, allow_null=True)
+    user_created = serializers.SerializerMethodField(method_name='get_user_created')
     user_updated = serializers.CharField(source='user_updated.username', read_only=True, required=False, allow_null=True)
     user_deleted = serializers.CharField(source='user_deleted.username', read_only=True, required=False, allow_null=True)
     class Meta:
@@ -70,3 +69,8 @@ class PublicationPublicSerializer(serializers.Serializer):
         
             
         return representation
+    
+    def get_user_created(self, obj):
+        if obj.user_created is None:
+            return ''
+        return obj.user_created.first_name + ' ' + obj.user_created.last_name

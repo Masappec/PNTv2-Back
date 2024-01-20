@@ -85,6 +85,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'entities_service.wsgi.application'
+ROOT_URLCONF = 'entities_service.urls'
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',
+]
 
 
 

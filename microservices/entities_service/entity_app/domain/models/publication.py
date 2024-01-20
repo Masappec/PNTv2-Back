@@ -36,6 +36,7 @@ class TypePublication(BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(default=True, null=True, blank=True)
+    code = models.CharField(max_length=255, null=True, blank=True)
     
     objects = models.Manager()
     

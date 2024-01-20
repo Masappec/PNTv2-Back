@@ -15,8 +15,8 @@ class PublicationImpl(PublicationRepository):
         return publication.to_dict()
     
     
-    def get_publications(self):
+    def get_publications_transparency_active(self):
         
-        publications = Publication.objects.filter(is_active=True)
+        publications = Publication.objects.filter(is_active=True).filter(type_publication__code='TA')
         
         return publications
