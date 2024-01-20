@@ -1,48 +1,72 @@
 from rest_framework import serializers
 
+from entity_app.domain.models.publication import Publication,Tag, FilePublication
+from entity_app.domain.models.type_formats import TypeFormats
 
+
+class TagSerializer(serializers.ModelSerializer):
+    """Tag serializer."""
+    class Meta:
+        """Meta class."""
+        model = Tag
+        fields = (
+            'id',
+            'name',
+            'description',
+        )
+
+
+class FilePublicationSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = FilePublication
+        fields = (
+            'id',
+            'name',
+            'description',
+            'url_download',
+        )
+        
+class TypeFormatsSerializer(serializers.ModelSerializer):
+        
+        class Meta:
+            model = TypeFormats
+            fields = (
+                'id',
+                'name',
+                'description',
+                'url_download',
+            )
 class PublicationPublicSerializer(serializers.Serializer):
     """Publication serializer."""
     id = serializers.IntegerField()
     name = serializers.CharField()
     description = serializers.CharField()
     is_active = serializers.BooleanField()
-    establishment = serializers.IntegerField()
-    type_publication = serializers.IntegerField()
-    tag = serializers.ListField()
-    type_format = serializers.ListField()
-    file_publication = serializers.ListField()
+    establishment = serializers.IntegerField(source='establishment.id')
+    type_publication = serializers.CharField(source='type_publication.name')
+    tag = TagSerializer(many=True)
+    type_format = TypeFormatsSerializer(many=True)
+    file_publication = FilePublicationSerializer(many=True)
     created_at = serializers.DateTimeField()
     updated_at = serializers.DateTimeField()
     deleted_at = serializers.DateTimeField()
-    created_by = serializers.IntegerField()
-    updated_by = serializers.IntegerField()
-    deleted_by = serializers.IntegerField()
+    user_created = serializers.CharField(source='user_created.username', read_only=True, required=False, allow_null=True)
+    user_updated = serializers.CharField(source='user_updated.username', read_only=True, required=False, allow_null=True)
+    user_deleted = serializers.CharField(source='user_deleted.username', read_only=True, required=False, allow_null=True)
     class Meta:
         """Meta class."""
-        fields = (
-            'id',
-            'name',
-            'description',
-            'is_active',
-            'establishment',
-            'type_publication',
-            'tag',
-            'type_format',
-            'file_publication',
-            'created_at',
-            'updated_at',
-            'deleted_at',
-            'created_by',
-            'updated_by',
-            'deleted_by',
-        )
-        read_only_fields = (
-            'id',
-            'created_at',
-            'updated_at',
-            'deleted_at',
-            'created_by',
-            'updated_by',
-            'deleted_by',
-        )
+        fields = '__all__'
+        
+    
+    def to_representation(self, instance):
+        """To representation."""
+        representation = super().to_representation(instance)
+        for x, i in enumerate(instance.file_publication.all()):
+            url_download = i.url_download.url
+            
+            representation['file_publication'][x]['url_download'] = url_download
+        
+        
+            
+        return representation

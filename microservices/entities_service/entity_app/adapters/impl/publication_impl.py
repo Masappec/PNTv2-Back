@@ -19,4 +19,4 @@ class PublicationImpl(PublicationRepository):
         
         publications = Publication.objects.filter(is_active=True)
         
-        return [publication.to_dict() for publication in publications]
+        return publications

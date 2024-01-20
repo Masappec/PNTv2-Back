@@ -13,7 +13,9 @@ class Publication(BaseModel):
     file_publication = models.ManyToManyField('FilePublication', blank=True, related_name='publication_file_publication')
     objects = models.Manager()
     
-    
+    class Meta:
+        verbose_name = 'Publicación'
+        verbose_name_plural = 'Publicaciones'
 
 class FilePublication(BaseModel):
     
@@ -23,7 +25,12 @@ class FilePublication(BaseModel):
     is_active = models.BooleanField(default=True, null=True, blank=True)
 
     objects = models.Manager()
+    
+    class Meta:
+        verbose_name = 'Archivo Publicación'
+        verbose_name_plural = 'Archivo Publicaciones'
 
+    
 class TypePublication(BaseModel):
     
     name = models.CharField(max_length=255, null=True, blank=True)
@@ -31,6 +38,10 @@ class TypePublication(BaseModel):
     is_active = models.BooleanField(default=True, null=True, blank=True)
     
     objects = models.Manager()
+    
+    class Meta:
+        verbose_name = 'Tipo de Publicación'
+        verbose_name_plural = 'Tipos de Publicaciones'
     
     
 class Tag(BaseModel):
@@ -40,5 +51,9 @@ class Tag(BaseModel):
     is_active = models.BooleanField(default=True, null=True, blank=True)
     
     objects = models.Manager()
+    
+    class Meta:
+        verbose_name = 'Etiqueta'
+        verbose_name_plural = 'Etiquetas'
 
     

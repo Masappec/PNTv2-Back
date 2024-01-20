@@ -14,7 +14,7 @@ class StandardResultsSetPagination(PageNumberPagination):
     
     def get_paginated_response(self, data):
         return Response({
-            'total': self.page.paginator.object_list.count(),
+            'total': self.page.paginator.object_list.count() if self.page.paginator.object_list else 0,
             'limit': self.page.paginator.per_page,
             'results': data,
             'current': self.page.number,

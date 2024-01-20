@@ -7,12 +7,14 @@ from entity_app.domain.services.publication_service import PublicationService
 from entity_app.utils.pagination import StandardResultsSetPagination
 from django.db.models import Q
 from rest_framework.response import Response
+from entity_app.adapters.serializers import PublicationPublicSerializer
 
 
 class PublicationPublicView(ListAPIView):
     """Publication view."""
     
     permission_classes = []
+    serializer_class = PublicationPublicSerializer
     
     pagination_class = StandardResultsSetPagination
     def __init__(self, **kwargs: Any):
