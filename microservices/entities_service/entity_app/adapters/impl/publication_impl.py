@@ -1,6 +1,7 @@
 from entity_app.ports.repositories.publication_repository import PublicationRepository
 from entity_app.domain.models import Publication
-
+from entity_app.domain.models.establishment import UserEstablishmentExtended
+from django.contrib.auth.models import User
 class PublicationImpl(PublicationRepository):
     
     def inactivate_publication(self, publication_id: int):
@@ -23,3 +24,17 @@ class PublicationImpl(PublicationRepository):
     
     def get_publications(self):
         publications = Publication.objects.all()
+        
+        
+    def get_publications_by_user_id(self, user_id: int):
+        
+        user = User.objects.get(id=user_id)
+        if user.is_superuser:
+            publications = Publication.objects.all()
+            return publications
+        
+        establishment = UserEstablishmentExtended.objects.get(user_id=user_id)
+        
+        publications = Publication.objects.filter(establishment=establishment)
+        
+        return publications

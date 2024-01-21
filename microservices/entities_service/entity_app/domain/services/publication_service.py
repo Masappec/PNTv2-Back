@@ -2,7 +2,7 @@
 
 
 from entity_app.ports.repositories.publication_repository import PublicationRepository
-
+from django.core.exceptions import ObjectDoesNotExist
 
 class PublicationService:
     
@@ -28,3 +28,12 @@ class PublicationService:
     
     def get_publications(self):
          return self.publication_repository.get_publications()
+     
+    
+    
+    def get_publications_by_user_id(self, user_id: int):
+        try:
+            return self.publication_repository.get_publications_by_user_id(user_id)
+        
+        except ObjectDoesNotExist:
+            raise Exception('El usuario no tiene establecimiento')

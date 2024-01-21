@@ -3,7 +3,6 @@ from rest_framework import serializers
 from entity_app.domain.models.publication import Publication,Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
 
-
 class TagSerializer(serializers.ModelSerializer):
     """Tag serializer."""
     class Meta:
@@ -75,3 +74,8 @@ class PublicationPublicSerializer(serializers.Serializer):
         if obj.user_created is None:
             return ''
         return obj.user_created.first_name + ' ' + obj.user_created.last_name
+    
+class MessageTransactional(serializers.Serializer):
+    message = serializers.CharField(max_length=1000)
+    status = serializers.IntegerField()
+    json = serializers.JSONField()

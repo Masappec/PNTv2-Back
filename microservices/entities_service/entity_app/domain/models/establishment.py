@@ -1,5 +1,7 @@
 from django.db import models
 
+from entity_app.domain.models.base_model import BaseModel
+
 
 class EstablishmentManager(models.Manager):
     def get_queryset(self):
@@ -24,3 +26,19 @@ class EstablishmentExtended(models.Model):
         managed = False
         db_table = 'app_admin_establishment'
 
+
+
+class UserEstablishmentExtended(BaseModel):
+    user = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True)
+    establishment = models.ForeignKey(
+        'EstablishmentExtended', on_delete=models.CASCADE, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
+
+    class Meta:
+        managed = False
+        db_table = 'app_admin_userestablishment'
+        unique_together = (('user', 'establishment'),)
+        
