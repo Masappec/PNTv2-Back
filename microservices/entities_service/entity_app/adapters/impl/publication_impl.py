@@ -12,7 +12,7 @@ class PublicationImpl(PublicationRepository):
         
         publication = Publication.objects.get(id=publication_id)
         
-        return publication.to_dict()
+        return publication
     
     
     def get_publications_transparency_active(self):

@@ -51,6 +51,7 @@ class PublicationPublicSerializer(serializers.Serializer):
     updated_at = serializers.DateTimeField()
     deleted_at = serializers.DateTimeField()
     user_created = serializers.SerializerMethodField(method_name='get_user_created')
+    email_created = serializers.CharField(source='user_created.email', read_only=True, required=False, allow_null=True)
     user_updated = serializers.CharField(source='user_updated.username', read_only=True, required=False, allow_null=True)
     user_deleted = serializers.CharField(source='user_deleted.username', read_only=True, required=False, allow_null=True)
     class Meta:
