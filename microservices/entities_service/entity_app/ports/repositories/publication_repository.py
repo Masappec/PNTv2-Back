@@ -26,3 +26,7 @@ class PublicationRepository(ABC):
     @abstractmethod
     def get_publications_by_user_id(self, user_id: int) -> dict:
         pass
+    
+    @abstractmethod
+    def get_publication_by_slug(self, slug: str) -> dict:
+        pass

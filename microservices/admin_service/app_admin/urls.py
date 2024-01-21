@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('public/form-fields/', FormField.as_view(), name='form-fields'),
     path('public/establishment/list',EstablishmentPublicList.as_view(), name='establishment-public-list'),
-    path('public/establishment/<pk>',EstablishmentPublicDetail.as_view(), name='establishment-public-detail'),
+    path('public/establishment/<slug>',EstablishmentPublicDetail.as_view(), name='establishment-public-detail'),
     path('public/pedagogy-area/', PedagogyAreaPublicView.as_view(), name='pedagogy-area-public-view'),
     
     

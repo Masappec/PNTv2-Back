@@ -93,7 +93,7 @@ class EstablishmentPublicDetail(APIView):
         self.law_enforcement = LawEnforcementService(LawEnforcementImpl())
 
 
-    def get(self, request, pk, *args, **kwargs):
+    def get(self, request, slug, *args, **kwargs):
         """
         Get a establishment.
 
@@ -108,9 +108,9 @@ class EstablishmentPublicDetail(APIView):
         
         try:
 
-            establishment = self.establishment_service.get_establishment(pk)
-            info = self.establishment_service.get_first_access_to_information(pk)
-            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(pk)
+            establishment = self.establishment_service.get_establishment_by_slug(slug)
+            info = self.establishment_service.get_first_access_to_information(establishment.id)
+            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(establishment.id)
             print("law_enforcemen t", law_enforcement)
             serializer = self.serializer_class(data={
                 'id': establishment.id,

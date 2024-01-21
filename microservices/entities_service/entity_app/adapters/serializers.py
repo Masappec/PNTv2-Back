@@ -42,6 +42,7 @@ class PublicationPublicSerializer(serializers.Serializer):
     description = serializers.CharField()
     is_active = serializers.BooleanField()
     establishment = serializers.IntegerField(source='establishment.id')
+    establishment_name = serializers.CharField(source='establishment.name')
     type_publication = serializers.CharField(source='type_publication.name')
     tag = TagSerializer(many=True)
     type_format = TypeFormatsSerializer(many=True)
@@ -53,6 +54,7 @@ class PublicationPublicSerializer(serializers.Serializer):
     email_created = serializers.CharField(source='user_created.email', read_only=True, required=False, allow_null=True)
     user_updated = serializers.CharField(source='user_updated.username', read_only=True, required=False, allow_null=True)
     user_deleted = serializers.CharField(source='user_deleted.username', read_only=True, required=False, allow_null=True)
+    slug = serializers.SlugField(allow_blank=True, allow_unicode=True,allow_null=True)
     class Meta:
         """Meta class."""
         fields = '__all__'

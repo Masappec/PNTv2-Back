@@ -1,5 +1,7 @@
 
 from django.db import models
+
+from app_admin.utils.function import unique_slug_generator
 from .base_model import BaseModel
 
 
@@ -31,10 +33,18 @@ class Establishment(BaseModel):
     is_active = models.BooleanField(default=True)
 
     objects = models.Manager()
+    
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
 
     class Meta:
         verbose_name = 'Institución'
         verbose_name_plural = 'Instituciones'
+        
+        
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slug_generator(self)
+        super(Establishment, self).save(*args, **kwargs)
 
     # generate code secuence
 

@@ -10,7 +10,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from entity_app.adapters.serializers import PublicationPublicSerializer
 from entity_app.utils.permissions import IsPublicPublication
-
+from entity_app.adapters.serializers import MessageTransactional
 
 class PublicationPublicView(ListAPIView):
     """Publication view."""
@@ -69,7 +69,7 @@ class PublicationDetail(APIView):
         self.sevice = PublicationService(PublicationImpl())
         
         
-    def get(self, request, pk):
+    def get(self, request, slug):
         """Get a user by id.
         
         Args:
@@ -79,7 +79,22 @@ class PublicationDetail(APIView):
         Returns:
             object: The response object.
         """
-        publication = self.sevice.get_publication(pk)
-        serializer = PublicationPublicSerializer(publication)
-        return Response(serializer.data)
-        
+        try:
+            publication = self.sevice.get_publication_by_slug(slug)
+            serializer = PublicationPublicSerializer(publication)
+            return Response(serializer.data)
+        except Exception as e:
+            res = MessageTransactional(
+                data={
+                    'message': e.__str__(),
+                    'status': 400,
+                    'json':{} 
+                }
+            )
+            
+            res.is_valid()
+            
+            if res.errors:
+                return Response(res.errors, status=400)
+            
+            return Response(res.data, status=400)

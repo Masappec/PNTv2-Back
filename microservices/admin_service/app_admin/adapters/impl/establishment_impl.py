@@ -139,3 +139,6 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         establishment.deleted_at = datetime.now()
         establishment.save()
         return establishment
+    
+    def get_establishment_by_slug(self, slug: str):
+        return Establishment.objects.get(slug=slug)

@@ -96,3 +96,6 @@ class EstablishmentRepository(ABC):
     
     
     
+    @abstractmethod
+    def get_establishment_by_slug(self, slug: str):
+        pass

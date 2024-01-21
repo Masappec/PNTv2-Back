@@ -97,3 +97,10 @@ class EstablishmentService:
             return self.establishment_repository.activa_or_deactivate_establishment(establishment_id)
         except ObjectDoesNotExist:
             raise ValueError("Instiución no existe")
+        
+    
+    def get_establishment_by_slug(self, slug: str):
+        try:
+            return self.establishment_repository.get_establishment_by_slug(slug)
+        except ObjectDoesNotExist:
+            raise ValueError("Instiución no existe")

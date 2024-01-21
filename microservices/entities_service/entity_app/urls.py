@@ -6,7 +6,7 @@ from entity_app.application.views.publication import PublicationsView
 urlpatterns = [
 
     path('public/transparency/active/list', PublicationPublicView.as_view(), name='publication-list'),
-    path('public/transparency/active/detail/<int:pk>', PublicationDetail.as_view(), name='publication-detail'),
+    path('public/transparency/active/detail/<slug>', PublicationDetail.as_view(), name='publication-detail'),
 
     path('publications/list', PublicationsView.as_view(), name='publications-all'),
 ]

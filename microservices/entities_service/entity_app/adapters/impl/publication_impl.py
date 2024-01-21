@@ -38,3 +38,10 @@ class PublicationImpl(PublicationRepository):
         publications = Publication.objects.filter(establishment=establishment)
         
         return publications
+    
+
+    def get_publication_by_slug(self, slug: str):
+        
+        publication = Publication.objects.get(slug=slug)
+        
+        return publication

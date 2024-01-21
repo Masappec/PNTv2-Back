@@ -37,3 +37,11 @@ class PublicationService:
         
         except ObjectDoesNotExist:
             raise Exception('El usuario no tiene establecimiento')
+        
+        
+    def get_publication_by_slug(self, slug: str):
+        try:
+            return self.publication_repository.get_publication_by_slug(slug)
+        
+        except ObjectDoesNotExist:
+            raise Exception('La publicacion no existe')

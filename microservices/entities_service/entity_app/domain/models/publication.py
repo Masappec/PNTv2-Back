@@ -1,4 +1,6 @@
 from django.db import models
+
+from entity_app.utils.functions import unique_slug_generator
 from .base_model import BaseModel
 
 class Publication(BaseModel):
@@ -11,7 +13,17 @@ class Publication(BaseModel):
     establishment = models.ForeignKey('EstablishmentExtended', on_delete=models.CASCADE, null=True, blank=True, related_name='publication_establishment')
     type_publication = models.ForeignKey('TypePublication', on_delete=models.CASCADE, null=True, blank=True, related_name='publication_type_publication')
     file_publication = models.ManyToManyField('FilePublication', blank=True, related_name='publication_file_publication')
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True, editable=False, db_index=True)
+    
     objects = models.Manager()
+    
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slug_generator(self)
+        super(Publication, self).save(*args, **kwargs)
+
+ 
     
     class Meta:
         verbose_name = 'Publicación'
