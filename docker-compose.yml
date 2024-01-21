@@ -65,7 +65,7 @@ services:
       context: ./microservices/entities_service
       dockerfile: Dockerfile
     ports:
-      - "8002"
+      - "8000"
     depends_on:
       - db_auth
       - redis_db
