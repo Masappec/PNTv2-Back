@@ -74,7 +74,13 @@ services:
     
     networks:
       - pnt_network
-    
+    environment:
+      - DB_HOST=db_auth
+      - DB_NAME=auth_database
+      - DB_USER=auth_user
+      - DB_PASSWORD=auth_password
+      - CELERY_BROKER_URL=redis://redis_db:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
 
 
  
