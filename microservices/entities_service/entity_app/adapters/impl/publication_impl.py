@@ -20,3 +20,6 @@ class PublicationImpl(PublicationRepository):
         publications = Publication.objects.filter(is_active=True).filter(type_publication__code='TA')
         
         return publications
+    
+    def get_publications(self):
+        publications = Publication.objects.all()

@@ -17,3 +17,7 @@ class PublicationRepository(ABC):
     @abstractmethod
     def get_publications_transparency_active(self) -> dict:
         pass
+
+    @abstractmethod
+    def get_publications(self) -> dict:
+        pass

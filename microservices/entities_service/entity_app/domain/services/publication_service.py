@@ -25,3 +25,6 @@ class PublicationService:
     def get_publications_transparency_active(self):
             
         return self.publication_repository.get_publications_transparency_active()
+    
+    def get_publications(self):
+         return self.publication_repository.get_publications()
