@@ -1,5 +1,5 @@
 from entity_app.ports.repositories.publication_repository import PublicationRepository
-from entity_app.domain.models import Publication
+from entity_app.domain.models import Publication, Tag, FilePublication
 from entity_app.domain.models.establishment import UserEstablishmentExtended
 from django.contrib.auth.models import User
 class PublicationImpl(PublicationRepository):
@@ -45,3 +45,35 @@ class PublicationImpl(PublicationRepository):
         publication = Publication.objects.get(slug=slug)
         
         return publication
+    
+    def create_publication(self, publicacion: dict):
+
+        tags_instancias = Tag.object.filter(id__in=publicacion['group_dataset'])
+        file_instancias = FilePublication.objects.filter(id_in=publicacion['file_publication'])
+
+        nueva_publicacion = Publication.objects.create(
+            name=publicacion['name'],
+            description=publicacion['description'],
+            type_publication=publicacion['type_publication'],
+            notes=publicacion['notes'],
+            created_at=publicacion['created_at']
+        )
+        nueva_publicacion.tags.set(tags_instancias)
+        nueva_publicacion.file_publication.set(file_instancias)
+
+        nueva_publicacion.save()
+
+    def update_publication(self, publication_id: int, publicacion: dict):
+
+        tags_instancias = Tag.object.filter(id__in=publicacion['group_dataset'])
+        file_instancias = FilePublication.objects.filter(id_in=publicacion['file_publication'])
+
+        publicacion = Publication.objects.filter(id=publication_id)
+        publicacion.update(
+            name=publicacion['name'],
+            description=publicacion['description'],
+            Tag=tags_instancias,
+            FilePublication=file_instancias
+        )
+
+        return publicacion.first()

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from rest_framework.fields import ListField
 from entity_app.domain.models.publication import Publication,Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
 
@@ -39,6 +39,31 @@ class TypeFormatsSerializer(serializers.ModelSerializer):
                 'name',
                 'description',
             )
+
+class PublicationCreateSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    description = serializers.CharField()
+    group_dataset = serializers.ListField(child=serializers.DictField(child=serializers.IntegerField()))
+    file_publication = serializers.ListField(child=serializers.DictField(child=serializers.IntegerField()))
+    type_publication = serializers.CharField(source='type_publication.name')
+    notes = serializers.CharField()
+    created_at = serializers.DateTimeField()
+    user_created = serializers.SerializerMethodField(method_name='get_user_created')
+
+    def get_user_created(self, obj):
+        if obj.user_created is None:
+            return ''
+        return obj.user_created.first_name + ' ' + obj.user_created.last_name
+
+class PublicationUpdateSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    description = serializers.CharField()
+    group_dataset = serializers.ListField(child=serializers.DictField(child=serializers.IntegerField()))
+    file_publication = serializers.ListField(child=serializers.DictField(child=serializers.IntegerField()))
+    updated_at = serializers.DateTimeField()
+    user_updated = serializers.CharField(source='user_updated.username', read_only=True, required=False, allow_null=True)
+
+
 class PublicationPublicSerializer(serializers.Serializer):
     """Publication serializer."""
     id = serializers.IntegerField()
@@ -61,9 +86,9 @@ class PublicationPublicSerializer(serializers.Serializer):
     slug = serializers.SlugField(allow_blank=True, allow_unicode=True,allow_null=True)
     class Meta:
         """Meta class."""
+        model : 'Publication'
         fields = '__all__'
         
-    
     def to_representation(self, instance):
         """To representation."""
         representation = super().to_representation(instance)
@@ -72,15 +97,14 @@ class PublicationPublicSerializer(serializers.Serializer):
             
             representation['file_publication'][x]['url_download'] = url_download
         
-        
-            
         return representation
     
     def get_user_created(self, obj):
         if obj.user_created is None:
             return ''
         return obj.user_created.first_name + ' ' + obj.user_created.last_name
-    
+
+
 class MessageTransactional(serializers.Serializer):
     message = serializers.CharField(max_length=1000)
     status = serializers.IntegerField()
