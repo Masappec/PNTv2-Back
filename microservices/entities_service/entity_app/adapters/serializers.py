@@ -13,6 +13,8 @@ class TagSerializer(serializers.ModelSerializer):
             'name',
             'description',
         )
+        
+        read_only_fields = ('id','description')
 
 
 class FilePublicationSerializer(serializers.ModelSerializer):
@@ -25,6 +27,8 @@ class FilePublicationSerializer(serializers.ModelSerializer):
             'description',
             'url_download',
         )
+        
+        read_only_fields = ('id', 'url_download')
         
 class TypeFormatsSerializer(serializers.ModelSerializer):
         
@@ -81,3 +85,15 @@ class MessageTransactional(serializers.Serializer):
     message = serializers.CharField(max_length=1000)
     status = serializers.IntegerField()
     json = serializers.JSONField()
+
+
+    def send_errors(self, errors,status):
+        e = ""
+        for error in errors:
+            e += error[0] + ", "
+            
+                        
+        
+        return MessageTransactional(message=e, status=status, json=errors).data
+    
+    
