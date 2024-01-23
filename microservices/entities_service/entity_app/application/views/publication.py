@@ -1,15 +1,17 @@
 from typing import Any
 from rest_framework.generics import ListAPIView
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.views import APIView
 from django.db.models import Q
 from rest_framework.response import Response
 from entity_app.utils.pagination import StandardResultsSetPagination
 from entity_app.adapters.impl.publication_impl import PublicationImpl
 from entity_app.domain.services.publication_service import PublicationService
-from entity_app.adapters.serializers import PublicationPublicSerializer
+from entity_app.adapters.serializers import PublicationPublicSerializer, PublicationCreateSerializer, PublicationUpdateSerializer
 from rest_framework.permissions import IsAuthenticated
 from entity_app.utils.permissions import HasPermission
 from entity_app.adapters.serializers import MessageTransactional
+
 class PublicationsView(ListAPIView):
     """Publication view."""
     
@@ -71,6 +73,139 @@ class PublicationsView(ListAPIView):
                 return Response(error.errors)
             return Response(error.data, status=400)
             
+class PublicationCreateAPI(APIView):
+    """
+        Endpoint para crear publicacion.
+
+        Args:
+           PublicationCreateAPI (_type_): The PublicationCreateAPI class is a generic view
+           that provides a list of objects.
+
+        Returns:
+            PublicationCreateAPI: An instance of the PublicationCreateAPI class.
+    """
+    permission_classes = [IsAuthenticated, HasPermission]
+    serializer_class = PublicationCreateSerializer
+    output_serializer_class = PublicationCreateSerializer
             
+    def __init__(self):
+        self.publication_service = PublicationService(PublicationImpl())
+
+    @swagger_auto_schema(
+        operation_description="Create a publication",
+        response={
+            201: output_serializer_class,
+            400: MessageTransactional
+        },
+        request_body=serializer_class,
+        #form data
+        
+    )
+    def post(self, request, *args, **kwargs):
+        """
+        Create a publication.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        data=self.serializer_class(data=request.data)
+        data.is_valid(raise_exception=True)
+        publication = None
+
+        try:
+            publication = self.publication_service.create_publication(data)
+
+            res = MessageTransactional(
+                data={ 
+                    'message': 'Publicacion creada correctamente',
+                    'status': 201,
+                    'json': self.output_serializer_class(publication).data
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=201)
+        except Exception as e:
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+        
+class PublicationUpdateAPI(APIView):
+    """
+        Endpoint para crear publicacion.
+
+        Args:
+           PublicationUpdateAPI (_type_): The PublicationUpdateAPI class is a generic view
+           that provides a list of objects.
+
+        Returns:
+            PublicationUpdateAPI: An instance of the PublicationUpdateAPI class.
+    """
+    permission_classes = [IsAuthenticated, HasPermission]
+    serializer_class = PublicationUpdateSerializer
+    output_serializer_class = PublicationUpdateSerializer
             
-            
+    def __init__(self):
+        self.publication_service = PublicationService(PublicationImpl())
+
+    @swagger_auto_schema(
+        operation_description="Update a publication",
+        response={
+            201: output_serializer_class,
+            400: MessageTransactional
+        },
+        request_body=serializer_class,
+        #form data
+        
+    )
+    def put(self, pk, request, *args, **kwargs):
+        """
+        Update a publication.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        data=self.serializer_class(data=request.data)
+        data.is_valid(raise_exception=True)
+        publication = None
+
+        try:
+            publication = self.publication_service.update_publication(data)
+
+            res = MessageTransactional(
+                data={ 
+                    'message': 'Publicacion creada correctamente',
+                    'status': 201,
+                    'json': self.output_serializer_class(publication).data
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=201)
+        except Exception as e:
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+    

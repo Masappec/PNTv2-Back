@@ -30,3 +30,11 @@ class PublicationRepository(ABC):
     @abstractmethod
     def get_publication_by_slug(self, slug: str) -> dict:
         pass
+
+    @abstractmethod
+    def create_publication(self, publicacion: dict):
+        pass
+
+    @abstractmethod
+    def update_publication(self, publicacion: dict):
+        pass
