@@ -18,7 +18,7 @@ class PublicationsView(ListAPIView):
     permission_classes = [IsAuthenticated, HasPermission]
     serializer_class = PublicationPublicSerializer
     pagination_class = StandardResultsSetPagination
-    permission_required = 'entity_app.view_publication'
+    permission_required = 'view_publication'
 
     def __init__(self, **kwargs: Any):
         self.sevice = PublicationService(PublicationImpl())

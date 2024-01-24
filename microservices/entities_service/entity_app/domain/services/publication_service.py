@@ -52,6 +52,7 @@ class PublicationService:
         try:
             user_establishment =UserEstablishmentExtended.objects.get(user_id=user_id)
             publicacion['establishment_id'] = user_establishment.establishment.id
+            publicacion['user_created_id'] = user_id
             return self.publication_repository.create_publication(publicacion)
         except Exception as e:
             raise e

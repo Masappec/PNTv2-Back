@@ -2,6 +2,7 @@ from entity_app.ports.repositories.publication_repository import PublicationRepo
 from entity_app.domain.models import Publication, Tag, FilePublication
 from entity_app.domain.models.establishment import UserEstablishmentExtended
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from entity_app.domain.models.publication import TypePublication
 class PublicationImpl(PublicationRepository):
@@ -20,7 +21,7 @@ class PublicationImpl(PublicationRepository):
     
     def get_publications_transparency_active(self):
         
-        publications = Publication.objects.filter(is_active=True).filter(type_publication__code='TA')
+        publications = Publication.objects.filter(is_active=True).filter(Q(type_publication__code='TA') | Q(type_publication__code='TC'))
         
         return publications
     
@@ -35,9 +36,9 @@ class PublicationImpl(PublicationRepository):
             publications = Publication.objects.all()
             return publications
         
-        establishment = UserEstablishmentExtended.objects.get(user_id=user_id)
+        user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
         
-        publications = Publication.objects.filter(establishment=establishment)
+        publications = Publication.objects.filter(establishment_id=user_es.establishment.id)
         
         return publications
     
@@ -60,7 +61,8 @@ class PublicationImpl(PublicationRepository):
             description=publicacion['description'],
             type_publication=type_publication,
             notes=publicacion['notes'],
-            establishment_id = publicacion['establishment_id']
+            establishment_id = publicacion['establishment_id'],
+            user_created_id = publicacion['user_created_id']
         )
         nueva_publicacion.tag.set(tags_instancias)
         nueva_publicacion.file_publication.set(file_instancias)
