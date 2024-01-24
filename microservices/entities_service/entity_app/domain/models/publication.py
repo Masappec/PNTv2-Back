@@ -14,7 +14,7 @@ class Publication(BaseModel):
     type_publication = models.ForeignKey('TypePublication', on_delete=models.CASCADE, null=True, blank=True, related_name='publication_type_publication')
     file_publication = models.ManyToManyField('FilePublication', blank=True, related_name='publication_file_publication')
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True, editable=False, db_index=True)
-    
+    notes = models.TextField(null=True, blank=True)
     objects = models.Manager()
     
     

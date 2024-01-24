@@ -4,6 +4,8 @@
 from entity_app.ports.repositories.publication_repository import PublicationRepository
 from django.core.exceptions import ObjectDoesNotExist
 
+from entity_app.domain.models.establishment import UserEstablishmentExtended
+
 class PublicationService:
     
     
@@ -46,14 +48,16 @@ class PublicationService:
         except ObjectDoesNotExist:
             raise Exception('La publicacion no existe')
         
-    def create_publication(self, publicacion: dict):
+    def create_publication(self, publicacion: dict, user_id: int):
         try:
+            user_establishment =UserEstablishmentExtended.objects.get(user_id=user_id)
+            publicacion['establishment_id'] = user_establishment.establishment.id
             return self.publication_repository.create_publication(publicacion)
         except Exception as e:
             raise e
         
     def update_publication(self, publicacion_id: int, publicacion: dict):
         try:
-            return self.establishment_repository.update_establishment(publicacion_id, publicacion)
+            return self.publication_repository.update_establishment(publicacion_id, publicacion)
         except ObjectDoesNotExist:
             raise ValueError("publicacion no existe")

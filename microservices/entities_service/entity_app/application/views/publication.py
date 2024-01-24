@@ -87,6 +87,7 @@ class PublicationCreateAPI(APIView):
     permission_classes = [IsAuthenticated, HasPermission]
     serializer_class = PublicationCreateSerializer
     output_serializer_class = PublicationCreateSerializer
+    permission_required = 'add_publication'
             
     def __init__(self):
         self.publication_service = PublicationService(PublicationImpl())
@@ -118,7 +119,9 @@ class PublicationCreateAPI(APIView):
         publication = None
 
         try:
-            publication = self.publication_service.create_publication(data)
+            
+            
+            publication = self.publication_service.create_publication(data.data,request.user.id)
 
             res = MessageTransactional(
                 data={ 
@@ -186,7 +189,7 @@ class PublicationUpdateAPI(APIView):
         publication = None
 
         try:
-            publication = self.publication_service.update_publication(data)
+            publication = self.publication_service.update_publication(pk,data)
 
             res = MessageTransactional(
                 data={ 

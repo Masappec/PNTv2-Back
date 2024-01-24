@@ -2,6 +2,8 @@ from entity_app.ports.repositories.publication_repository import PublicationRepo
 from entity_app.domain.models import Publication, Tag, FilePublication
 from entity_app.domain.models.establishment import UserEstablishmentExtended
 from django.contrib.auth.models import User
+
+from entity_app.domain.models.publication import TypePublication
 class PublicationImpl(PublicationRepository):
     
     def inactivate_publication(self, publication_id: int):
@@ -48,24 +50,26 @@ class PublicationImpl(PublicationRepository):
     
     def create_publication(self, publicacion: dict):
 
-        tags_instancias = Tag.object.filter(id__in=publicacion['group_dataset'])
-        file_instancias = FilePublication.objects.filter(id_in=publicacion['file_publication'])
+        tags_instancias = Tag.objects.filter(id__in=publicacion['group_dataset'])
+        file_instancias = FilePublication.objects.filter(id__in=publicacion['file_publication'])
+        
+        type_publication = TypePublication.objects.get(code=publicacion['type_publication'])
 
         nueva_publicacion = Publication.objects.create(
             name=publicacion['name'],
             description=publicacion['description'],
-            type_publication=publicacion['type_publication'],
+            type_publication=type_publication,
             notes=publicacion['notes'],
-            created_at=publicacion['created_at']
+            establishment_id = publicacion['establishment_id']
         )
-        nueva_publicacion.tags.set(tags_instancias)
+        nueva_publicacion.tag.set(tags_instancias)
         nueva_publicacion.file_publication.set(file_instancias)
 
         nueva_publicacion.save()
 
     def update_publication(self, publication_id: int, publicacion: dict):
 
-        tags_instancias = Tag.object.filter(id__in=publicacion['group_dataset'])
+        tags_instancias = Tag.objects.filter(id__in=publicacion['group_dataset'])
         file_instancias = FilePublication.objects.filter(id_in=publicacion['file_publication'])
 
         publicacion = Publication.objects.filter(id=publication_id)

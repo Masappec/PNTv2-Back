@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.fields import ListField
 from entity_app.domain.models.publication import Publication,Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
 
@@ -43,17 +42,11 @@ class TypeFormatsSerializer(serializers.ModelSerializer):
 class PublicationCreateSerializer(serializers.Serializer):
     name = serializers.CharField()
     description = serializers.CharField()
-    group_dataset = serializers.ListField(child=serializers.DictField(child=serializers.IntegerField()))
-    file_publication = serializers.ListField(child=serializers.DictField(child=serializers.IntegerField()))
+    group_dataset = serializers.ListField(child=serializers.IntegerField())
+    file_publication = serializers.ListField(child=serializers.IntegerField())
     type_publication = serializers.CharField(source='type_publication.name')
     notes = serializers.CharField()
-    created_at = serializers.DateTimeField()
-    user_created = serializers.SerializerMethodField(method_name='get_user_created')
 
-    def get_user_created(self, obj):
-        if obj.user_created is None:
-            return ''
-        return obj.user_created.first_name + ' ' + obj.user_created.last_name
 
 class PublicationUpdateSerializer(serializers.Serializer):
     name = serializers.CharField()

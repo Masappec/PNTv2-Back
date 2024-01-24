@@ -18,8 +18,8 @@ class HasPermission(BasePermission):
         
         user_id = request.user.id
         
-        
-        return User.objects.get(id=user_id).has_perm(permission_required)
+        is_permited = User.objects.get(id=user_id).groups.filter(permissions__codename=permission_required).exists()
+        return  is_permited
 
         
         
