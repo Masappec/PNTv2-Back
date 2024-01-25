@@ -28,3 +28,6 @@ microservices/.idea/vcs.xml
 microservices/.idea/workspace.xml
 microservices/admin_service/.idea/inspectionProfiles/profiles_settings.xml
 microservices/auth_service/.idea/inspectionProfiles/Project_Default.xml
+
+
+**/media/

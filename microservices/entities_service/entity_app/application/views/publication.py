@@ -157,7 +157,8 @@ class PublicationUpdateAPI(APIView):
     """
     permission_classes = [IsAuthenticated, HasPermission]
     serializer_class = PublicationUpdateSerializer
-    output_serializer_class = PublicationUpdateSerializer
+    output_serializer_class = PublicationPublicSerializer
+    permission_required = 'change_publication'
             
     def __init__(self):
         self.publication_service = PublicationService(PublicationImpl())
@@ -172,7 +173,7 @@ class PublicationUpdateAPI(APIView):
         #form data
         
     )
-    def put(self, pk, request, *args, **kwargs):
+    def put(self, request, pk):
         """
         Update a publication.
 
@@ -189,7 +190,10 @@ class PublicationUpdateAPI(APIView):
         publication = None
 
         try:
-            publication = self.publication_service.update_publication(pk,data)
+            
+            data_save = data.data
+            data_save['user_updated_id'] = request.user.id
+            publication = self.publication_service.update_publication(pk,data_save)
 
             res = MessageTransactional(
                 data={ 
@@ -201,14 +205,88 @@ class PublicationUpdateAPI(APIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-            print("Error:", e)
+            data={
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }
+            
+            return Response(data, status=400)
+    
+    
+
+class PublicatioDetail(APIView):
+    
+    
+    def __init__(self):
+        self.publication_service = PublicationService(PublicationImpl())
+        
+        
+    def get(self, request,pk):
+        """
+        Get a publication detail.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        try:
+            publication = self.publication_service.get_publication_detail_admin(pk,request.user.id)
+            serializer = PublicationPublicSerializer(publication)
+            return Response(serializer.data)
+        except Exception as e:
+            
+            data={
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }
+            
+            return Response(data, status=400)
+        
+
+
+class PublicationUpdateState(APIView):
+    
+    def __init__(self):
+        self.publication_service = PublicationService(PublicationImpl())
+        
+        
+    def put(self, request,pk):
+        """
+        Update state a publication.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        try:
+            publication = self.publication_service.inactivate_activate_publication(pk,request.user.id)
+            serializer = PublicationPublicSerializer(publication)
             res = MessageTransactional(
-                data={
-                    'message': str(e),
-                    'status': 400,
-                    'json': {}
+                data={ 
+                    'message': 'Publicacion actualizada correctamente',
+                    'status': 201,
+                    'json': serializer.data
                 }
             )
             res.is_valid(raise_exception=True)
-            return Response(res.data, status=400)
-    
+            
+            return Response(res.data, status=200)
+        except Exception as e:
+            
+            data={
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }
+            
+            return Response(data, status=400)

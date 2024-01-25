@@ -15,6 +15,7 @@ class Publication(BaseModel):
     file_publication = models.ManyToManyField('FilePublication', blank=True, related_name='publication_file_publication')
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True, editable=False, db_index=True)
     notes = models.TextField(null=True, blank=True)
+    attachment = models.ManyToManyField('Attachment', blank=True, related_name='publication_attachment')
     objects = models.Manager()
     
     
@@ -29,6 +30,19 @@ class Publication(BaseModel):
         verbose_name = 'Publicación'
         verbose_name_plural = 'Publicaciones'
 
+
+class Attachment(BaseModel):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    url_download = models.URLField(max_length=255, null=True, blank=True)
+    is_active = models.BooleanField(default=True, null=True, blank=True)
+    objects = models.Manager()
+    
+    class Meta:
+        verbose_name = 'Adjunto'
+        verbose_name_plural = 'Adjuntos'
+        
+    
 class FilePublication(BaseModel):
     
     name = models.CharField(max_length=255, null=True, blank=True)

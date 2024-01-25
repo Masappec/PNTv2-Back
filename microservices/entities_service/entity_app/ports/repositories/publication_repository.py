@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 class PublicationRepository(ABC):
     
     @abstractmethod
-    def inactivate_publication(self, publication_id: int) -> None:
+    def inactivate_activate_publication(self, publication_id: int,user_id:int) -> None:
         pass
     
     
@@ -36,5 +36,9 @@ class PublicationRepository(ABC):
         pass
 
     @abstractmethod
-    def update_publication(self, publicacion: dict):
+    def update_publication(self, id,publicacion: dict):
+        pass
+    
+    @abstractmethod
+    def get_publication_detail_admin(self, publication_id: int,user_id:int):
         pass

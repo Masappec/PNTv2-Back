@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from entity_app.domain.models.publication import Publication,Tag, FilePublication
+from entity_app.domain.models.publication import Attachment, Publication,Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
 
 class TagSerializer(serializers.ModelSerializer):
@@ -45,16 +45,36 @@ class PublicationCreateSerializer(serializers.Serializer):
     group_dataset = serializers.ListField(child=serializers.IntegerField())
     file_publication = serializers.ListField(child=serializers.IntegerField())
     type_publication = serializers.CharField(source='type_publication.name')
-    notes = serializers.CharField()
+    notes = serializers.CharField(allow_blank=True, allow_null=True)
+    attachment = serializers.ListField(child=serializers.IntegerField())
 
 
 class PublicationUpdateSerializer(serializers.Serializer):
     name = serializers.CharField()
     description = serializers.CharField()
-    group_dataset = serializers.ListField(child=serializers.DictField(child=serializers.IntegerField()))
-    file_publication = serializers.ListField(child=serializers.DictField(child=serializers.IntegerField()))
-    updated_at = serializers.DateTimeField()
-    user_updated = serializers.CharField(source='user_updated.username', read_only=True, required=False, allow_null=True)
+    group_dataset = serializers.ListField(child=serializers.IntegerField())
+    file_publication = serializers.ListField(child=serializers.IntegerField())
+    type_publication = serializers.CharField(source='type_publication.name')
+    notes = serializers.CharField(allow_blank=True, allow_null=True)
+    attachment = serializers.ListField(child=serializers.IntegerField())
+
+
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attachment
+        
+        fields = (
+            'id',
+            'name',
+            'description',
+            'url_download',
+        )
+        
+        read_only_fields = ('id',)
+
+
+
 
 
 class PublicationPublicSerializer(serializers.Serializer):
@@ -77,6 +97,8 @@ class PublicationPublicSerializer(serializers.Serializer):
     user_updated = serializers.CharField(source='user_updated.username', read_only=True, required=False, allow_null=True)
     user_deleted = serializers.CharField(source='user_deleted.username', read_only=True, required=False, allow_null=True)
     slug = serializers.SlugField(allow_blank=True, allow_unicode=True,allow_null=True)
+    attachment = AttachmentSerializer(many=True)
+    notes = serializers.CharField(allow_blank=True, allow_null=True)
     class Meta:
         """Meta class."""
         model : 'Publication'

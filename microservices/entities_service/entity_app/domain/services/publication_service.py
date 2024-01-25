@@ -14,9 +14,9 @@ class PublicationService:
         
         
     
-    def inactivate_publication(self, publication_id: int):
+    def inactivate_activate_publication(self, publication_id: int,user_id):
             
-            return self.publication_repository.inactivate_publication(publication_id)
+            return self.publication_repository.inactivate_activate_publication(publication_id,user_id)
         
         
     def get_publication(self, publication_id: int):
@@ -59,6 +59,15 @@ class PublicationService:
         
     def update_publication(self, publicacion_id: int, publicacion: dict):
         try:
-            return self.publication_repository.update_establishment(publicacion_id, publicacion)
+            return self.publication_repository.update_publication(publicacion_id, publicacion)
         except ObjectDoesNotExist:
             raise ValueError("publicacion no existe")
+        
+        
+    def get_publication_detail_admin(self, publication_id: int,user_id:int):
+            
+        try:
+            return self.publication_repository.get_publication_detail_admin(publication_id,user_id)
+        
+        except ObjectDoesNotExist:
+            raise Exception('La publicacion no existe')
