@@ -18,7 +18,10 @@ class Solicity(BaseModel):
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.CREATED)
     expiry_date = models.DateTimeField(null=True, blank=True)
     have_extension = models.BooleanField(default=False)
+    is_manual = models.BooleanField(default=False)
     
+    objects = models.Manager()
+
     
     class Meta:
         verbose_name = 'Solicitud'
@@ -35,6 +38,7 @@ class Insistency(BaseModel):
     expiry_date = models.DateTimeField(null=True, blank=True)
     motive = models.TextField()
     
+    objects = models.Manager()
     class Meta:
         verbose_name = 'Insistencia'
         verbose_name_plural = 'Insistencias'
@@ -51,6 +55,8 @@ class SolicityResponse(BaseModel):
     attachments = models.ManyToManyField('Attachment', blank=True)
     category = models.ForeignKey('Category', on_delete=models.CASCADE, null=True, blank=True)
     
+    objects = models.Manager()
+    
     class Meta:
         verbose_name = 'Respuesta de Solicitud'
         verbose_name_plural = 'Respuestas de Solicitudes'
@@ -64,6 +70,9 @@ class Extension(BaseModel):
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.CREATED)
     expiry_date = models.DateTimeField(null=True, blank=True)
     motive = models.TextField()
+    
+    
+    objects = models.Manager()
     
     class Meta:
         verbose_name = 'Prórroga'
@@ -83,5 +92,5 @@ class Category(BaseModel):
         verbose_name_plural = 'Categorías'
         
     def __str__(self):
-        return self.name
+        return str(self.name)
     
