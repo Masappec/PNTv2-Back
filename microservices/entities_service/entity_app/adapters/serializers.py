@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from entity_app.domain.models.publication import Attachment, Publication,Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
+from microservices.entities_service.entity_app.domain.models.solicity import Solicity
 
 class TagSerializer(serializers.ModelSerializer):
     """Tag serializer."""
@@ -136,3 +137,34 @@ class MessageTransactional(serializers.Serializer):
         return MessageTransactional(message=e, status=status, json=errors).data
     
     
+
+class SolicitySerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        
+        model = Solicity
+        fields = (
+            'id',
+            'text',
+            'establishment',
+            'user',
+            'is_active',
+            'status',
+            'expiry_date',
+            'have_extension',
+            'is_manual',
+        )
+        
+        read_only_fields = ('id', 'is_active', 'status', 'have_extension', 'is_manual')
+
+
+
+class CreateExtensionSerializer(serializers.Serializer):
+    
+    motive = serializers.CharField()
+    solicity = SolicitySerializer()
+    
+    
+class CreateInsistencySerializer(serializers.Serializer):
+    motive = serializers.CharField()
+    solicity = SolicitySerializer()
