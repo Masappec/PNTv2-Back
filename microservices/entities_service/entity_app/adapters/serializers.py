@@ -2,6 +2,7 @@ from rest_framework import serializers
 from entity_app.domain.models.publication import Attachment, Publication,Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
 from microservices.entities_service.entity_app.domain.models.solicity import Solicity
+import datetime
 
 class TagSerializer(serializers.ModelSerializer):
     """Tag serializer."""
@@ -137,6 +138,35 @@ class MessageTransactional(serializers.Serializer):
         return MessageTransactional(message=e, status=status, json=errors).data
     
     
+class SolicitySerializer(serializers.ModelSerializer):
+    """Solicity serializer"""
+    id=serializers.IntegerField();
+    title=serializers.CharField();
+    text=serializers.CharField();
+    establishment = serializers.IntegerField(source='establishment.id')
+    establishment_name = serializers.CharField(source='establishment.name')
+    user = serializers.IntegerField()
+    is_active = serializers.IntegerField();
+    status=serializers.CharField();
+    expiry_date=serializers.DateTimeField();
+    have_extension = serializers.BooleanField();
+    id_manual = serializers.BooleanField();
+
+class SolicityCreateSerializer(serializers.ModelSerializer):
+    """Solicity create serializer"""
+    establishment_id = serializers.IntegerField();
+    title=serializers.CharField();
+    description=serializers.CharField();
+    expiry_date=datetime.date() + datetime.timedelta(days=15)
+
+class SolicityCreateResponseSerializer(serializers.ModelSerializer):
+    """Solicity Create Response serializer."""
+
+    id_solicitud = serializers.IntegerField()
+    text = serializers.CharField()
+    files = serializers.ListField(child=serializers.IntegerField())
+    attachment = serializers.ListField(child=serializers.IntegerField())
+    category_id = serializers.IntegerField();
 
 class SolicitySerializer(serializers.ModelSerializer):
     

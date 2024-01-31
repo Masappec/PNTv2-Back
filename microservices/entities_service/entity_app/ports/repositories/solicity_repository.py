@@ -102,4 +102,8 @@ class SolicityRepository(ABC):
             list: Lista de solicitudes
         """
         pass
+
+    @abstractmethod
+    def validate_user_establishmentt(self, establishment_id, user_id):
+        pass
     
