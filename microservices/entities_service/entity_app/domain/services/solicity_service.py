@@ -13,3 +13,9 @@ class SolicityService:
     
     def create_solicity_response(self, solicity_id, user_id, text, category_id, files, attachments):
         return self.solicity_repository.create_solicity_response(solicity_id, user_id, text, category_id, files, attachments)
+    
+    def get_user_solicities(self, user_id):
+        return self.solicity_repository.get_user_solicities(user_id)
+    
+    def get_entity_solicities(self, entity_id):
+        return self.solicity_repository.get_entity_solicities(entity_id)
