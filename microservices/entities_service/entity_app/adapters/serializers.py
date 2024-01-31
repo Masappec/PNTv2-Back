@@ -143,7 +143,7 @@ class SolicitySerializer(serializers.ModelSerializer):
     id=serializers.IntegerField();
     title=serializers.CharField();
     text=serializers.CharField();
-    establishment = serializers.IntegerField(source='establishment.id')
+    establishment_id = serializers.IntegerField(source='establishment.id')
     establishment_name = serializers.CharField(source='establishment.name')
     user = serializers.IntegerField()
     is_active = serializers.IntegerField();
@@ -187,14 +187,11 @@ class SolicitySerializer(serializers.ModelSerializer):
         
         read_only_fields = ('id', 'is_active', 'status', 'have_extension', 'is_manual')
 
-
-
 class CreateExtensionSerializer(serializers.Serializer):
     
     motive = serializers.CharField()
     solicity = SolicitySerializer()
-    
-    
+
 class CreateInsistencySerializer(serializers.Serializer):
     motive = serializers.CharField()
     solicity = SolicitySerializer()
