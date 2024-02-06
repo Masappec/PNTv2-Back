@@ -6,6 +6,8 @@ from entity_app.application.views.publication import PublicationCreateAPI, Publi
 from entity_app.application.views.file_publication import FilePublicationCreateView, FilePublicationListEstablishemtSession, FilePublicationDelete
 from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
+from entity_app.application.views.solicity import SolicityView, SolicityCreateView, SolicityResponseView, SolicityCreateResponseView
+
 urlpatterns = [
 
     path('public/transparency/active/list', PublicationPublicView.as_view(), name='publication-list'),
@@ -28,4 +30,9 @@ urlpatterns = [
     path('publications/state/<pk>', PublicationUpdateState.as_view(), name='publication-inactivate'),
     
     path('attachments/create', AttachmentCreateView.as_view(), name='attachment-create'),
+
+    path('solicity/list', SolicityView.as_view(), name='solicity-all'),
+    path('solicity/create', SolicityCreateView.as_view(), name='solicity-create'),
+    path('solicity_response/list', SolicityResponseView.as_view(), name='solicity-response-all'),
+    path('solicity_response/create', SolicityCreateResponseView.as_view(), name='solicity-response-create'),
 ]

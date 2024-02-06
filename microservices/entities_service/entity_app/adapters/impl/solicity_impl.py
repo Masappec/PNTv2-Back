@@ -1,6 +1,7 @@
 from entity_app.ports.repositories.solicity_repository import SolicityRepository
 from entity_app.domain.models.solicity import Insistency, Solicity, SolicityResponse, Status, Extension
 from entity_app.domain.models.publication import Attachment, FilePublication
+from entity_app.domain.models.establishment import UserEstablishmentExtended
 from datetime import datetime
 
 class SolicityImpl(SolicityRepository):
@@ -75,12 +76,11 @@ class SolicityImpl(SolicityRepository):
     def get_user_solicities(self, user_id):
         return Solicity.objects.filter(user_id=user_id, is_active=True)
     
-    
-    
     def get_entity_solicities(self, entity_id):
         return Solicity.objects.filter(establishment__id=entity_id, is_active=True)
     
-    
-    
     def delete_solicity_response(self, solicity_response_id,user_id):
         return SolicityResponse.objects.filter(id=solicity_response_id).update(is_active=False,deteled_at=datetime.now(),user_deleted_id=user_id)
+    
+    def validate_user_establishment(self, establishment_id, user_id):
+        return UserEstablishmentExtended.objects.filter(user_id=user_id, establishment_id=establishment_id, is_active=True).exists()
