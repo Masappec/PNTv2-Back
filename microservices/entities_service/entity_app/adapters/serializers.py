@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from entity_app.domain.models.publication import Attachment, Publication,Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
-from microservices.entities_service.entity_app.domain.models.solicity import Solicity
+from entity_app.domain.models.solicity import Solicity
 
 class TagSerializer(serializers.ModelSerializer):
     """Tag serializer."""
@@ -168,3 +168,19 @@ class CreateExtensionSerializer(serializers.Serializer):
 class CreateInsistencySerializer(serializers.Serializer):
     motive = serializers.CharField()
     solicity = SolicitySerializer()
+    
+    
+class CreateManualSolicitySerializer(serializers.Serializer):
+    title = serializers.CharField()
+    text = serializers.CharField()
+    expiry_date = serializers.DateTimeField()
+    establishment_id = serializers.IntegerField()
+    
+
+
+class SolicityResponseSerializer(serializers.Serializer):
+    text = serializers.CharField()
+    category_id = serializers.IntegerField()
+    files = serializers.ListField(child=serializers.IntegerField())
+    attachments = serializers.ListField(child=serializers.IntegerField())
+    solicity_id = serializers.IntegerField()

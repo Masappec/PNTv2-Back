@@ -74,14 +74,14 @@ class SolicityService:
         return self.solicity_repository.update_solicity_response(solicity_response_id, text, category_id, files, attachments)
     
     
-    def delete_solicity_response(self, solicity_response_id):
+    def delete_solicity_response(self, solicity_response_id,user_id):
         """
         Elimina una respuesta de solicitud
 
         Args:
             solicity_response_id (int): id de la respuesta de solicitud
         """
-        return self.solicity_repository.delete_solicity_response(solicity_response_id)
+        return self.solicity_repository.delete_solicity_response(solicity_response_id,user_id)
     
     def get_user_solicities(self, user_id):
         """

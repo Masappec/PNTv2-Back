@@ -3,6 +3,7 @@ from rest_framework.permissions import BasePermission
 from django.contrib.auth.models import User
 
 from entity_app.domain.models.publication import Publication
+from entity_app.domain.models.solicity import SolicityResponse
 
 class HasPermission(BasePermission):
     
@@ -21,7 +22,16 @@ class HasPermission(BasePermission):
         is_permited = User.objects.get(id=user_id).groups.filter(permissions__codename=permission_required).exists()
         return  is_permited
 
+
+
+
+class IsOwnerResponseSolicity(BasePermission):
+    def has_object_permission(self, request, view, obj):
         
+        if isinstance(obj, SolicityResponse):
+            if obj.user.id == request.user.id:
+                return True
+        return False
         
         
 class IsPublicPublication(BasePermission):
