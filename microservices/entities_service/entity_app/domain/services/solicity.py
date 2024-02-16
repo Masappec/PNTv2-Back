@@ -101,3 +101,13 @@ class SolicityService:
             entity_id (int): id de la entidad
         """
         return self.solicity_repository.get_entity_solicities(entity_id)
+    
+    def validate_user_establishment(self, user_id, establishment_id):
+        """
+        Valida si el usuario pertenece al establecimiento
+
+        Args:
+            user_id (int): id del usuario
+            establishment_id (int): id del establecimiento
+        """
+        return self.solicity_repository.validate_user_establishment(user_id, establishment_id)

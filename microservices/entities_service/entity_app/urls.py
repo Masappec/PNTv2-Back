@@ -8,6 +8,8 @@ from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
 from entity_app.application.views.solicity import SolicityView, SolicityCreateView, SolicityResponseView, SolicityCreateResponseView
 
+from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail
+
 urlpatterns = [
 
     path('public/transparency/active/list', PublicationPublicView.as_view(), name='publication-list'),
@@ -35,4 +37,9 @@ urlpatterns = [
     path('solicity/create', SolicityCreateView.as_view(), name='solicity-create'),
     path('solicity_response/list', SolicityResponseView.as_view(), name='solicity-response-all'),
     path('solicity_response/create', SolicityCreateResponseView.as_view(), name='solicity-response-create'),
+    
+    
+    
+    path('numerals/', NumeralsByEstablishment.as_view(), name='numerals-by-establishment'),
+    path('numerals/detail/', NumeralDetail.as_view(), name='numeral-detail'),
 ]

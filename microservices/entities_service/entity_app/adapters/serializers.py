@@ -1,8 +1,9 @@
+import datetime
 from rest_framework import serializers
 from entity_app.domain.models.publication import Attachment, Publication,Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
 from entity_app.domain.models.solicity import Solicity
-
+from entity_app.domain.models.transparency_active import Numeral, TemplateFile, ColumnFile
 class TagSerializer(serializers.ModelSerializer):
     """Tag serializer."""
     class Meta:
@@ -137,28 +138,17 @@ class MessageTransactional(serializers.Serializer):
         return MessageTransactional(message=e, status=status, json=errors).data
     
     
-class SolicitySerializer(serializers.ModelSerializer):
-    """Solicity serializer"""
-    id=serializers.IntegerField();
-    title=serializers.CharField();
-    text=serializers.CharField();
-    establishment_id = serializers.IntegerField(source='establishment.id')
-    establishment_name = serializers.CharField(source='establishment.name')
-    user = serializers.IntegerField()
-    is_active = serializers.IntegerField();
-    status=serializers.CharField();
-    expiry_date=serializers.DateTimeField();
-    have_extension = serializers.BooleanField();
-    id_manual = serializers.BooleanField();
 
-class SolicityCreateSerializer(serializers.ModelSerializer):
+
+class SolicityCreateSerializer(serializers.Serializer):
     """Solicity create serializer"""
     establishment_id = serializers.IntegerField();
     title=serializers.CharField();
     description=serializers.CharField();
-    expiry_date=datetime.date() + datetime.timedelta(days=15)
+    expiry_date= serializers.DateTimeField();
+    establishment_id = serializers.IntegerField();
 
-class SolicityCreateResponseSerializer(serializers.ModelSerializer):
+class SolicityCreateResponseSerializer(serializers.Serializer):
     """Solicity Create Response serializer."""
 
     id_solicitud = serializers.IntegerField()
@@ -210,3 +200,68 @@ class SolicityResponseSerializer(serializers.Serializer):
     files = serializers.ListField(child=serializers.IntegerField())
     attachments = serializers.ListField(child=serializers.IntegerField())
     solicity_id = serializers.IntegerField()
+    
+
+class ColumnFileSerializer(serializers.ModelSerializer):
+    """Column file serializer."""
+    class Meta:
+        """Meta class."""
+        model = ColumnFile
+        fields = (
+            'id',
+            'name',
+            'code',
+            'type',
+            'format',
+            'regex',
+        
+        )
+
+class TemplateResponseSerializer(serializers.ModelSerializer):
+    
+    columns = serializers.SerializerMethodField(method_name='get_columns')
+    
+    class Meta:
+        model = TemplateFile
+        
+        read_only_fields = ('id', 'is_active', 'vertical_template', 'max_inserts', 'columns')
+        
+        fields ='__all__'
+        
+    def get_columns(self, obj):
+        columns = obj.columns.all()
+        return ColumnFileSerializer(columns, many=True).data
+    
+    
+
+class TemplateFileValidateSerializer(serializers.Serializer):
+    establishment_id = serializers.IntegerField()
+    numeral_id = serializers.IntegerField()
+    
+
+
+
+class NumeralResponseSerializer(serializers.ModelSerializer):
+    """Numeral response serializer."""
+    class Meta:
+        """Meta class."""
+        model = Numeral
+        fields = '__all__'
+        
+        
+class NumeralDetailSerializer(serializers.ModelSerializer):
+    """Numeral detail serializer."""
+    
+    templates = serializers.SerializerMethodField(method_name='get_templates')
+    
+    class Meta:
+        """Meta class."""
+        model = Numeral
+        fields = '__all__'
+    def get_templates(self, obj):
+        templates = obj.templates.all()
+        
+        return TemplateResponseSerializer(templates, many=True).data
+        
+        
+        

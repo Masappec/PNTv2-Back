@@ -18,6 +18,8 @@ class SolicityImpl(SolicityRepository):
 
         return solicity
 
+
+    
     def create_extencion_solicity(self, motive, solicity_id, user_id):
         """
         Crea una prorroga

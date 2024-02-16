@@ -104,6 +104,6 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
-    def validate_user_establishmentt(self, establishment_id, user_id):
+    def validate_user_establishment(self, establishment_id, user_id):
         pass
     

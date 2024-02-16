@@ -1,3 +1,4 @@
+import datetime
 from typing import Any
 from rest_framework.views import APIView
 
@@ -11,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
 
-from entity_app.utils.permissions import HasPermission, IsOwnerResponseSolicity
+from entity_app.utils.permissions import BelongsToEstablishment, HasPermission, IsOwnerResponseSolicity
 from entity_app.utils.pagination import StandardResultsSetPagination
 from entity_app.adapters.serializers import SolicitySerializer, SolicityCreateSerializer, MessageTransactional, CreateExtensionSerializer, SolicityCreateResponseSerializer
 from entity_app.domain.services.solicity_service import SolicityService
@@ -34,9 +35,9 @@ class CreateExtensionSolicityView(APIView):
             serializer.is_valid(raise_exception=True)
             user_id = request.user.id
             response = self.service.create_extencion_solicity(
-                motive=serializer.validated_data['motive'],
-                solicity_id=serializer.validated_data['solicity_id'],
-                user_id=user_id
+                serializer.validated_data['motive'],
+                serializer.validated_data['solicity_id'],
+                user_id
             )
             return Response(response, status=status.HTTP_201_CREATED)
         except Exception as e:
@@ -56,7 +57,7 @@ class CreateManualSolicity(APIView):
     permission_required = 'add_manual_solicity'
     
     
-    def __init__(self, **kwargs: Any):
+    def __init__(self):
         self.service = SolicityService(solicity_repository=SolicityImpl())
         
         
@@ -150,6 +151,7 @@ class SolicityView(ListAPIView):
     serializer_class = SolicitySerializer
     pagination_class = StandardResultsSetPagination
     permission_required = 'view_solicity'
+    output_serializer_class = SolicitySerializer
 
     def __init__(self):
         self.service = SolicityService(SolicityImpl())
@@ -175,7 +177,7 @@ class SolicityView(ListAPIView):
         queryset = None
 
         try:
-            relations = self.service.validate_user_establishmentt(data.establishment_id, request.user.id)
+            relations = self.service.validate_user_establishment(data.validated_data['establishment_id'], request.user.id)
 
             if relations is True:
                 queryset = self.get_queryset(request.user.id)
@@ -190,18 +192,13 @@ class SolicityView(ListAPIView):
                     serializer = self.get_serializer(page, many=True)
                     return self.get_paginated_response(serializer.data)
                 
-                res = MessageTransactional(
-                    data={
-                        'message': str(e),
-                        'status': 200,
-                        'json': self.output_serializer_class(queryset).data
-                    }
-                )
+                serializer = self.get_serializer(queryset, many=True)
+                return Response(serializer.data)
             else:
                 res = MessageTransactional(
                     data={
-                        'message': str(e),
-                        'status': 200,
+                        'message': "Error: No tiene permisos para ver las solicitudes de este establecimiento.",
+                        'status': 400,
                         'json': {}
                     }
                 )
@@ -237,7 +234,13 @@ class SolicityCreateView(APIView):
         solicity = None
 
         try:
-            solicity = self.solicity_service.create_citizen_solicity()
+            solicity = self.service.create_citizen_solicity(
+                data.validated_data['title'],
+                data.validated_data['description'],
+                data.validated_data['establishment_id'],
+                request.user.id,
+                datetime.datetime.now() + datetime.timedelta(days=15)
+            )
 
             res = MessageTransactional(
                 data={ 
@@ -265,9 +268,10 @@ class SolicityResponseView(ListAPIView):
     """Solicity Response view."""
 
     permission_classes = [IsAuthenticated, HasPermission]
-    serializer_class = SolicityCreateResponseSerializer
+    serializer_class = SolicityCreateSerializer
     pagination_class = StandardResultsSetPagination
     permission_required = 'view_solicity_response'
+    output_serializer_class = SolicityResponseSerializer
 
     def __init__(self):
         self.service = SolicityService(SolicityImpl())
@@ -293,10 +297,10 @@ class SolicityResponseView(ListAPIView):
         queryset = None
 
         try:
-            relations = self.service.validate_user_establishmentt(data.establishment_id, request.user.id)
+            relations = self.service.validate_user_establishment(data.validated_data['establishment_id'], request.user.id)
 
             if relations is True:
-                queryset = self.get_queryset(data.establishment_id)
+                queryset = self.get_queryset( data.validated_data['establishment_id'])
 
                 search = request.query_params.get('search', None)
                 if search is not None:
@@ -310,7 +314,7 @@ class SolicityResponseView(ListAPIView):
                 
                 res = MessageTransactional(
                     data={
-                        'message': str(e),
+                        'message': "Solicitudes respondida correctamente.",
                         'status': 200,
                         'json': self.output_serializer_class(queryset).data
                     }
@@ -318,8 +322,8 @@ class SolicityResponseView(ListAPIView):
             else:
                 res = MessageTransactional(
                     data={
-                        'message': str(e),
-                        'status': 200,
+                        'message': "Error: No tiene permisos para ver las solicitudes de este establecimiento.",
+                        'status':status.HTTP_400_BAD_REQUEST,
                         'json': {}
                     }
                 )
@@ -340,9 +344,10 @@ class SolicityResponseView(ListAPIView):
 class SolicityCreateResponseView(APIView):
     """ Solicity Create Response """
 
-    permission_classes = [IsAuthenticated, HasPermission]
+    permission_classes = [IsAuthenticated, HasPermission,BelongsToEstablishment]
     serializer_class = SolicityCreateResponseSerializer
     pagination_class = StandardResultsSetPagination
+    output_serializer_class = SolicityResponseSerializer
     permission_required = 'add_solicity_response'
 
     def __init__(self):
@@ -354,28 +359,17 @@ class SolicityCreateResponseView(APIView):
         solicity_response = None
 
         try:
-            relations = self.service.validate_user_establishmentt(data.establishment_id, request.user.id)
 
-            if relations is True:
-                solicity_response = self.service.create_solicity_response(data.id_solicitud, request.user.id, data.text, data.category_id, data.files, data.attachment)
+            solicity_response = self.service.create_solicity_response(data.id_solicitud, request.user.id, data.text, data.category_id, data.files, data.attachment)
 
-                res = MessageTransactional(
-                    data={
-                        'message': str(e),
-                        'status': 200,
-                        'json': self.output_serializer_class(solicity_response).data
-                    }
-                )
-            else:
-                res = MessageTransactional(
-                    data={
-                        'message': str(e),
-                        'status': 200,
-                        'json': {}
-                    }
-                )
-
-            res.is_valid(raise_exception=True)
+            res = MessageTransactional(
+                data={
+                    'message': 'Publicacion creada correctamente',
+                    'status': 200,
+                    'json': self.output_serializer_class(solicity_response).data
+                }
+            )
+            
             return Response(res.data, status=201)
 
         except Exception as e:
