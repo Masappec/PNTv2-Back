@@ -136,7 +136,7 @@ class FilePublicationDelete(APIView):
 
 class FilePublicationListEstablishemtSession(ListAPIView):
     
-    
+    serializer_class = FilePublicationSerializer
     def __init__(self, **kwargs):
         
         self.sevice = FilePublicationService(FilePublicationImpl())

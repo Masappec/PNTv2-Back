@@ -48,3 +48,20 @@ def unique_code_generator(instance, new_slug = None):
         return unique_code_generator(instance, new_slug = new_slug)
     
     return slug
+
+
+
+
+def validate_type(type_obj, type_for_valid):
+    types = {
+        'string': ['str'],
+        'number': ['int', 'float'],
+        'date': ['str', 'datetime'],
+        'file': ['str', 'file'],
+        'decimal': ['float']
+    }
+    
+    if types[type_for_valid] == type_obj:
+        return True
+    
+    return False

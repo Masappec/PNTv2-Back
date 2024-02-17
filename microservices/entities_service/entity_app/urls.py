@@ -10,6 +10,8 @@ from entity_app.application.views.solicity import SolicityView, SolicityCreateVi
 
 from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail
 
+from entity_app.application.views.template_file import TemplateFileValidate
+
 urlpatterns = [
 
     path('public/transparency/active/list', PublicationPublicView.as_view(), name='publication-list'),
@@ -42,4 +44,7 @@ urlpatterns = [
     
     path('numerals/', NumeralsByEstablishment.as_view(), name='numerals-by-establishment'),
     path('numerals/detail/', NumeralDetail.as_view(), name='numeral-detail'),
+    
+    
+    path('template_file/validate', TemplateFileValidate.as_view(), name='template-file-validate'),
 ]

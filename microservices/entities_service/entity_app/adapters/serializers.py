@@ -236,8 +236,8 @@ class TemplateResponseSerializer(serializers.ModelSerializer):
 
 class TemplateFileValidateSerializer(serializers.Serializer):
     establishment_id = serializers.IntegerField()
-    numeral_id = serializers.IntegerField()
-    
+    template_id = serializers.IntegerField()
+    file = serializers.FileField()
 
 
 

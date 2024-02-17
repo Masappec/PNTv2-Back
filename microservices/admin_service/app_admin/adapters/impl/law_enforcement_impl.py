@@ -35,7 +35,6 @@ class LawEnforcementImpl(LawEnforcementRepository):
     
     def get_all_law_enforcement_by_establishment(self, establishment_id: int):
         law = LawEnforcement.objects.filter(establishment__id=establishment_id, is_active=True)
-        print(law)
         return law
         
     

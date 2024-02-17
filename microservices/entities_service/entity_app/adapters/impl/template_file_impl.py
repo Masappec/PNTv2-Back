@@ -4,6 +4,8 @@ from entity_app.ports.repositories.template_file_repository import TemplateFileR
 from entity_app.domain.models.transparency_active import TemplateFile
 from django.core.files.uploadedfile import UploadedFile
 from pandas import read_csv
+from entity_app.utils.functions import validate_type
+from django.core.exceptions import ObjectDoesNotExist
 
 class TemplateFileImpl(TemplateFileRepository):
     
@@ -27,7 +29,7 @@ class TemplateFileImpl(TemplateFileRepository):
         
             template = TemplateFile.objects.get(id=template_id)
             
-        except TemplateFile.DoesNotExist:
+        except ObjectDoesNotExist:
             
             raise ValueError('El template no existe')
         
@@ -35,13 +37,14 @@ class TemplateFileImpl(TemplateFileRepository):
         if file.name.endswith('.csv') or file.name.endswith('.xls') or file.name.endswith('.xlsx'):
             #liberar el archivo
             
-            csv = read_csv(file,encoding='utf-8')
+            csv = read_csv(file,encoding='utf-8', delimiter=';')
             
             
-            headers = csv.columns
+            headers = csv.columns.to_list()
+            templates_headers = [column.name for column in template.columns.all()]
             
-            if not all([header in template.columns.all().values_list('name', flat=True) for header in headers]):
-                raise ValueError('El archivo no tiene las columnas requeridas')
+            if set(headers) != set(templates_headers):
+                raise ValueError('El archivo no contiene las columnas necesarias')
             
             
             
@@ -52,10 +55,10 @@ class TemplateFileImpl(TemplateFileRepository):
                 
                 for value in csv[header]:
                     
-                    if type(value) != template.columns.get(name=header).type:
+                    if validate_type(type(value),template.columns.get(name=header).type):
                         raise ValueError('El archivo contiene valores no validos')
                 
-                
+            
             if template.max_inserts and len(csv)-1 > template.max_inserts:
                 raise ValueError('El archivo contiene mas registros de los permitidos')
             

@@ -95,7 +95,6 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         
     def update_establishment(self, establishment_id: int, establishment: dict):
         
-        print(establishment)
         establishment_selected = Establishment.objects.filter(id=establishment_id)
         establishment_selected.update(
             name=establishment['name'],
