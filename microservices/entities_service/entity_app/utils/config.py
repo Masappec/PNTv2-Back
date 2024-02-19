@@ -10,3 +10,16 @@ def create_custom_permissions():
         name='Puede crear solicitud manual',
         content_type=content_type,
     )
+
+        
+    Permission.objects.get_or_create(
+        codename='view_transparency_active_all',
+        name='Puede Ver todas las cargas de numerales',
+        content_type=content_type,
+    )
+    
+    Permission.objects.get_or_create(
+        codename='view_transparency_active',
+        name='Puede Ver cargas de numerales que le pertenecen',
+        content_type=content_type,
+    )

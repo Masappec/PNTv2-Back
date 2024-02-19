@@ -95,6 +95,14 @@ class TransparencyActive(BaseModel):
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True, editable=False, db_index=True)
     month = models.IntegerField()
     year = models.IntegerField()
+    status = models.CharField(max_length=255, 
+                              choices=(('pending', 'Pendiente'),
+                                       ('ingress', 'Ingresado'),), default='pending')
+    
+    published = models.BooleanField(default=False)
+    published_at = models.DateTimeField(null=True, blank=True)
+    max_date_to_publish = models.DateTimeField(null=True, blank=True)
+    
     
     
     def save(self, *args, **kwargs):
