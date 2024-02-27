@@ -10,16 +10,21 @@ class Status(models.TextChoices):
     
     
 class Solicity(BaseModel):
-    title = models.CharField(max_length=255)
     text = models.TextField()
     establishment = models.ForeignKey('EstablishmentExtended', on_delete=models.CASCADE)
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.CREATED)
     expiry_date = models.DateTimeField(null=True, blank=True)
     have_extension = models.BooleanField(default=False)
     is_manual = models.BooleanField(default=False)
-    
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=255)
+    identification = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    type_receipt = models.CharField(max_length=255)
+    format_receipt = models.CharField(max_length=255)
     objects = models.Manager()
 
     
