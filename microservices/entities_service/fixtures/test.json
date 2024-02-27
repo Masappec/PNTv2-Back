@@ -1,0 +1,5757 @@
+[
+    {
+        "model": "admin.logentry",
+        "pk": 1,
+        "fields": {
+            "action_time": "2024-01-13T21:29:53.704Z",
+            "user": 1,
+            "content_type": 15,
+            "object_id": "12",
+            "object_repr": "PedagogyArea object (12)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 2,
+        "fields": {
+            "action_time": "2024-01-13T22:36:51.798Z",
+            "user": 1,
+            "content_type": 15,
+            "object_id": "13",
+            "object_repr": "PedagogyArea object (13)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 3,
+        "fields": {
+            "action_time": "2024-01-14T02:15:17.754Z",
+            "user": 1,
+            "content_type": 15,
+            "object_id": "14",
+            "object_repr": "PedagogyArea object (14)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 4,
+        "fields": {
+            "action_time": "2024-01-20T02:46:14.734Z",
+            "user": 1,
+            "content_type": 23,
+            "object_id": "1",
+            "object_repr": "Tag object (1)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 5,
+        "fields": {
+            "action_time": "2024-01-20T02:46:34.927Z",
+            "user": 1,
+            "content_type": 24,
+            "object_id": "1",
+            "object_repr": "TypePublication object (1)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 6,
+        "fields": {
+            "action_time": "2024-01-20T02:47:11.667Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "1",
+            "object_repr": "FilePublication object (1)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 7,
+        "fields": {
+            "action_time": "2024-01-20T02:48:39.566Z",
+            "user": 1,
+            "content_type": 22,
+            "object_id": "1",
+            "object_repr": "Publication object (1)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 8,
+        "fields": {
+            "action_time": "2024-01-20T14:40:56.740Z",
+            "user": 1,
+            "content_type": 24,
+            "object_id": "1",
+            "object_repr": "TypePublication object (1)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 9,
+        "fields": {
+            "action_time": "2024-01-20T14:41:22.756Z",
+            "user": 1,
+            "content_type": 24,
+            "object_id": "2",
+            "object_repr": "TypePublication object (2)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 10,
+        "fields": {
+            "action_time": "2024-01-20T14:41:53.651Z",
+            "user": 1,
+            "content_type": 24,
+            "object_id": "3",
+            "object_repr": "TypePublication object (3)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 11,
+        "fields": {
+            "action_time": "2024-01-20T14:42:16.414Z",
+            "user": 1,
+            "content_type": 24,
+            "object_id": "4",
+            "object_repr": "TypePublication object (4)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 12,
+        "fields": {
+            "action_time": "2024-01-20T15:04:46.746Z",
+            "user": 1,
+            "content_type": 24,
+            "object_id": "4",
+            "object_repr": "TypePublication object (4)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 13,
+        "fields": {
+            "action_time": "2024-01-20T17:38:17.522Z",
+            "user": 1,
+            "content_type": 11,
+            "object_id": "2",
+            "object_repr": "Establishment object (2)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 14,
+        "fields": {
+            "action_time": "2024-01-20T17:38:32.192Z",
+            "user": 1,
+            "content_type": 11,
+            "object_id": "1",
+            "object_repr": "Establishment object (1)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Logo\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 15,
+        "fields": {
+            "action_time": "2024-01-21T15:02:49.977Z",
+            "user": 1,
+            "content_type": 22,
+            "object_id": "1",
+            "object_repr": "Publication object (1)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 16,
+        "fields": {
+            "action_time": "2024-01-21T15:07:46.772Z",
+            "user": 1,
+            "content_type": 11,
+            "object_id": "1",
+            "object_repr": "Establishment object (1)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 17,
+        "fields": {
+            "action_time": "2024-01-21T15:07:49.967Z",
+            "user": 1,
+            "content_type": 11,
+            "object_id": "2",
+            "object_repr": "Establishment object (2)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 18,
+        "fields": {
+            "action_time": "2024-01-22T23:32:22.473Z",
+            "user": 1,
+            "content_type": 23,
+            "object_id": "2",
+            "object_repr": "Tag object (2)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 19,
+        "fields": {
+            "action_time": "2024-01-22T23:32:37.486Z",
+            "user": 1,
+            "content_type": 23,
+            "object_id": "3",
+            "object_repr": "Tag object (3)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 20,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.899Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "22",
+            "object_repr": "FilePublication object (22)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 21,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.905Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "21",
+            "object_repr": "FilePublication object (21)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 22,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.907Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "20",
+            "object_repr": "FilePublication object (20)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 23,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.910Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "19",
+            "object_repr": "FilePublication object (19)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 24,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.913Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "18",
+            "object_repr": "FilePublication object (18)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 25,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.915Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "17",
+            "object_repr": "FilePublication object (17)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 26,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.918Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "16",
+            "object_repr": "FilePublication object (16)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 27,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.920Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "15",
+            "object_repr": "FilePublication object (15)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 28,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.922Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "14",
+            "object_repr": "FilePublication object (14)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 29,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.924Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "13",
+            "object_repr": "FilePublication object (13)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 30,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.926Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "12",
+            "object_repr": "FilePublication object (12)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 31,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.929Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "11",
+            "object_repr": "FilePublication object (11)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 32,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.931Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "10",
+            "object_repr": "FilePublication object (10)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 33,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.934Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "9",
+            "object_repr": "FilePublication object (9)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 34,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.936Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "8",
+            "object_repr": "FilePublication object (8)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 35,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.938Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "7",
+            "object_repr": "FilePublication object (7)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 36,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.940Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "6",
+            "object_repr": "FilePublication object (6)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 37,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.942Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "5",
+            "object_repr": "FilePublication object (5)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 38,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.945Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "4",
+            "object_repr": "FilePublication object (4)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 39,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.947Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "3",
+            "object_repr": "FilePublication object (3)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 40,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.950Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "2",
+            "object_repr": "FilePublication object (2)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 41,
+        "fields": {
+            "action_time": "2024-02-12T02:56:07.952Z",
+            "user": 1,
+            "content_type": 25,
+            "object_id": "1",
+            "object_repr": "FilePublication object (1)",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 42,
+        "fields": {
+            "action_time": "2024-02-12T02:58:59.066Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "1",
+            "object_repr": "Numeral object (1)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 43,
+        "fields": {
+            "action_time": "2024-02-12T16:15:45.292Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "1",
+            "object_repr": "ColumnFile object (1)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 44,
+        "fields": {
+            "action_time": "2024-02-12T16:15:59.140Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "2",
+            "object_repr": "ColumnFile object (2)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 45,
+        "fields": {
+            "action_time": "2024-02-12T17:12:10.298Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "3",
+            "object_repr": "ColumnFile object (3)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 46,
+        "fields": {
+            "action_time": "2024-02-12T17:14:11.974Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "1",
+            "object_repr": "TemplateFile object (1)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 47,
+        "fields": {
+            "action_time": "2024-02-12T17:14:24.095Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "2",
+            "object_repr": "ColumnFile object (2)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Code\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 48,
+        "fields": {
+            "action_time": "2024-02-12T17:14:29.227Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "3",
+            "object_repr": "ColumnFile object (3)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 49,
+        "fields": {
+            "action_time": "2024-02-12T17:14:33.109Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "2",
+            "object_repr": "ColumnFile object (2)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 50,
+        "fields": {
+            "action_time": "2024-02-12T17:14:38.848Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "1",
+            "object_repr": "ColumnFile object (1)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Code\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 51,
+        "fields": {
+            "action_time": "2024-02-12T17:15:14.232Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "1",
+            "object_repr": "TemplateFile object (1)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 52,
+        "fields": {
+            "action_time": "2024-02-12T17:15:35.572Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "1",
+            "object_repr": "Numeral object (1)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Templates\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 53,
+        "fields": {
+            "action_time": "2024-02-12T17:15:43.285Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "1",
+            "object_repr": "Numeral object (1)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 54,
+        "fields": {
+            "action_time": "2024-02-12T17:16:58.711Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "4",
+            "object_repr": "ColumnFile object (4)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 55,
+        "fields": {
+            "action_time": "2024-02-12T17:17:10.172Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "5",
+            "object_repr": "ColumnFile object (5)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 56,
+        "fields": {
+            "action_time": "2024-02-12T17:17:17.450Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "6",
+            "object_repr": "ColumnFile object (6)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 57,
+        "fields": {
+            "action_time": "2024-02-12T17:17:30.375Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "7",
+            "object_repr": "ColumnFile object (7)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 58,
+        "fields": {
+            "action_time": "2024-02-12T17:17:41.742Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "8",
+            "object_repr": "ColumnFile object (8)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 59,
+        "fields": {
+            "action_time": "2024-02-12T17:19:09.722Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "2",
+            "object_repr": "TemplateFile object (2)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 60,
+        "fields": {
+            "action_time": "2024-02-12T17:19:17.511Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "1",
+            "object_repr": "TemplateFile object (1)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Columns\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 61,
+        "fields": {
+            "action_time": "2024-02-12T17:20:17.624Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "2",
+            "object_repr": "Metadatos",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 62,
+        "fields": {
+            "action_time": "2024-02-12T17:20:45.690Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "1",
+            "object_repr": "Numeral object (1)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Templates\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 63,
+        "fields": {
+            "action_time": "2024-02-12T17:21:04.436Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "9",
+            "object_repr": "NÚMERO TELEFÓNICO DE LA PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 64,
+        "fields": {
+            "action_time": "2024-02-12T17:21:22.845Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "10",
+            "object_repr": "LICENCIA",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 65,
+        "fields": {
+            "action_time": "2024-02-12T17:21:33.156Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "11",
+            "object_repr": "ENLACE PARA CONSULTAR EL ORGANIGRAMA ESTRUCTURAL",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 66,
+        "fields": {
+            "action_time": "2024-02-12T17:21:36.347Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "2",
+            "object_repr": "Metadatos",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Columns\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 67,
+        "fields": {
+            "action_time": "2024-02-12T17:22:28.517Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "12",
+            "object_repr": "Institución",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 68,
+        "fields": {
+            "action_time": "2024-02-12T17:22:35.452Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "13",
+            "object_repr": "Descripción",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 69,
+        "fields": {
+            "action_time": "2024-02-12T17:22:47.678Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "14",
+            "object_repr": "Nombre del campo",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 70,
+        "fields": {
+            "action_time": "2024-02-12T17:23:22.421Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "3",
+            "object_repr": "Diccionario",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 71,
+        "fields": {
+            "action_time": "2024-02-12T17:23:35.506Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "1",
+            "object_repr": "Data set",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 72,
+        "fields": {
+            "action_time": "2024-02-12T17:41:57.963Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "14",
+            "object_repr": "Nombre del campo",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 73,
+        "fields": {
+            "action_time": "2024-02-12T17:42:14.896Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "1",
+            "object_repr": "Numeral object (1)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Templates\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 74,
+        "fields": {
+            "action_time": "2024-02-12T17:42:27.878Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "3",
+            "object_repr": "Diccionario",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 75,
+        "fields": {
+            "action_time": "2024-02-12T17:42:32.120Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "2",
+            "object_repr": "Metadatos",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Vertical template\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 76,
+        "fields": {
+            "action_time": "2024-02-12T17:45:49.993Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "2",
+            "object_repr": "Numeral object (2)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 77,
+        "fields": {
+            "action_time": "2024-02-12T17:45:55.104Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "1",
+            "object_repr": "Numeral object (1)",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 78,
+        "fields": {
+            "action_time": "2024-02-12T17:46:01.525Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "2",
+            "object_repr": "Numeral object (2)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Parent\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 79,
+        "fields": {
+            "action_time": "2024-02-12T17:46:34.984Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "3",
+            "object_repr": "Numeral 1.2",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 80,
+        "fields": {
+            "action_time": "2024-02-12T17:47:53.432Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "3",
+            "object_repr": "Numeral 1.2",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 81,
+        "fields": {
+            "action_time": "2024-02-12T17:50:20.118Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "1",
+            "object_repr": "Numeral 1.1",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 82,
+        "fields": {
+            "action_time": "2024-02-12T17:51:45.359Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "1",
+            "object_repr": "Numeral 1.1",
+            "action_flag": 2,
+            "change_message": "[]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 83,
+        "fields": {
+            "action_time": "2024-02-12T17:52:43.759Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "15",
+            "object_repr": "TIPO",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 84,
+        "fields": {
+            "action_time": "2024-02-12T17:52:54.282Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "16",
+            "object_repr": "DESCRIPCIÓN DE REGULACIÓN",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 85,
+        "fields": {
+            "action_time": "2024-02-12T17:53:05.925Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "17",
+            "object_repr": "ENLACE A REGULACIÓN",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 86,
+        "fields": {
+            "action_time": "2024-02-12T17:54:37.318Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "6",
+            "object_repr": "DATASET",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 87,
+        "fields": {
+            "action_time": "2024-02-12T17:54:43.309Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "1",
+            "object_repr": "Dataset",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 88,
+        "fields": {
+            "action_time": "2024-02-12T17:54:49.524Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "6",
+            "object_repr": "Dataset",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 89,
+        "fields": {
+            "action_time": "2024-02-12T17:56:56.952Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "7",
+            "object_repr": "Metadatos - ",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 90,
+        "fields": {
+            "action_time": "2024-02-12T17:57:36.980Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "8",
+            "object_repr": "Diccionario - ",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 91,
+        "fields": {
+            "action_time": "2024-02-12T17:57:48.758Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "3",
+            "object_repr": "Numeral 1.2",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Templates\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 92,
+        "fields": {
+            "action_time": "2024-02-12T18:00:01.546Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "4",
+            "object_repr": "Numeral 2",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 93,
+        "fields": {
+            "action_time": "2024-02-12T18:00:19.565Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "5",
+            "object_repr": "Numeral 2.2",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 94,
+        "fields": {
+            "action_time": "2024-02-12T18:01:27.622Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "18",
+            "object_repr": "No.",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 95,
+        "fields": {
+            "action_time": "2024-02-12T18:01:43.014Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "19",
+            "object_repr": "Apellidos y Nombres de los servidores y servidoras",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 96,
+        "fields": {
+            "action_time": "2024-02-12T18:01:56.300Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "20",
+            "object_repr": "Puesto Institucional",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 97,
+        "fields": {
+            "action_time": "2024-02-12T18:02:05.618Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "21",
+            "object_repr": "Unidad a la que pertenece",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 98,
+        "fields": {
+            "action_time": "2024-02-12T18:02:15.334Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "22",
+            "object_repr": "Dirección institucional",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 99,
+        "fields": {
+            "action_time": "2024-02-12T18:02:25.044Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "23",
+            "object_repr": "Ciudad en la que labora",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 100,
+        "fields": {
+            "action_time": "2024-02-12T18:02:34.960Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "24",
+            "object_repr": "Teléfono institucional",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 101,
+        "fields": {
+            "action_time": "2024-02-12T18:02:48.649Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "25",
+            "object_repr": "Extensión telefónica",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 102,
+        "fields": {
+            "action_time": "2024-02-12T18:02:56.199Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "26",
+            "object_repr": "Correo Electrónico institucional",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 103,
+        "fields": {
+            "action_time": "2024-02-12T18:03:03.032Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "9",
+            "object_repr": "Datasets - ",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 104,
+        "fields": {
+            "action_time": "2024-02-12T18:07:09.333Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "10",
+            "object_repr": "Metadatos - ",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 105,
+        "fields": {
+            "action_time": "2024-02-12T18:08:07.309Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "11",
+            "object_repr": "Diccionario - ",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 106,
+        "fields": {
+            "action_time": "2024-02-12T18:08:22.718Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "5",
+            "object_repr": "Numeral 2.2",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Templates\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 107,
+        "fields": {
+            "action_time": "2024-02-12T18:08:44.787Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "5",
+            "object_repr": "Numeral 2.1",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 108,
+        "fields": {
+            "action_time": "2024-02-12T18:19:16.863Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "6",
+            "object_repr": "Numeral 3",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 109,
+        "fields": {
+            "action_time": "2024-02-12T18:20:59.588Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "27",
+            "object_repr": "Numeración",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 110,
+        "fields": {
+            "action_time": "2024-02-12T18:22:13.906Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "28",
+            "object_repr": "Régimen laboral al que pertenece",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 111,
+        "fields": {
+            "action_time": "2024-02-12T18:22:23.817Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "29",
+            "object_repr": "Número de partida presupuestaria",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 112,
+        "fields": {
+            "action_time": "2024-02-12T18:22:35.359Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "30",
+            "object_repr": "Grado jerárquico o escala al que pertenece el puesto",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 113,
+        "fields": {
+            "action_time": "2024-02-12T18:22:49.631Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "31",
+            "object_repr": "Remuneración mensual unificada",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 114,
+        "fields": {
+            "action_time": "2024-02-12T18:22:59.398Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "32",
+            "object_repr": "Remuneración unificada (anual)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 115,
+        "fields": {
+            "action_time": "2024-02-12T18:23:08.641Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "33",
+            "object_repr": "Décimo Tercera Remuneración",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 116,
+        "fields": {
+            "action_time": "2024-02-12T18:23:18.479Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "34",
+            "object_repr": "Décima Cuarta Remuneración",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 117,
+        "fields": {
+            "action_time": "2024-02-12T18:23:43.847Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "35",
+            "object_repr": "Horas suplementarias y extraordinarias",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 118,
+        "fields": {
+            "action_time": "2024-02-12T18:23:54.981Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "36",
+            "object_repr": "Encargos y subrogaciones",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 119,
+        "fields": {
+            "action_time": "2024-02-12T18:24:03.034Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "37",
+            "object_repr": "Total ingresos adicionales",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 120,
+        "fields": {
+            "action_time": "2024-02-12T18:24:05.421Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "12",
+            "object_repr": "Datasets - ",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 121,
+        "fields": {
+            "action_time": "2024-02-12T18:25:02.244Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "37",
+            "object_repr": "Total ingresos adicionales",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Type\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 122,
+        "fields": {
+            "action_time": "2024-02-12T18:25:06.084Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "36",
+            "object_repr": "Encargos y subrogaciones",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Type\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 123,
+        "fields": {
+            "action_time": "2024-02-12T18:25:10.961Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "35",
+            "object_repr": "Horas suplementarias y extraordinarias",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Type\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 124,
+        "fields": {
+            "action_time": "2024-02-12T18:25:15.376Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "34",
+            "object_repr": "Décima Cuarta Remuneración",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Type\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 125,
+        "fields": {
+            "action_time": "2024-02-12T18:25:20.132Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "32",
+            "object_repr": "Remuneración unificada (anual)",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Type\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 126,
+        "fields": {
+            "action_time": "2024-02-12T18:25:25.958Z",
+            "user": 1,
+            "content_type": 68,
+            "object_id": "31",
+            "object_repr": "Remuneración mensual unificada",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Type\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 127,
+        "fields": {
+            "action_time": "2024-02-12T18:26:16.716Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "13",
+            "object_repr": "Metadatos - ",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 128,
+        "fields": {
+            "action_time": "2024-02-12T18:27:52.170Z",
+            "user": 1,
+            "content_type": 69,
+            "object_id": "14",
+            "object_repr": "Diccionario - ",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 129,
+        "fields": {
+            "action_time": "2024-02-12T18:28:06.978Z",
+            "user": 1,
+            "content_type": 70,
+            "object_id": "6",
+            "object_repr": "Numeral 3",
+            "action_flag": 2,
+            "change_message": "[{\"changed\": {\"fields\": [\"Templates\"]}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 130,
+        "fields": {
+            "action_time": "2024-02-16T19:24:11.664Z",
+            "user": 1,
+            "content_type": 72,
+            "object_id": "1",
+            "object_repr": "EstablishmentNumeral object (1)",
+            "action_flag": 1,
+            "change_message": "[{\"added\": {}}]"
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 131,
+        "fields": {
+            "action_time": "2024-02-22T15:52:57.997Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "3",
+            "object_repr": "anderson@gMAIL.COM",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 132,
+        "fields": {
+            "action_time": "2024-02-22T15:55:28.806Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "5",
+            "object_repr": "anderson@gmI",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 133,
+        "fields": {
+            "action_time": "2024-02-22T15:57:00.381Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "6",
+            "object_repr": "anderson@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 134,
+        "fields": {
+            "action_time": "2024-02-22T15:59:59.237Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "7",
+            "object_repr": "anderson@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 135,
+        "fields": {
+            "action_time": "2024-02-22T16:00:37.336Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "2",
+            "object_repr": "andersonsinaluisa@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 136,
+        "fields": {
+            "action_time": "2024-02-22T16:00:46.953Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "2",
+            "object_repr": "andersonsinaluisa@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 137,
+        "fields": {
+            "action_time": "2024-02-22T16:01:15.069Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "8",
+            "object_repr": "anderson@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 138,
+        "fields": {
+            "action_time": "2024-02-22T16:05:22.450Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "9",
+            "object_repr": "anderson@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 139,
+        "fields": {
+            "action_time": "2024-02-23T01:55:10.140Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "44",
+            "object_repr": "clienteqqqq@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 140,
+        "fields": {
+            "action_time": "2024-02-23T01:55:10.144Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "11",
+            "object_repr": "cliente@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 141,
+        "fields": {
+            "action_time": "2024-02-23T01:55:10.147Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "10",
+            "object_repr": "anderson@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 172,
+        "fields": {
+            "action_time": "2024-02-23T02:10:30.498Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "78",
+            "object_repr": "andersonqqqq@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 173,
+        "fields": {
+            "action_time": "2024-02-23T02:10:30.503Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "77",
+            "object_repr": "anderson@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 205,
+        "fields": {
+            "action_time": "2024-02-23T02:13:16.976Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "143",
+            "object_repr": "andersonsssss@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 206,
+        "fields": {
+            "action_time": "2024-02-23T02:13:16.980Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "110",
+            "object_repr": "anderson@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 238,
+        "fields": {
+            "action_time": "2024-02-23T02:51:22.201Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "244",
+            "object_repr": "andersaasssaonsssd555dd@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 239,
+        "fields": {
+            "action_time": "2024-02-23T02:51:22.209Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "243",
+            "object_repr": "andersaaaonsssd555dd@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 240,
+        "fields": {
+            "action_time": "2024-02-23T02:51:22.211Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "242",
+            "object_repr": "andersonsssd555dd@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 241,
+        "fields": {
+            "action_time": "2024-02-23T02:51:22.214Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "209",
+            "object_repr": "andersonddd@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "admin.logentry",
+        "pk": 242,
+        "fields": {
+            "action_time": "2024-02-23T02:51:22.217Z",
+            "user": 1,
+            "content_type": 6,
+            "object_id": "176",
+            "object_repr": "anderson@gmail.com",
+            "action_flag": 3,
+            "change_message": ""
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 1,
+        "fields": {
+            "name": "Can add log entry",
+            "content_type": 1,
+            "codename": "add_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 2,
+        "fields": {
+            "name": "Can change log entry",
+            "content_type": 1,
+            "codename": "change_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 3,
+        "fields": {
+            "name": "Can delete log entry",
+            "content_type": 1,
+            "codename": "delete_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 4,
+        "fields": {
+            "name": "Can view log entry",
+            "content_type": 1,
+            "codename": "view_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 5,
+        "fields": {
+            "name": "Can add permission",
+            "content_type": 2,
+            "codename": "add_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 6,
+        "fields": {
+            "name": "Can change permission",
+            "content_type": 2,
+            "codename": "change_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 7,
+        "fields": {
+            "name": "Can delete permission",
+            "content_type": 2,
+            "codename": "delete_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 8,
+        "fields": {
+            "name": "Can view permission",
+            "content_type": 2,
+            "codename": "view_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 9,
+        "fields": {
+            "name": "Can add group",
+            "content_type": 3,
+            "codename": "add_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 10,
+        "fields": {
+            "name": "Can change group",
+            "content_type": 3,
+            "codename": "change_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 11,
+        "fields": {
+            "name": "Can delete group",
+            "content_type": 3,
+            "codename": "delete_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 12,
+        "fields": {
+            "name": "Can view group",
+            "content_type": 3,
+            "codename": "view_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 13,
+        "fields": {
+            "name": "Can add content type",
+            "content_type": 4,
+            "codename": "add_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 14,
+        "fields": {
+            "name": "Can change content type",
+            "content_type": 4,
+            "codename": "change_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 15,
+        "fields": {
+            "name": "Can delete content type",
+            "content_type": 4,
+            "codename": "delete_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 16,
+        "fields": {
+            "name": "Can view content type",
+            "content_type": 4,
+            "codename": "view_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 17,
+        "fields": {
+            "name": "Can add session",
+            "content_type": 5,
+            "codename": "add_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 18,
+        "fields": {
+            "name": "Can change session",
+            "content_type": 5,
+            "codename": "change_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 19,
+        "fields": {
+            "name": "Can delete session",
+            "content_type": 5,
+            "codename": "delete_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 20,
+        "fields": {
+            "name": "Can view session",
+            "content_type": 5,
+            "codename": "view_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 21,
+        "fields": {
+            "name": "Can add user",
+            "content_type": 6,
+            "codename": "add_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 22,
+        "fields": {
+            "name": "Can change user",
+            "content_type": 6,
+            "codename": "change_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 23,
+        "fields": {
+            "name": "Can delete user",
+            "content_type": 6,
+            "codename": "delete_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 24,
+        "fields": {
+            "name": "Can view user",
+            "content_type": 6,
+            "codename": "view_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 25,
+        "fields": {
+            "name": "Can add role",
+            "content_type": 7,
+            "codename": "add_role"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 26,
+        "fields": {
+            "name": "Can change role",
+            "content_type": 7,
+            "codename": "change_role"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 27,
+        "fields": {
+            "name": "Can delete role",
+            "content_type": 7,
+            "codename": "delete_role"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 28,
+        "fields": {
+            "name": "Can view role",
+            "content_type": 7,
+            "codename": "view_role"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 29,
+        "fields": {
+            "name": "Can add Datos Personales",
+            "content_type": 8,
+            "codename": "add_person"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 30,
+        "fields": {
+            "name": "Can change Datos Personales",
+            "content_type": 8,
+            "codename": "change_person"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 31,
+        "fields": {
+            "name": "Can delete Datos Personales",
+            "content_type": 8,
+            "codename": "delete_person"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 32,
+        "fields": {
+            "name": "Can view Datos Personales",
+            "content_type": 8,
+            "codename": "view_person"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 33,
+        "fields": {
+            "name": "Puede crear usuario ciudadano",
+            "content_type": 3,
+            "codename": "add_user_ciudadano"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 34,
+        "fields": {
+            "name": "Puede crear usuario Carga PNT",
+            "content_type": 3,
+            "codename": "add_user_carga_pnt"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 35,
+        "fields": {
+            "name": "Puede crear usuario Supervisora PNT",
+            "content_type": 3,
+            "codename": "add_user_supervisora_pnt"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 36,
+        "fields": {
+            "name": "Puede crear usuario Monitoreo DPE",
+            "content_type": 3,
+            "codename": "add_user_monitoreo_dpe"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 37,
+        "fields": {
+            "name": "Puede crear usuario Supervisora PNT DPE",
+            "content_type": 3,
+            "codename": "add_user_monitoreo_pnt_dpe"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 38,
+        "fields": {
+            "name": "Can add Password Reset Token",
+            "content_type": 9,
+            "codename": "add_resetpasswordtoken"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 39,
+        "fields": {
+            "name": "Can change Password Reset Token",
+            "content_type": 9,
+            "codename": "change_resetpasswordtoken"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 40,
+        "fields": {
+            "name": "Can delete Password Reset Token",
+            "content_type": 9,
+            "codename": "delete_resetpasswordtoken"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 41,
+        "fields": {
+            "name": "Can view Password Reset Token",
+            "content_type": 9,
+            "codename": "view_resetpasswordtoken"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 42,
+        "fields": {
+            "name": "Can add user",
+            "content_type": 10,
+            "codename": "add_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 43,
+        "fields": {
+            "name": "Can change user",
+            "content_type": 10,
+            "codename": "change_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 44,
+        "fields": {
+            "name": "Can delete user",
+            "content_type": 10,
+            "codename": "delete_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 45,
+        "fields": {
+            "name": "Can view user",
+            "content_type": 10,
+            "codename": "view_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 46,
+        "fields": {
+            "name": "Can add Institución",
+            "content_type": 11,
+            "codename": "add_establishment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 47,
+        "fields": {
+            "name": "Can change Institución",
+            "content_type": 11,
+            "codename": "change_establishment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 48,
+        "fields": {
+            "name": "Can delete Institución",
+            "content_type": 11,
+            "codename": "delete_establishment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 49,
+        "fields": {
+            "name": "Can view Institución",
+            "content_type": 11,
+            "codename": "view_establishment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 50,
+        "fields": {
+            "name": "Can add Comité de Transparencia",
+            "content_type": 12,
+            "codename": "add_lawenforcement"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 51,
+        "fields": {
+            "name": "Can change Comité de Transparencia",
+            "content_type": 12,
+            "codename": "change_lawenforcement"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 52,
+        "fields": {
+            "name": "Can delete Comité de Transparencia",
+            "content_type": 12,
+            "codename": "delete_lawenforcement"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 53,
+        "fields": {
+            "name": "Can view Comité de Transparencia",
+            "content_type": 12,
+            "codename": "view_lawenforcement"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 54,
+        "fields": {
+            "name": "Can add Acceso a la Información",
+            "content_type": 13,
+            "codename": "add_accesstoinformation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 55,
+        "fields": {
+            "name": "Can change Acceso a la Información",
+            "content_type": 13,
+            "codename": "change_accesstoinformation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 56,
+        "fields": {
+            "name": "Can delete Acceso a la Información",
+            "content_type": 13,
+            "codename": "delete_accesstoinformation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 57,
+        "fields": {
+            "name": "Can view Acceso a la Información",
+            "content_type": 13,
+            "codename": "view_accesstoinformation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 58,
+        "fields": {
+            "name": "Can add Campo de Formulario",
+            "content_type": 14,
+            "codename": "add_formfields"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 59,
+        "fields": {
+            "name": "Can change Campo de Formulario",
+            "content_type": 14,
+            "codename": "change_formfields"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 60,
+        "fields": {
+            "name": "Can delete Campo de Formulario",
+            "content_type": 14,
+            "codename": "delete_formfields"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 61,
+        "fields": {
+            "name": "Can view Campo de Formulario",
+            "content_type": 14,
+            "codename": "view_formfields"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 62,
+        "fields": {
+            "name": "Can add BaseModel",
+            "content_type": 15,
+            "codename": "add_pedagogyarea"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 63,
+        "fields": {
+            "name": "Can change BaseModel",
+            "content_type": 15,
+            "codename": "change_pedagogyarea"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 64,
+        "fields": {
+            "name": "Can delete BaseModel",
+            "content_type": 15,
+            "codename": "delete_pedagogyarea"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 65,
+        "fields": {
+            "name": "Can view BaseModel",
+            "content_type": 15,
+            "codename": "view_pedagogyarea"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 66,
+        "fields": {
+            "name": "Can add Video Tutorial",
+            "content_type": 16,
+            "codename": "add_tutorialvideo"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 67,
+        "fields": {
+            "name": "Can change Video Tutorial",
+            "content_type": 16,
+            "codename": "change_tutorialvideo"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 68,
+        "fields": {
+            "name": "Can delete Video Tutorial",
+            "content_type": 16,
+            "codename": "delete_tutorialvideo"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 69,
+        "fields": {
+            "name": "Can view Video Tutorial",
+            "content_type": 16,
+            "codename": "view_tutorialvideo"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 70,
+        "fields": {
+            "name": "Can add Documento Normativo",
+            "content_type": 17,
+            "codename": "add_normativedocument"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 71,
+        "fields": {
+            "name": "Can change Documento Normativo",
+            "content_type": 17,
+            "codename": "change_normativedocument"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 72,
+        "fields": {
+            "name": "Can delete Documento Normativo",
+            "content_type": 17,
+            "codename": "delete_normativedocument"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 73,
+        "fields": {
+            "name": "Can view Documento Normativo",
+            "content_type": 17,
+            "codename": "view_normativedocument"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 74,
+        "fields": {
+            "name": "Can add Pregunta Frecuente",
+            "content_type": 18,
+            "codename": "add_frequentlyaskedquestions"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 75,
+        "fields": {
+            "name": "Can change Pregunta Frecuente",
+            "content_type": 18,
+            "codename": "change_frequentlyaskedquestions"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 76,
+        "fields": {
+            "name": "Can delete Pregunta Frecuente",
+            "content_type": 18,
+            "codename": "delete_frequentlyaskedquestions"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 77,
+        "fields": {
+            "name": "Can view Pregunta Frecuente",
+            "content_type": 18,
+            "codename": "view_frequentlyaskedquestions"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 78,
+        "fields": {
+            "name": "Can add Usuario por Institución",
+            "content_type": 19,
+            "codename": "add_userestablishment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 79,
+        "fields": {
+            "name": "Can change Usuario por Institución",
+            "content_type": 19,
+            "codename": "change_userestablishment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 80,
+        "fields": {
+            "name": "Can delete Usuario por Institución",
+            "content_type": 19,
+            "codename": "delete_userestablishment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 81,
+        "fields": {
+            "name": "Can view Usuario por Institución",
+            "content_type": 19,
+            "codename": "view_userestablishment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 82,
+        "fields": {
+            "name": "Can add Email",
+            "content_type": 20,
+            "codename": "add_email"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 83,
+        "fields": {
+            "name": "Can change Email",
+            "content_type": 20,
+            "codename": "change_email"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 84,
+        "fields": {
+            "name": "Can delete Email",
+            "content_type": 20,
+            "codename": "delete_email"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 85,
+        "fields": {
+            "name": "Can view Email",
+            "content_type": 20,
+            "codename": "view_email"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 86,
+        "fields": {
+            "name": "Can add Configuración",
+            "content_type": 21,
+            "codename": "add_configuration"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 87,
+        "fields": {
+            "name": "Can change Configuración",
+            "content_type": 21,
+            "codename": "change_configuration"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 88,
+        "fields": {
+            "name": "Can delete Configuración",
+            "content_type": 21,
+            "codename": "delete_configuration"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 89,
+        "fields": {
+            "name": "Can view Configuración",
+            "content_type": 21,
+            "codename": "view_configuration"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 90,
+        "fields": {
+            "name": "Can view configuration",
+            "content_type": 21,
+            "codename": "can_view_configuration"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 91,
+        "fields": {
+            "name": "Can add establishment extended",
+            "content_type": 26,
+            "codename": "add_establishmentextended"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 92,
+        "fields": {
+            "name": "Can change establishment extended",
+            "content_type": 26,
+            "codename": "change_establishmentextended"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 93,
+        "fields": {
+            "name": "Can delete establishment extended",
+            "content_type": 26,
+            "codename": "delete_establishmentextended"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 94,
+        "fields": {
+            "name": "Can view establishment extended",
+            "content_type": 26,
+            "codename": "view_establishmentextended"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 95,
+        "fields": {
+            "name": "Can add Publicación",
+            "content_type": 22,
+            "codename": "add_publication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 96,
+        "fields": {
+            "name": "Can change Publicación",
+            "content_type": 22,
+            "codename": "change_publication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 97,
+        "fields": {
+            "name": "Can delete Publicación",
+            "content_type": 22,
+            "codename": "delete_publication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 98,
+        "fields": {
+            "name": "Can view Publicación",
+            "content_type": 22,
+            "codename": "view_publication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 99,
+        "fields": {
+            "name": "Can add Tipo de Publicación",
+            "content_type": 24,
+            "codename": "add_typepublication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 100,
+        "fields": {
+            "name": "Can change Tipo de Publicación",
+            "content_type": 24,
+            "codename": "change_typepublication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 101,
+        "fields": {
+            "name": "Can delete Tipo de Publicación",
+            "content_type": 24,
+            "codename": "delete_typepublication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 102,
+        "fields": {
+            "name": "Can view Tipo de Publicación",
+            "content_type": 24,
+            "codename": "view_typepublication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 103,
+        "fields": {
+            "name": "Can add BaseModel",
+            "content_type": 27,
+            "codename": "add_typeformats"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 104,
+        "fields": {
+            "name": "Can change BaseModel",
+            "content_type": 27,
+            "codename": "change_typeformats"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 105,
+        "fields": {
+            "name": "Can delete BaseModel",
+            "content_type": 27,
+            "codename": "delete_typeformats"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 106,
+        "fields": {
+            "name": "Can view BaseModel",
+            "content_type": 27,
+            "codename": "view_typeformats"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 107,
+        "fields": {
+            "name": "Can add Etiqueta",
+            "content_type": 23,
+            "codename": "add_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 108,
+        "fields": {
+            "name": "Can change Etiqueta",
+            "content_type": 23,
+            "codename": "change_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 109,
+        "fields": {
+            "name": "Can delete Etiqueta",
+            "content_type": 23,
+            "codename": "delete_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 110,
+        "fields": {
+            "name": "Can view Etiqueta",
+            "content_type": 23,
+            "codename": "view_tag"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 111,
+        "fields": {
+            "name": "Can add Archivo Publicación",
+            "content_type": 25,
+            "codename": "add_filepublication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 112,
+        "fields": {
+            "name": "Can change Archivo Publicación",
+            "content_type": 25,
+            "codename": "change_filepublication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 113,
+        "fields": {
+            "name": "Can delete Archivo Publicación",
+            "content_type": 25,
+            "codename": "delete_filepublication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 114,
+        "fields": {
+            "name": "Can view Archivo Publicación",
+            "content_type": 25,
+            "codename": "view_filepublication"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 115,
+        "fields": {
+            "name": "Can add Activity Log",
+            "content_type": 28,
+            "codename": "add_activitylog"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 116,
+        "fields": {
+            "name": "Can change Activity Log",
+            "content_type": 28,
+            "codename": "change_activitylog"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 117,
+        "fields": {
+            "name": "Can delete Activity Log",
+            "content_type": 28,
+            "codename": "delete_activitylog"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 118,
+        "fields": {
+            "name": "Can view Activity Log",
+            "content_type": 28,
+            "codename": "view_activitylog"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 119,
+        "fields": {
+            "name": "Can add user establishment extended",
+            "content_type": 29,
+            "codename": "add_userestablishmentextended"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 120,
+        "fields": {
+            "name": "Can change user establishment extended",
+            "content_type": 29,
+            "codename": "change_userestablishmentextended"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 121,
+        "fields": {
+            "name": "Can delete user establishment extended",
+            "content_type": 29,
+            "codename": "delete_userestablishmentextended"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 122,
+        "fields": {
+            "name": "Can view user establishment extended",
+            "content_type": 29,
+            "codename": "view_userestablishmentextended"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 152,
+        "fields": {
+            "name": "Can add Adjunto",
+            "content_type": 62,
+            "codename": "add_attachment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 153,
+        "fields": {
+            "name": "Can change Adjunto",
+            "content_type": 62,
+            "codename": "change_attachment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 154,
+        "fields": {
+            "name": "Can delete Adjunto",
+            "content_type": 62,
+            "codename": "delete_attachment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 155,
+        "fields": {
+            "name": "Can view Adjunto",
+            "content_type": 62,
+            "codename": "view_attachment"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 156,
+        "fields": {
+            "name": "Can add Solicitud",
+            "content_type": 63,
+            "codename": "add_solicity"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 157,
+        "fields": {
+            "name": "Can change Solicitud",
+            "content_type": 63,
+            "codename": "change_solicity"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 158,
+        "fields": {
+            "name": "Can delete Solicitud",
+            "content_type": 63,
+            "codename": "delete_solicity"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 159,
+        "fields": {
+            "name": "Can view Solicitud",
+            "content_type": 63,
+            "codename": "view_solicity"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 160,
+        "fields": {
+            "name": "Can add Insistencia",
+            "content_type": 64,
+            "codename": "add_insistency"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 161,
+        "fields": {
+            "name": "Can change Insistencia",
+            "content_type": 64,
+            "codename": "change_insistency"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 162,
+        "fields": {
+            "name": "Can delete Insistencia",
+            "content_type": 64,
+            "codename": "delete_insistency"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 163,
+        "fields": {
+            "name": "Can view Insistencia",
+            "content_type": 64,
+            "codename": "view_insistency"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 164,
+        "fields": {
+            "name": "Can add Prórroga",
+            "content_type": 65,
+            "codename": "add_extension"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 165,
+        "fields": {
+            "name": "Can change Prórroga",
+            "content_type": 65,
+            "codename": "change_extension"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 166,
+        "fields": {
+            "name": "Can delete Prórroga",
+            "content_type": 65,
+            "codename": "delete_extension"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 167,
+        "fields": {
+            "name": "Can view Prórroga",
+            "content_type": 65,
+            "codename": "view_extension"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 168,
+        "fields": {
+            "name": "Can add Respuesta de Solicitud",
+            "content_type": 66,
+            "codename": "add_solicityresponse"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 169,
+        "fields": {
+            "name": "Can change Respuesta de Solicitud",
+            "content_type": 66,
+            "codename": "change_solicityresponse"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 170,
+        "fields": {
+            "name": "Can delete Respuesta de Solicitud",
+            "content_type": 66,
+            "codename": "delete_solicityresponse"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 171,
+        "fields": {
+            "name": "Can view Respuesta de Solicitud",
+            "content_type": 66,
+            "codename": "view_solicityresponse"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 172,
+        "fields": {
+            "name": "Can add Categoría",
+            "content_type": 67,
+            "codename": "add_category"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 173,
+        "fields": {
+            "name": "Can change Categoría",
+            "content_type": 67,
+            "codename": "change_category"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 174,
+        "fields": {
+            "name": "Can delete Categoría",
+            "content_type": 67,
+            "codename": "delete_category"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 175,
+        "fields": {
+            "name": "Can view Categoría",
+            "content_type": 67,
+            "codename": "view_category"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 176,
+        "fields": {
+            "name": "Can add Columna de Plantilla de Archivo",
+            "content_type": 68,
+            "codename": "add_columnfile"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 177,
+        "fields": {
+            "name": "Can change Columna de Plantilla de Archivo",
+            "content_type": 68,
+            "codename": "change_columnfile"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 178,
+        "fields": {
+            "name": "Can delete Columna de Plantilla de Archivo",
+            "content_type": 68,
+            "codename": "delete_columnfile"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 179,
+        "fields": {
+            "name": "Can view Columna de Plantilla de Archivo",
+            "content_type": 68,
+            "codename": "view_columnfile"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 180,
+        "fields": {
+            "name": "Can add Plantilla de Archivo",
+            "content_type": 69,
+            "codename": "add_templatefile"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 181,
+        "fields": {
+            "name": "Can change Plantilla de Archivo",
+            "content_type": 69,
+            "codename": "change_templatefile"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 182,
+        "fields": {
+            "name": "Can delete Plantilla de Archivo",
+            "content_type": 69,
+            "codename": "delete_templatefile"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 183,
+        "fields": {
+            "name": "Can view Plantilla de Archivo",
+            "content_type": 69,
+            "codename": "view_templatefile"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 184,
+        "fields": {
+            "name": "Can add Numeral",
+            "content_type": 70,
+            "codename": "add_numeral"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 185,
+        "fields": {
+            "name": "Can change Numeral",
+            "content_type": 70,
+            "codename": "change_numeral"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 186,
+        "fields": {
+            "name": "Can delete Numeral",
+            "content_type": 70,
+            "codename": "delete_numeral"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 187,
+        "fields": {
+            "name": "Can view Numeral",
+            "content_type": 70,
+            "codename": "view_numeral"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 188,
+        "fields": {
+            "name": "Can add Transparencia Activa",
+            "content_type": 71,
+            "codename": "add_transparencyactive"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 189,
+        "fields": {
+            "name": "Can change Transparencia Activa",
+            "content_type": 71,
+            "codename": "change_transparencyactive"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 190,
+        "fields": {
+            "name": "Can delete Transparencia Activa",
+            "content_type": 71,
+            "codename": "delete_transparencyactive"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 191,
+        "fields": {
+            "name": "Can view Transparencia Activa",
+            "content_type": 71,
+            "codename": "view_transparencyactive"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 192,
+        "fields": {
+            "name": "Can add Numeral de Establecimiento",
+            "content_type": 72,
+            "codename": "add_establishmentnumeral"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 193,
+        "fields": {
+            "name": "Can change Numeral de Establecimiento",
+            "content_type": 72,
+            "codename": "change_establishmentnumeral"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 194,
+        "fields": {
+            "name": "Can delete Numeral de Establecimiento",
+            "content_type": 72,
+            "codename": "delete_establishmentnumeral"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 195,
+        "fields": {
+            "name": "Can view Numeral de Establecimiento",
+            "content_type": 72,
+            "codename": "view_establishmentnumeral"
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "Ciudadano",
+            "permissions": []
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 2,
+        "fields": {
+            "name": "Carga PNT",
+            "permissions": [
+                91,
+                92,
+                93,
+                94,
+                111,
+                112,
+                113,
+                114,
+                95,
+                96,
+                97,
+                98
+            ]
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 3,
+        "fields": {
+            "name": "Supervisora PNT",
+            "permissions": []
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 4,
+        "fields": {
+            "name": "Monitoreo DPE",
+            "permissions": []
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 5,
+        "fields": {
+            "name": "Superadministradora PNT DPE",
+            "permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$SMwY6jDvWaZS43UjJ4ENe0$TsIHmk7ieyOgwPBM2TUnhc+n93alh+VlUchv2NduaGg=",
+            "last_login": "2024-02-23T02:52:42.586Z",
+            "is_superuser": true,
+            "username": "superadmin@pnt.com",
+            "first_name": "Super",
+            "last_name": "Administrador",
+            "email": "superadmin@pnt.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2023-12-21T16:25:03.247Z",
+            "groups": [
+                5
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$X4qdftCfg2n2pGVilq6jnb$bc83vaDt+265bWbk5bLedsBf2V5z4TBwlG1tHhW+3MY=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "andersonsinaluisa@gmail.com",
+            "first_name": "Anderson",
+            "last_name": "Sinaluisa",
+            "email": "andersonsinaluisa@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-01-21T22:32:50.564Z",
+            "groups": [
+                2
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 245,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$A872o8ItRcYz2VK3L7aVka$Ofz0RgNNltldZD8vxHdFENROihSnofVYmQmXtv7FZBI=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "cliente@gmail.com",
+            "first_name": "anderson",
+            "last_name": "sinaluisa",
+            "email": "cliente@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-02-23T02:51:45.570Z",
+            "groups": [
+                3
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 278,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$pPIBFbQmrrHoDXIyWveoOA$T0Irx54aWCMguslIUxHVFpM+OMfOcHo36mfqzKX7rPU=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "clientessss@gmail.com",
+            "first_name": "anderson",
+            "last_name": "sinaluisa",
+            "email": "clientessss@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-02-23T02:52:17.424Z",
+            "groups": [
+                3
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 311,
+        "fields": {
+            "password": "pbkdf2_sha256$600000$EmYy0eDETnJiPhxSi32PUM$4BoCdD7+QDxZTamJiLohaJJoDT7sbQM1W/fsco38scI=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "clientesssssss@gmail.com",
+            "first_name": "anderson",
+            "last_name": "sinaluisa",
+            "email": "clientesssssss@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-02-23T03:01:55.423Z",
+            "groups": [
+                3
+            ],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 1,
+        "fields": {
+            "app_label": "admin",
+            "model": "logentry"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 2,
+        "fields": {
+            "app_label": "auth",
+            "model": "permission"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 3,
+        "fields": {
+            "app_label": "auth",
+            "model": "group"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 4,
+        "fields": {
+            "app_label": "contenttypes",
+            "model": "contenttype"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 5,
+        "fields": {
+            "app_label": "sessions",
+            "model": "session"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 6,
+        "fields": {
+            "app_label": "app",
+            "model": "user"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 7,
+        "fields": {
+            "app_label": "app",
+            "model": "role"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 8,
+        "fields": {
+            "app_label": "app",
+            "model": "person"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 9,
+        "fields": {
+            "app_label": "django_rest_passwordreset",
+            "model": "resetpasswordtoken"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 10,
+        "fields": {
+            "app_label": "auth",
+            "model": "user"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 11,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "establishment"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 12,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "lawenforcement"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 13,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "accesstoinformation"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 14,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "formfields"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 15,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "pedagogyarea"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 16,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "tutorialvideo"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 17,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "normativedocument"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 18,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "frequentlyaskedquestions"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 19,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "userestablishment"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 20,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "email"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 21,
+        "fields": {
+            "app_label": "app_admin",
+            "model": "configuration"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 22,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "publication"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 23,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "tag"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 24,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "typepublication"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 25,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "filepublication"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 26,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "establishmentextended"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 27,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "typeformats"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 28,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "activitylog"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 29,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "userestablishmentextended"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 62,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "attachment"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 63,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "solicity"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 64,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "insistency"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 65,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "extension"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 66,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "solicityresponse"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 67,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "category"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 68,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "columnfile"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 69,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "templatefile"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 70,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "numeral"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 71,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "transparencyactive"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 72,
+        "fields": {
+            "app_label": "entity_app",
+            "model": "establishmentnumeral"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "1rhpnlwnrhxs9q6v8ymzb8xxgywp92fr",
+        "fields": {
+            "session_data": ".eJxVjDkOwjAUBe_iGlleghdK-pzB-ouDA8iW4qRC3B0ipYD2zcx7iQTbWtLW85JmFhehxel3Q6BHrjvgO9Rbk9Tquswod0UetMuxcX5eD_fvoEAv39pNBgb0wBisU9aqIcSAmtgrNgqDioEdafAxa-PPxltyUUcfFU1oCcX7A8zvN0Q:1rOlXz:W6fmT8qU0qg42MhtumVaM-VO234J3M9B2ny70_L9pqI",
+            "expire_date": "2024-01-27T21:28:07.115Z"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "f0rejqsmfeql0rec0htj36jykxzh9zx7",
+        "fields": {
+            "session_data": ".eJxVzM0OwiAQBOB34WwIIH_r0bvPQHaBStVAUtqT8d2lSQ96nflm3izgtpaw9byEObELk-z0mxHGZ657kR5Y743HVtdlJr4TfrSd31rKr-th_w4K9jLWkITzXpsJrHJkdfTSGaMm0IbMmSBmJCMkYEZUOOygmMmBleCUSOzzBcVWN1g:1rS3kX:iSIIWezJrGA52l_yquLcw3yUxbCpSdtvEnrQLPl8NVw",
+            "expire_date": "2024-02-05T23:30:41.669Z"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "n9xlkqh7jwsnmsisypxniy4f0dl750uu",
+        "fields": {
+            "session_data": ".eJxVjDkOwjAUBe_iGlleghdK-pzB-ouDA8iW4qRC3B0ipYD2zcx7iQTbWtLW85JmFhehxel3Q6BHrjvgO9Rbk9Tquswod0UetMuxcX5eD_fvoEAv39pNBgb0wBisU9aqIcSAmtgrNgqDioEdafAxa-PPxltyUUcfFU1oCcX7A8zvN0Q:1rdBQb:AiPhju9986nMBHogUFS-BjTJ2KeJr4l0Q8Oq2O80mNM",
+            "expire_date": "2024-03-07T15:56:05.648Z"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "uostt8dup30q7yj1252dato8fw3wkdpw",
+        "fields": {
+            "session_data": ".eJxVzM0OwiAQBOB34WwIIH_r0bvPQHaBStVAUtqT8d2lSQ96nflm3izgtpaw9byEObELk-z0mxHGZ657kR5Y743HVtdlJr4TfrSd31rKr-th_w4K9jLWkITzXpsJrHJkdfTSGaMm0IbMmSBmJCMkYEZUOOygmMmBleCUSOzzBcVWN1g:1rdBNS:LrmI-ItWXdD2rVkmxMKJtklRzgS5J152ATSzbhnyMpE",
+            "expire_date": "2024-03-07T15:52:50.159Z"
+        }
+    },
+    {
+        "model": "entity_app.establishmentextended",
+        "pk": 1,
+        "fields": {
+            "name": "PRUEBA A",
+            "code": "1",
+            "abbreviation": "TEST",
+            "logo": "establishment/2-removebg-preview_2.png",
+            "highest_authority": "ASDASD",
+            "first_name_authority": "ASDASD",
+            "last_name_authority": "ASDASD",
+            "job_authority": "ASDASD",
+            "email_authority": "admin@admin.com",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.establishmentextended",
+        "pk": 2,
+        "fields": {
+            "name": "PRUEBA A",
+            "code": "2",
+            "abbreviation": "TEST",
+            "logo": "establishment/1-removebg-preview.png",
+            "highest_authority": "ASDASD",
+            "first_name_authority": "ASDASD",
+            "last_name_authority": "ASDASD",
+            "job_authority": "ASDASD",
+            "email_authority": "admin@admin.com",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.userestablishmentextended",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-01-21T22:32:51.826Z",
+            "updated_at": "2024-01-21T22:32:51.826Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "user": 2,
+            "establishment": 1,
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.publication",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-01-20T02:48:39.542Z",
+            "updated_at": "2024-01-25T02:52:31.597Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": 1,
+            "user_updated": 2,
+            "user_deleted": null,
+            "ip": null,
+            "name": "PUBLICACION DE PRUEBA",
+            "description": "ASASD",
+            "is_active": true,
+            "establishment": 1,
+            "type_publication": 1,
+            "slug": "publicacion-de-prueba",
+            "notes": null,
+            "type_format": [],
+            "tag": [
+                1
+            ],
+            "file_publication": [],
+            "attachment": []
+        }
+    },
+    {
+        "model": "entity_app.publication",
+        "pk": 2,
+        "fields": {
+            "created_at": "2024-01-24T05:26:21.996Z",
+            "updated_at": "2024-01-25T03:02:00.427Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": 1,
+            "user_deleted": null,
+            "ip": null,
+            "name": "sss",
+            "description": "asdasd",
+            "is_active": true,
+            "establishment": 1,
+            "type_publication": 1,
+            "slug": "sss",
+            "notes": "asdsad",
+            "type_format": [],
+            "tag": [
+                1
+            ],
+            "file_publication": [],
+            "attachment": []
+        }
+    },
+    {
+        "model": "entity_app.publication",
+        "pk": 3,
+        "fields": {
+            "created_at": "2024-01-24T05:38:28.920Z",
+            "updated_at": "2024-01-27T02:55:04.566Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": 2,
+            "user_deleted": null,
+            "ip": null,
+            "name": "PUBLICACION DE PRUEBA",
+            "description": "DATOA ABIERTOS",
+            "is_active": true,
+            "establishment": 1,
+            "type_publication": 4,
+            "slug": "pnt-project",
+            "notes": "EVENTO DIA NO SE QUE",
+            "type_format": [],
+            "tag": [
+                1,
+                2,
+                3
+            ],
+            "file_publication": [],
+            "attachment": [
+                12
+            ]
+        }
+    },
+    {
+        "model": "entity_app.publication",
+        "pk": 4,
+        "fields": {
+            "created_at": "2024-01-24T05:59:44.526Z",
+            "updated_at": "2024-01-25T02:52:05.733Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": 2,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "DATOS ABIERTOS",
+            "description": "DATOS ABIERTOS SOLICITADOS EN EL COMITE",
+            "is_active": true,
+            "establishment": 1,
+            "type_publication": 4,
+            "slug": "datos-abiertos",
+            "notes": "EVENTO REALIZADO HOY",
+            "type_format": [],
+            "tag": [
+                2,
+                3,
+                6
+            ],
+            "file_publication": [],
+            "attachment": []
+        }
+    },
+    {
+        "model": "entity_app.publication",
+        "pk": 5,
+        "fields": {
+            "created_at": "2024-01-25T00:17:21.000Z",
+            "updated_at": "2024-01-25T02:52:40.819Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": 2,
+            "user_updated": 2,
+            "user_deleted": null,
+            "ip": null,
+            "name": "PRUEBA DE DATOS ABIERTOS",
+            "description": "adsad",
+            "is_active": true,
+            "establishment": 1,
+            "type_publication": 1,
+            "slug": "prueba-de-datos-abiertos",
+            "notes": "",
+            "type_format": [],
+            "tag": [
+                2,
+                6
+            ],
+            "file_publication": [],
+            "attachment": [
+                5,
+                6
+            ]
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-01-25T00:02:55.702Z",
+            "updated_at": "2024-01-25T00:02:55.702Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": null,
+            "description": null,
+            "url_download": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 2,
+        "fields": {
+            "created_at": "2024-01-25T00:04:55.601Z",
+            "updated_at": "2024-01-25T00:04:55.601Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": null,
+            "description": null,
+            "url_download": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 3,
+        "fields": {
+            "created_at": "2024-01-25T00:06:16.188Z",
+            "updated_at": "2024-01-25T00:06:16.188Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": null,
+            "description": null,
+            "url_download": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 4,
+        "fields": {
+            "created_at": "2024-01-25T00:08:40.300Z",
+            "updated_at": "2024-01-25T00:08:40.300Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": null,
+            "description": null,
+            "url_download": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 5,
+        "fields": {
+            "created_at": "2024-01-25T00:09:42.064Z",
+            "updated_at": "2024-01-25T00:09:42.065Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "asdasd",
+            "description": "asdasd",
+            "url_download": "https://datosabiertos.gob.ec/blog/",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 6,
+        "fields": {
+            "created_at": "2024-01-25T00:14:09.224Z",
+            "updated_at": "2024-01-25T00:14:09.224Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "asdasd",
+            "description": "asdsad",
+            "url_download": "https://media.githubusercontent.com/media/datablist/sample-csv-files/main/files/organizations/organizations-100.csv",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 7,
+        "fields": {
+            "created_at": "2024-01-25T01:55:04.348Z",
+            "updated_at": "2024-01-25T01:55:04.348Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "aasd",
+            "description": "asdsad",
+            "url_download": "https://educacion.gob.ec/wp-content/uploads/downloads/2015/01/NOMINA-DE-DOCENTES-SELECCIONADOS-OEI-PRIMERA-Y-SEGUNDA-FASE.pdf",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 8,
+        "fields": {
+            "created_at": "2024-01-25T02:16:25.168Z",
+            "updated_at": "2024-01-25T02:16:25.168Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "ANDERSON SINALUISA TOBAR",
+            "description": "asdsadsadasdsa",
+            "url_download": "https://educacion.gob.ec/wp-content/uploads/downloads/2015/01/NOMINA-DE-DOCENTES-SELECCIONADOS-OEI-PRIMERA-Y-SEGUNDA-FASE.pdf",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 9,
+        "fields": {
+            "created_at": "2024-01-25T02:16:59.773Z",
+            "updated_at": "2024-01-25T02:16:59.773Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "ASDASD",
+            "description": "ASDASD",
+            "url_download": "https://educacion.gob.ec/wp-content/uploads/downloads/2015/01/NOMINA-DE-DOCENTES-SELECCIONADOS-OEI-PRIMERA-Y-SEGUNDA-FASE.pdf",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 10,
+        "fields": {
+            "created_at": "2024-01-25T02:17:31.355Z",
+            "updated_at": "2024-01-25T02:17:31.355Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "DASDSAD",
+            "description": "ADASDAS",
+            "url_download": "https://educacion.gob.ec/wp-content/uploads/downloads/2015/01/NOMINA-DE-DOCENTES-SELECCIONADOS-OEI-PRIMERA-Y-SEGUNDA-FASE.pdf",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 11,
+        "fields": {
+            "created_at": "2024-01-25T02:20:48.894Z",
+            "updated_at": "2024-01-25T02:20:48.894Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "asdsad",
+            "description": "asdasd",
+            "url_download": "https://educacion.gob.ec/wp-content/uploads/downloads/2015/01/NOMINA-DE-DOCENTES-SELECCIONADOS-OEI-PRIMERA-Y-SEGUNDA-FASE.pdf",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 12,
+        "fields": {
+            "created_at": "2024-01-25T02:21:43.252Z",
+            "updated_at": "2024-01-25T02:21:43.252Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "asdasdsad",
+            "description": "asdsad",
+            "url_download": "https://datosabiertos.gob.ec/blog/",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.attachment",
+        "pk": 13,
+        "fields": {
+            "created_at": "2024-01-27T02:59:37.057Z",
+            "updated_at": "2024-01-27T02:59:37.057Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "DATOS ABIERTOS",
+            "description": "ASDASD",
+            "url_download": "https://datosabiertos.gob.ec/blog/",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.typepublication",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-01-20T02:46:34.916Z",
+            "updated_at": "2024-01-20T14:40:56.736Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "TRANSPARENCIA ACTIVA",
+            "description": "Transparencia activa se refiere a la publicación mensual de información en los formatos establecidos (dataset, metadato, diccionario), considerando además las obligaciones específicas según la entidad de la que se trate.",
+            "is_active": true,
+            "code": "TA"
+        }
+    },
+    {
+        "model": "entity_app.typepublication",
+        "pk": 2,
+        "fields": {
+            "created_at": "2024-01-20T14:41:22.753Z",
+            "updated_at": "2024-01-20T14:41:22.753Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "TRANSPARENCIA PASIVA",
+            "description": "Gestión y seguimiento de solicitudes de acceso a la información pública. La entidad solo podría consultar las solicitudes que ha recibido y responderlas.",
+            "is_active": true,
+            "code": "TP"
+        }
+    },
+    {
+        "model": "entity_app.typepublication",
+        "pk": 3,
+        "fields": {
+            "created_at": "2024-01-20T14:41:53.650Z",
+            "updated_at": "2024-01-20T14:41:53.650Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "TRANSPARENCIA FOCALIZADA",
+            "description": "Igual a la activa, pero solo con 1 formato posible de dataset, es decir no habrían varios formatos. Los CSV que se compartan podrían tener anexos en otros formatos de archivos, por ejemplo, mapas, informes pdf, etc.",
+            "is_active": true,
+            "code": "TF"
+        }
+    },
+    {
+        "model": "entity_app.typepublication",
+        "pk": 4,
+        "fields": {
+            "created_at": "2024-01-20T14:42:16.412Z",
+            "updated_at": "2024-01-20T15:04:46.745Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "TRANSPARENCIA COLABORATIVA",
+            "description": "Igual a la activa, pero solo con 1 formato posible de dataset, es decir no habrían varios formatos. Los CSV que se compartan podrían tener anexos en otros formatos de archivos, por ejemplo, mapas, informes pdf, etc.",
+            "is_active": true,
+            "code": "TC"
+        }
+    },
+    {
+        "model": "entity_app.tag",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-01-20T02:46:14.716Z",
+            "updated_at": "2024-01-20T02:46:14.716Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "ETIQUETA",
+            "description": "",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.tag",
+        "pk": 2,
+        "fields": {
+            "created_at": "2024-01-22T23:32:22.453Z",
+            "updated_at": "2024-01-22T23:32:22.453Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "DATA",
+            "description": "DATA",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.tag",
+        "pk": 3,
+        "fields": {
+            "created_at": "2024-01-22T23:32:37.483Z",
+            "updated_at": "2024-01-22T23:32:37.483Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "DATOS ABIERTOS",
+            "description": "datos Abiertos",
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.tag",
+        "pk": 4,
+        "fields": {
+            "created_at": "2024-01-22T23:35:12.878Z",
+            "updated_at": "2024-01-22T23:35:12.878Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "PRUEBA",
+            "description": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.tag",
+        "pk": 5,
+        "fields": {
+            "created_at": "2024-01-22T23:36:14.936Z",
+            "updated_at": "2024-01-22T23:36:14.936Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "PRUEBA 2",
+            "description": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.tag",
+        "pk": 6,
+        "fields": {
+            "created_at": "2024-01-23T03:32:28.359Z",
+            "updated_at": "2024-01-23T03:32:28.360Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "asssa",
+            "description": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "entity_app.establishmentnumeral",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-02-16T19:24:11.659Z",
+            "updated_at": "2024-02-16T19:24:11.659Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "establishment": 1,
+            "numeral": 2,
+            "value": "TEST"
+        }
+    },
+    {
+        "model": "entity_app.numeral",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-02-12T02:58:59.061Z",
+            "updated_at": "2024-02-12T17:51:45.356Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Numeral 1.1",
+            "description": "Estructura orgánica funcional",
+            "parent": null,
+            "templates": [
+                1,
+                2,
+                3
+            ]
+        }
+    },
+    {
+        "model": "entity_app.numeral",
+        "pk": 2,
+        "fields": {
+            "created_at": "2024-02-12T17:45:49.987Z",
+            "updated_at": "2024-02-12T17:46:01.521Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Numeral 1",
+            "description": "Estructura orgánica funcional",
+            "parent": 2,
+            "templates": []
+        }
+    },
+    {
+        "model": "entity_app.numeral",
+        "pk": 3,
+        "fields": {
+            "created_at": "2024-02-12T17:46:34.982Z",
+            "updated_at": "2024-02-12T17:57:48.754Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Numeral 1.2",
+            "description": "Base legal que rige a la entidad",
+            "parent": 2,
+            "templates": [
+                8,
+                6,
+                7
+            ]
+        }
+    },
+    {
+        "model": "entity_app.numeral",
+        "pk": 4,
+        "fields": {
+            "created_at": "2024-02-12T18:00:01.541Z",
+            "updated_at": "2024-02-12T18:00:01.541Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Numeral 2",
+            "description": "El directorio completo del organismo, dependencia y/o persona jurídica,\r\nasí como el distributivo del personal y su cargo;",
+            "parent": null,
+            "templates": []
+        }
+    },
+    {
+        "model": "entity_app.numeral",
+        "pk": 5,
+        "fields": {
+            "created_at": "2024-02-12T18:00:19.562Z",
+            "updated_at": "2024-02-12T18:08:44.785Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Numeral 2.1",
+            "description": "Directorio completo del organismo, dependencia y/o persona jurídica",
+            "parent": 4,
+            "templates": [
+                9,
+                10,
+                11
+            ]
+        }
+    },
+    {
+        "model": "entity_app.numeral",
+        "pk": 6,
+        "fields": {
+            "created_at": "2024-02-12T18:19:16.859Z",
+            "updated_at": "2024-02-12T18:28:06.975Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Numeral 3",
+            "description": "Las remuneraciones salariales, incluyendo todo ingreso adicional\r\ncorrespondiente a todo el personal del organismo, dependencia y/o\r\npersona jurídica;",
+            "parent": null,
+            "templates": [
+                12,
+                13,
+                14
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-02-12T17:14:11.967Z",
+            "updated_at": "2024-02-12T17:54:43.307Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": 1,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Dataset",
+            "code": "dataset_numeral_1.1",
+            "description": "base legal que la rige, regulaciones y\r\nprocedimientos internos aplicables a la entidad; así como las metas y\r\nobjetivos de las unidades administrativas de conformidad con sus\r\nprogramas operativos",
+            "is_active": true,
+            "vertical_template": false,
+            "max_inserts": null,
+            "columns": [
+                3,
+                2,
+                1
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 2,
+        "fields": {
+            "created_at": "2024-02-12T17:19:09.717Z",
+            "updated_at": "2024-02-12T17:42:32.118Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Metadatos",
+            "code": "metadatos_numeral_1.1",
+            "description": "base legal que la rige, regulaciones y\r\nprocedimientos internos aplicables a la entidad; así como las metas y\r\nobjetivos de las unidades administrativas de conformidad con sus\r\nprogramas operativos",
+            "is_active": true,
+            "vertical_template": true,
+            "max_inserts": 1,
+            "columns": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 3,
+        "fields": {
+            "created_at": "2024-02-12T17:23:22.417Z",
+            "updated_at": "2024-02-12T17:42:27.875Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Diccionario",
+            "code": "diccionario_numeral_1.1",
+            "description": "base legal que la rige, regulaciones y\r\nprocedimientos internos aplicables a la entidad; así como las metas y\r\nobjetivos de las unidades administrativas de conformidad con sus\r\nprogramas operativos",
+            "is_active": true,
+            "vertical_template": true,
+            "max_inserts": 1,
+            "columns": [
+                3,
+                2,
+                1,
+                11,
+                12,
+                13,
+                14
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 6,
+        "fields": {
+            "created_at": "2024-02-12T17:54:37.312Z",
+            "updated_at": "2024-02-12T17:54:49.522Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Dataset",
+            "code": "dataset_numeral_1.2",
+            "description": "Base legal que rige a la entidad",
+            "is_active": true,
+            "vertical_template": false,
+            "max_inserts": null,
+            "columns": [
+                15,
+                16,
+                17
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 7,
+        "fields": {
+            "created_at": "2024-02-12T17:56:56.945Z",
+            "updated_at": "2024-02-12T17:56:56.945Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Metadatos",
+            "code": null,
+            "description": "Base legal que rige a la entidad",
+            "is_active": true,
+            "vertical_template": true,
+            "max_inserts": 1,
+            "columns": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 8,
+        "fields": {
+            "created_at": "2024-02-12T17:57:36.973Z",
+            "updated_at": "2024-02-12T17:57:36.973Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Diccionario",
+            "code": "diccionario_numeral_1.2",
+            "description": "Base legal que rige a la entidad",
+            "is_active": true,
+            "vertical_template": true,
+            "max_inserts": 1,
+            "columns": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 9,
+        "fields": {
+            "created_at": "2024-02-12T18:03:03.027Z",
+            "updated_at": "2024-02-12T18:03:03.027Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Datasets",
+            "code": "dataset_numeral_2.1",
+            "description": "Directorio completo del organismo, dependencia y/o persona jurídica",
+            "is_active": true,
+            "vertical_template": false,
+            "max_inserts": null,
+            "columns": [
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 10,
+        "fields": {
+            "created_at": "2024-02-12T18:07:09.327Z",
+            "updated_at": "2024-02-12T18:07:09.327Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Metadatos",
+            "code": "metados_numeral_2.1",
+            "description": "Directorio completo del organismo, dependencia y/o persona jurídica",
+            "is_active": true,
+            "vertical_template": true,
+            "max_inserts": 1,
+            "columns": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 11,
+        "fields": {
+            "created_at": "2024-02-12T18:08:07.301Z",
+            "updated_at": "2024-02-12T18:08:07.301Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Diccionario",
+            "code": "diccionario_numeral_2.1",
+            "description": "Directorio completo del organismo, dependencia y/o persona jurídica",
+            "is_active": true,
+            "vertical_template": true,
+            "max_inserts": 1,
+            "columns": [
+                12,
+                13,
+                14,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 12,
+        "fields": {
+            "created_at": "2024-02-12T18:24:05.413Z",
+            "updated_at": "2024-02-12T18:24:05.413Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Datasets",
+            "code": "dataset_numeral_3",
+            "description": "Las remuneraciones salariales, incluyendo todo ingreso adicional\r\ncorrespondiente a todo el personal del organismo, dependencia y/o\r\npersona jurídica;",
+            "is_active": true,
+            "vertical_template": false,
+            "max_inserts": null,
+            "columns": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                20,
+                27,
+                28,
+                29,
+                30,
+                31
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 13,
+        "fields": {
+            "created_at": "2024-02-12T18:26:16.709Z",
+            "updated_at": "2024-02-12T18:26:16.709Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Metadatos",
+            "code": "metadatos_numeral_3",
+            "description": "Las remuneraciones salariales, incluyendo todo ingreso adicional\r\ncorrespondiente a todo el personal del organismo, dependencia y/o\r\npersona jurídica;",
+            "is_active": true,
+            "vertical_template": true,
+            "max_inserts": null,
+            "columns": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ]
+        }
+    },
+    {
+        "model": "entity_app.templatefile",
+        "pk": 14,
+        "fields": {
+            "created_at": "2024-02-12T18:27:52.163Z",
+            "updated_at": "2024-02-12T18:27:52.163Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Diccionario",
+            "code": "diccionario_numeral_3",
+            "description": "Las remuneraciones salariales, incluyendo todo ingreso adicional\r\ncorrespondiente a todo el personal del organismo, dependencia y/o\r\npersona jurídica;",
+            "is_active": true,
+            "vertical_template": true,
+            "max_inserts": null,
+            "columns": [
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                12,
+                13,
+                14,
+                20,
+                27,
+                28,
+                29,
+                30,
+                31
+            ]
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 1,
+        "fields": {
+            "created_at": "2024-02-12T16:15:45.287Z",
+            "updated_at": "2024-02-12T17:14:38.846Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Nivel superior",
+            "code": "nivel-superior",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 2,
+        "fields": {
+            "created_at": "2024-02-12T16:15:59.139Z",
+            "updated_at": "2024-02-12T17:14:33.108Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Unidad",
+            "code": "unidad",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 3,
+        "fields": {
+            "created_at": "2024-02-12T17:12:10.296Z",
+            "updated_at": "2024-02-12T17:14:29.225Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Nivel de los Procesos de la Estructura",
+            "code": "nivel-de-los-procesos-de-la-estructura",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 4,
+        "fields": {
+            "created_at": "2024-02-12T17:16:58.710Z",
+            "updated_at": "2024-02-12T17:16:58.710Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "FECHA ACTUALIZACIÓN DE LA INFORMACIÓN:",
+            "code": "fecha-actualizacion-de-la-informacion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 5,
+        "fields": {
+            "created_at": "2024-02-12T17:17:10.171Z",
+            "updated_at": "2024-02-12T17:17:10.171Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "PERIODICIDAD DE ACTUALIZACIÓN DE LA INFORMACIÓN:",
+            "code": "periodicidad-de-actualizacion-de-la-informacion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 6,
+        "fields": {
+            "created_at": "2024-02-12T17:17:17.449Z",
+            "updated_at": "2024-02-12T17:17:17.449Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+            "code": "unidad-poseedora-de-la-informacion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 7,
+        "fields": {
+            "created_at": "2024-02-12T17:17:30.374Z",
+            "updated_at": "2024-02-12T17:17:30.374Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+            "code": "persona-responsable-de-la-unidad-poseedora-de-la-informacion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 8,
+        "fields": {
+            "created_at": "2024-02-12T17:17:41.741Z",
+            "updated_at": "2024-02-12T17:17:41.741Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "CORREO ELECTRÓNICO DE LA PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+            "code": "correo-electronico-de-la-persona-responsable-de-la-unidad-poseedora-de-la-informacion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 9,
+        "fields": {
+            "created_at": "2024-02-12T17:21:04.435Z",
+            "updated_at": "2024-02-12T17:21:04.435Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "NÚMERO TELEFÓNICO DE LA PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+            "code": "numero-telefonico-de-la-persona-responsable-de-la-unidad-poseedora-de-la-informacion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 10,
+        "fields": {
+            "created_at": "2024-02-12T17:21:22.843Z",
+            "updated_at": "2024-02-12T17:21:22.843Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "LICENCIA",
+            "code": "licencia",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 11,
+        "fields": {
+            "created_at": "2024-02-12T17:21:33.155Z",
+            "updated_at": "2024-02-12T17:21:33.155Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "ENLACE PARA CONSULTAR EL ORGANIGRAMA ESTRUCTURAL",
+            "code": "enlace-para-consultar-el-organigrama-estructural",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 12,
+        "fields": {
+            "created_at": "2024-02-12T17:22:28.516Z",
+            "updated_at": "2024-02-12T17:22:28.516Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Institución",
+            "code": "institucion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 13,
+        "fields": {
+            "created_at": "2024-02-12T17:22:35.451Z",
+            "updated_at": "2024-02-12T17:22:35.451Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Descripción",
+            "code": "descripcion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 14,
+        "fields": {
+            "created_at": "2024-02-12T17:22:47.677Z",
+            "updated_at": "2024-02-12T17:41:57.961Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Nombre del campo",
+            "code": "nombre-del-campo",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 15,
+        "fields": {
+            "created_at": "2024-02-12T17:52:43.758Z",
+            "updated_at": "2024-02-12T17:52:43.758Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "TIPO",
+            "code": "tipo",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 16,
+        "fields": {
+            "created_at": "2024-02-12T17:52:54.281Z",
+            "updated_at": "2024-02-12T17:52:54.281Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "DESCRIPCIÓN DE REGULACIÓN",
+            "code": "descripcion-de-regulacion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 17,
+        "fields": {
+            "created_at": "2024-02-12T17:53:05.923Z",
+            "updated_at": "2024-02-12T17:53:05.923Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "ENLACE A REGULACIÓN",
+            "code": "enlace-a-regulacion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 18,
+        "fields": {
+            "created_at": "2024-02-12T18:01:27.621Z",
+            "updated_at": "2024-02-12T18:01:27.621Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "No.",
+            "code": "no",
+            "type": "number",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 19,
+        "fields": {
+            "created_at": "2024-02-12T18:01:43.013Z",
+            "updated_at": "2024-02-12T18:01:43.013Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Apellidos y Nombres de los servidores y servidoras",
+            "code": "apellidos-y-nombres-de-los-servidores-y-servidoras",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 20,
+        "fields": {
+            "created_at": "2024-02-12T18:01:56.299Z",
+            "updated_at": "2024-02-12T18:01:56.299Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Puesto Institucional",
+            "code": "puesto-institucional",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 21,
+        "fields": {
+            "created_at": "2024-02-12T18:02:05.617Z",
+            "updated_at": "2024-02-12T18:02:05.617Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Unidad a la que pertenece",
+            "code": "unidad-a-la-que-pertenece",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 22,
+        "fields": {
+            "created_at": "2024-02-12T18:02:15.333Z",
+            "updated_at": "2024-02-12T18:02:15.333Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Dirección institucional",
+            "code": "direccion-institucional",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 23,
+        "fields": {
+            "created_at": "2024-02-12T18:02:25.044Z",
+            "updated_at": "2024-02-12T18:02:25.044Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Ciudad en la que labora",
+            "code": "ciudad-en-la-que-labora",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 24,
+        "fields": {
+            "created_at": "2024-02-12T18:02:34.959Z",
+            "updated_at": "2024-02-12T18:02:34.959Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Teléfono institucional",
+            "code": "telefono-institucional",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 25,
+        "fields": {
+            "created_at": "2024-02-12T18:02:48.648Z",
+            "updated_at": "2024-02-12T18:02:48.648Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Extensión telefónica",
+            "code": "extension-telefonica",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 26,
+        "fields": {
+            "created_at": "2024-02-12T18:02:56.198Z",
+            "updated_at": "2024-02-12T18:02:56.198Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Correo Electrónico institucional",
+            "code": "correo-electronico-institucional",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 27,
+        "fields": {
+            "created_at": "2024-02-12T18:20:59.587Z",
+            "updated_at": "2024-02-12T18:20:59.587Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Numeración",
+            "code": "numeracion",
+            "type": "number",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 28,
+        "fields": {
+            "created_at": "2024-02-12T18:22:13.905Z",
+            "updated_at": "2024-02-12T18:22:13.905Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Régimen laboral al que pertenece",
+            "code": "regimen-laboral-al-que-pertenece",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 29,
+        "fields": {
+            "created_at": "2024-02-12T18:22:23.816Z",
+            "updated_at": "2024-02-12T18:22:23.816Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Número de partida presupuestaria",
+            "code": "numero-de-partida-presupuestaria",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 30,
+        "fields": {
+            "created_at": "2024-02-12T18:22:35.357Z",
+            "updated_at": "2024-02-12T18:22:35.357Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Grado jerárquico o escala al que pertenece el puesto",
+            "code": "grado-jerarquico-o-escala-al-que-pertenece-el-puesto",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 31,
+        "fields": {
+            "created_at": "2024-02-12T18:22:49.630Z",
+            "updated_at": "2024-02-12T18:25:25.956Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Remuneración mensual unificada",
+            "code": "remuneracion-mensual-unificada",
+            "type": "decimal",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 32,
+        "fields": {
+            "created_at": "2024-02-12T18:22:59.397Z",
+            "updated_at": "2024-02-12T18:25:20.131Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Remuneración unificada (anual)",
+            "code": "remuneracion-unificada-anual",
+            "type": "decimal",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 33,
+        "fields": {
+            "created_at": "2024-02-12T18:23:08.641Z",
+            "updated_at": "2024-02-12T18:23:08.641Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Décimo Tercera Remuneración",
+            "code": "decimo-tercera-remuneracion",
+            "type": "string",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 34,
+        "fields": {
+            "created_at": "2024-02-12T18:23:18.478Z",
+            "updated_at": "2024-02-12T18:25:15.375Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Décima Cuarta Remuneración",
+            "code": "decima-cuarta-remuneracion",
+            "type": "decimal",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 35,
+        "fields": {
+            "created_at": "2024-02-12T18:23:43.845Z",
+            "updated_at": "2024-02-12T18:25:10.960Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Horas suplementarias y extraordinarias",
+            "code": "horas-suplementarias-y-extraordinarias",
+            "type": "decimal",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 36,
+        "fields": {
+            "created_at": "2024-02-12T18:23:54.980Z",
+            "updated_at": "2024-02-12T18:25:06.082Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Encargos y subrogaciones",
+            "code": "encargos-y-subrogaciones",
+            "type": "decimal",
+            "format": null,
+            "regex": null
+        }
+    },
+    {
+        "model": "entity_app.columnfile",
+        "pk": 37,
+        "fields": {
+            "created_at": "2024-02-12T18:24:03.033Z",
+            "updated_at": "2024-02-12T18:25:02.242Z",
+            "deleted": false,
+            "deleted_at": null,
+            "user_created": null,
+            "user_updated": null,
+            "user_deleted": null,
+            "ip": null,
+            "name": "Total ingresos adicionales",
+            "code": "total-ingresos-adicionales",
+            "type": "decimal",
+            "format": null,
+            "regex": null
+        }
+    }
+]
