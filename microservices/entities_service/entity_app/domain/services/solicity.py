@@ -9,7 +9,7 @@ class SolicityService:
     def __init__(self, solicity_repository: SolicityRepository):
         self.solicity_repository = solicity_repository
         
-    def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id):
+    def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id, expiry_date):
     #def create_citizen_solicity(self, title, text, establishment_id, user_id,expiry_date):
         """
         Crea una solicitud de ciudadano
@@ -18,7 +18,7 @@ class SolicityService:
             solicity (dict): Diccionario con los datos de la solicitud de ciudadano
         """
         #return self.solicity_repository.create_citizen_solicity(title, text, establishment_id, user_id,expiry_date)
-        return self.solicity_repository.create_citizen_solicity(establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id)
+        return self.solicity_repository.create_citizen_solicity(establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id, expiry_date)
         
         
     def create_manual_solicity(self, title, text, establishment_id, user_id,expiry_date):

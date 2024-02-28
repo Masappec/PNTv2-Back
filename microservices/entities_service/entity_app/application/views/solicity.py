@@ -240,7 +240,7 @@ class SolicityCreateView(APIView):
                 data.validated_data['type_reception'],
                 data.validated_data['format'],
                 request.user.id,
-                #datetime.datetime.now() + datetime.timedelta(days=15)
+                datetime.datetime.now() + datetime.timedelta(days=15)
             )
 
             res = MessageTransactional(

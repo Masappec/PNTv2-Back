@@ -7,7 +7,7 @@ from datetime import datetime
 class SolicityImpl(SolicityRepository):
 
     #def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
-    def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id):
+    def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id, expiry_date):
         """
         Crea una solicitud de ciudadano
 
@@ -15,7 +15,7 @@ class SolicityImpl(SolicityRepository):
             solicity (dict): Diccionario con los datos de la solicitud de ciudadano
         """
         solicity = Solicity.objects.create(establishment_id=establishment_id
-                                         , description=description
+                                         , text=description
                                          , user_id=user_id
                                          , first_name=first_name
                                          , last_name=last_name
@@ -25,6 +25,9 @@ class SolicityImpl(SolicityRepository):
                                          , phone=phone
                                          , format_receipt=format_receipt
                                          , type_reception=type_reception
+                                         , expiry_date=expiry_date
+                                         , expiry_date=0
+                                         , have_extension=0
                                          , user_created_id=user_id
                                          , user_updated_id=user_id
                                          , status=Status.CREATED)

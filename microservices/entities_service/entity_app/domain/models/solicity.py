@@ -20,14 +20,13 @@ class Solicity(BaseModel):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField()
-    phone = models.CharField(max_length=255)
     identification = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255)
     type_receipt = models.CharField(max_length=255)
     format_receipt = models.CharField(max_length=255)
     objects = models.Manager()
 
-    
     class Meta:
         verbose_name = 'Solicitud'
         verbose_name_plural = 'Solicitudes'
