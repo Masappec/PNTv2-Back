@@ -48,8 +48,7 @@ class CreateExtensionSolicityView(APIView):
             }
             
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
-        
-        
+
 class CreateManualSolicity(APIView):
     serializer_class = CreateExtensionSerializer
     
@@ -82,10 +81,6 @@ class CreateManualSolicity(APIView):
             }
             
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
-    
-        
-        
-        
 
 class DeleteSolicityResponse(APIView):
         
@@ -111,8 +106,6 @@ class DeleteSolicityResponse(APIView):
             }
             
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 class UpdateSolicityResponse(APIView):
     serializer_class = SolicityResponseSerializer
@@ -235,11 +228,19 @@ class SolicityCreateView(APIView):
 
         try:
             solicity = self.service.create_citizen_solicity(
-                data.validated_data['title'],
-                data.validated_data['description'],
+                #data.validated_data['title'],
                 data.validated_data['establishment_id'],
+                data.validated_data['description'],
+                data.validated_data['first_name'],
+                data.validated_data['last_name'],
+                data.validated_data['email'],
+                data.validated_data['identification'],
+                data.validated_data['address'],
+                data.validated_data['phone'],
+                data.validated_data['type_reception'],
+                data.validated_data['format'],
                 request.user.id,
-                datetime.datetime.now() + datetime.timedelta(days=15)
+                #datetime.datetime.now() + datetime.timedelta(days=15)
             )
 
             res = MessageTransactional(

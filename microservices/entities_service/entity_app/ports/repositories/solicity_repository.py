@@ -4,7 +4,8 @@ from abc import ABC, abstractmethod
 class SolicityRepository(ABC):
     
     @abstractmethod
-    def create_citizen_solicity(self, title, text, establishment_id, user_id,expiry_date):
+    def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id):
+    #def create_citizen_solicity(self, title, text, establishment_id, user_id,expiry_date):
         """
         Crea una solicitud de ciudadano
 

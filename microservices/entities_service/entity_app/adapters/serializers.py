@@ -143,8 +143,16 @@ class MessageTransactional(serializers.Serializer):
 class SolicityCreateSerializer(serializers.Serializer):
     """Solicity create serializer"""
     establishment_id = serializers.IntegerField();
-    title=serializers.CharField();
+    #title=serializers.CharField();
     description=serializers.CharField();
+    first_name=serializers.CharField();
+    last_name=serializers.ChardField();
+    email=serializers.ChardFiled();
+    identification=serializers.ChardField();
+    address=serializers.ChardField();
+    phone=serializers.ChardField();
+    type_reception=serializers.ChardField();
+    formatSolicity=serializers.ChardField();
     expiry_date= serializers.DateTimeField();
     establishment_id = serializers.IntegerField();
 

@@ -52,9 +52,7 @@ class NumeralsByEstablishment(APIView):
                 'status': status.HTTP_400_BAD_REQUEST,
                 'json':{}
             }, status=status.HTTP_400_BAD_REQUEST)
-            
-            
-            
+
 class NumeralDetail(APIView):
         
     serializer_class = NumeralDetailSerializer
@@ -95,4 +93,5 @@ class NumeralDetail(APIView):
                 'status': status.HTTP_400_BAD_REQUEST,
                 'json':{}
             }, status=status.HTTP_400_BAD_REQUEST)
-        
+
+

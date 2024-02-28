@@ -6,20 +6,31 @@ from datetime import datetime
 
 class SolicityImpl(SolicityRepository):
 
-    def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
+    #def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
+    def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id):
         """
         Crea una solicitud de ciudadano
 
         Args:
             solicity (dict): Diccionario con los datos de la solicitud de ciudadano
         """
-        solicity = Solicity.objects.create(title=title, text=text, establishment_id=establishment_id, user_id=user_id,
-                                           user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED, expiry_date=expiry_date)
+        solicity = Solicity.objects.create(establishment_id=establishment_id
+                                         , description=description
+                                         , user_id=user_id
+                                         , first_name=first_name
+                                         , last_name=last_name
+                                         , email=email
+                                         , identification=identification
+                                         , address=address
+                                         , phone=phone
+                                         , format_receipt=format_receipt
+                                         , type_reception=type_reception
+                                         , user_created_id=user_id
+                                         , user_updated_id=user_id
+                                         , status=Status.CREATED)
 
         return solicity
 
-
-    
     def create_extencion_solicity(self, motive, solicity_id, user_id):
         """
         Crea una prorroga
