@@ -2,7 +2,7 @@
 
 
 from entity_app.ports.repositories.numeral_repository import NumeralRepository
-from entity_app.domain.models.transparency_active import Numeral, EstablishmentNumeral
+from entity_app.domain.models.transparency_active import Numeral, EstablishmentNumeral, TransparencyActive
 
 class NumeralImpl(NumeralRepository):
     
@@ -10,9 +10,6 @@ class NumeralImpl(NumeralRepository):
     
     def get_all(self):
         return Numeral.objects.all()
-    
-
-    
     
     def get(self, id):
         numeral = Numeral.objects.get(id=id)
@@ -23,6 +20,9 @@ class NumeralImpl(NumeralRepository):
         ids = EstablishmentNumeral.objects.filter(establishment_id=entity_id).values('numeral_id')
         
         return Numeral.objects.filter(id__in=ids)
+    
+    def get_all_transparency():
+        return TransparencyActive.objects.get()
     
     
     

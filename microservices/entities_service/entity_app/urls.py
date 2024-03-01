@@ -8,7 +8,7 @@ from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
 from entity_app.application.views.solicity import SolicityView, SolicityCreateView, SolicityResponseView, SolicityCreateResponseView
 
-from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail
+from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail, ListNumeral
 
 from entity_app.application.views.template_file import TemplateFileValidate
 
@@ -40,11 +40,9 @@ urlpatterns = [
     path('solicity_response/list', SolicityResponseView.as_view(), name='solicity-response-all'),
     path('solicity_response/create', SolicityCreateResponseView.as_view(), name='solicity-response-create'),
     
-    
-    
     path('numerals/', NumeralsByEstablishment.as_view(), name='numerals-by-establishment'),
     path('numerals/detail/', NumeralDetail.as_view(), name='numeral-detail'),
-    
+    path('numerals/transparency', ListNumeral.as_view(), name='numero-transparency'),
     
     path('template_file/validate', TemplateFileValidate.as_view(), name='template-file-validate'),
 ]

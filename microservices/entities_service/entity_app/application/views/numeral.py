@@ -1,10 +1,14 @@
 from typing import Any
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from entity_app.adapters.serializers import NumeralResponseSerializer, NumeralDetailSerializer
 from entity_app.domain.services.numeral_service import NumeralService
 from entity_app.adapters.impl.numeral_impl import NumeralImpl
-from entity_app.utils.permissions import BelongsToEstablishment,NumeralIsOwner
+from entity_app.utils.permissions import BelongsToEstablishment,NumeralIsOwner, HasPermission
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Q
+
+from entity_app.adapters.serializers import MessageTransactional
 from rest_framework.response import Response
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
@@ -94,4 +98,64 @@ class NumeralDetail(APIView):
                 'json':{}
             }, status=status.HTTP_400_BAD_REQUEST)
 
+class ListNumeral(ListAPIView):
+    """Publication view."""
 
+    permission_classes = [IsAuthenticated,HasPermission]
+
+    def __init__(self):
+        self.service = NumeralService(
+            numeral_repository=NumeralImpl()
+        )
+
+    def get_queryset(self):
+        """Get queryset."""
+        return self.sevice.get_all_transparency()
+
+    def get(self, request, *args, **kwargs):
+        """
+        Get a list of transparency.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        try:
+            queryset = self.get_queryset()
+            search = request.query_params.get('search', None)
+            date = request.query_params.get('date', None)
+            numeral_id = request.query_params.get('numeral_id', None)
+
+            if search is not None:
+                queryset = queryset.filter(Q(name__icontains=search) | Q(description__icontains=search))
+                
+            if date is not None:
+                queryset = queryset.filter(Q(date=date))
+
+            if numeral_id is not None:
+                queryset = queryset.filter(numeral_id=numeral_id)
+                
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            
+            error = MessageTransactional(
+                    data={
+                        'message': e.__str__(),
+                        'status': 400,
+                        'json': {} 
+                    }
+                )
+            error.is_valid()
+            if error.errors:
+                return Response(error.errors)
+            return Response(error.data, status=400)

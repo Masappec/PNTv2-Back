@@ -23,9 +23,6 @@ class PublicationsView(ListAPIView):
     def __init__(self, **kwargs: Any):
         self.sevice = PublicationService(PublicationImpl())
 
-
-        
-
     def get_queryset(self):
         """Get queryset."""
         return self.sevice.get_publications_by_user_id(self.request.user.id)
@@ -33,7 +30,7 @@ class PublicationsView(ListAPIView):
     
     def get(self, request, *args, **kwargs):
         """
-        Get a list of users.
+        Get a list of publications.
 
         Args:
             request (object): The request object.
