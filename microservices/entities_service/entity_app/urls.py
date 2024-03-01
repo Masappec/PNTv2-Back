@@ -17,15 +17,12 @@ urlpatterns = [
     path('public/transparency/active/list', PublicationPublicView.as_view(), name='publication-list'),
     path('public/transparency/active/detail/<slug>', PublicationDetail.as_view(), name='publication-detail'),
  
-    
-    
     path('publications/file/create', FilePublicationCreateView.as_view(), name='file-publication-create'),
     path('publications/file/list', FilePublicationListEstablishemtSession.as_view(), name='file-publication-list'),
     path('publications/file/delete/<pk>', FilePublicationDelete.as_view(), name='file-publication-delete'),
     
     path('tags/list', TagView.as_view(), name='tag-list'),
     path('tags/create', TagCreateView.as_view(), name='tag-create'),
-    
     
     path('publications/list', PublicationsView.as_view(), name='publications-all'),
     path('publications/detail/<pk>', PublicatioDetail.as_view(), name='publications-detail'),
