@@ -2,6 +2,9 @@
 
 from app_admin.ports.repositories.establishment_repository import EstablishmentRepository
 from django.core.exceptions import ObjectDoesNotExist
+from app_admin.domain.models.establishment_model import Establishment
+
+from shared.tasks.establishment_task import establishment_created_event
 
 class EstablishmentService:
     def __init__(self, establishment_repository: EstablishmentRepository):
@@ -10,8 +13,17 @@ class EstablishmentService:
     def create_establishment(self, establishment: dict, file):
         try:
             
+            ids = establishment['extra_numerals']
+            if ids:
+                
+                list_ids = establishment['extra_numerals'].split(',')
+            else:
+                list_ids = []
             
-            return self.establishment_repository.create_establishment(establishment, file)
+            establishment_ = self.establishment_repository.create_establishment(establishment, file)
+            
+            establishment_created_event.delay(list_ids, establishment_.id)
+            return establishment_
         except ObjectDoesNotExist:
             raise ValueError("Instiución no existe")
         except Exception as e:
@@ -104,3 +116,7 @@ class EstablishmentService:
             return self.establishment_repository.get_establishment_by_slug(slug)
         except ObjectDoesNotExist:
             raise ValueError("Instiución no existe")
+        
+        
+    def get_establishment_by_user_id(self,user_id:int) -> Establishment:
+        return self.establishment_repository.get_establishment_by_user_id(user_id)

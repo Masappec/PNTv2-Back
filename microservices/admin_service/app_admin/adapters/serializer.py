@@ -31,6 +31,7 @@ class EstablishmentCreateSerializer(Serializer):
     job_committe = CharField(max_length=255)
     email_committe = CharField(max_length=255)
     email_accesstoinformation = CharField(max_length=255)
+    extra_numerals = CharField(allow_blank=True)
 
 
 class EstablishmentCreateResponseSerializer(Serializer):

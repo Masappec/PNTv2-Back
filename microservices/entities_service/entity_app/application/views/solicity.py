@@ -4,12 +4,10 @@ from rest_framework.views import APIView
 
 from entity_app.adapters.serializers import CreateExtensionSerializer, SolicityResponseSerializer
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
-from entity_app.domain.services.solicity import SolicityService
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 from django.db.models import Q
 
 from entity_app.utils.permissions import BelongsToEstablishment, HasPermission, IsOwnerResponseSolicity
@@ -18,17 +16,16 @@ from entity_app.adapters.serializers import SolicitySerializer, SolicityCreateSe
 from entity_app.domain.services.solicity_service import SolicityService
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
 
+
 class CreateExtensionSolicityView(APIView):
-    
+
     serializer_class = CreateExtensionSerializer
-    permission_classes = [IsAuthenticated,HasPermission]
+    permission_classes = [IsAuthenticated, HasPermission]
     permission_required = 'add_extension'
-    
-  
+
     def __init__(self, **kwargs: Any):
         self.service = SolicityService(solicity_repository=SolicityImpl())
-        
-        
+
     def post(self, request):
         try:
             serializer = self.serializer_class(data=request.data)
@@ -46,20 +43,19 @@ class CreateExtensionSolicityView(APIView):
                 'status': status.HTTP_400_BAD_REQUEST,
                 'json': {}
             }
-            
+
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CreateManualSolicity(APIView):
     serializer_class = CreateExtensionSerializer
-    
-    permission_classes = [IsAuthenticated,HasPermission]
+
+    permission_classes = [IsAuthenticated, HasPermission]
     permission_required = 'add_manual_solicity'
-    
-    
+
     def __init__(self):
         self.service = SolicityService(solicity_repository=SolicityImpl())
-        
-        
+
     def post(self, request):
         try:
             serializer = self.serializer_class(data=request.data)
@@ -79,18 +75,19 @@ class CreateManualSolicity(APIView):
                 'status': status.HTTP_400_BAD_REQUEST,
                 'json': {}
             }
-            
+
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
+
 class DeleteSolicityResponse(APIView):
-        
-    permission_classes = [IsAuthenticated,HasPermission, IsOwnerResponseSolicity]
+
+    permission_classes = [IsAuthenticated,
+                          HasPermission, IsOwnerResponseSolicity]
     permission_required = 'delete_solicity_response'
-    
+
     def __init__(self, **kwargs: Any):
         self.service = SolicityService(solicity_repository=SolicityImpl())
-        
-        
+
     def delete(self, request, solicity_response_id):
         try:
             response = self.service.delete_solicity_response(
@@ -104,18 +101,19 @@ class DeleteSolicityResponse(APIView):
                 'status': status.HTTP_400_BAD_REQUEST,
                 'json': {}
             }
-            
+
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UpdateSolicityResponse(APIView):
     serializer_class = SolicityResponseSerializer
-    permission_classes = [IsAuthenticated,HasPermission, IsOwnerResponseSolicity]
+    permission_classes = [IsAuthenticated,
+                          HasPermission, IsOwnerResponseSolicity]
     permission_required = 'change_solicity_response'
-    
+
     def __init__(self, **kwargs: Any):
         self.service = SolicityService(solicity_repository=SolicityImpl())
-        
-        
+
     def put(self, request, solicity_response_id):
         try:
             serializer = self.serializer_class(data=request.data)
@@ -123,7 +121,7 @@ class UpdateSolicityResponse(APIView):
             response = self.service.update_solicity_response(
                 attachments=serializer.validated_data['attachments'],
                 category_id=serializer.validated_data['category_id'],
-                files=  serializer.validated_data['files'],
+                files=serializer.validated_data['files'],
                 solicity_response_id=solicity_response_id,
                 text=serializer.validated_data['text'],
             )
@@ -134,8 +132,9 @@ class UpdateSolicityResponse(APIView):
                 'status': status.HTTP_400_BAD_REQUEST,
                 'json': {}
             }
-            
+
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class SolicityView(ListAPIView):
     """Solicity view."""
@@ -152,7 +151,7 @@ class SolicityView(ListAPIView):
     def get_queryset(self, user_id):
         """Get queryset."""
         return self.service.get_user_solicities(user_id)
-    
+
     def get(self, request, *args, **kwargs):
         """
         Get a list of solicities.
@@ -165,12 +164,13 @@ class SolicityView(ListAPIView):
         Returns:
             object: The response object.
         """
-        data=self.serializer_class(data=request.data)
+        data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
         queryset = None
 
         try:
-            relations = self.service.validate_user_establishment(data.validated_data['establishment_id'], request.user.id)
+            relations = self.service.validate_user_establishment(
+                data.validated_data['establishment_id'], request.user.id)
 
             if relations is True:
                 queryset = self.get_queryset(request.user.id)
@@ -179,12 +179,12 @@ class SolicityView(ListAPIView):
                 if search is not None:
                     queryset = queryset.filter(
                         Q(name__icontains=search) | Q(description__icontains=search))
-                
+
                 page = self.paginate_queryset(queryset)
                 if page is not None:
                     serializer = self.get_serializer(page, many=True)
                     return self.get_paginated_response(serializer.data)
-                
+
                 serializer = self.get_serializer(queryset, many=True)
                 return Response(serializer.data)
             else:
@@ -198,16 +198,17 @@ class SolicityView(ListAPIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-                print("Error:", e)
-                res = MessageTransactional(
-                    data={
-                        'message': str(e),
-                        'status': 400,
-                        'json': {}
-                    }
-                )
-                res.is_valid(raise_exception=True)
-                return Response(res.data, status=400) 
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
 
 class SolicityCreateView(APIView):
     """Solicity Response view."""
@@ -222,13 +223,13 @@ class SolicityCreateView(APIView):
         self.service = SolicityService(SolicityImpl())
 
     def post(self, request, *args, **kwargs):
-        data=self.serializer_class(data=request.data)
+        data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
         solicity = None
 
         try:
             solicity = self.service.create_citizen_solicity(
-                #data.validated_data['title'],
+                # data.validated_data['title'],
                 data.validated_data['establishment_id'],
                 data.validated_data['description'],
                 data.validated_data['first_name'],
@@ -244,7 +245,7 @@ class SolicityCreateView(APIView):
             )
 
             res = MessageTransactional(
-                data={ 
+                data={
                     'message': 'Publicacion creada correctamente',
                     'status': 201,
                     'json': self.output_serializer_class(solicity).data
@@ -265,6 +266,7 @@ class SolicityCreateView(APIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=400)
 
+
 class SolicityResponseView(ListAPIView):
     """Solicity Response view."""
 
@@ -280,7 +282,7 @@ class SolicityResponseView(ListAPIView):
     def get_queryset(self, entity_id):
         """Get queryset."""
         return self.service.get_entity_solicities(entity_id)
-    
+
     def get(self, request, *args, **kwargs):
         """
         Get a list of solicities.
@@ -293,26 +295,28 @@ class SolicityResponseView(ListAPIView):
         Returns:
             object: The response object.
         """
-        data=self.serializer_class(data=request.data)
+        data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
         queryset = None
 
         try:
-            relations = self.service.validate_user_establishment(data.validated_data['establishment_id'], request.user.id)
+            relations = self.service.validate_user_establishment(
+                data.validated_data['establishment_id'], request.user.id)
 
             if relations is True:
-                queryset = self.get_queryset( data.validated_data['establishment_id'])
+                queryset = self.get_queryset(
+                    data.validated_data['establishment_id'])
 
                 search = request.query_params.get('search', None)
                 if search is not None:
                     queryset = queryset.filter(
                         Q(name__icontains=search) | Q(description__icontains=search))
-                
+
                 page = self.paginate_queryset(queryset)
                 if page is not None:
                     serializer = self.get_serializer(page, many=True)
                     return self.get_paginated_response(serializer.data)
-                
+
                 res = MessageTransactional(
                     data={
                         'message': "Solicitudes respondida correctamente.",
@@ -324,28 +328,30 @@ class SolicityResponseView(ListAPIView):
                 res = MessageTransactional(
                     data={
                         'message': "Error: No tiene permisos para ver las solicitudes de este establecimiento.",
-                        'status':status.HTTP_400_BAD_REQUEST,
+                        'status': status.HTTP_400_BAD_REQUEST,
                         'json': {}
                     }
                 )
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-                print("Error:", e)
-                res = MessageTransactional(
-                    data={
-                        'message': str(e),
-                        'status': 400,
-                        'json': {}
-                    }
-                )
-                res.is_valid(raise_exception=True)
-                return Response(res.data, status=400) 
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
 
 class SolicityCreateResponseView(APIView):
     """ Solicity Create Response """
 
-    permission_classes = [IsAuthenticated, HasPermission,BelongsToEstablishment]
+    permission_classes = [IsAuthenticated,
+                          HasPermission, BelongsToEstablishment]
     serializer_class = SolicityCreateResponseSerializer
     pagination_class = StandardResultsSetPagination
     output_serializer_class = SolicityResponseSerializer
@@ -355,13 +361,14 @@ class SolicityCreateResponseView(APIView):
         self.service = SolicityService(SolicityImpl())
 
     def post(self, request, *args, **kwargs):
-        data=self.serializer_class(data=request.data)
+        data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
         solicity_response = None
 
         try:
 
-            solicity_response = self.service.create_solicity_response(data.id_solicitud, request.user.id, data.text, data.category_id, data.files, data.attachment)
+            solicity_response = self.service.create_solicity_response(
+                data.id_solicitud, request.user.id, data.text, data.category_id, data.files, data.attachment)
 
             res = MessageTransactional(
                 data={
@@ -370,18 +377,17 @@ class SolicityCreateResponseView(APIView):
                     'json': self.output_serializer_class(solicity_response).data
                 }
             )
-            
+
             return Response(res.data, status=201)
 
         except Exception as e:
-                print("Error:", e)
-                res = MessageTransactional(
-                    data={
-                        'message': str(e),
-                        'status': 400,
-                        'json': {}
-                    }
-                )
-                res.is_valid(raise_exception=True)
-                return Response(res.data, status=400) 
-
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)

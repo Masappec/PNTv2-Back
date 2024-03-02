@@ -26,7 +26,6 @@ class SolicityImpl(SolicityRepository):
                                          , format_receipt=format_receipt
                                          , type_reception=type_reception
                                          , expiry_date=expiry_date
-                                         , expiry_date=0
                                          , have_extension=0
                                          , user_created_id=user_id
                                          , user_updated_id=user_id

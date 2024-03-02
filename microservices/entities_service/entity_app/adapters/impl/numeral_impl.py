@@ -1,6 +1,9 @@
 
 
 
+from typing import List
+
+from django.db.models.query import QuerySet
 from entity_app.ports.repositories.numeral_repository import NumeralRepository
 from entity_app.domain.models.transparency_active import Numeral, EstablishmentNumeral, TransparencyActive
 
@@ -21,8 +24,24 @@ class NumeralImpl(NumeralRepository):
         
         return Numeral.objects.filter(id__in=ids)
     
-    def get_all_transparency():
+    def get_all_transparency(self):
         return TransparencyActive.objects.get()
     
     
+    def filter_by_list_ids(self, ids:List[int]):
+        return Numeral.objects.filter(id__in=ids)
     
+    def asign_numeral_to_establishment(self, ids_numeral: List[Numeral], establishment_id: int):
+        
+        for numeral in ids_numeral:
+            
+            
+            EstablishmentNumeral.objects.create(
+                establishment_id=establishment_id,
+                numeral= numeral,
+                value='default'
+            )
+    
+    
+    def get_by_default(self, default: bool) -> QuerySet[Numeral]:
+        return Numeral.objects.filter(is_default=default)

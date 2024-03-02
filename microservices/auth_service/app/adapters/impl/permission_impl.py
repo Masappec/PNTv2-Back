@@ -22,10 +22,28 @@ class PermissionRepositoryImpl(PermissionRepository):
         return Permission.objects.filter(pk=permission_id).update(**permission)
     
     def get_permissions(self):
-        return Permission.objects.all().exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session','django_rest_passwordresettoken'])
+        return Permission.objects.all().exclude(content_type__model__in=[
+            'contenttype', 'logentry', 'permission','session' ,'basemodel','accesstoinformation',
+            'resetpasswordtoken','userestablishmentextended','lawenforcement','accesstoinformation',
+            'formfields','tutorialvideo','normativedocument','frequentlyaskedquestions','userestablishment',
+            'email','typepublication','filepublication','establishmentextended','typeformats','activitylog',
+            'userestablishmentextended','attachment','columnfile','templatefile','numeral','establishmentnumeral','role'
+            
+        ])
     
     def get_permissions_by_role(self, role_id: int):
-        return Permission.objects.filter(group__id=role_id).exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session'])
+        return Permission.objects.filter(group__id=role_id).exclude(
+            content_type__model__in=[
+            'contenttype', 'logentry', 'permission','session' ,'basemodel','accesstoinformation',
+            'resetpasswordtoken','userestablishmentextended','lawenforcement','accesstoinformation',
+            'formfields','tutorialvideo','normativedocument','frequentlyaskedquestions','userestablishment',
+            'email','typepublication','filepublication','establishmentextended','typeformats','activitylog',
+            'userestablishmentextended','attachment','columnfile','templatefile','numeral','establishmentnumeral',
+            'role'
+            
+        ]
+            
+        )
     
     
     def get_permissions_by_user(self, user_id: int):
@@ -34,8 +52,24 @@ class PermissionRepositoryImpl(PermissionRepository):
         group = user.groups.all()
         
         if user.is_superuser:
-            return Permission.objects.all().exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session']).values('codename')
+            return Permission.objects.all().exclude(content_type__model__in=[
+            'contenttype', 'logentry', 'permission','session' ,'basemodel','accesstoinformation',
+            'resetpasswordtoken','userestablishmentextended','lawenforcement','accesstoinformation',
+            'formfields','tutorialvideo','normativedocument','frequentlyaskedquestions','userestablishment',
+            'email','typepublication','filepublication','establishmentextended','typeformats','activitylog',
+            'userestablishmentextended','attachment','columnfile','templatefile','numeral','establishmentnumeral',
+            'role'
+            
+        ]).values('codename')
         
         
         
-        return Permission.objects.filter(group__in=group).exclude(content_type__model__in=['contenttype', 'logentry', 'permission','session']).values('codename')
+        return Permission.objects.filter(group__in=group).exclude(content_type__model__in=[
+            'contenttype', 'logentry', 'permission','session' ,'basemodel','accesstoinformation',
+            'resetpasswordtoken','userestablishmentextended','lawenforcement','accesstoinformation',
+            'formfields','tutorialvideo','normativedocument','frequentlyaskedquestions','userestablishment',
+            'email','typepublication','filepublication','establishmentextended','typeformats','activitylog',
+            'userestablishmentextended','attachment','columnfile','templatefile','numeral','establishmentnumeral',
+            'role'
+            
+        ]).values('codename')

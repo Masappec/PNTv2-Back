@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+from typing import List
+from entity_app.domain.models.transparency_active import Numeral
+from django.db.models.query import QuerySet
 
 class NumeralRepository(ABC):
     
@@ -15,7 +18,17 @@ class NumeralRepository(ABC):
         pass
     
     
+    def filter_by_list_ids(self, ids:List[int]) -> QuerySet[Numeral]:
+        pass
     
+    
+    def asign_numeral_to_establishment(self,ids_numeral:List[int],establishment_id:int) :
+        
+        pass
+    
+    def get_by_default(self, default:bool) -> QuerySet[Numeral]:
+        
+        pass
     
     
     

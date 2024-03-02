@@ -43,7 +43,7 @@ class EstablishmentRepository(ABC):
     
     
     @abstractmethod
-    def create_establishment(self, establishment: dict, file):
+    def create_establishment(self, establishment: dict, file) -> Establishment:
         pass
     
     
@@ -98,4 +98,9 @@ class EstablishmentRepository(ABC):
     
     @abstractmethod
     def get_establishment_by_slug(self, slug: str):
+        pass
+    
+    
+    @abstractmethod
+    def get_establishment_by_user_id(self,user_id) -> Establishment:
         pass

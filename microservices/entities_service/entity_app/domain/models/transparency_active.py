@@ -11,6 +11,7 @@ class EstablishmentNumeral(BaseModel):
     numeral = models.ForeignKey('Numeral', on_delete=models.CASCADE, related_name='establishments')
     value = models.TextField()
     
+    objects = models.Manager()
     class Meta:
         verbose_name = 'Numeral de Establecimiento'
         verbose_name_plural = 'Numerales de Establecimiento'
@@ -23,7 +24,7 @@ class Numeral(BaseModel):
     description = models.TextField()
     templates = models.ManyToManyField('TemplateFile', related_name='numerals', blank=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
-    
+    is_default = models.BooleanField(default=True)
     objects = models.Manager()
     class Meta:
         verbose_name = 'Numeral'
@@ -104,7 +105,7 @@ class TransparencyActive(BaseModel):
     max_date_to_publish = models.DateTimeField(null=True, blank=True)
     
     
-    
+    objects = models.Manager()
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = unique_slug_generator(self)

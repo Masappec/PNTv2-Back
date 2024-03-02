@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
 from app_admin.ports.repositories.establishment_repository import EstablishmentRepository
-from app_admin.domain.models import Establishment
+from app_admin.domain.models import Establishment,UserEstablishment
 from datetime import datetime
 from django.utils import timezone
+
 class EstablishmentRepositoryImpl(EstablishmentRepository):
     
     
@@ -141,3 +142,10 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
     
     def get_establishment_by_slug(self, slug: str):
         return Establishment.objects.get(slug=slug)
+    
+    
+    def get_establishment_by_user_id(self,user_id:int):
+        try:
+            return UserEstablishment.objects.filter(user_id=user_id).first().establishment
+        except Exception:
+            raise ValueError("El usuario no pertenece a ninguna institución")

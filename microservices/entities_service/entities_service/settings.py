@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CELERY_IMPORTS = ('shared.tasks.emit','shared.tasks.establishment_task',)
 
 #enable cors all domain
 CORS_ORIGIN_ALLOW_ALL = True

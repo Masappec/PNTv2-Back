@@ -146,13 +146,13 @@ class SolicityCreateSerializer(serializers.Serializer):
     #title=serializers.CharField();
     description=serializers.CharField();
     first_name=serializers.CharField();
-    last_name=serializers.ChardField();
-    email=serializers.ChardFiled();
-    identification=serializers.ChardField();
-    address=serializers.ChardField();
-    phone=serializers.ChardField();
-    type_reception=serializers.ChardField();
-    formatSolicity=serializers.ChardField();
+    last_name=serializers.CharField();
+    email=serializers.CharField();
+    identification=serializers.CharField();
+    address=serializers.CharField();
+    phone=serializers.CharField();
+    type_reception=serializers.CharField();
+    formatSolicity=serializers.CharField();
     expiry_date= serializers.DateTimeField();
     establishment_id = serializers.IntegerField();
 
@@ -174,7 +174,6 @@ class SolicitySerializer(serializers.ModelSerializer):
             'id',
             'text',
             'establishment',
-            'user',
             'is_active',
             'status',
             'expiry_date',
