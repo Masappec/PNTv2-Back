@@ -45,3 +45,21 @@ class NumeralImpl(NumeralRepository):
     
     def get_by_default(self, default: bool) -> QuerySet[Numeral]:
         return Numeral.objects.filter(is_default=default)
+    
+    def get_transparency_by_numeral(self, numeral, month, year):
+        return TransparencyActive.objects.filter(numeral=numeral, month=month, year=year)
+    
+    def create_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual):
+        TransparencyActive.objects.create(
+            establishment=establishment_id,
+            numeral=numeral_id,
+            files=files, 
+            month=month, 
+            year=year,
+            status="ingress",
+            published=True,
+            published_at=fecha_actual
+
+        );
+
+        return self.get_transparency_by_numeral(numeral_id, month, year)
