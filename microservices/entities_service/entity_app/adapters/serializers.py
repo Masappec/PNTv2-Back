@@ -17,7 +17,6 @@ class TagSerializer(serializers.ModelSerializer):
         
         read_only_fields = ('id','description')
 
-
 class FilePublicationSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -50,7 +49,6 @@ class PublicationCreateSerializer(serializers.Serializer):
     notes = serializers.CharField(allow_blank=True, allow_null=True)
     attachment = serializers.ListField(child=serializers.IntegerField())
 
-
 class PublicationUpdateSerializer(serializers.Serializer):
     name = serializers.CharField()
     description = serializers.CharField()
@@ -59,8 +57,6 @@ class PublicationUpdateSerializer(serializers.Serializer):
     type_publication = serializers.CharField(source='type_publication.name')
     notes = serializers.CharField(allow_blank=True, allow_null=True)
     attachment = serializers.ListField(child=serializers.IntegerField())
-
-
 
 class AttachmentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -74,10 +70,6 @@ class AttachmentSerializer(serializers.ModelSerializer):
         )
         
         read_only_fields = ('id',)
-
-
-
-
 
 class PublicationPublicSerializer(serializers.Serializer):
     """Publication serializer."""
@@ -121,7 +113,6 @@ class PublicationPublicSerializer(serializers.Serializer):
             return ''
         return obj.user_created.first_name + ' ' + obj.user_created.last_name
 
-
 class MessageTransactional(serializers.Serializer):
     message = serializers.CharField(max_length=1000)
     status = serializers.IntegerField()
@@ -136,9 +127,6 @@ class MessageTransactional(serializers.Serializer):
                         
         
         return MessageTransactional(message=e, status=status, json=errors).data
-    
-    
-
 
 class SolicityCreateSerializer(serializers.Serializer):
     """Solicity create serializer"""
@@ -191,15 +179,12 @@ class CreateExtensionSerializer(serializers.Serializer):
 class CreateInsistencySerializer(serializers.Serializer):
     motive = serializers.CharField()
     solicity = SolicitySerializer()
-    
-    
+
 class CreateManualSolicitySerializer(serializers.Serializer):
     title = serializers.CharField()
     text = serializers.CharField()
     expiry_date = serializers.DateTimeField()
     establishment_id = serializers.IntegerField()
-    
-
 
 class SolicityResponseSerializer(serializers.Serializer):
     text = serializers.CharField()
@@ -208,7 +193,6 @@ class SolicityResponseSerializer(serializers.Serializer):
     attachments = serializers.ListField(child=serializers.IntegerField())
     solicity_id = serializers.IntegerField()
     
-
 class ColumnFileSerializer(serializers.ModelSerializer):
     """Column file serializer."""
     class Meta:
@@ -238,8 +222,6 @@ class TemplateResponseSerializer(serializers.ModelSerializer):
     def get_columns(self, obj):
         columns = obj.columns.all()
         return ColumnFileSerializer(columns, many=True).data
-    
-    
 
 class TemplateFileValidateSerializer(serializers.Serializer):
     template_id = serializers.IntegerField()
@@ -262,8 +244,7 @@ class NumeralResponseSerializer(serializers.ModelSerializer):
         """Meta class."""
         model = Numeral
         fields = '__all__'
-        
-        
+
 class NumeralDetailSerializer(serializers.ModelSerializer):
     """Numeral detail serializer."""
     
@@ -277,6 +258,12 @@ class NumeralDetailSerializer(serializers.ModelSerializer):
         templates = obj.templates.all()
         
         return TemplateResponseSerializer(templates, many=True).data
+
+class NumeralCreateSerializer(serializers.ModelSerializar):
+    establishment_id = serializers.IntegerField();
+    numeral_id = serializers.IntegerField();
+    files = serializers.ListField(child=serializers.IntegerField());
+
         
         
         

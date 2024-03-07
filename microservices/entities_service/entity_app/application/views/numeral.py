@@ -1,7 +1,8 @@
+from datetime import datetime
 from typing import Any
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
-from entity_app.adapters.serializers import NumeralResponseSerializer, NumeralDetailSerializer
+from entity_app.adapters.serializers import NumeralResponseSerializer, NumeralDetailSerializer, NumeralCreateSerializer
 from entity_app.domain.services.numeral_service import NumeralService
 from entity_app.adapters.impl.numeral_impl import NumeralImpl
 from entity_app.utils.permissions import BelongsToEstablishment,NumeralIsOwner, HasPermission
@@ -159,3 +160,56 @@ class ListNumeral(ListAPIView):
             if error.errors:
                 return Response(error.errors)
             return Response(error.data, status=400)
+        
+class CreateNumeral(APIView):
+
+    permission_classes = [IsAuthenticated,HasPermission]
+    serializar_class = NumeralCreateSerializer
+    output_serializer_class = NumeralResponseSerializer
+
+    def __init__(self):
+        self.service = NumeralService(
+            numeral_repository=NumeralImpl()
+        )
+
+    def post(self, request, *args, **kwargs):
+        """
+        Create Numeral
+        """
+
+        data=self.serializer_class(data=request.data)
+        month=datetime.now().month
+        year=datetime.now().year
+        fecha_actual=datetime.now()
+        transparency = self.service.get_transparency_by_numeral(data.numeral_id, month, year)
+        mensaje = ""
+
+        try:
+            if transparency is not None:
+                transparency = self.service.create_transparency(data.establishment_id, data.numeral_id, data.files, month, year, fecha_actual)
+            else:
+                if transparency.published is False:
+                    transparency = "Ya tiene información de este mes cargada"
+
+            res = MessageTransactional(
+                data={
+                    'message': 'Publicacion creada correctamente',
+                    'status': 201,
+                    'json': self.output_serializer_class(transparency).data
+                }
+            )
+            
+            return Response(res.data, status=200)
+        except Exception as e:
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
+        

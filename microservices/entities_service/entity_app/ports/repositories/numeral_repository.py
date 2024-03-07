@@ -30,5 +30,9 @@ class NumeralRepository(ABC):
         
         pass
     
+    def get_transparency_by_numeral(self, numeral, month, year):
+        pass
     
+    def create_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual):
+        pass
     
