@@ -242,14 +242,22 @@ class TemplateResponseSerializer(serializers.ModelSerializer):
     
 
 class TemplateFileValidateSerializer(serializers.Serializer):
-    establishment_id = serializers.IntegerField()
     template_id = serializers.IntegerField()
     file = serializers.FileField()
 
 
+class PartialTemplateFileSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = TemplateFile
+        fields = [
+            'id','name'
+        ]
+    
 
 class NumeralResponseSerializer(serializers.ModelSerializer):
     """Numeral response serializer."""
+    templates = PartialTemplateFileSerializer(many=True)
     class Meta:
         """Meta class."""
         model = Numeral

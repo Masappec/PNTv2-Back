@@ -59,10 +59,4 @@ class TemplateFileValidate(APIView):
                 
                 }, status=status.HTTP_409_CONFLICT)
             
-        except Exception as e:
-            return Response({
-                'message': str(e),
-                'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                'json': {}
-                
-                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
