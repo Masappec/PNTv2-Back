@@ -57,26 +57,31 @@ class TemplateFileImpl(TemplateFileRepository):
        
         headers = csv.columns.to_list()
         if template.vertical_template:
-            headers = csv.get('A').to_list()
+            headers = [i for i in range(len(templates_headers)) ]
             csv = csv.transpose()
-            
-            print(csv )
+            #OBTENER LA PRIMERA FILA COMO CABECERA
+            headers = csv.iloc[0].to_list()
             
             
             
         
-        print(templates_headers)
+        print(set(headers), set(templates_headers ))
         if set(headers) != set(templates_headers):
             raise ValueError('El archivo no contiene las columnas necesarias')
         
         
         
-        for header in headers:
-            if csv[header].isnull().values.any():
+        for x, header in enumerate(headers):
+            
+            name_column = header
+            if template.vertical_template:
+                name_column = x
+            
+            if csv[name_column].isnull().values.any():
                 raise ValueError('El archivo contiene valores nulos')
             
             
-            for value in csv[header]:
+            for value in csv[name_column]:
                 
                 if validate_type(type(value),template.columns.get(name=header).type):
                     raise ValueError('El archivo contiene valores no validos')

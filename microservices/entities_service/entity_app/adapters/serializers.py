@@ -259,7 +259,7 @@ class NumeralDetailSerializer(serializers.ModelSerializer):
         
         return TemplateResponseSerializer(templates, many=True).data
 
-class NumeralCreateSerializer(serializers.ModelSerializar):
+class NumeralCreateSerializer(serializers.ModelSerializer):
     establishment_id = serializers.IntegerField();
     numeral_id = serializers.IntegerField();
     files = serializers.ListField(child=serializers.IntegerField());
