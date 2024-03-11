@@ -7,11 +7,13 @@ from shared.tasks.user_task import send_user_created_event
 from app.domain.models import Role
 from django.contrib.auth.hashers import make_password
 
+
 class UserService:
     """
         The UserService class implements the UserRepository abstract base class.
-    
+
     """
+
     def __init__(self, user_repository: UserRepository):
         """
         The constructor for the UserService class.
@@ -22,7 +24,6 @@ class UserService:
             create, update, and delete user objects.
         """
         self.user_repository = user_repository
-
 
     def register_cityzen_user(self, user: dict):
         """
@@ -53,7 +54,7 @@ class UserService:
         user['email'] = user['username']
         user['password'] = make_password(user['password'])
 
-        data =  self.user_repository.register_cityzen_user(user)
+        data = self.user_repository.register_cityzen_user(user)
         return json.loads(data)
 
     def get_user_by_id(self, user_id: int):
@@ -67,8 +68,7 @@ class UserService:
             User: The user object.
         """
         return self.user_repository.get_user(user_id)
-    
-    
+
     def get_users(self):
         """
         Get a list of users.
@@ -79,15 +79,14 @@ class UserService:
         user = self.user_repository.get_users()
         return user
 
-    
     def generate_password(self):
-        
-        #random password
-        
+
+        # random password
+
         letters = string.ascii_lowercase
         result_str = ''.join(random.choice(letters) for i in range(10))
         return result_str
-    
+
     def create_user(self, user: RegisterSerializer):
         """
         The function creates a user object using the provided dictionary of user data.
@@ -111,9 +110,10 @@ class UserService:
             return self.user_repository.create_user(data)
         except Exception as e:
             print("Error", e)
-            raise ValueError("Ya existe un usuario con ese correo o nombre de usuario")
-    
-    def create_user_admin(self,user:UserCreateAdminSerializer):
+            raise ValueError(
+                "Ya existe un usuario con ese correo o nombre de usuario")
+
+    def create_user_admin(self, user: UserCreateAdminSerializer):
         """
         The function creates a user object using the provided dictionary of user data.
 
@@ -133,7 +133,8 @@ class UserService:
             'last_name': user.validated_data['last_name'],
         }
         user_ = self.user_repository.create_user(data)
-        send_user_created_event.delay(user_.id, user.validated_data['establishment_id'])
+        send_user_created_event.delay(
+            user_.id, user.validated_data['establishment_id'])
         return user_
 
     def update_user(self, user_id: int, user: UserCreateAdminSerializer):
@@ -159,7 +160,9 @@ class UserService:
         }
         if user.validated_data['password']:
             data['password'] = user.validated_data['password']
-        
+        send_user_created_event.delay(
+            user_id, user.validated_data['establishment_id'])
+
         return self.user_repository.update_user(user_id, data)
 
     def delete_user(self, user_id: int):
@@ -173,8 +176,7 @@ class UserService:
             User: The user object.
         """
         return self.user_repository.delete_user(user_id)
-    
-    
+
     def active_user(self, user_id: int):
         """
         The function deletes a user object using the provided user id.
@@ -201,8 +203,7 @@ class UserService:
             return self.user_repository.get_user_by_email(email)
         except Exception:
             raise ValueError("User not found")
-        
-        
+
     def get_user_by_username(self, username: str):
         """
         Get a user by username.
@@ -218,6 +219,7 @@ class UserService:
         except Exception as e:
             print(e)
             raise ValueError("User not found")
+
     def login(self, user: dict):
         """
         Get a user by email.
@@ -233,7 +235,6 @@ class UserService:
         except Exception:
             raise ValueError("User or password incorrect")
 
-
     def assign_role(self, user_id: int, role_id: Role):
         """
         Assign a role to a user.
@@ -247,11 +248,11 @@ class UserService:
         """
         try:
             return self.user_repository.assign_role(user_id, role_id)
-        
+
         except Exception as e:
             print(e)
             raise ValueError("User not found")
-        
+
     def delete_permanent_user(self, user_id: int):
         """
         The function deletes a user object using the provided user id.
@@ -263,8 +264,7 @@ class UserService:
             User: The user object.
         """
         return self.user_repository.delete_permanent_user(user_id)
-    
-    
+
     def get_user_object(self, user_id: int):
         """
         Get a user by id.
