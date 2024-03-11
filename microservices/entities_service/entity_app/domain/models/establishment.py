@@ -6,9 +6,8 @@ from entity_app.domain.models.base_model import BaseModel
 class EstablishmentManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
-    
-    
-    
+
+
 class EstablishmentExtended(models.Model):
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=255, null=True, blank=True, unique=True)
@@ -20,12 +19,13 @@ class EstablishmentExtended(models.Model):
     job_authority = models.CharField(max_length=255)
     email_authority = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
-    
-    
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
+
+    objects = models.Manager()
+
     class Meta:
         managed = False
         db_table = 'app_admin_establishment'
-
 
 
 class UserEstablishmentExtended(BaseModel):
@@ -41,4 +41,3 @@ class UserEstablishmentExtended(BaseModel):
         managed = False
         db_table = 'app_admin_userestablishment'
         unique_together = (('user', 'establishment'),)
-        

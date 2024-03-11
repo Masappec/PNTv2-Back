@@ -1,6 +1,6 @@
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView,DestroyAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 
 from app_admin.adapters.serializer import EstablishmentListSerializer, EstablishmentCreateSerializer, \
     MessageTransactional, EstablishmentCreateResponseSerializer
@@ -16,8 +16,9 @@ from django.db.models import Q
 from app_admin.domain.service.access_information_service import AccessInformationService
 from app_admin.adapters.impl.access_information_impl import AccessInformationImpl
 
+
 class EstablishmentListAPI(ListAPIView):
-    
+
     pagination_class = StandardResultsSetPagination
     serializer_class = EstablishmentListSerializer
 
@@ -35,9 +36,9 @@ class EstablishmentListAPI(ListAPIView):
             User: The list of users.
         """
         return self.user_service.get_establishments()
-    
-    
-    #search by username
+
+    # search by username
+
     def get(self, request, *args, **kwargs):
         """
         Get a list of users.
@@ -53,8 +54,9 @@ class EstablishmentListAPI(ListAPIView):
         queryset = self.get_queryset()
         search = request.query_params.get('search', None)
         if search is not None:
-            queryset = queryset.filter(Q(name__icontains=search) | Q(abbreviation__icontains=search))
-        
+            queryset = queryset.filter(
+                Q(name__icontains=search) | Q(abbreviation__icontains=search))
+
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -62,10 +64,6 @@ class EstablishmentListAPI(ListAPIView):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-    
-    
-
-
 
 
 class EstablishmentCreateAPI(APIView):
@@ -88,7 +86,8 @@ class EstablishmentCreateAPI(APIView):
         """
         The constructor for the EstablishmentCreateAPI class.
         """
-        self.establishment_service = EstablishmentService(EstablishmentRepositoryImpl())
+        self.establishment_service = EstablishmentService(
+            EstablishmentRepositoryImpl())
         self.access_info = AccessInformationService(AccessInformationImpl())
         self.law_enforcement = LawEnforcementService(LawEnforcementImpl())
 
@@ -99,8 +98,8 @@ class EstablishmentCreateAPI(APIView):
             400: MessageTransactional
         },
         request_body=serializer_class,
-        #form data
-        
+        # form data
+
     )
     def post(self, request, *args, **kwargs):
         """
@@ -114,18 +113,21 @@ class EstablishmentCreateAPI(APIView):
         Returns:
             object: The response object.
         """
-        data=self.serializer_class(data=request.data)
+        data = self.serializer_class(data=request.data)
         file = request.FILES['logo']
         data.is_valid(raise_exception=True)
         establishment = None
         law = None
         access = None
         try:
-            establishment = self.establishment_service.create_establishment(data.data, file)
-            access= self.access_info.create_access_information(data.data)
+            establishment = self.establishment_service.create_establishment(
+                data.data, file)
+            access = self.access_info.create_access_information(data.data)
             law = self.law_enforcement.create_law_enforcement(data.data)
-            self.access_info.assign_establishment_to_access_information(access.id, establishment)
-            self.law_enforcement.assign_establishment_to_law_enforcement(law.id, establishment)
+            self.access_info.assign_establishment_to_access_information(
+                access.id, establishment)
+            self.law_enforcement.assign_establishment_to_law_enforcement(
+                law.id, establishment)
             res = MessageTransactional(
                 data={
                     'message': 'Entidad creada correctamente',
@@ -137,11 +139,12 @@ class EstablishmentCreateAPI(APIView):
             return Response(res.data, status=201)
         except Exception as e:
             if establishment is not None:
-                self.establishment_service.delete_establishment(establishment.id)
-                
+                self.establishment_service.delete_establishment(
+                    establishment.id)
+
             if access is not None:
                 self.access_info.delete_access_information(access.id)
-                
+
             if law is not None:
                 self.law_enforcement.delete_law_enforcement(law.id)
             print("Error:", e)
@@ -154,8 +157,7 @@ class EstablishmentCreateAPI(APIView):
             )
             res.is_valid(raise_exception=True)
             return Response(res.data, status=400)
-        
-        
+
 
 class EstablishmentDetail(APIView):
     """
@@ -175,9 +177,9 @@ class EstablishmentDetail(APIView):
         """
         The constructor for the EstablishmentDetail class.
         """
-        self.establishment_service = EstablishmentService(EstablishmentRepositoryImpl())
+        self.establishment_service = EstablishmentService(
+            EstablishmentRepositoryImpl())
         self.law_enforcement = LawEnforcementService(LawEnforcementImpl())
-
 
     def get(self, request, pk, *args, **kwargs):
         """
@@ -191,12 +193,14 @@ class EstablishmentDetail(APIView):
         Returns:
             object: The response object.
         """
-        
+
         try:
 
             establishment = self.establishment_service.get_establishment(pk)
-            info = self.establishment_service.get_first_access_to_information(pk)
-            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(pk)
+            info = self.establishment_service.get_first_access_to_information(
+                pk)
+            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(
+                pk)
             serializer = self.serializer_class(data={
                 'id': establishment.id,
                 'name': establishment.name,
@@ -213,10 +217,10 @@ class EstablishmentDetail(APIView):
                 'job_committe': law_enforcement.job_committe if law_enforcement is not None else None,
                 'email_committe': law_enforcement.email_committe if law_enforcement is not None else None,
                 'email_accesstoinformation': info.email if info is not None else None,
-                
-            
+
+
             })
-            
+
             serializer.is_valid(raise_exception=True)
             return Response(serializer.data)
         except Exception as e:
@@ -228,7 +232,7 @@ class EstablishmentDetail(APIView):
                     'json': {}
                 }
             )
-            
+
             res.is_valid(raise_exception=True)
             return Response(res.data, status=400)
 
@@ -251,9 +255,9 @@ class EstablishmentDetailUserSession(APIView):
         """
         The constructor for the EstablishmentDetail class.
         """
-        self.establishment_service = EstablishmentService(EstablishmentRepositoryImpl())
+        self.establishment_service = EstablishmentService(
+            EstablishmentRepositoryImpl())
         self.law_enforcement = LawEnforcementService(LawEnforcementImpl())
-
 
     def get(self, request):
         """
@@ -267,13 +271,16 @@ class EstablishmentDetailUserSession(APIView):
         Returns:
             object: The response object.
         """
-        
+
         try:
-            
+
             user_id = request.user.pk
-            establishment = self.establishment_service.get_establishment_by_user_id(user_id)
-            info = self.establishment_service.get_first_access_to_information(establishment.id)
-            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(establishment.id)
+            establishment = self.establishment_service.get_establishment_by_user_id(
+                user_id)
+            info = self.establishment_service.get_first_access_to_information(
+                establishment.id)
+            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(
+                establishment.id)
             serializer = self.serializer_class(data={
                 'id': establishment.id,
                 'name': establishment.name,
@@ -290,10 +297,10 @@ class EstablishmentDetailUserSession(APIView):
                 'job_committe': law_enforcement.job_committe if law_enforcement is not None else None,
                 'email_committe': law_enforcement.email_committe if law_enforcement is not None else None,
                 'email_accesstoinformation': info.email if info is not None else None,
-                
-            
+
+
             })
-            
+
             serializer.is_valid(raise_exception=True)
             return Response(serializer.data)
         except Exception as e:
@@ -305,7 +312,7 @@ class EstablishmentDetailUserSession(APIView):
                     'json': {}
                 }
             )
-            
+
             res.is_valid(raise_exception=True)
             return Response(res.data, status=400)
 
@@ -324,15 +331,15 @@ class EstablismentUpdate(APIView):
     serializer_class = EstablishmentCreateSerializer
     permission_classes = [IsAuthenticated]
     output_serializer_class = EstablishmentCreateResponseSerializer
-    
+
     def __init__(self):
         """
         The constructor for the EstablismentUpdate class.
         """
-        self.establisment_service = EstablishmentService(EstablishmentRepositoryImpl())
+        self.establisment_service = EstablishmentService(
+            EstablishmentRepositoryImpl())
         self.access_info = AccessInformationService(AccessInformationImpl())
         self.law_enforcement = LawEnforcementService(LawEnforcementImpl())
-
 
     def put(self, request, pk, *args, **kwargs):
         """
@@ -346,21 +353,23 @@ class EstablismentUpdate(APIView):
         Returns:
             object: The response object.
         """
-        data=self.serializer_class(data=request.data)
+        data = self.serializer_class(data=request.data)
         file = request.FILES['logo'] if 'logo' in request.FILES else None
         data.is_valid(raise_exception=True)
         establishment = None
         law = None
         access = None
-        
-        
+
         try:
-            establishment = self.establisment_service.update_establishment(pk, data.data)
+            establishment = self.establisment_service.update_establishment(
+                pk, data.data)
             if file is not None:
                 self.establisment_service.update_logo(pk, file)
-            law = self.law_enforcement.update_law_enforcement_by_establishment_id(pk, data.data)
-            access = self.access_info.update_access_information_by_establishment_id(pk, data.data)
-            
+            law = self.law_enforcement.update_law_enforcement_by_establishment_id(
+                pk, data.data)
+            access = self.access_info.update_access_information_by_establishment_id(
+                pk, data.data)
+
             serializer = self.output_serializer_class(data={
                 'id': establishment.id,
                 'name': establishment.name,
@@ -377,8 +386,8 @@ class EstablismentUpdate(APIView):
                 'job_committe': law.job_committe if law is not None else None,
                 'email_committe': law.email_committe if law is not None else None,
                 'email_accesstoinformation': access.email if access is not None else None,
-                
-            
+
+
             })
             serializer.is_valid(raise_exception=True)
             res = MessageTransactional(
@@ -391,7 +400,7 @@ class EstablismentUpdate(APIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-            
+
             print("Error:  ", e)
             res = MessageTransactional(
                 data={
@@ -402,7 +411,6 @@ class EstablismentUpdate(APIView):
             )
             res.is_valid(raise_exception=True)
             return Response(res.data, status=400)
- 
 
 
 class EstablishmentDeactive(APIView):
@@ -422,7 +430,8 @@ class EstablishmentDeactive(APIView):
         """
         The constructor for the EstablishmentDeactive class.
         """
-        self.establishment_service = EstablishmentService(EstablishmentRepositoryImpl())
+        self.establishment_service = EstablishmentService(
+            EstablishmentRepositoryImpl())
 
     def get_queryset(self):
         return self.establishment_service.get_establishments()
@@ -439,7 +448,8 @@ class EstablishmentDeactive(APIView):
         Returns:
             object: The response object.
         """
-        establishment = self.establishment_service.activa_or_deactivate_establishment(pk)
+        establishment = self.establishment_service.activa_or_deactivate_establishment(
+            pk)
         message = 'Entidad desactivada correctamente' if establishment.deleted else 'Entidad activada correctamente'
         res = MessageTransactional(
             data={
@@ -450,5 +460,3 @@ class EstablishmentDeactive(APIView):
         )
         res.is_valid(raise_exception=True)
         return Response(res.data, status=200)
-
-

@@ -50,7 +50,7 @@ services:
       - auth_microservice
       - redis_db
     volumes:
-      - ./microservices/entities_service:/app
+      - ./microservices/entities_service:/code
 
     environment:
       - DB_HOST=db_auth

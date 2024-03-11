@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-        'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -66,8 +66,10 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 
-FRONTEND_PASSWORD_CONFIRMATION_URL = os.getenv('FRONTEND_PASSWORD_CONFIRMATION_URL','http://localhost:5173/auth/reset-password/:token')
-FRONTEND_ACTIVATE_ACCOUNT_URL = os.getenv('FRONTEND_ACTIVATE_ACCOUNT_URL','http://localhost:5173/auth/activate-account/:uidb64/:token')
+FRONTEND_PASSWORD_CONFIRMATION_URL = os.getenv(
+    'FRONTEND_PASSWORD_CONFIRMATION_URL', 'http://localhost:5173/auth/reset-password/:token')
+FRONTEND_ACTIVATE_ACCOUNT_URL = os.getenv(
+    'FRONTEND_ACTIVATE_ACCOUNT_URL', 'http://localhost:5173/auth/activate-account/:uidb64/:token')
 
 TEMPLATES = [
     {
@@ -103,7 +105,7 @@ SWAGGER_SETTINGS = {
             "name": "Authorization",
             "type": "apiKey",
             "in": "header",
-        
+
         }
     },
     "USE_SESSION_AUTH": False,
@@ -120,9 +122,10 @@ SIMPLE_JWT = {
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
-    
+
 }
-CELERY_IMPORTS = ('shared.tasks.user_task','shared.tasks.auth_task')
+CELERY_IMPORTS = ('shared.tasks.user_task',
+                  'shared.tasks.auth_task', 'shared.tasks.ta_task')
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -158,10 +161,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
-
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = os.getenv(
+    'CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -183,7 +185,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 
 MEDIA_URL = '/media/'

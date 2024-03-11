@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'shared',
     'entity_app',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -59,9 +60,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CELERY_IMPORTS = ('shared.tasks.emit','shared.tasks.establishment_task',)
+CELERY_IMPORTS = ('shared.tasks.emit',
+                  'shared.tasks.establishment_task', 'shared.tasks.ta_task')
 
-#enable cors all domain
+# enable cors all domain
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
@@ -93,10 +95,10 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 
-
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
-
+CELERY_RESULT_BACKEND = os.getenv(
+    'CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
+CELERY_TIMEZONE = 'UTC'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -110,9 +112,6 @@ DATABASES = {
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
-
-
-
 
 
 REST_FRAMEWORK = {
@@ -131,7 +130,7 @@ SWAGGER_SETTINGS = {
             "name": "Authorization",
             "type": "apiKey",
             "in": "header",
-        
+
         }
     },
     "USE_SESSION_AUTH": False,
@@ -149,10 +148,10 @@ SIMPLE_JWT = {
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
-    
+
 }
 
-#time JWT
+# time JWT
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -195,8 +194,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
 
 
 MEDIA_URL = '/media/'

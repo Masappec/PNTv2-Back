@@ -4,8 +4,8 @@ from django.db.models import Q
 from app_admin.domain.service.establishment_service import EstablishmentService
 from app_admin.adapters.impl.establishment_impl import EstablishmentRepositoryImpl
 from app_admin.adapters.serializer import EstablishmentCreateResponseSerializer, EstablishmentListSerializer, MessageTransactional, \
-    PedagogyAreaSerializerResponse    
-from app_admin.utils.pagination import StandardResultsSetPagination
+    PedagogyAreaSerializerResponse
+from app_admin.utils.pagination import LetterPagination
 from rest_framework.views import APIView
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
@@ -18,8 +18,8 @@ from app_admin.domain.service.law_enforcement_service import LawEnforcementServi
 
 
 class EstablishmentPublicList(ListAPIView):
-    
-    pagination_class = StandardResultsSetPagination
+
+    pagination_class = LetterPagination
     serializer_class = EstablishmentListSerializer
     permission_classes = []
 
@@ -37,9 +37,9 @@ class EstablishmentPublicList(ListAPIView):
             User: The list of users.
         """
         return self.user_service.get_public_establishment()
-    
-    
-    #search by username
+
+    # search by username
+
     def get(self, request, *args, **kwargs):
         """
         Get a list of users.
@@ -53,22 +53,26 @@ class EstablishmentPublicList(ListAPIView):
             object: The response object.
         """
         queryset = self.get_queryset()
-        #quiero que en el campo logo me devuelva la url relativa
-
+        # quiero que en el campo logo me devuelva la url relativa
 
         search = request.query_params.get('search', None)
         if search is not None:
-            queryset = queryset.filter(Q(name__icontains=search) | Q(abbreviation__icontains=search))
-        
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            
-            
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+            queryset = queryset.filter(
+                Q(name__icontains=search) | Q(abbreviation__icontains=search))
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        establishments_by_letter = {}
+        for establishment in queryset:
+            first_letter = establishment.name[0].upper()
+            if first_letter not in establishments_by_letter:
+                establishments_by_letter[first_letter] = []
+            establishments_by_letter[first_letter].append(
+                self.get_serializer(establishment).data)
+
+        result_data = [{'letter': letter, 'data': data}
+                       for letter, data in establishments_by_letter.items()]
+
+        result = self.get_paginated_response(result_data)
+        return result
 
 
 class EstablishmentPublicDetail(APIView):
@@ -89,9 +93,9 @@ class EstablishmentPublicDetail(APIView):
         """
         The constructor for the EstablishmentDetail class.
         """
-        self.establishment_service = EstablishmentService(EstablishmentRepositoryImpl())
+        self.establishment_service = EstablishmentService(
+            EstablishmentRepositoryImpl())
         self.law_enforcement = LawEnforcementService(LawEnforcementImpl())
-
 
     def get(self, request, slug, *args, **kwargs):
         """
@@ -105,12 +109,15 @@ class EstablishmentPublicDetail(APIView):
         Returns:
             object: The response object.
         """
-        
+
         try:
 
-            establishment = self.establishment_service.get_establishment_by_slug(slug)
-            info = self.establishment_service.get_first_access_to_information(establishment.id)
-            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(establishment.id)
+            establishment = self.establishment_service.get_establishment_by_slug(
+                slug)
+            info = self.establishment_service.get_first_access_to_information(
+                establishment.id)
+            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(
+                establishment.id)
             print("law_enforcemen t", law_enforcement)
             serializer = self.serializer_class(data={
                 'id': establishment.id,
@@ -128,10 +135,10 @@ class EstablishmentPublicDetail(APIView):
                 'job_committe': law_enforcement.job_committe if law_enforcement is not None else None,
                 'email_committe': law_enforcement.email_committe if law_enforcement is not None else None,
                 'email_accesstoinformation': info.email if info is not None else None,
-                
-            
+
+
             })
-            
+
             serializer.is_valid(raise_exception=True)
             return Response(serializer.data)
         except Exception as e:
@@ -143,31 +150,28 @@ class EstablishmentPublicDetail(APIView):
                     'json': {}
                 }
             )
-            
+
             res.is_valid(raise_exception=True)
             return Response(res.data, status=400)
-        
-        
+
+
 class PedagogyAreaPublicView(APIView):
 
-        
     permission_classes = []
-    
+
     serializer_class = PedagogyAreaSerializerResponse
-    
+
     def __init__(self):
         self.service = PedagogyAreaService(
             respository=PedagogyAreaImpl()
         )
-        
-    
-    
+
     def get(self, request, format=None):
         try:
             pedagogy_area = self.service.select_area()
-            
+
             serializer = self.serializer_class(pedagogy_area)
-            
+
             res = MessageTransactional(
                 data={
                     'message': 'Pedagogy area selected successfully',
@@ -175,11 +179,11 @@ class PedagogyAreaPublicView(APIView):
                     'json': serializer.data
                 }
             )
-            
+
             res.is_valid(raise_exception=True)
-            
+
             return Response(res.data, status=status.HTTP_200_OK)
-        
+
         except Exception as e:
             print(e)
             res = MessageTransactional(
@@ -189,10 +193,7 @@ class PedagogyAreaPublicView(APIView):
                     'json': {}
                 }
             )
-            
+
             res.is_valid(raise_exception=True)
-            
+
             return Response(res.validated_data, status=status.HTTP_400_BAD_REQUEST)
-
-
-

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from app_admin.domain.models import FormFields, Establishment, UserEstablishment,\
-    LawEnforcement, AccessToInformation, Email,Configuration, TutorialVideo, NormativeDocument, PedagogyArea
+from app_admin.domain.models import FormFields, Establishment, UserEstablishment, \
+    LawEnforcement, AccessToInformation, Email, Configuration, TutorialVideo, NormativeDocument, PedagogyArea
 
 # Register your models here.
 

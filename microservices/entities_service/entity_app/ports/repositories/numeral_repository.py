@@ -3,36 +3,34 @@ from typing import List
 from entity_app.domain.models.transparency_active import Numeral
 from django.db.models.query import QuerySet
 
+
 class NumeralRepository(ABC):
-    
+
     def get_all(self):
         pass
-    
+
     def get(self, id):
         pass
-    
+
     def get_by_entity(self, entity_id):
         pass
 
     def get_all_transparency(self):
         pass
-    
-    
-    def filter_by_list_ids(self, ids:List[int]) -> QuerySet[Numeral]:
+
+    def filter_by_list_ids(self, ids: List[int]) -> QuerySet[Numeral]:
         pass
-    
-    
-    def asign_numeral_to_establishment(self,ids_numeral:List[int],establishment_id:int) :
-        
+
+    def asign_numeral_to_establishment(self, ids_numeral: List[int], establishment_id: int):
+
         pass
-    
-    def get_by_default(self, default:bool) -> QuerySet[Numeral]:
-        
+
+    def get_by_default(self, default: bool) -> QuerySet[Numeral]:
+
         pass
-    
-    def get_transparency_by_numeral(self, numeral, month, year):
+
+    def get_transparency_by_numeral(self, numeral, month, year, establishment_id):
         pass
-    
-    def create_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual):
+
+    def create_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual, get_transparency_by_numeral, status="ingress"):
         pass
-    
