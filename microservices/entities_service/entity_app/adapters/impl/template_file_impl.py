@@ -58,8 +58,10 @@ class TemplateFileImpl(TemplateFileRepository):
             # OBTENER LA PRIMERA FILA COMO CABECERA
             headers = csv.iloc[0].to_list()
 
-        if sorted([header.strip() for header in headers]) != sorted([h.strip() for h in templates_headers]):
-            raise ValueError('El archivo no contiene las columnas necesarias')
+        if not template.vertical_template:
+            if sorted([header.strip() for header in headers]) != sorted([h.strip() for h in templates_headers]):
+                raise ValueError(
+                    'El archivo no contiene las columnas necesarias')
 
         for x, header in enumerate(headers):
 
