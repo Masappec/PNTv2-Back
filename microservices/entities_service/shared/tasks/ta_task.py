@@ -15,7 +15,7 @@ def process_updaload_data(self, fileMeta: UploadedFile, fileDataset: UploadedFil
     pass
 
 
-@shared_task(bind=True)
+@shared_task(bind=True, name='numeral.created')
 def process_created_transparency_active_entity(self):
     print("Process created transparency active entity ")
     month = datetime.now().month
