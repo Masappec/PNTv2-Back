@@ -36,7 +36,11 @@ class EstablishmentFakeData:
                     'last_name_authority': self.fake.last_name(),
                     'job_authority': self.fake.job(),
                     'email_authority': self.fake.email(),
-                    'extra_numerals': []
+                    'extra_numerals': [],
+                    'type_organization': 1,
+                    'type_institution': 1,
+                    'function_organization': 1,
+                    'address': self.fake.address(),
                 },
                 file
             )

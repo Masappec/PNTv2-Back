@@ -156,7 +156,6 @@ class SolicityCreateSerializer(serializers.Serializer):
     type_reception = serializers.CharField()
     formatSolicity = serializers.CharField()
     expiry_date = serializers.DateTimeField()
-    establishment_id = serializers.IntegerField()
 
 
 class SolicityCreateResponseSerializer(serializers.Serializer):

@@ -1,15 +1,17 @@
 from django.db.models import ImageField
 from rest_framework.fields import ListField
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, JSONField, PrimaryKeyRelatedField
-from app_admin.domain.models import Configuration, Establishment, FormFields, FrequentlyAskedQuestions, TutorialVideo, NormativeDocument
+from app_admin.domain.models import Configuration, Establishment, \
+    FormFields, FrequentlyAskedQuestions, TutorialVideo, NormativeDocument, TypeInstitution, \
+    FunctionOrganization, TypeOrganization
 
 
 class EstablishmentListSerializer(ModelSerializer):
-    
+
     class Meta:
         model = Establishment
         fields = '__all__'
-        
+
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['logo'] = instance.logo.url
@@ -32,6 +34,14 @@ class EstablishmentCreateSerializer(Serializer):
     email_committe = CharField(max_length=255)
     email_accesstoinformation = CharField(max_length=255)
     extra_numerals = CharField(allow_blank=True)
+    type_institution = PrimaryKeyRelatedField(
+        queryset=TypeInstitution.objects.all())
+
+    type_organization = PrimaryKeyRelatedField(
+        queryset=TypeOrganization.objects.all())
+    function_organization = PrimaryKeyRelatedField(
+        queryset=FunctionOrganization.objects.all())
+    address = CharField(max_length=255)
 
 
 class EstablishmentCreateResponseSerializer(Serializer):
@@ -49,7 +59,11 @@ class EstablishmentCreateResponseSerializer(Serializer):
     last_name_committe = CharField(max_length=255)
     job_committe = CharField(max_length=255)
     email_committe = CharField(max_length=255)
-    email_accesstoinformation = CharField(max_length=255)
+    email_accesstoinformation = CharField(max_length=255),
+    address = CharField(max_length=255)
+    type_institution = IntegerField()
+    type_organization = IntegerField()
+    function_organization = IntegerField()
 
 
 class MessageTransactional(Serializer):
@@ -128,31 +142,29 @@ class PedagogyAreaSerializerCreate(Serializer):
     normative = NormativeSerializer(many=True)
 
 
-
-
-
 class FAQSerializerResponse(ModelSerializer):
-    
+
     class Meta:
         model = FrequentlyAskedQuestions
         fields = '__all__'
-        
-        
+
+
 class TutorialSerializerResponse(ModelSerializer):
-    
+
     class Meta:
         model = TutorialVideo
         fields = '__all__'
-        
+
+
 class NormativeSerializerResponse(ModelSerializer):
-    
+
     class Meta:
         model = NormativeDocument
         fields = '__all__'
-        
+
 
 class PedagogyAreaSerializerResponse(Serializer):
-    
+
     faq = FAQSerializerResponse(many=True)
     tutorial = TutorialSerializerResponse(many=True)
     normative = NormativeSerializerResponse(many=True)

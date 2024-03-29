@@ -6,6 +6,7 @@ import string
 from shared.tasks.user_task import send_user_created_event
 from app.domain.models import Role
 from django.contrib.auth.hashers import make_password
+from app.adapters.messaging.publish import publish_message
 
 
 class UserService:
@@ -160,6 +161,9 @@ class UserService:
         }
         if user.validated_data['password']:
             data['password'] = user.validated_data['password']
+
+        publish_message('user', 'user updated')
+        print("User updated")
         send_user_created_event.delay(
             user_id, user.validated_data['establishment_id'])
 

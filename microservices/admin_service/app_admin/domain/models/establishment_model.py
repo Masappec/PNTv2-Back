@@ -19,11 +19,51 @@ class UserEstablishment(BaseModel):
         verbose_name_plural = 'Usuarios por Institución'
 
 
+class TypeOrganization(BaseModel):
+    name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
+
+    class Meta:
+        verbose_name = 'Tipo de Organización'
+        verbose_name_plural = 'Tipos de Organización'
+
+
+class TypeInstitution(BaseModel):
+    name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
+
+    class Meta:
+        verbose_name = 'Tipo de Institución'
+        verbose_name_plural = 'Tipos de Institución'
+
+
+class FunctionOrganization(BaseModel):
+    name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
+
+    class Meta:
+        verbose_name = 'Función de Organización'
+        verbose_name_plural = 'Funciones de Organización'
+
+
 class Establishment(BaseModel):
 
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=255, null=True, blank=True, unique=True)
     abbreviation = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    type_organization = models.ForeignKey(
+        TypeOrganization, on_delete=models.CASCADE, null=True, blank=True)
+    function_organization = models.ForeignKey(
+        FunctionOrganization, on_delete=models.CASCADE, null=True, blank=True)
+    type_institution = models.ForeignKey(
+        TypeInstitution, on_delete=models.CASCADE, null=True, blank=True)
     logo = models.ImageField(upload_to='establishment')
     highest_authority = models.CharField(max_length=255)
     first_name_authority = models.CharField(max_length=255)
@@ -33,14 +73,13 @@ class Establishment(BaseModel):
     is_active = models.BooleanField(default=True)
 
     objects = models.Manager()
-    
+
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
 
     class Meta:
         verbose_name = 'Institución'
         verbose_name_plural = 'Instituciones'
-        
-        
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = unique_slug_generator(self)

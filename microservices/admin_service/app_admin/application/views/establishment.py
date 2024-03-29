@@ -16,6 +16,10 @@ from django.db.models import Q
 from app_admin.domain.service.access_information_service import AccessInformationService
 from app_admin.adapters.impl.access_information_impl import AccessInformationImpl
 
+from app_admin.adapters.impl.function_organization_impl import FunctionOrganizationImpl
+from app_admin.adapters.impl.type_institution_impl import TypeInstitutionImpl
+from app_admin.adapters.impl.type_organization_impl import TypeOrganizationImpl
+
 
 class EstablishmentListAPI(ListAPIView):
 
@@ -460,3 +464,30 @@ class EstablishmentDeactive(APIView):
         )
         res.is_valid(raise_exception=True)
         return Response(res.data, status=200)
+
+
+class FieldForFormCreate(APIView):
+
+    permission_classes = []
+
+    def get(self, request):
+        """
+        Get a establishment.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        respository_type = FunctionOrganizationImpl()
+        repository_institution = TypeInstitutionImpl()
+        repository_organization = TypeOrganizationImpl()
+
+        return Response({
+            'functions': [{'id': x.id, 'name': x.name} for x in respository_type.get_all()],
+            'institutions': [{'id': x.id, 'name': x.name} for x in repository_institution.get_all()],
+            'organizations': [{'id': x.id, 'name': x.name} for x in repository_organization.get_all()]
+        })

@@ -1,17 +1,12 @@
-version: '3'
+version: "3"
 
 services:
-
-
   redis_db:
     image: redis:latest
     ports:
       - "6379:6379"
     networks:
       - pnt_network
-  
-
-
 
   auth_microservice:
     build:
@@ -25,7 +20,6 @@ services:
     volumes:
       - ./microservices/auth_service:/app
 
-
     environment:
       - DB_HOST=db_auth
       - DB_NAME=auth_database
@@ -33,11 +27,12 @@ services:
       - DB_PASSWORD=auth_password
       - CELERY_BROKER_URL=redis://redis_db:6379/0
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+      - REDIS_HOST = redis_db
+      - REDIS_PORT = 6379
+      - REDIS_DB = 0
 
     networks:
       - pnt_network
-
-  
 
   entity_microservice:
     build:
@@ -63,7 +58,6 @@ services:
     networks:
       - pnt_network
 
-
   admin_microservice:
     build:
       context: ./microservices/admin_service
@@ -84,10 +78,12 @@ services:
       - DB_PASSWORD=auth_password
       - CELERY_BROKER_URL=redis://redis_db:6379/0
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
 
     networks:
       - pnt_network
-      
 
   db_auth:
     image: postgres:latest
@@ -100,9 +96,6 @@ services:
 
     networks:
       - pnt_network
-
-
-
 
   api_gateway:
     image: nginx:latest
@@ -117,15 +110,9 @@ services:
     networks:
       - pnt_network
 
-
-  
-
-    
-
 volumes:
   auth_microservice:
   admin_microservice:
 
 networks:
   pnt_network:
-
