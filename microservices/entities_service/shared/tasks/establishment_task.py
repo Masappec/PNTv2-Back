@@ -3,7 +3,6 @@ from entity_app.adapters.impl.numeral_impl import NumeralImpl
 from entities_service.celery import app
 
 
-@app.task(name='establishment.created')
 def establishment_created_event(numerals_id: list, establishment_id: int):
     service = NumeralService(numeral_repository=NumeralImpl())
     # eliminar los valores '' de la lista numerals_id

@@ -1,8 +1,8 @@
 from django.conf import settings
 import redis
 from typing import List
-from app_admin.adapters.messaging.callback_observer import CallbackObserver
-from app_admin.adapters.messaging.redis.client import RedisClient
+from entity_app.adapters.messaging.callback_observer import CallbackObserver
+from entity_app.adapters.messaging.redis.client import RedisClient
 
 
 class Subscribe:
@@ -18,13 +18,14 @@ class Subscribe:
 
             for observer in self.observers:
                 pubsub.subscribe(observer.channel)
-                for message in pubsub.listen():
-                    print("Mensaje recibido: ", message)
-                    if message['type'] == 'message':
+
+            for message in pubsub.listen():
+                if message['type'] == 'message':
+                    for observer in self.observers:
                         observer.update(message, observer.channel)
 
         except Exception as e:
-            print("Error al suscribirse al canal:  ", e)
+            print("Error al suscribirse al canal: ", e)
             raise e
 
 

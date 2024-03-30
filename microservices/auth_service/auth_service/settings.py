@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'auth_service.wsgi.application'
 CELERY_IMPORTS = ('shared.tasks.auth_task', 'shared.tasks.emit', 'shared.tasks.establishment_task',
                   'shared.tasks.user_task', 'shared.tasks.ta_task')
 
-REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+REDIS_HOST = os.getenv('REDIS_HOST', 'redis_db')
 REDIS_PORT = os.getenv('REDIS_PORT', 6379)
 REDIS_DB = os.getenv('REDIS_DB', 0)
 

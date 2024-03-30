@@ -3,10 +3,11 @@ from app.ports.repositories.user_repository import UserRepository
 from app.adapters.serializer import RegisterSerializer, UserCreateAdminSerializer
 import random
 import string
-from shared.tasks.user_task import send_user_created_event
 from app.domain.models import Role
 from django.contrib.auth.hashers import make_password
-from app.adapters.messaging.publish import publish_message
+from app.adapters.messaging.events import USER_CREATED, USER_UPDATED
+from app.adapters.messaging.channels import CHANNEL_USER
+from app.adapters.messaging.publish import Publisher
 
 
 class UserService:
@@ -25,6 +26,7 @@ class UserService:
             create, update, and delete user objects.
         """
         self.user_repository = user_repository
+        self.publisher = Publisher(CHANNEL_USER)
 
     def register_cityzen_user(self, user: dict):
         """
@@ -134,8 +136,13 @@ class UserService:
             'last_name': user.validated_data['last_name'],
         }
         user_ = self.user_repository.create_user(data)
-        send_user_created_event.delay(
-            user_.id, user.validated_data['establishment_id'])
+        self.publisher.publish(json.dumps({
+            'type': USER_CREATED,
+            'payload': {
+                'user_id': user_.id,
+                'establishment_id': user.validated_data['establishment_id']
+            }
+        }))
         return user_
 
     def update_user(self, user_id: int, user: UserCreateAdminSerializer):
@@ -162,10 +169,13 @@ class UserService:
         if user.validated_data['password']:
             data['password'] = user.validated_data['password']
 
-        publish_message('user', 'user updated')
-        print("User updated")
-        send_user_created_event.delay(
-            user_id, user.validated_data['establishment_id'])
+        self.publisher.publish(json.dumps({
+            'type': USER_UPDATED,
+            'payload': {
+                'user_id': user_id,
+                'establishment_id': user.validated_data['establishment_id']
+            }
+        }))
 
         return self.user_repository.update_user(user_id, data)
 

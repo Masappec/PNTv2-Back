@@ -54,6 +54,9 @@ services:
       - DB_PASSWORD=auth_password
       - CELERY_BROKER_URL=redis://redis_db:6379/0
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
 
     networks:
       - pnt_network

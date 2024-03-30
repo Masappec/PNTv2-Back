@@ -1,7 +1,6 @@
 from auth_service.celery import app
 
 
-@app.task(name='user.user_created')
 def send_user_created_event(user_id, establishment_id):
 
     # ejecutar la tarea admin.user_created

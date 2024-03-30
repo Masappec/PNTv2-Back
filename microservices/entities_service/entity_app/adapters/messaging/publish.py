@@ -1,7 +1,6 @@
 from django.conf import settings
-# publish.py (Microservicio 1)
 
-from app.adapters.messaging.redis.client import RedisClient
+from entity_app.adapters.messaging.redis.client import RedisClient
 
 
 class Publisher:

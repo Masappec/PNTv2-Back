@@ -7,6 +7,10 @@ from app_admin.domain.models import Configuration, Establishment, \
 
 
 class EstablishmentListSerializer(ModelSerializer):
+    address = CharField(max_length=255, allow_blank=True, allow_null=True)
+    type_institution = CharField(max_length=255, allow_null=True)
+    type_organization = CharField(max_length=255, allow_null=True)
+    function_organization = CharField(max_length=255, allow_null=True)
 
     class Meta:
         model = Establishment
@@ -35,13 +39,13 @@ class EstablishmentCreateSerializer(Serializer):
     email_accesstoinformation = CharField(max_length=255)
     extra_numerals = CharField(allow_blank=True)
     type_institution = PrimaryKeyRelatedField(
-        queryset=TypeInstitution.objects.all())
+        queryset=TypeInstitution.objects.all(), allow_null=True)
 
     type_organization = PrimaryKeyRelatedField(
-        queryset=TypeOrganization.objects.all())
+        queryset=TypeOrganization.objects.all(), allow_null=True)
     function_organization = PrimaryKeyRelatedField(
-        queryset=FunctionOrganization.objects.all())
-    address = CharField(max_length=255)
+        queryset=FunctionOrganization.objects.all(), allow_null=True)
+    address = CharField(max_length=255, allow_blank=True, allow_null=True)
 
 
 class EstablishmentCreateResponseSerializer(Serializer):
@@ -60,10 +64,10 @@ class EstablishmentCreateResponseSerializer(Serializer):
     job_committe = CharField(max_length=255)
     email_committe = CharField(max_length=255)
     email_accesstoinformation = CharField(max_length=255),
-    address = CharField(max_length=255)
-    type_institution = IntegerField()
-    type_organization = IntegerField()
-    function_organization = IntegerField()
+    address = CharField(max_length=255, allow_blank=True, allow_null=True)
+    type_institution = IntegerField(allow_null=True)
+    type_organization = IntegerField(allow_null=True)
+    function_organization = IntegerField(allow_null=True)
 
 
 class MessageTransactional(Serializer):
