@@ -4,9 +4,10 @@ from entity_app.domain.models.publication import Attachment, FilePublication
 from entity_app.domain.models.establishment import UserEstablishmentExtended
 from datetime import datetime
 
+
 class SolicityImpl(SolicityRepository):
 
-    #def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
+    # def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
     def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id, expiry_date):
         """
         Crea una solicitud de ciudadano
@@ -14,22 +15,8 @@ class SolicityImpl(SolicityRepository):
         Args:
             solicity (dict): Diccionario con los datos de la solicitud de ciudadano
         """
-        solicity = Solicity.objects.create(establishment_id=establishment_id
-                                         , text=description
-                                         , user_id=user_id
-                                         , first_name=first_name
-                                         , last_name=last_name
-                                         , email=email
-                                         , identification=identification
-                                         , address=address
-                                         , phone=phone
-                                         , format_receipt=format_receipt
-                                         , type_reception=type_reception
-                                         , expiry_date=expiry_date
-                                         , have_extension=0
-                                         , user_created_id=user_id
-                                         , user_updated_id=user_id
-                                         , status=Status.CREATED)
+        solicity = Solicity.objects.create(establishment_id=establishment_id, text=description, user_id=user_id, first_name=first_name, last_name=last_name, email=email, identification=identification, address=address,
+                                           phone=phone, format_receipt=format_receipt, type_reception=type_reception, expiry_date=expiry_date, have_extension=0, user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
 
         return solicity
 
@@ -89,13 +76,13 @@ class SolicityImpl(SolicityRepository):
         return response
 
     def get_user_solicities(self, user_id):
-        return Solicity.objects.filter(user_id=user_id, is_active=True)
-    
+        return Solicity.objects.filter(user_created_id=user_id, is_active=True)
+
     def get_entity_solicities(self, entity_id):
         return Solicity.objects.filter(establishment__id=entity_id, is_active=True)
-    
-    def delete_solicity_response(self, solicity_response_id,user_id):
-        return SolicityResponse.objects.filter(id=solicity_response_id).update(is_active=False,deteled_at=datetime.now(),user_deleted_id=user_id)
-    
+
+    def delete_solicity_response(self, solicity_response_id, user_id):
+        return SolicityResponse.objects.filter(id=solicity_response_id).update(is_active=False, deteled_at=datetime.now(), user_deleted_id=user_id)
+
     def validate_user_establishment(self, establishment_id, user_id):
         return UserEstablishmentExtended.objects.filter(user_id=user_id, establishment_id=establishment_id, is_active=True).exists()

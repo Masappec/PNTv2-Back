@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from entity_app.domain.models.publication import Publication
 from entity_app.domain.models.solicity import SolicityResponse
 from entity_app.domain.models.establishment import UserEstablishmentExtended
-from entity_app.domain.models.transparency_active import Numeral
+from entity_app.domain.models.transparency_active import EstablishmentNumeral
 
 
 class HasPermission(BasePermission):
@@ -60,10 +60,10 @@ class NumeralIsOwner(BasePermission):
         valid = UserEstablishmentExtended.objects.filter(
             user_id=request.user).first()
 
-        valid_numeral = Numeral.objects.get(
-            id=id_numeral, establishment_id=valid.establishment_id).exists()
+        valid_numeral = EstablishmentNumeral.objects.filter(
+            establishment_id=valid.establishment_id, numeral_id=id_numeral)
 
-        if valid_numeral:
+        if valid_numeral.count() > 0:
             return True
 
         return False
