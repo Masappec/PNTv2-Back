@@ -255,17 +255,17 @@ class SolicityResponseView(ListAPIView):
     """Solicity Response view."""
 
     permission_classes = [IsAuthenticated, HasPermission]
-    serializer_class = SolicityCreateSerializer
+    serializer_class = SolicitySerializer
     pagination_class = StandardResultsSetPagination
-    permission_required = 'view_solicity_response'
+    permission_required = 'view_solicityresponse'
     output_serializer_class = SolicityResponseSerializer
 
     def __init__(self):
         self.service = SolicityService(SolicityImpl())
 
-    def get_queryset(self, entity_id):
+    def get_queryset(self, use_id):
         """Get queryset."""
-        return self.service.get_entity_solicities(entity_id)
+        return self.service.get_entity_user_solicities(use_id)
 
     def get(self, request, *args, **kwargs):
         """
@@ -279,45 +279,25 @@ class SolicityResponseView(ListAPIView):
         Returns:
             object: The response object.
         """
-        data = self.serializer_class(data=request.data)
-        data.is_valid(raise_exception=True)
-        queryset = None
+        data = request.data
 
         try:
-            relations = self.service.validate_user_establishment(
-                data.validated_data['establishment_id'], request.user.id)
 
-            if relations is True:
-                queryset = self.get_queryset(
-                    data.validated_data['establishment_id'])
+            queryset = self.get_queryset(
+                request.user.id
+            )
 
-                search = request.query_params.get('search', None)
-                if search is not None:
-                    queryset = queryset.filter(
-                        Q(name__icontains=search) | Q(description__icontains=search))
+            search = request.query_params.get('search', None)
+            if search is not None:
+                queryset = queryset.filter(
+                    Q(name__icontains=search) | Q(description__icontains=search))
 
-                page = self.paginate_queryset(queryset)
-                if page is not None:
-                    serializer = self.get_serializer(page, many=True)
-                    return self.get_paginated_response(serializer.data)
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
 
-                res = MessageTransactional(
-                    data={
-                        'message': "Solicitudes respondida correctamente.",
-                        'status': 200,
-                        'json': self.output_serializer_class(queryset).data
-                    }
-                )
-            else:
-                res = MessageTransactional(
-                    data={
-                        'message': "Error: No tiene permisos para ver las solicitudes de este establecimiento.",
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'json': {}
-                    }
-                )
-            res.is_valid(raise_exception=True)
-            return Response(res.data, status=201)
+            return Response(serializer.data)
         except Exception as e:
             print("Error:", e)
             res = MessageTransactional(

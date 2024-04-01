@@ -86,3 +86,11 @@ class SolicityImpl(SolicityRepository):
 
     def validate_user_establishment(self, establishment_id, user_id):
         return UserEstablishmentExtended.objects.filter(user_id=user_id, establishment_id=establishment_id, is_active=True).exists()
+
+    def get_entity_user_solicities(self, user_id):
+        establishment = UserEstablishmentExtended.objects.filter(
+            user_id=user_id, is_active=True).first()
+
+        if establishment is None:
+            return ValueError('User does not have an establishment')
+        return Solicity.objects.filter(establishment_id=establishment.establishment_id, is_active=True)
