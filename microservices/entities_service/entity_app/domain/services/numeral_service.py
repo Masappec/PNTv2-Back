@@ -32,3 +32,6 @@ class NumeralService:
 
     def create_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual, status="ingress"):
         return self.numeral_repository.create_transparency(establishment_id, numeral_id, files, month, year, fecha_actual, status)
+
+    def get_all(self):
+        return self.numeral_repository.get_all()
