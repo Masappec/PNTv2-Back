@@ -1,15 +1,13 @@
-version: '3'
+version: "3"
 
 services:
-
-
   redis_db:
     image: redis:latest
     ports:
       - "6379:6379"
     networks:
       - pnt_network
-      
+
   admin_microservice:
     build:
       context: ./microservices/admin_service
@@ -32,6 +30,9 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
       - FRONTEND_PASSWORD_CONFIRMATION_URL=http://44.221.168.184/auth/reset-password/:token
       - FRONTEND_ACTIVATE_ACCOUNT_URL=http://44.221.168.184/auth/activate-account/:uidb64/:token
+      - REDIS_HOST = redis_db
+      - REDIS_PORT = 6379
+      - REDIS_DB = 0
 
     networks:
       - pnt_network
@@ -46,7 +47,6 @@ services:
       - redis_db
     volumes:
       - ./microservices/auth_service:/app
-    
 
     environment:
       - DB_HOST=db_auth
@@ -55,10 +55,12 @@ services:
       - DB_PASSWORD=auth_password
       - CELERY_BROKER_URL=redis://redis_db:6379/0
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+      - REDIS_HOST = redis_db
+      - REDIS_PORT = 6379
+      - REDIS_DB = 0
 
     networks:
       - pnt_network
-
 
   entity_microservice:
     build:
@@ -71,7 +73,7 @@ services:
       - redis_db
     volumes:
       - ./microservices/entities_service:/app
-    
+
     networks:
       - pnt_network
     environment:
@@ -81,10 +83,9 @@ services:
       - DB_PASSWORD=auth_password
       - CELERY_BROKER_URL=redis://redis_db:6379/0
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
-
-
- 
-      
+      - REDIS_HOST = redis_db
+      - REDIS_PORT = 6379
+      - REDIS_DB = 0
 
   db_auth:
     image: postgres:latest
@@ -96,12 +97,10 @@ services:
     networks:
       - pnt_network
 
-
   mongo_db:
     image: mongo:latest
     networks:
       - pnt_network
-
 
   api_gateway:
     image: nginx:latest
@@ -116,8 +115,6 @@ services:
     networks:
       - pnt_network
 
-    
-
 volumes:
   auth_microservice:
   admin_microservice:
@@ -125,4 +122,3 @@ volumes:
 networks:
   pnt_network:
     driver: bridge
-
