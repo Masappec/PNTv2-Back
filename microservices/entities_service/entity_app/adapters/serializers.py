@@ -155,7 +155,6 @@ class SolicityCreateSerializer(serializers.Serializer):
     phone = serializers.CharField()
     type_reception = serializers.CharField()
     formatSolicity = serializers.CharField()
-    expiry_date = serializers.DateTimeField()
 
 
 class SolicityCreateResponseSerializer(serializers.Serializer):
