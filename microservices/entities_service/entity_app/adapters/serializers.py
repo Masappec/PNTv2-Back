@@ -321,3 +321,38 @@ class TransparecyActiveCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
     numeral_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
+
+class TransparencyColaboratyCreate(serializers.Serializers):
+    establishment_id = serializers.IntegerField()
+    numeral_id = serializers.IntegerField()
+    files = serializers.ListField(child=serializers.IntegerField())
+
+class TransparencyFocusCreate(serializers.Serializers):
+    establishment_id = serializers.IntegerField()
+    numeral_id = serializers.IntegerField()
+    files = serializers.ListField(child=serializers.IntegerField())
+
+class ListTransparencyFocus(serializers.Serializers):
+    establishment = serializers.IntegerField()
+    numeral = serializers.IntegerField()
+    files = serializers.ListField(child=serializers.IntegerField())
+    slug = serializers.BooleanField()
+    month = serializers.IntegerField()
+    year = serializers.IntegerField()
+    status = serializers.CharField()
+    published = serializers.BooleanField()
+    published_at = serializers.DateTimeField()
+    max_date_to_publish = serializers.DateTimeField()
+
+class ListTransparencyColaborative(serializers.Serializers):
+    establishment = serializers.IntegerField()
+    numeral = serializers.IntegerField()
+    files = serializers.ListField(child=serializers.IntegerField())
+    slug = serializers.BooleanField()
+    month = serializers.IntegerField()
+    year = serializers.IntegerField()
+    status = serializers.CharField()
+    published = serializers.BooleanField()
+    published_at = serializers.DateTimeField()
+    max_date_to_publish = serializers.DateTimeField()
+

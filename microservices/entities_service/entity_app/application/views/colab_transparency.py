@@ -1,5 +1,5 @@
-from entity_app.adapters.impl.TransparencyColaborativeImpl import TransparencyFocusImpl
-from entity_app.domain.services.transparency_colaborative_repository import TransparencyFocusService
+from entity_app.adapters.impl.transparency_colaborative_impl import TransparencyColaborativeImpl
+from entity_app.domain.services.transparency_colaborative_service import TransparencyColaborativeService
 
 from datetime import datetime
 
@@ -12,15 +12,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from entity_app.adapters.serializers import TransparencyFocusCreate, MessageTransactional, ListTransparencyFocus
+from entity_app.adapters.serializers import TransparencyColaboratyCreate, MessageTransactional, ListTransparencyColaborative
 
-class CreateTransparencyFocalizada(APIView):
+class CreateTransparencyColaboraty(APIView):
 
-    serializer_class = TransparencyFocusCreate
+    serializer_class = TransparencyColaboratyCreate
     permission_classes = [IsAuthenticated, HasPermission]
 
     def __init__(self, **kwargs):
-        self.sevice = TransparencyFocusService(TransparencyFocusImpl())
+        self.sevice = TransparencyColaborativeService(TransparencyColaborativeImpl())
 
     def post(self, request, *args, **kwargs):
 
@@ -33,13 +33,13 @@ class CreateTransparencyFocalizada(APIView):
         maxDatePublish = datetime.now() + datetime.timedelta(days=15)
 
         try:
-            transparency_focus = self.service.createTransparencyFocus(data.validated_data['establishment_id'], data.validated_data['numeral_id'], data.validated_data['files'], month, year, today, maxDatePublish)
+            transparency_colaborative = self.service.createTransparencyColaborative(data.validated_data['establishment_id'], data.validated_data['numeral_id'], data.validated_data['files'], month, year, today, maxDatePublish)
 
             res = MessageTransactional(
                 data={
                     'message': 'Publicacion creada correctamente',
                     'status': 201,
-                    'json': self.output_serializer_class(transparency_focus).data
+                    'json': self.output_serializer_class(transparency_colaborative).data
                 }
             )
 
@@ -54,19 +54,19 @@ class CreateTransparencyFocalizada(APIView):
                 }
             
             return Response(res, status=status.HTTP_400_BAD_REQUEST)
-
-class TransparencyFocusView(ListAPIView):
+        
+class TransparencyColaborativeView(ListAPIView):
 
     permission_classes = [IsAuthenticated, HasPermission]
-    serializer_class = ListTransparencyFocus
+    serializer_class = ListTransparencyColaborative
     pagination_class = StandardResultsSetPagination
 
     def __init__(self, **kwargs):
-        self.sevice = TransparencyFocusService(TransparencyFocusImpl())
+        self.sevice = TransparencyColaborativeService(TransparencyColaborativeImpl())
 
     def get_queryset(self):
         """Get queryset."""
-        return self.sevice.getTransparencyFocusUser(self.request.user.id)
+        return self.sevice.getTransparencyColaborativeUser(self.request.user.id)
     
     def get(self, request, *args, **kwargs):
 
@@ -94,16 +94,16 @@ class TransparencyFocusView(ListAPIView):
                 return Response(error.errors)
             return Response(error.data, status=400)
         
-class TransparencyFocusDelete(APIView):
-    serializer_class = TransparencyFocusCreate
+class TransparencyColaborativeDelete(APIView):
+    serializer_class = TransparencyColaboratyCreate
 
     def __init__(self, **kwargs):
-        self.sevice = TransparencyFocusService(TransparencyFocusImpl())
+        self.sevice = TransparencyColaborativeService(TransparencyColaborativeImpl())
 
     def delete(self, request, pk, *args, **kwargs):
         try:
             
-            self.sevice.deleteTransparencyFocus(pk, request.user.id)
+            self.sevice.deleteTransparencyColaborative(pk, request.user.id)
             return Response(status=status.HTTP_204_NO_CONTENT)
             
         except Exception as e:
