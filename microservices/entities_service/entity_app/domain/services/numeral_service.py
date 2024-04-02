@@ -21,7 +21,6 @@ class NumeralService:
         return self.numeral_repository.filter_by_list_ids(ids)
 
     def asign_numeral_to_establishment(self, ids: List[Numeral], establishment_id: int):
-        print(ids, "IDS")
         return self.numeral_repository.asign_numeral_to_establishment(ids, establishment_id)
 
     def get_by_default(self, default: bool):
@@ -33,5 +32,5 @@ class NumeralService:
     def create_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual, status="ingress"):
         return self.numeral_repository.create_transparency(establishment_id, numeral_id, files, month, year, fecha_actual, status)
 
-    def get_all(self):
+    def get_all(self) -> List[Numeral]:
         return self.numeral_repository.get_all()

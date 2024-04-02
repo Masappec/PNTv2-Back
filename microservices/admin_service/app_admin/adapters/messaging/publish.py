@@ -16,4 +16,5 @@ class Publisher:
         self.channel = channel
 
     def publish(self, message):
+        print(message)
         self.redis_client.publish(self.channel, message)

@@ -1,8 +1,9 @@
 from entity_app.ports.repositories.transparency_colaborative_repository import TransparencyColaborativeRepository
-from entity_app.domain.models.colab_transparecy import TransparencyColab
+from entity_app.domain.models.transparecy_colab import TransparencyColab
 from entity_app.domain.models.publication import FilePublication
 
 from entity_app.domain.models.establishment import UserEstablishmentExtended
+
 
 class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
 
@@ -10,28 +11,30 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
         file_instances = FilePublication.objects.filter(id__in=files)
 
         response = TransparencyColab.objects.create(establishment_id=establishment_id,
-            numeral_id=numeral_id,
-            month=month,
-            year=year,
-            status=status,
-            published=True,
-            max_date_to_publish=max_fecha,
-            published_at=fecha_actual if status == "ingress" else None)
+                                                    numeral_id=numeral_id,
+                                                    month=month,
+                                                    year=year,
+                                                    status=status,
+                                                    published=True,
+                                                    max_date_to_publish=max_fecha,
+                                                    published_at=fecha_actual if status == "ingress" else None)
 
         response.files.set(file_instances)
 
         return response
-    
+
     def getTransparencyFocus(self, user_id):
         user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
 
-        response = TransparencyColab.objects.get(establishment_id=user_es.establishment.id)
+        response = TransparencyColab.objects.get(
+            establishment_id=user_es.establishment.id)
 
         return response
-    
+
     def deleteTransparencyColaborative(self, pk, user_id):
         user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
 
-        response = TransparencyColab.objects.get(establishment_id=user_es.establishment.id, id=pk).delete()
+        response = TransparencyColab.objects.get(
+            establishment_id=user_es.establishment.id, id=pk).delete()
 
         return response

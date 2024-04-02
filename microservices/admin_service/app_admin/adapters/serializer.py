@@ -18,7 +18,7 @@ class EstablishmentListSerializer(ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['logo'] = instance.logo.url
+        representation['logo'] = instance.logo.url if instance.logo else None
         return representation
 
 
@@ -52,18 +52,28 @@ class EstablishmentCreateResponseSerializer(Serializer):
     id = IntegerField()
     name = CharField(max_length=255)
     abbreviation = CharField(max_length=255)
-    logo = CharField(max_length=255)
-    highest_authority = CharField(max_length=255)
-    first_name_authority = CharField(max_length=255)
-    last_name_authority = CharField(max_length=255)
-    job_authority = CharField(max_length=255)
-    email_authority = CharField(max_length=255)
-    highest_committe = CharField(max_length=255)
-    first_name_committe = CharField(max_length=255)
-    last_name_committe = CharField(max_length=255)
-    job_committe = CharField(max_length=255)
-    email_committe = CharField(max_length=255)
-    email_accesstoinformation = CharField(max_length=255),
+    logo = CharField(max_length=255, allow_null=True)
+    highest_authority = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    first_name_authority = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    last_name_authority = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    job_authority = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    email_authority = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    highest_committe = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    first_name_committe = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    last_name_committe = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    job_committe = CharField(max_length=255, allow_null=True, allow_blank=True)
+    email_committe = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
+    email_accesstoinformation = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
     address = CharField(max_length=255, allow_blank=True, allow_null=True)
     type_institution = IntegerField(allow_null=True)
     type_organization = IntegerField(allow_null=True)

@@ -22,6 +22,7 @@ djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.1
 drf-yasg==1.21.7
 et-xmlfile==1.1.0
+Faker==24.4.0
 filelock==3.13.1
 idna==3.6
 inflection==0.5.1

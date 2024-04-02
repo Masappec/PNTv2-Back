@@ -135,7 +135,10 @@ class EstablishmentPublicDetail(APIView):
                 'job_committe': law_enforcement.job_committe if law_enforcement is not None else None,
                 'email_committe': law_enforcement.email_committe if law_enforcement is not None else None,
                 'email_accesstoinformation': info.email if info is not None else None,
-
+                'address': establishment.address if establishment.address else '',
+                'type_institution': establishment.type_institution.id if establishment.type_institution else None,
+                'type_organization': establishment.type_organization.id if establishment.type_organization else None,
+                'function_organization': establishment.function_organization.id if establishment.function_organization else None,
 
             })
 

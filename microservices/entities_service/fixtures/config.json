@@ -1684,33 +1684,5 @@
             "format": null,
             "regex": null
         }
-    },
-    {
-        "model": "entity_app.transparencyactive",
-        "pk": 41,
-        "fields": {
-            "created_at": "2024-03-11T03:13:32.661Z",
-            "updated_at": "2024-03-11T03:13:32.661Z",
-            "deleted": false,
-            "deleted_at": null,
-            "user_created": null,
-            "user_updated": null,
-            "user_deleted": null,
-            "ip": null,
-            "establishment": 1441,
-            "numeral": 1,
-            "slug": "3-2024-pnt-project-hmsq",
-            "month": 3,
-            "year": 2024,
-            "status": "ingress",
-            "published": true,
-            "published_at": "2024-03-11T03:13:32.653Z",
-            "max_date_to_publish": null,
-            "files": [
-                137,
-                138,
-                139
-            ]
-        }
     }
 ]

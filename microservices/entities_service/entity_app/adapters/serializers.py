@@ -317,22 +317,42 @@ class NumeralDetailSerializer(serializers.ModelSerializer):
         return TemplateResponseSerializer(templates, many=True).data
 
 
+class TransparencyActiveListSerializer(serializers.ModelSerializer):
+    numeral = serializers.SerializerMethodField(method_name='get_numeral')
+    files = FilePublicationSerializer(many=True)
+
+    class Meta:
+        model = TransparencyActive
+        fields = '__all__'
+
+    def get_numeral(self, obj):
+        numeral = obj.numeral
+        return {
+            'id': numeral.id,
+            'name': numeral.name,
+            'description': numeral.description
+        }
+
+
 class TransparecyActiveCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
     numeral_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
 
-class TransparencyColaboratyCreate(serializers.Serializers):
+
+class TransparencyColaboratyCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
     numeral_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
 
-class TransparencyFocusCreate(serializers.Serializers):
+
+class TransparencyFocusCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
     numeral_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
 
-class ListTransparencyFocus(serializers.Serializers):
+
+class ListTransparencyFocus(serializers.Serializer):
     establishment = serializers.IntegerField()
     numeral = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
@@ -344,7 +364,8 @@ class ListTransparencyFocus(serializers.Serializers):
     published_at = serializers.DateTimeField()
     max_date_to_publish = serializers.DateTimeField()
 
-class ListTransparencyColaborative(serializers.Serializers):
+
+class ListTransparencyColaborative(serializers.Serializer):
     establishment = serializers.IntegerField()
     numeral = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
@@ -355,4 +376,3 @@ class ListTransparencyColaborative(serializers.Serializers):
     published = serializers.BooleanField()
     published_at = serializers.DateTimeField()
     max_date_to_publish = serializers.DateTimeField()
-

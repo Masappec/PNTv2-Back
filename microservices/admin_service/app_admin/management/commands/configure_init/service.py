@@ -12,6 +12,8 @@ from app_admin.management.commands.configure_init.type_data import data_type_est
 from app_admin.management.commands.configure_init.function_data import data_func
 from app_admin.management.commands.configure_init.type_ogr_data import data_type_org
 
+from app_admin.utils.function import progress_bar
+
 
 class ConfigureService:
 
@@ -25,25 +27,28 @@ class ConfigureService:
         self.function_service = FunctionOrganizationImpl()
 
     def create_establishment(self):
-
+        print("CREANDO INSTITUCIONES..")
         list_type_org = self.type_institution.get_all()
         list_type_inst = self.type_organization.get_all()
         list_func = self.function_service.get_all()
-        for establishment in data:
+        for x, establishment in enumerate(data):
+            print(progress_bar(x, len(data)), end='\r', flush=True)
             establishment_ = self.establishment_service.create_establishment({
                 'name': establishment['Nombre Entidad'],
                 'abbreviation': establishment['Nombre Entidad'],
                 'highest_authority': "",
                 'first_name_authority': establishment['Nombre Máxima Autoridad'].split()[0] if len(establishment['Nombre Máxima Autoridad'].split()) > 0 else "",
-                'last_name_authority': establishment['Apellido Máxima Autoridad'].split()[0] if len(establishment['Apellido Máxima Autoridad'].split()) > 0 else "",
+                'last_name_authority': establishment['Nombre Máxima Autoridad'].split()[0] if len(establishment['Nombre Máxima Autoridad'].split()) > 0 else "",
                 'job_authority': "",
                 'email_authority': "",
                 'extra_numerals': [],
-                'type_organization': list_type_org.get(name=establishment['Tipo Organización']).id,
-                'type_institution': list_type_inst.get(name=establishment['Tipo Institución']).id,
-                'function_organization': list_func.get(name=establishment['Función Organización']).id,
-                'address': establishment['Dirección'],
-            })
+                'type_organization': list_type_org.filter(name=establishment['Tipo Organización']).first().id if list_type_org.filter(name=establishment['Tipo Organización']).exists() else None,
+                'type_institution': list_type_inst.filter(name=establishment['Tipo Entidad']).first().id if list_type_inst.filter(name=establishment['Tipo Entidad']).exists() else None,
+                'function_organization': list_func.filter(name=establishment['Función']).first().id if list_func.filter(name=establishment['Función']).exists() else None,
+                'address': establishment['Direccion'],
+
+
+            }, None)
             access = self.access_info.create_access_information({
                 'email_accesstoinformation': establishment['Correo electrónico para solicitudes de acceso']
             })
@@ -51,15 +56,18 @@ class ConfigureService:
                 access.id, establishment_)
 
     def create_type_organization(self):
+        print("Creando tipos de organizacion...")
         for type_org in data_type_establishment:
             self.type_organization.create_type_organization(
                 type_org['Tipo Organización'])
 
     def create_type_institution(self):
+        print("Creando tipo de instituciones")
         for type_inst in data_type_establishment:
             self.type_institution.create_type_institution(
-                type_inst['Tipo Institución'])
+                type_inst['Tipo Entidad'])
 
     def create_function_organization(self):
+        print("creando funciones de organizaciones")
         for func in data_func:
             self.function_service.create_function_organization(func['funcion'])
