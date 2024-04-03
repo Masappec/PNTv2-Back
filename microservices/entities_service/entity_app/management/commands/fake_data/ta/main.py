@@ -13,6 +13,7 @@ from django.core.files.base import ContentFile
 from entity_app.domain.services.file_publication_service import FilePublicationService
 from entity_app.adapters.impl.file_publication_impl import FilePublicationImpl
 from datetime import datetime
+from django.utils import timezone
 
 
 class TransparencyActiveFakeData:
@@ -50,9 +51,10 @@ class TransparencyActiveFakeData:
         return ContentFile(csv_content, name=file_name)
 
     def create_fake_data(self):
+        self.service.get_all().delete()
         list_establishment = EstablishmentExtended.objects.all()
-        numeral_list = self.service.get_all()
-        anios = [_ for _ in range(1980, 2019)]
+        numeral_list = self.service.get_all().delete()
+        anios = [_ for _ in range(2020, 2024)]
         meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         print("datos")
         for x, establishment in enumerate(list_establishment):
@@ -79,5 +81,5 @@ class TransparencyActiveFakeData:
                             files=file_list,
                             month=mes,
                             year=anio,
-                            fecha_actual=datetime.now(),
+                            fecha_actual=timezone.now()
                         )

@@ -15,6 +15,7 @@ from entity_app.utils.pagination import StandardResultsSetPagination
 from entity_app.adapters.serializers import SolicitySerializer, SolicityCreateSerializer, MessageTransactional, CreateExtensionSerializer, SolicityCreateResponseSerializer
 from entity_app.domain.services.solicity_service import SolicityService
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
+from drf_yasg.utils import swagger_auto_schema
 
 
 class CreateExtensionSolicityView(APIView):
@@ -324,6 +325,16 @@ class SolicityCreateResponseView(APIView):
     def __init__(self):
         self.service = SolicityService(SolicityImpl())
 
+    @swagger_auto_schema(
+        operation_description="create a response of solicity",
+        response={
+            201: output_serializer_class,
+            400: MessageTransactional
+        },
+        request_body=serializer_class,
+        # form data
+
+    )
     def post(self, request, *args, **kwargs):
         data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
