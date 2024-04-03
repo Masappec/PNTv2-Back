@@ -94,6 +94,19 @@ services:
       POSTGRES_USER: auth_user
       POSTGRES_PASSWORD: auth_password
 
+    volumes:
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+
+    command:
+      [
+        "pg_dump",
+        "-U",
+        "auth_user",
+        "auth_database",
+        "-f",
+        "/docker-entrypoint-initdb.d/dump.sql",
+      ]
+
     networks:
       - pnt_network
 
