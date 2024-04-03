@@ -1,7 +1,7 @@
 from entity_app.adapters.impl.transparency_focus_impl import TransparencyFocalImpl
 from entity_app.domain.services.transparency_focus_service import TransparencyFocusService
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from entity_app.utils.permissions import HasPermission
 from rest_framework.permissions import IsAuthenticated
@@ -21,7 +21,7 @@ class CreateTransparencyFocalizada(APIView):
     permission_classes = [IsAuthenticated, HasPermission]
 
     def __init__(self, **kwargs):
-        self.sevice = TransparencyFocusService(TransparencyFocalImpl())
+        self.service = TransparencyFocusService(TransparencyFocalImpl())
 
     def post(self, request, *args, **kwargs):
 
@@ -31,7 +31,7 @@ class CreateTransparencyFocalizada(APIView):
         month = datetime.now().month
         year = datetime.now().year
         today = datetime.now()
-        maxDatePublish = datetime.now() + datetime.timedelta(days=15)
+        maxDatePublish = datetime.now() + timedelta(days=15)
 
         try:
             transparency_focus = self.service.createTransparencyFocus(
@@ -65,11 +65,11 @@ class TransparencyFocusView(ListAPIView):
     pagination_class = StandardResultsSetPagination
 
     def __init__(self, **kwargs):
-        self.sevice = TransparencyFocusService(TransparencyFocalImpl())
+        self.service = TransparencyFocusService(TransparencyFocalImpl())
 
     def get_queryset(self):
         """Get queryset."""
-        return self.sevice.getTransparencyFocusUser(self.request.user.id)
+        return self.service.getTransparencyColaborativeUser(self.request.user.id)
 
     def get(self, request, *args, **kwargs):
 

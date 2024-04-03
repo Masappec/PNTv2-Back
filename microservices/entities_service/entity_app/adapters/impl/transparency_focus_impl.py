@@ -7,7 +7,7 @@ from entity_app.domain.models.establishment import UserEstablishmentExtended
 
 class TransparencyFocalImpl(TransparencyFocusRepository):
 
-    def createTransparencyFocal(self, establishment_id, numeral_id, files, month, year, fecha_actual, max_fecha, status="ingress"):
+    def createTransparencyFocus(self, establishment_id, numeral_id, files, month, year, fecha_actual, max_fecha, status="ingress"):
         file_instances = FilePublication.objects.filter(id__in=files)
 
         response = TransparencyFocal.objects.create(establishment_id=establishment_id,
@@ -23,7 +23,7 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
 
         return response
 
-    def getTransparencyFocal(self, user_id):
+    def getTransparencyFocusUser(self, user_id):
         user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
 
         response = TransparencyFocal.objects.get(
@@ -31,7 +31,7 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
 
         return response
 
-    def deleteTransparencyFocal(self, pk, user_id):
+    def deleteTransparencyFocusUser(self, pk, user_id):
         user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
 
         response = TransparencyFocal.objects.get(

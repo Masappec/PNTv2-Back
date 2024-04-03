@@ -23,7 +23,7 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
 
         return response
 
-    def getTransparencyFocus(self, user_id):
+    def getTransparencyColaborativeUser(self, user_id):
         user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
 
         response = TransparencyColab.objects.get(
@@ -31,7 +31,7 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
 
         return response
 
-    def deleteTransparencyColaborative(self, pk, user_id):
+    def deleteTransparencyColaborativeUser(self, pk, user_id):
         user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
 
         response = TransparencyColab.objects.get(

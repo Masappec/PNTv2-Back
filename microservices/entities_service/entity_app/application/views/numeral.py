@@ -106,6 +106,7 @@ class ListNumeral(ListAPIView):
     """Publication view."""
 
     permission_classes = [IsAuthenticated, HasPermission]
+    serializer_class = NumeralResponseSerializer
 
     def __init__(self):
         self.service = NumeralService(
