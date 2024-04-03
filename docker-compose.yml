@@ -97,20 +97,6 @@ services:
     volumes:
       - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
 
-    command:
-      [
-        "postgres",
-        "-c",
-        "log_statement=all",
-        "&&",
-        "pg_dump",
-        "-U",
-        "auth_user",
-        "auth_database",
-        "-f",
-        "/docker-entrypoint-initdb.d/dump.sql",
-      ]
-
     networks:
       - pnt_network
 
