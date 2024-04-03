@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any
 from rest_framework.views import APIView
 
@@ -223,9 +223,9 @@ class SolicityCreateView(APIView):
                 data.validated_data['address'],
                 data.validated_data['phone'],
                 data.validated_data['type_reception'],
-                data.validated_data['format'],
+                data.validated_data['formatSolicity'],
                 request.user.id,
-                datetime.datetime.now() + datetime.timedelta(days=15)
+                datetime.now() + timedelta(days=15)
             )
 
             res = MessageTransactional(

@@ -3,6 +3,7 @@ from entity_app.domain.models.solicity import Insistency, Solicity, SolicityResp
 from entity_app.domain.models.publication import Attachment, FilePublication
 from entity_app.domain.models.establishment import UserEstablishmentExtended
 from datetime import datetime
+from django.contrib.auth.models import User
 
 
 class SolicityImpl(SolicityRepository):
@@ -15,8 +16,10 @@ class SolicityImpl(SolicityRepository):
         Args:
             solicity (dict): Diccionario con los datos de la solicitud de ciudadano
         """
-        solicity = Solicity.objects.create(establishment_id=establishment_id, text=description, user_id=user_id, first_name=first_name, last_name=last_name, email=email, identification=identification, address=address,
-                                           phone=phone, format_receipt=format_receipt, type_reception=type_reception, expiry_date=expiry_date, have_extension=0, user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
+        user = User.objects.get(id=user_id)
+        solicity = Solicity.objects.create(establishment_id=establishment_id, text=description,
+                                           user_created=user, first_name=first_name, last_name=last_name, email=email, identification=identification, address=address,
+                                           phone=phone, format_receipt=format_receipt, type_receipt=type_reception, expiry_date=expiry_date, have_extension=0, user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
 
         return solicity
 
