@@ -51,9 +51,8 @@ class TransparencyActiveFakeData:
         return ContentFile(csv_content, name=file_name)
 
     def create_fake_data(self):
-        self.service.get_all().delete()
         list_establishment = EstablishmentExtended.objects.all()
-        numeral_list = self.service.get_all().delete()
+        numeral_list = self.service.get_all()
         anios = [_ for _ in range(2020, 2024)]
         meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         print("datos")
