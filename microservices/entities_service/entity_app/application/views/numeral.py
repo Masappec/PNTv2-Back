@@ -48,7 +48,8 @@ class NumeralsByEstablishment(APIView):
             numerals = self.service.get_by_entity(
                 request.query_params.get('establishtment_id'))
 
-            serializer = self.serializer_class(numerals, many=True)
+            serializer = self.serializer_class(numerals, many=True, context={
+                                               'establishment_id': request.query_params.get('establishtment_id')})
 
             return Response(serializer.data)
 

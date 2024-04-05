@@ -273,6 +273,7 @@ class NumeralResponseSerializer(serializers.ModelSerializer):
     def get_published(self, obj):
 
         transparency = TransparencyActive.objects.filter(numeral=obj, published=True,
+                                                         establishment_id=self.context['establishment_id'],
                                                          month=datetime.datetime.now().month, year=datetime.datetime.now().year).first()
 
         if transparency is not None:

@@ -140,6 +140,6 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
 
     def get_establishment_by_user_id(self, user_id: int):
         try:
-            return UserEstablishment.objects.filter(user_id=user_id).first().establishment
+            return UserEstablishment.objects.filter(user_id=user_id, is_active=True).last().establishment
         except Exception:
             raise ValueError("El usuario no pertenece a ninguna institución")

@@ -109,6 +109,7 @@ class TransparencyActive(BaseModel):
         if not self.slug:
             self.slug = str(self.month) + '-' + str(self.year) + '-' + \
                 unique_slug_generator(self.establishment)
+
         super(TransparencyActive, self).save(*args, **kwargs)
 
     class Meta:
