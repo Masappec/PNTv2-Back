@@ -1,17 +1,72 @@
 from abc import ABC, abstractmethod
 
+from datetime import datetime
+from entity_app.models import Solicity
+
 
 class SolicityRepository(ABC):
 
     @abstractmethod
-    def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id, expiry_date):
-        # def create_citizen_solicity(self, title, text, establishment_id, user_id,expiry_date):
-        """
-        Crea una solicitud de ciudadano
+    def create_solicity_draft(self,
+                              number_saip: str,
+                              establishment_id: int,
+                              city: str,
+                              first_name: str,
+                              last_name: str,
+                              email: str,
+                              phone: str,
+                              gender: str,
+                              race_identification: str,
+                              description: str,
+                              format_receipt: str,
+                              format_send: str,
+                              expiry_date: datetime,
+                              user_id: int) -> Solicity:
+        pass
 
-        Args:
-            solicity (dict): Diccionario con los datos de la solicitud de ciudadano
-        """
+    @abstractmethod
+    def send_solicity_from_draft(self,
+                                 solicity_id: int,
+                                 number_saip: str,
+                                 establishment_id: int,
+                                 city: str,
+                                 first_name: str,
+                                 last_name: str,
+                                 email: str,
+                                 phone: str,
+                                 gender: str,
+                                 race_identification: str,
+                                 description: str,
+                                 format_receipt: str,
+                                 format_send: str,
+                                 expiry_date: datetime,
+                                 user_id: int) -> Solicity:
+        pass
+
+    @abstractmethod
+    def send_solicity_without_draft(self,
+                                    number_saip: str,
+                                    establishment_id: int,
+                                    city: str,
+                                    first_name: str,
+                                    last_name: str,
+                                    email: str,
+                                    phone: str,
+                                    gender: str,
+                                    race_identification: str,
+                                    description: str,
+                                    format_receipt: str,
+                                    format_send: str,
+                                    expiry_date: datetime,
+                                    user_id: int) -> Solicity:
+        pass
+
+    @abstractmethod
+    def get_solicity_last_draft(self, user_id) -> Solicity | None:
+        pass
+
+    @abstractmethod
+    def save_timeline(self, solicity_id, user_id, status):
         pass
 
     @abstractmethod
@@ -117,4 +172,8 @@ class SolicityRepository(ABC):
         Returns:
             list: Lista de solicitudes
         """
+        pass
+
+    @abstractmethod
+    def get_solicity_by_id_and_user(self, solicity_id, user_id) -> Solicity:
         pass

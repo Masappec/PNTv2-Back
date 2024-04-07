@@ -4,6 +4,11 @@ from django.template.loader import render_to_string
 from django_rest_passwordreset.signals import reset_password_token_created
 
 from shared.tasks.auth_task import auth_send_password_reset_event
+from app.adapters.messaging.channels import CHANNEL_USER
+from app.adapters.messaging.events import USER_PASSWORD_RESET_REQUESTED
+from app.adapters.messaging.publish import Publisher
+import json
+
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
@@ -16,11 +21,15 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     :param args:
     :param kwargs:
     :return:"""
-    
-    auth_send_password_reset_event.delay(
-        
-        current_user_id=reset_password_token.user.id,
-        username=reset_password_token.user.username,
-        email=reset_password_token.user.email,
-        reset_password_url=reset_password_token.key
-    )
+
+    publisher = Publisher(CHANNEL_USER)
+
+    publisher.publish(json.dumps({
+        'type': USER_PASSWORD_RESET_REQUESTED,
+        'payload': {
+            'current_user_id': reset_password_token.user.id,
+            'username': reset_password_token.user.username,
+            'email': reset_password_token.user.email,
+            'reset_password_url': reset_password_token.key
+        }
+    }))

@@ -6,7 +6,9 @@ from entity_app.application.views.publication import PublicationCreateAPI, Publi
 from entity_app.application.views.file_publication import FilePublicationCreateView, FilePublicationListEstablishemtSession, FilePublicationDelete
 from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
-from entity_app.application.views.solicity import SolicityView, SolicityCreateView, SolicityResponseView, SolicityCreateResponseView
+from entity_app.application.views.solicity import SolicityView, SolicityCreateDraftView, \
+    SolicityResponseView, SolicityCreateResponseView, SolicityWithoutDraftView, SolicityGetLastDraftView, \
+    SolicitySendView, SolicityDetailView, UpdateSolicityView
 
 from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail, ListNumeral, PublishNumeral
 
@@ -46,7 +48,23 @@ urlpatterns = [
          name='attachment-create'),
 
     path('solicity/list', SolicityView.as_view(), name='solicity-all'),
-    path('solicity/create', SolicityCreateView.as_view(), name='solicity-create'),
+
+    path('solicity/detail/<solicity_id>', SolicityDetailView.as_view(),
+         name='solicity-detail'),
+    path("solicity/update", UpdateSolicityView.as_view(), name="solicity-update"),
+
+    path('solicity/create/draft', SolicityCreateDraftView.as_view(),
+         name='solicity-create'),
+
+    path('solicity/get_last_draft', SolicityGetLastDraftView.as_view(),
+         name='solicity-get-last-draft'),
+
+    path('solicity/send', SolicityWithoutDraftView.as_view(),
+         name='solicity-create-without-draft'),
+
+    path('solicity/draft/send', SolicitySendView.as_view(),
+         name='solicity-send'),
+
     path('solicity_response/list', SolicityResponseView.as_view(),
          name='solicity-response-all'),
     path('solicity_response/create', SolicityCreateResponseView.as_view(),

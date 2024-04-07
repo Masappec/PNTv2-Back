@@ -46,7 +46,7 @@ class ConfigureService:
                 'type_institution': list_type_inst.filter(name=establishment['Tipo Entidad']).first().id if list_type_inst.filter(name=establishment['Tipo Entidad']).exists() else None,
                 'function_organization': list_func.filter(name=establishment['Función']).first().id if list_func.filter(name=establishment['Función']).exists() else None,
                 'address': establishment['Direccion'],
-
+                'identification': establishment['RUC'],
 
             }, None)
             access = self.access_info.create_access_information({

@@ -3,8 +3,8 @@
         "model": "entity_app.numeral",
         "pk": 1,
         "fields": {
-            "created_at": "2024-02-12T02:58:59.061Z",
-            "updated_at": "2024-02-12T17:51:45.356Z",
+            "created_at": "2024-02-12T17:45:49.987Z",
+            "updated_at": "2024-02-12T17:46:01.521Z",
             "deleted": false,
             "deleted_at": null,
             "user_created": null,
@@ -24,25 +24,6 @@
     },
     {
         "model": "entity_app.numeral",
-        "pk": 2,
-        "fields": {
-            "created_at": "2024-02-12T17:45:49.987Z",
-            "updated_at": "2024-02-12T17:46:01.521Z",
-            "deleted": false,
-            "deleted_at": null,
-            "user_created": null,
-            "user_updated": null,
-            "user_deleted": null,
-            "ip": null,
-            "name": "Numeral 1",
-            "description": "Estructura orgánica funcional",
-            "parent": 2,
-            "is_default": true,
-            "templates": []
-        }
-    },
-    {
-        "model": "entity_app.numeral",
         "pk": 3,
         "fields": {
             "created_at": "2024-02-12T17:46:34.982Z",
@@ -55,7 +36,7 @@
             "ip": null,
             "name": "Numeral 1.2",
             "description": "Base legal que rige a la entidad",
-            "parent": 2,
+            "parent": null,
             "is_default": true,
             "templates": [
                 8,
@@ -76,7 +57,7 @@
             "user_updated": null,
             "user_deleted": null,
             "ip": null,
-            "name": "Numeral 2",
+            "name": "Numeral 2.1",
             "description": "Directorio y distributivo personal de la entidad",
             "parent": null,
             "is_default": true,
@@ -95,7 +76,7 @@
             "user_updated": null,
             "user_deleted": null,
             "ip": null,
-            "name": "Numeral 2.1",
+            "name": "Numeral 2.2",
             "description": "Directorio completo del organismo, dependencia y/o persona jurídica",
             "parent": 4,
             "is_default": true,

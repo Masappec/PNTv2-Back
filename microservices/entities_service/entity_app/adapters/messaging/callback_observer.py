@@ -14,7 +14,7 @@ class CallbackObserver:
             dict_ = json.loads(message['data'])
             print(dict_['type'], self.type)
             if self.type == dict_['type']:
-                print(f"Recibido mensaje de tipo {self.type}")
+                print(f"Recibido mensaje de tipo  {self.type}")
                 payload = dict_['payload']
 
                 print(payload)

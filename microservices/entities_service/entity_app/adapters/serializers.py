@@ -2,7 +2,7 @@ import datetime
 from rest_framework import serializers
 from entity_app.domain.models.publication import Attachment, Publication, Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
-from entity_app.domain.models.solicity import Solicity
+from entity_app.domain.models.solicity import Solicity, TimeLineSolicity
 from entity_app.domain.models.transparency_active import Numeral, TemplateFile, ColumnFile, TransparencyActive
 from entity_app.domain.models.establishment import EstablishmentExtended
 
@@ -142,19 +142,28 @@ class MessageTransactional(serializers.Serializer):
         return MessageTransactional(message=e, status=status, json=errors).data
 
 
-class SolicityCreateSerializer(serializers.Serializer):
+class SolicityCreateDraftSerializer(serializers.ModelSerializer):
     """Solicity create serializer"""
-    establishment_id = serializers.IntegerField()
-    # title=serializers.CharField();
-    description = serializers.CharField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
-    email = serializers.CharField()
-    identification = serializers.CharField()
-    address = serializers.CharField()
-    phone = serializers.CharField()
-    type_reception = serializers.CharField()
-    formatSolicity = serializers.CharField()
+
+    class Meta:
+        model = Solicity
+        exclude = ('id', 'ip', 'is_active', 'status',
+                   'date',
+                   'address',
+                   'have_extension', 'is_manual', 'expiry_date', 'user_created', 'user_updated', 'user_deleted',
+                   'created_at', 'updated_at', 'deleted_at', 'deleted')
+
+
+class SolicityCreateWithDraftSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
+    class Meta:
+        model = Solicity
+        exclude = ('ip', 'is_active', 'status',
+                   'date',
+                   'address',
+                   'have_extension', 'is_manual', 'expiry_date', 'user_created', 'user_updated', 'user_deleted',
+                   'created_at', 'updated_at', 'deleted_at', 'deleted')
 
 
 class SolicityCreateResponseSerializer(serializers.Serializer):
@@ -168,23 +177,27 @@ class SolicityCreateResponseSerializer(serializers.Serializer):
 
 
 class SolicitySerializer(serializers.ModelSerializer):
+    estblishment_name = serializers.CharField(
+        source='establishment.name', read_only=True)
+    time_line = serializers.SerializerMethodField(method_name='get_time_line')
 
     class Meta:
 
         model = Solicity
-        fields = (
-            'id',
-            'text',
-            'establishment',
-            'is_active',
-            'status',
-            'expiry_date',
-            'have_extension',
-            'is_manual',
-        )
+        fields = '__all__'
 
         read_only_fields = ('id', 'is_active', 'status',
                             'have_extension', 'is_manual')
+
+    def get_time_line(self, obj):
+        time_line = TimeLineSolicity.objects.filter(solicity=obj)
+        list_ = []
+        for i in time_line:
+            list_.append({
+                'status': i.status,
+                'created_at': i.created_at
+            })
+        return list_
 
 
 class CreateExtensionSerializer(serializers.Serializer):

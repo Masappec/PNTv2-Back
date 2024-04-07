@@ -1,4 +1,6 @@
 from entity_app.ports.repositories.solicity_repository import SolicityRepository
+from datetime import datetime
+from entity_app.domain.models.solicity import Solicity, TimeLineSolicity
 
 
 class SolicityService:
@@ -6,7 +8,21 @@ class SolicityService:
     def __init__(self, solicity_repository: SolicityRepository):
         self.solicity_repository = solicity_repository
 
-    def create_citizen_solicity(self, establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id, expiry_date):
+    def create_solicity_draft(self,
+                              number_saip: str,
+                              establishment: int,
+                              city: str,
+                              first_name: str,
+                              last_name: str,
+                              email: str,
+                              phone: str,
+                              gender: str,
+                              race_identification: str,
+                              text: str,
+                              format_receipt: str,
+                              format_send: str,
+                              expiry_date: datetime,
+                              user_id: int) -> Solicity:
         """
         Crea una solicitud de ciudadano
 
@@ -14,7 +30,56 @@ class SolicityService:
             solicity (dict): Diccionario con los datos de la solicitud de ciudadano
         """
         # return self.solicity_repository.create_citizen_solicity(title, text, establishment_id, user_id,expiry_date)
-        return self.solicity_repository.create_citizen_solicity(establishment_id, description, first_name, last_name, email, identification, address, phone, type_reception, format_receipt, user_id, expiry_date)
+        return self.solicity_repository.create_solicity_draft(
+            number_saip, establishment, city, first_name, last_name, email, phone,
+            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
+
+    def send_solicity_from_draft(self,
+                                 id: int,
+                                 number_saip: str,
+                                 establishment: int,
+                                 city: str,
+                                 first_name: str,
+                                 last_name: str,
+                                 email: str,
+                                 phone: str,
+                                 gender: str,
+                                 race_identification: str,
+                                 text: str,
+                                 format_receipt: str,
+                                 format_send: str,
+                                 expiry_date: datetime,
+                                 user_id: int) -> Solicity:
+
+        return self.solicity_repository.send_solicity_from_draft(
+            id, number_saip, establishment, city, first_name, last_name, email, phone,
+            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
+
+    def send_solicity_without_draft(self,
+                                    number_saip: str,
+                                    establishment: int,
+                                    city: str,
+                                    first_name: str,
+                                    last_name: str,
+                                    email: str,
+                                    phone: str,
+                                    gender: str,
+                                    race_identification: str,
+                                    text: str,
+                                    format_receipt: str,
+                                    format_send: str,
+                                    expiry_date: datetime,
+                                    user_id: int) -> Solicity:
+
+        return self.solicity_repository.send_solicity_without_draft(
+            number_saip, establishment, city, first_name, last_name, email, phone,
+            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
+
+    def get_solicity_last_draft(self, user_id) -> Solicity | None:
+        return self.solicity_repository.get_solicity_last_draft(user_id)
+
+    def save_timeline(self, solicity_id, user_id, status) -> TimeLineSolicity:
+        return self.solicity_repository.save_timeline(solicity_id, user_id, status)
 
     def create_manual_solicity(self, title, text, establishment_id, user_id, expiry_date):
         """
@@ -54,6 +119,27 @@ class SolicityService:
             solicity_response (dict): Diccionario con los datos de la respuesta de solicitud
         """
         return self.solicity_repository.create_solicity_response(solicity_id, user_id, text, category_id, files, attachments)
+
+    def update_solicity(self,
+                        id: int,
+                        number_saip: str,
+                        establishment: int,
+                        city: str,
+                        first_name: str,
+                        last_name: str,
+                        email: str,
+                        phone: str,
+                        gender: str,
+                        race_identification: str,
+                        text: str,
+                        format_receipt: str,
+                        format_send: str,
+                        expiry_date: datetime,
+                        user_id: int) -> Solicity:
+
+        return self.send_solicity_from_draft(
+            id, number_saip, establishment, city, first_name, last_name, email, phone,
+            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
 
     def update_solicity_response(self, solicity_response_id, text, category_id, files, attachments):
         """
@@ -109,3 +195,16 @@ class SolicityService:
             user_id (int): id del usuario
         """
         return self.solicity_repository.get_entity_user_solicities(user_id)
+
+    def get_solicity_by_id_and_user(self, solicity_id, user_id):
+        """
+        Obtiene una solicitud por id y usuario
+
+        Args:
+            solicity_id (int): id de la solicitud
+            user_id (int): id del usuario
+        """
+        try:
+            return self.solicity_repository.get_solicity_by_id_and_user(solicity_id, user_id)
+        except Exception as e:
+            raise ValueError("No se encontro la solicitud")

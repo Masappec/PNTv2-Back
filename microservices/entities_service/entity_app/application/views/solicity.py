@@ -12,7 +12,7 @@ from django.db.models import Q
 
 from entity_app.utils.permissions import BelongsToEstablishment, HasPermission, IsOwnerResponseSolicity
 from entity_app.utils.pagination import StandardResultsSetPagination
-from entity_app.adapters.serializers import SolicitySerializer, SolicityCreateSerializer, MessageTransactional, CreateExtensionSerializer, SolicityCreateResponseSerializer
+from entity_app.adapters.serializers import SolicitySerializer, SolicityCreateDraftSerializer, SolicityCreateWithDraftSerializer, MessageTransactional, CreateExtensionSerializer, SolicityCreateResponseSerializer
 from entity_app.domain.services.solicity_service import SolicityService
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
 from drf_yasg.utils import swagger_auto_schema
@@ -137,6 +137,82 @@ class UpdateSolicityResponse(APIView):
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 
+class SolicityDetailView(APIView):
+    """Solicity view."""
+
+    permission_classes = [IsAuthenticated, HasPermission]
+    permission_required = 'view_solicity'
+    serializer_class = SolicitySerializer
+    output_serializer_class = SolicitySerializer
+
+    def __init__(self):
+        self.service = SolicityService(SolicityImpl())
+
+    def get(self, request, solicity_id):
+        """Get solicity."""
+        try:
+            solicity = self.service.get_solicity_by_id_and_user(
+                solicity_id, request.user.id)
+
+            return Response({
+                'message': 'Publicacion creada correctamente',
+                'status': 201,
+                'json': self.output_serializer_class(solicity).data
+            }, status=201)
+        except Exception as e:
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
+
+class UpdateSolicityView(APIView):
+    """Solicity view."""
+
+    permission_classes = [IsAuthenticated, HasPermission]
+    permission_required = 'change_solicity'
+    serializer_class = SolicityCreateWithDraftSerializer
+    output_serializer_class = SolicitySerializer
+
+    def __init__(self):
+        self.service = SolicityService(SolicityImpl())
+
+    def put(self, request):
+        """Update solicity."""
+        try:
+            serializer = self.serializer_class(data=request.data)
+            serializer.is_valid(raise_exception=True)
+
+            solicity = self.service.update_solicity(
+                **serializer.validated_data,
+                expiry_date=datetime.now() + timedelta(days=10),
+                user_id=request.user.id
+            )
+
+            return Response({
+                'message': 'Publicacion creada correctamente',
+                'status': 201,
+                'json': self.output_serializer_class(solicity).data
+            }, status=201)
+        except Exception as e:
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': '{}'
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
+
 class SolicityView(ListAPIView):
     """Solicity view."""
 
@@ -195,11 +271,11 @@ class SolicityView(ListAPIView):
             return Response(res.data, status=400)
 
 
-class SolicityCreateView(APIView):
+class SolicityCreateDraftView(APIView):
     """Solicity Response view."""
 
     permission_classes = [IsAuthenticated, HasPermission]
-    serializer_class = SolicityCreateSerializer
+    serializer_class = SolicityCreateDraftSerializer
     output_serializer_class = SolicitySerializer
     pagination_class = StandardResultsSetPagination
     permission_required = 'add_solicity'
@@ -207,26 +283,182 @@ class SolicityCreateView(APIView):
     def __init__(self):
         self.service = SolicityService(SolicityImpl())
 
+    @swagger_auto_schema(
+        operation_description="create a draft of solicity",
+        response={201: output_serializer_class, 400: MessageTransactional},
+        request_body=serializer_class,
+        # form data
+    )
     def post(self, request, *args, **kwargs):
         data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
         solicity = None
 
         try:
-            solicity = self.service.create_citizen_solicity(
-                # data.validated_data['title'],
-                data.validated_data['establishment_id'],
-                data.validated_data['description'],
-                data.validated_data['first_name'],
-                data.validated_data['last_name'],
-                data.validated_data['email'],
-                data.validated_data['identification'],
-                data.validated_data['address'],
-                data.validated_data['phone'],
-                data.validated_data['type_reception'],
-                data.validated_data['formatSolicity'],
-                request.user.id,
-                datetime.now() + timedelta(days=15)
+            data_validated = data.validated_data
+            data_validated['user_id'] = request.user.id
+            data_validated['expiry_date'] = datetime.now() + timedelta(days=10)
+            solicity = self.service.create_solicity_draft(
+                **data_validated
+            )
+
+            res = MessageTransactional(
+                data={
+                    'message': 'Publicacion creada correctamente',
+                    'status': 201,
+                    'json': self.output_serializer_class(solicity).data
+                }
+            )
+
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=201)
+        except Exception as e:
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
+
+class SolicityWithoutDraftView(APIView):
+    """Solicity Response view."""
+
+    permission_classes = [IsAuthenticated, HasPermission]
+    serializer_class = SolicityCreateDraftSerializer
+    output_serializer_class = SolicitySerializer
+    pagination_class = StandardResultsSetPagination
+    permission_required = 'add_solicity'
+
+    def __init__(self):
+        self.service = SolicityService(SolicityImpl())
+
+    @swagger_auto_schema(
+        operation_description="create a solicity without draft",
+        response={201: output_serializer_class, 400: MessageTransactional},
+        request_body=serializer_class,
+        # form data
+    )
+    def post(self, request, *args, **kwargs):
+        data = self.serializer_class(data=request.data)
+        data.is_valid(raise_exception=True)
+        solicity = None
+
+        try:
+            solicity = self.service.send_solicity_without_draft(
+                **data.validated_data,
+                expiry_date=datetime.now() + timedelta(days=10),
+                user_id=request.user.id
+            )
+
+            solicityser = self.output_serializer_class(solicity)
+
+            return Response(data={
+                'message': 'Publicacion creada correctamente',
+                'status': 201,
+                'json': solicityser.data
+            }, status=201)
+        except Exception as e:
+            print("Error: ", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': '{}'
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
+
+class SolicityGetLastDraftView(APIView):
+    """Solicity Response view."""
+
+    permission_classes = [IsAuthenticated, HasPermission]
+    serializer_class = SolicityCreateDraftSerializer
+    output_serializer_class = SolicitySerializer
+    pagination_class = StandardResultsSetPagination
+    permission_required = 'add_solicity'
+
+    def __init__(self):
+        self.service = SolicityService(SolicityImpl())
+
+    @swagger_auto_schema(
+        operation_description="get the last draft of solicity",
+        response={201: output_serializer_class, 400: MessageTransactional},
+        # form data
+    )
+    def get(self, request, *args, **kwargs):
+
+        try:
+            solicity = self.service.get_solicity_last_draft(request.user.id)
+            print("Solicity:  ", solicity)
+            if solicity is None:
+                res = MessageTransactional(
+                    data={
+                        'message': 'No se encontro un borrador',
+                        'status': 200,
+                        'json': {}
+                    }
+                )
+                res.is_valid(raise_exception=True)
+                return Response(res.data, status=400)
+            res = MessageTransactional(
+                data={
+                    'message': 'Publicacion creada correctamente',
+                    'status': 201,
+                    'json': self.output_serializer_class(solicity).data
+                }
+            )
+
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=201)
+        except Exception as e:
+            print("Error: ", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
+
+class SolicitySendView(APIView):
+    """Solicity Response view."""
+
+    permission_classes = [IsAuthenticated, HasPermission]
+    serializer_class = SolicityCreateWithDraftSerializer
+    output_serializer_class = SolicitySerializer
+    pagination_class = StandardResultsSetPagination
+    permission_required = 'add_solicity'
+
+    def __init__(self):
+        self.service = SolicityService(SolicityImpl())
+
+    @swagger_auto_schema(
+        operation_description="send a solicity from draft",
+        response={201: output_serializer_class, 400: MessageTransactional},
+        request_body=serializer_class,
+        # form data
+    )
+    def post(self, request, *args, **kwargs):
+        data = self.serializer_class(data=request.data)
+        data.is_valid(raise_exception=True)
+        solicity = None
+
+        try:
+            date = datetime.now() + timedelta(days=10)
+            solicity = self.service.send_solicity_from_draft(
+                **data.validated_data,
+                expiry_date=date,
+                user_id=request.user.id
             )
 
             res = MessageTransactional(

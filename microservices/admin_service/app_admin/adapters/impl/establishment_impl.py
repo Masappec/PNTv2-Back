@@ -38,6 +38,7 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         return Establishment.objects.create(
             name=establishment['name'],
             abbreviation=establishment['abbreviation'],
+            identification=establishment['identification'],
             deleted=False,
             created_at=datetime.now(),
             updated_at=datetime.now(),

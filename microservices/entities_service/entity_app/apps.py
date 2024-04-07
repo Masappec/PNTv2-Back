@@ -26,7 +26,7 @@ class EntityAppConfig(AppConfig):
                      establishment_update_observer]
         print("Creando observadores ")
         subscribe_thread = Thread(
-            target=create_subscription, args=(observers,))
+            target=create_subscription, args=(CHANNEL_ESTABLISHMENT, observers,))
         # Establece el hilo como demonio para que se detenga cuando la aplicación se cierre
         subscribe_thread.daemon = True
         subscribe_thread.start()

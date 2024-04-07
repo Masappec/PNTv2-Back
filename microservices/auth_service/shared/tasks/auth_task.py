@@ -1,7 +1,6 @@
 from auth_service.celery import app
 
 
-@app.task(name='auth_send_password_reset_event')
 def auth_send_password_reset_event(current_user_id, username, email, reset_password_url):
     return {
         'type': 'auth_password_reset',
@@ -15,7 +14,6 @@ def auth_send_password_reset_event(current_user_id, username, email, reset_passw
     }
 
 
-@app.task()
 def auth_send_activate_account_event(email, uidb64, token, username):
 
     return {

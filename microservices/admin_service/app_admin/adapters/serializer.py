@@ -40,7 +40,7 @@ class EstablishmentCreateSerializer(Serializer):
     extra_numerals = CharField(allow_blank=True)
     type_institution = PrimaryKeyRelatedField(
         queryset=TypeInstitution.objects.all(), allow_null=True)
-
+    identification = CharField(max_length=255)
     type_organization = PrimaryKeyRelatedField(
         queryset=TypeOrganization.objects.all(), allow_null=True)
     function_organization = PrimaryKeyRelatedField(
@@ -78,6 +78,7 @@ class EstablishmentCreateResponseSerializer(Serializer):
     type_institution = IntegerField(allow_null=True)
     type_organization = IntegerField(allow_null=True)
     function_organization = IntegerField(allow_null=True)
+    identification = CharField(max_length=255)
 
 
 class MessageTransactional(Serializer):

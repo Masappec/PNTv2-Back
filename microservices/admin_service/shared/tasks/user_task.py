@@ -14,11 +14,9 @@ def send_user_created_event(user_id, establishment_id):
         if not establishment_id:
             raise ValueError("El id del establecimiento no puede ser nulo")
 
-        print("TAREA RECIEN CREADA ", user_id, establishment_id)
         service = UserEstablishmentService(UserEstablishmentImpl())
         establishments = service.get_establishment_by_user(user_id)
         for establishment in establishments:
-            print("Establecimiento ", establishment.establishment_id)
             service.remove_user(user_id, establishment.establishment_id)
 
         establishments = service.get_establishment_by_user(user_id)

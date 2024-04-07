@@ -21,11 +21,10 @@ class UserRepositoryImpl(UserRepository):
         """
         self.jwt_authentication = JWTAuthentication()
 
-
-
     def register_cityzen_user(self, user: dict):
-        
+        user.pop('confirm_password')
         return User.register_citizen_user(**user)
+
     def get_user(self, user_id: int):
         """
         Get a user by id.
@@ -36,22 +35,19 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        user = User.objects.prefetch_related('groups').prefetch_related('person').filter(pk=user_id).first()
+        user = User.objects.prefetch_related('groups').prefetch_related(
+            'person').filter(pk=user_id).first()
 
- 
         # return user with groups name
-        
-        
+
         groups = [{
             'id': group.id,
             'name': group.name
-            } for group in user.groups.all()]
+        } for group in user.groups.all()]
         user = user.__dict__
         user['group'] = groups
-        
+
         return user
-
-
 
     def get_user_object(self, user_id: int):
         """
@@ -73,12 +69,13 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        users = User.objects.prefetch_related('groups').prefetch_related('person')
- 
+        users = User.objects.prefetch_related(
+            'groups').prefetch_related('person')
+
         # return user with groups name
         for user in users:
             group = [group for group in user.groups.all()]
-            #join list to string
+            # join list to string
             user.group = group
         return users
 
@@ -94,11 +91,7 @@ class UserRepositoryImpl(UserRepository):
         """
 
         return User.objects.get(email=email)
-        
-        
-        
 
-        
     def get_user_by_username(self, username: str):
         """
         Get a user by username.
@@ -109,18 +102,18 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        user = User.objects.prefetch_related('groups').prefetch_related('person').filter(is_active=True, username=username).first()
+        user = User.objects.prefetch_related('groups').prefetch_related(
+            'person').filter(is_active=True, username=username).first()
 
- 
         # return user with groups name
-        
+
         groups = [{
             'id': group.id,
             'name': group.name
-            } for group in user.groups.all()]
+        } for group in user.groups.all()]
         user = user.__dict__
         user['group'] = groups
-        
+
         return user
 
     def create_user(self, user: dict):
@@ -177,15 +170,13 @@ class UserRepositoryImpl(UserRepository):
     def login(self, user: dict):
         return self.jwt_authentication.authenticate(**user)
 
-    
     def assign_role(self, user_id: int, role_id: Role):
-        #delete all roles for user
+        # delete all roles for user
         User.objects.get(pk=user_id).groups.clear()
         return role_id.user_set.add(user_id)
-    
+
     def delete_permanent_user(self, user_id: int):
         return User.objects.filter(pk=user_id).delete()
-    
 
     def active_user(self, user_id: int):
         return User.objects.filter(pk=user_id).update(is_active=True)
