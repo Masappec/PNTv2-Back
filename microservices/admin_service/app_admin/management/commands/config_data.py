@@ -14,12 +14,29 @@ class Command(BaseCommand):
     def add_arguments(self, parser: Any) -> None:
         parser.add_argument(
             '--all', help='Generate fake data for the establishment model', action='store_true')
+        parser.add_argument(
+            '--establishment', help='Generate fake data for the establishment model', action='store_true')
+        parser.add_argument(
+            '--fo', help='Generate fake data for the function organization model', action='store_true')
+        parser.add_argument(
+            '--ti', help='Generate fake data for the type institution model', action='store_true')
+        parser.add_argument(
+            '--quantity', help='Quantity of data to generate', type=int)
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         all = options.get('all', False)
+        quantity = options.get('quantity', 0)
+
         if all:
-            self.service.create_function_organization()
             self.service.create_type_institution()
             self.service.create_function_organization()
             self.service.create_establishment()
+        if options.get('establishment', False):
+            if quantity:
+                self.service.create_establishment_quantity(quantity)
+        if options.get('fo', False):
+            self.service.create_function_organization()
+
+        if options.get('ti', False):
+            self.service.create_type_institution()
