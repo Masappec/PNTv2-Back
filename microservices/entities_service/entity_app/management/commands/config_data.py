@@ -15,9 +15,17 @@ class Command(BaseCommand):
         parser.add_argument(
             '-an', help='Generar datos de transparencia activa', action='store_true')
 
+        parser.add_argument(
+            '-list_templates', help='Listar plantillas', action='store_true')
+
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         ta = options.get('an', False)
         if ta:
             print('Asignando numerals a los establecimientos')
             self.config_service.assign_numerals()
+
+        list_templates = options.get('list_templates', False)
+        if list_templates:
+            print('Listando templates')
+            print(self.config_service.list_templates())

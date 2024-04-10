@@ -3,6 +3,7 @@ from entity_app.domain.models import EstablishmentExtended
 from entity_app.domain.services.numeral_service import NumeralService
 from entity_app.adapters.impl.numeral_impl import NumeralImpl
 from entity_app.utils.functions import progress_bar
+import os
 
 
 class NumeralServiceData:
@@ -21,3 +22,6 @@ class NumeralServiceData:
             if n.count() == 0:
                 self.service.asign_numeral_to_establishment(
                     defaults_numerals, establistment.id)
+
+    def get_list_templates(self):
+        return os.listdir('../DatasetsDPE/')
