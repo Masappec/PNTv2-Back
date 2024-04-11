@@ -4,6 +4,7 @@ from entity_app.domain.services.numeral_service import NumeralService
 from entity_app.adapters.impl.numeral_impl import NumeralImpl
 from entity_app.utils.functions import progress_bar
 import os
+import pandas as pd
 
 
 class NumeralServiceData:
@@ -24,4 +25,21 @@ class NumeralServiceData:
                     defaults_numerals, establistment.id)
 
     def get_list_templates(self):
-        return os.listdir('../DatasetsDPE/')
+        # directorio actual
+        dir = os.path.dirname(os.path.dirname(__file__))
+        dir = os.path.join(dir, 'DatasetsDPE')
+
+        for root, dirs, files in os.walk(dir):
+            for file in files:
+                if file.endswith('.xlsx'):
+                    print(file)
+                    df = pd.read_excel(os.path.join(root, file))
+
+                    # recorrer hojas
+                    for sheet in df:
+                        print(sheet)
+                        for columns in df[sheet]:
+
+                            print(columns)
+                        print('-------------------------')
+                    print('='*50)
