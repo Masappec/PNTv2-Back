@@ -19,7 +19,7 @@ services:
       - redis_db
       - auth_microservice
     volumes:
-      - ./microservices/admin_service:/app
+      - ./microservices/admin_service:/code
 
     environment:
       - DB_HOST=db_auth
@@ -46,7 +46,7 @@ services:
       - db_auth
       - redis_db
     volumes:
-      - ./microservices/auth_service:/app
+      - ./microservices/auth_service:/code
 
     environment:
       - DB_HOST=db_auth
@@ -72,7 +72,7 @@ services:
       - db_auth
       - redis_db
     volumes:
-      - ./microservices/entities_service:/app
+      - ./microservices/entities_service:/code
 
     networks:
       - pnt_network
