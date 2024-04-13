@@ -78,7 +78,8 @@ class EstablishmentCreateResponseSerializer(Serializer):
     type_institution = IntegerField(allow_null=True)
     type_organization = IntegerField(allow_null=True)
     function_organization = IntegerField(allow_null=True)
-    identification = CharField(max_length=255)
+    identification = CharField(
+        max_length=255, allow_null=True, allow_blank=True)
 
 
 class MessageTransactional(Serializer):

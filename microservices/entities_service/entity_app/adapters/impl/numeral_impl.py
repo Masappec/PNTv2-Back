@@ -18,9 +18,11 @@ class NumeralImpl(NumeralRepository):
 
     def get_by_entity(self, entity_id):
         obj = EstablishmentNumeral.objects.filter(
-            establishment_id=entity_id).values('numeral')
+            establishment_id=entity_id,
+            numeral__type_transparency='A'
+        ).values('numeral')
 
-        return Numeral.objects.filter(id__in=obj)
+        return Numeral.objects.filter(id__in=obj).order_by('name')
 
     def get_all_transparency(self):
         return TransparencyActive.objects.get()
@@ -39,7 +41,7 @@ class NumeralImpl(NumeralRepository):
             )
 
     def get_by_default(self, default: bool) -> QuerySet[Numeral]:
-        return Numeral.objects.filter(is_default=default)
+        return Numeral.objects.filter(is_default=default, type_transparency='A').order_by('name')
 
     def get_transparency_by_numeral(self, numeral, month, year, establishment_id):
         return TransparencyActive.objects.filter(numeral=numeral, month=month, year=year, establishment_id=establishment_id).first()

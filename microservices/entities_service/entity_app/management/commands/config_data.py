@@ -18,6 +18,9 @@ class Command(BaseCommand):
         parser.add_argument(
             '-list_templates', help='Listar plantillas', action='store_true')
 
+        parser.add_argument(
+            '-generate_file', help='Generar archivo', action='store_true')
+
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         ta = options.get('an', False)
@@ -27,5 +30,8 @@ class Command(BaseCommand):
 
         list_templates = options.get('list_templates', False)
         if list_templates:
-            print('Listando templates')
             print(self.config_service.list_templates())
+
+        generate_file = options.get('generate_file', False)
+        if generate_file:
+            print(self.config_service.generate_file())

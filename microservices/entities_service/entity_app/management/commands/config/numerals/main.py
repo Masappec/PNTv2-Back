@@ -101,9 +101,9 @@ class NumeralServiceData:
 
                                     template['columns'] = list_columns
 
-                            list_templates.append(template)
-                        numeral_data['templates'] = list_templates
-                        list_final.append(numeral_data)
+                                list_templates.append(template)
+                            numeral_data['templates'] = list_templates
+                            list_final.append(numeral_data)
 
         print(json.dumps(list_final, ensure_ascii=False))
 
@@ -120,8 +120,31 @@ class NumeralServiceData:
 
                 description = description.replace('Art.', '')
                 description = description.replace('. ', '')
-                description = description.replace(' ', '')
                 description = description.replace('.', '')
 
                 numero = re.search(r'\d+', name)
-                print(description, numero.group() if numero else None)
+
+                numeral_object = Numeral.objects.create(
+                    name="Numeral " + numero.group() if numero else '',
+                    description=description,
+                )
+
+                for template in numeral['templates']:
+                    template_object = TemplateFile.objects.create(
+                        name=template['name'],
+                        description=template['description'],
+                        vertical_template=template['vertical_template'],
+                        max_inserts=template['max_insert'],
+
+                    )
+
+                    numeral_object.templates.add(template_object)
+
+                    for column in template['columns']:
+                        column_object = ColumnFile.objects.create(
+                            name=column['name'],
+                            type=column['type'],
+                            format=column['format'],
+                            regex=column['regex'],
+                        )
+                        template_object.columns.add(column_object)

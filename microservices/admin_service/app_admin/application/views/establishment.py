@@ -309,8 +309,8 @@ class EstablishmentDetailUserSession(APIView):
                 'address': establishment.address if establishment.address else '',
                 'type_institution': establishment.type_institution.id if establishment.type_institution else None,
                 'type_organization': establishment.type_organization.id if establishment.type_organization else None,
-                'function_organization': establishment.function_organization.id if establishment.function_organization else None
-
+                'function_organization': establishment.function_organization.id if establishment.function_organization else None,
+                'identification': establishment.identification if establishment.identification else None
 
             })
 

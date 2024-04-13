@@ -12,3 +12,6 @@ class ConfigDataService:
 
     def list_templates(self):
         return self.numeral_service.read_json_generate()
+
+    def generate_file(self):
+        return self.numeral_service.generate_file_json()
