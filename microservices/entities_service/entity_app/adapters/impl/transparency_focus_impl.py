@@ -24,16 +24,21 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
         return response
 
     def getTransparencyFocusUser(self, user_id):
-        user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
 
-        response = TransparencyFocal.objects.get(
+        user_es = UserEstablishmentExtended.objects.filter(
+            user_id=user_id).first()
+        if not user_es:
+            raise ValueError("El usuario no tiene establecimiento")
+        response = TransparencyFocal.objects.filter(
             establishment_id=user_es.establishment.id)
 
         return response
 
     def deleteTransparencyFocusUser(self, pk, user_id):
-        user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
-
+        user_es = UserEstablishmentExtended.objects.filter(
+            user_id=user_id).first()
+        if not user_es:
+            raise ValueError("El usuario no tiene establecimiento")
         response = TransparencyFocal.objects.get(
             establishment_id=user_es.establishment.id, id=pk).delete()
 

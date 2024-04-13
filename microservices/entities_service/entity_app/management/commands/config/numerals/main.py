@@ -5,6 +5,9 @@ from entity_app.adapters.impl.numeral_impl import NumeralImpl
 from entity_app.utils.functions import progress_bar
 import os
 import pandas as pd
+import re
+import json
+from entity_app.models import TemplateFile, Numeral, ColumnFile
 
 
 class NumeralServiceData:
@@ -24,22 +27,101 @@ class NumeralServiceData:
                 self.service.asign_numeral_to_establishment(
                     defaults_numerals, establistment.id)
 
-    def get_list_templates(self):
+    def generate_file_json(self):
         # directorio actual
         dir = os.path.dirname(os.path.dirname(__file__))
         dir = os.path.join(dir, 'DatasetsDPE')
 
+        list_final = []
         for root, dirs, files in os.walk(dir):
             for file in files:
                 if file.endswith('.xlsx'):
-                    print(file)
-                    df = pd.read_excel(os.path.join(root, file))
+                    df = pd.ExcelFile(os.path.join(root, file))
 
-                    # recorrer hojas
-                    for sheet in df:
-                        print(sheet)
-                        for columns in df[sheet]:
+                    numeral_name = re.sub(r'Art.', '', file)
+                    numeral_name = numeral_name.replace('.xlsx', '')
+                    numeral_data = {
+                        'name': numeral_name,
+                        'templates': []
+                    }
 
-                            print(columns)
-                        print('-------------------------')
-                    print('='*50)
+                    if file.startswith("ART") or re.search("[0-9].", file):
+                        list_sheets = df.sheet_names
+                        list_templates = []
+
+                        for sheet in list_sheets:
+                            if sheet.lower().find('conjunto de datos') != -1 or \
+                                    sheet.lower().find('metadatos') != -1 or \
+                                    sheet.lower().find('diccionario') != -1:
+
+                                template = {
+                                    'name': sheet,
+                                    'description': numeral_name,
+                                    "vertical_template": False,
+                                    "max_insert": None,
+                                    'columns': []
+                                }
+
+                                dataframe = df.parse(sheet, encode='')
+
+                                if sheet.lower().find('conjunto de datos') != -1:
+                                    data = dataframe.head().to_json()
+                                    dict_data = json.loads(data)
+                                    list_ids_column = []
+                                    for k in dict_data:
+                                        column = {
+                                            "name": k,
+                                            "type": "str",
+                                            "format": None,
+                                            "regex": None
+                                        }
+
+                                        list_ids_column.append(column)
+                                    template['columns'] = list_ids_column
+
+                                else:
+                                    template = {
+                                        'name': sheet,
+                                        'description': numeral_name,
+                                        "vertical_template": True,
+                                        "max_insert": 1,
+                                        'columns': []
+                                    }
+
+                                    columns = dataframe.iloc[:, 0].to_list()
+                                    list_columns = []
+                                    for column in columns:
+                                        column_save = {
+                                            "name": column,
+                                            "type": "str",
+                                            "format": None,
+                                            "regex": None
+                                        }
+                                        list_columns.append(column_save)
+
+                                    template['columns'] = list_columns
+
+                            list_templates.append(template)
+                        numeral_data['templates'] = list_templates
+                        list_final.append(numeral_data)
+
+        print(json.dumps(list_final, ensure_ascii=False))
+
+    def read_json_generate(self):
+
+        dir = os.path.dirname(__file__)
+        dir = os.path.join(dir, 'test.json')
+        with open(dir, encoding='utf-8') as file:
+            data = json.load(file)
+            for numeral in data:
+                description = numeral['name']
+                name = numeral['name']
+                description = re.sub(r'[0-9]', '', description)
+
+                description = description.replace('Art.', '')
+                description = description.replace('. ', '')
+                description = description.replace(' ', '')
+                description = description.replace('.', '')
+
+                numero = re.search(r'\d+', name)
+                print(description, numero.group() if numero else None)

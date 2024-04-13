@@ -12,17 +12,32 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from entity_app.adapters.serializers import TransparencyFocusCreate, MessageTransactional, ListTransparencyFocus
+from entity_app.adapters.serializers import TransparencyFocusCreate, MessageTransactional, ListTransparencyFocus, \
+    TransparencyFocusSerializer
+
+from drf_yasg.utils import swagger_auto_schema
 
 
 class CreateTransparencyFocalizada(APIView):
 
     serializer_class = TransparencyFocusCreate
     permission_classes = [IsAuthenticated, HasPermission]
+    output_serializer_class = TransparencyFocusSerializer
+    permission_required = 'add_transparencyfocal'
 
     def __init__(self, **kwargs):
         self.service = TransparencyFocusService(TransparencyFocalImpl())
 
+    @swagger_auto_schema(
+        operation_description="Create a new publication",
+        response={
+            201: output_serializer_class,
+            400: MessageTransactional
+        },
+        request_body=serializer_class,
+        # form data
+
+    )
     def post(self, request, *args, **kwargs):
 
         data = self.serializer_class(data=request.data)
@@ -63,6 +78,7 @@ class TransparencyFocusView(ListAPIView):
     permission_classes = [IsAuthenticated, HasPermission]
     serializer_class = ListTransparencyFocus
     pagination_class = StandardResultsSetPagination
+    permission_required = 'view_transparencyfocal'
 
     def __init__(self, **kwargs):
         self.service = TransparencyFocusService(TransparencyFocalImpl())
@@ -100,6 +116,8 @@ class TransparencyFocusView(ListAPIView):
 
 class TransparencyFocusDelete(APIView):
     serializer_class = TransparencyFocusCreate
+    permission_classes = [IsAuthenticated, HasPermission]
+    permission_required = 'delete_transparencyfocal'
 
     def __init__(self, **kwargs):
         self.sevice = TransparencyFocusService(TransparencyFocalImpl())

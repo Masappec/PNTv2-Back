@@ -11,4 +11,4 @@ class ConfigDataService:
         self.numeral_service.asign_numeral_to_establishments()
 
     def list_templates(self):
-        return self.numeral_service.get_list_templates()
+        return self.numeral_service.read_json_generate()

@@ -5,6 +5,8 @@ from entity_app.domain.models.type_formats import TypeFormats
 from entity_app.domain.models.solicity import Solicity, TimeLineSolicity
 from entity_app.domain.models.transparency_active import Numeral, TemplateFile, ColumnFile, TransparencyActive
 from entity_app.domain.models.establishment import EstablishmentExtended
+from entity_app.domain.models.transparecy_foc import TransparencyFocal
+from entity_app.domain.models.transparecy_colab import TransparencyColab
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -365,17 +367,28 @@ class TransparencyFocusCreate(serializers.Serializer):
     files = serializers.ListField(child=serializers.IntegerField())
 
 
-class ListTransparencyFocus(serializers.Serializer):
-    establishment = serializers.IntegerField()
-    numeral = serializers.IntegerField()
-    files = serializers.ListField(child=serializers.IntegerField())
-    slug = serializers.BooleanField()
-    month = serializers.IntegerField()
-    year = serializers.IntegerField()
-    status = serializers.CharField()
-    published = serializers.BooleanField()
-    published_at = serializers.DateTimeField()
-    max_date_to_publish = serializers.DateTimeField()
+class TransparencyFocusSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TransparencyFocal
+        fields = '__all__'
+
+
+class ListTransparencyFocus(serializers.ModelSerializer):
+    numeral = serializers.SerializerMethodField(method_name='get_numeral')
+    files = FilePublicationSerializer(many=True)
+
+    class Meta:
+        model = TransparencyFocal
+        fields = '__all__'
+
+    def get_numeral(self, obj):
+        numeral = obj.numeral
+        return {
+            'id': numeral.id,
+            'name': numeral.name,
+            'description': numeral.description
+        }
 
 
 class ListTransparencyColaborative(serializers.Serializer):
