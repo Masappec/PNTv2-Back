@@ -391,14 +391,18 @@ class ListTransparencyFocus(serializers.ModelSerializer):
         }
 
 
-class ListTransparencyColaborative(serializers.Serializer):
-    establishment = serializers.IntegerField()
-    numeral = serializers.IntegerField()
-    files = serializers.ListField(child=serializers.IntegerField())
-    slug = serializers.BooleanField()
-    month = serializers.IntegerField()
-    year = serializers.IntegerField()
-    status = serializers.CharField()
-    published = serializers.BooleanField()
-    published_at = serializers.DateTimeField()
-    max_date_to_publish = serializers.DateTimeField()
+class ListTransparencyColaborative(serializers.ModelSerializer):
+    numeral = serializers.SerializerMethodField(method_name='get_numeral')
+    files = FilePublicationSerializer(many=True)
+
+    class Meta:
+        model = TransparencyColab
+        fields = '__all__'
+
+    def get_numeral(self, obj):
+        numeral = obj.numeral
+        return {
+            'id': numeral.id,
+            'name': numeral.name,
+            'description': numeral.description
+        }

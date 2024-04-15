@@ -24,9 +24,10 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
         return response
 
     def getTransparencyColaborativeUser(self, user_id):
-        user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
+        user_es = UserEstablishmentExtended.objects.filter(
+            user_id=user_id).last()
 
-        response = TransparencyColab.objects.get(
+        response = TransparencyColab.objects.filter(
             establishment_id=user_es.establishment.id)
 
         return response

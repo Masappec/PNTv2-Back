@@ -13,17 +13,24 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from entity_app.adapters.serializers import TransparencyColaboratyCreate, MessageTransactional, ListTransparencyColaborative
+from drf_yasg.utils import swagger_auto_schema
 
 
 class CreateTransparencyColaboraty(APIView):
 
     serializer_class = TransparencyColaboratyCreate
     permission_classes = [IsAuthenticated, HasPermission]
+    output_serializer_class = ListTransparencyColaborative
+    permission_required = 'add_transparencycolab'
 
     def __init__(self, **kwargs):
-        self.sevice = TransparencyColaborativeService(
+        self.service = TransparencyColaborativeService(
             TransparencyColaborativeImpl())
 
+    @swagger_auto_schema(
+        request_body=TransparencyColaboratyCreate,
+        responses={201: MessageTransactional}
+    )
     def post(self, request, *args, **kwargs):
 
         data = self.serializer_class(data=request.data)
@@ -64,6 +71,7 @@ class TransparencyColaborativeView(ListAPIView):
     permission_classes = [IsAuthenticated, HasPermission]
     serializer_class = ListTransparencyColaborative
     pagination_class = StandardResultsSetPagination
+    permission_required = 'view_transparencycolab'
 
     def __init__(self, **kwargs):
         self.sevice = TransparencyColaborativeService(
