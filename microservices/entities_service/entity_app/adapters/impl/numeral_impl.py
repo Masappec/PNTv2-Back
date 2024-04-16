@@ -5,6 +5,8 @@ from typing import List
 from django.db.models.query import QuerySet
 from entity_app.ports.repositories.numeral_repository import NumeralRepository
 from entity_app.domain.models.transparency_active import Numeral, EstablishmentNumeral, TransparencyActive
+from django.db.models import Value, IntegerField
+from django.db.models.functions import Cast
 
 
 class NumeralImpl(NumeralRepository):
@@ -17,12 +19,14 @@ class NumeralImpl(NumeralRepository):
         return numeral
 
     def get_by_entity(self, entity_id):
-        obj = EstablishmentNumeral.objects.filter(
+        numerals_ids = EstablishmentNumeral.objects.filter(
             establishment_id=entity_id,
             numeral__type_transparency='A'
         ).values('numeral')
 
-        return Numeral.objects.filter(id__in=obj).order_by('name')
+        return Numeral.objects.filter(id__in=numerals_ids).annotate(
+            numeral_id_int=Cast('id', IntegerField())
+        ).order_by('numeral_id_int')
 
     def get_all_transparency(self):
         return TransparencyActive.objects.get()

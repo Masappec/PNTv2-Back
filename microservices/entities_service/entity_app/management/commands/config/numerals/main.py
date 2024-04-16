@@ -27,6 +27,15 @@ class NumeralServiceData:
                 self.service.asign_numeral_to_establishment(
                     defaults_numerals, establistment.id)
 
+    def extract_numeral_number(self, file_name):
+        # Utilizamos una expresión regular para encontrar cualquier número,
+        # ya sea entero o decimal, al principio del nombre del archivo.
+        match = re.match(r'^\d+(\.\d+)?', file_name)
+        if match:
+            return match.group(0)
+        else:
+            return None
+
     def generate_file_json(self):
         # directorio actual
         dir = os.path.dirname(os.path.dirname(__file__))
@@ -40,8 +49,12 @@ class NumeralServiceData:
 
                     numeral_name = re.sub(r'Art.', '', file)
                     numeral_name = numeral_name.replace('.xlsx', '')
+
+                    number = self.extract_numeral_number(file)
+
                     numeral_data = {
                         'name': numeral_name,
+                        'number': self.extract_numeral_number(file),
                         'templates': []
                     }
 
