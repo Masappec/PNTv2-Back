@@ -33,5 +33,3 @@ class TransparencyColab(BaseModel):
     class Meta:
         verbose_name = 'Transparencia Colaborativa'
         verbose_name_plural = 'Transparencias Colaborativa'
-
-        unique_together = ('establishment', 'numeral', 'month', 'year')

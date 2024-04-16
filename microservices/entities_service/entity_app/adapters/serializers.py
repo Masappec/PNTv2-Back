@@ -363,7 +363,6 @@ class TransparencyColaboratyCreate(serializers.Serializer):
 
 class TransparencyFocusCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
-    numeral_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
 
 

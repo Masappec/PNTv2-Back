@@ -14,7 +14,8 @@ from rest_framework import status
 
 from entity_app.adapters.serializers import TransparencyFocusCreate, MessageTransactional, ListTransparencyFocus, \
     TransparencyFocusSerializer
-
+from entity_app.domain.services.numeral_service import NumeralService
+from entity_app.adapters.impl.numeral_impl import NumeralImpl
 from drf_yasg.utils import swagger_auto_schema
 
 
@@ -22,11 +23,12 @@ class CreateTransparencyFocalizada(APIView):
 
     serializer_class = TransparencyFocusCreate
     permission_classes = [IsAuthenticated, HasPermission]
-    output_serializer_class = TransparencyFocusSerializer
+    output_serializer_class = ListTransparencyFocus
     permission_required = 'add_transparencyfocal'
 
     def __init__(self, **kwargs):
         self.service = TransparencyFocusService(TransparencyFocalImpl())
+        self.numeral_service = NumeralService(NumeralImpl())
 
     @swagger_auto_schema(
         operation_description="Create a new publication",
@@ -49,8 +51,24 @@ class CreateTransparencyFocalizada(APIView):
         maxDatePublish = datetime.now() + timedelta(days=15)
 
         try:
+            numeral_id = self.numeral_service.get_all().filter(
+                type_transparency='F').first()
+
+            if not numeral_id:
+                res = MessageTransactional(
+                    data={
+                        'message': 'No se encontro el numeral',
+                        'status': 400,
+                        'json': {}
+                    }
+                )
+                res.is_valid(raise_exception=True)
+                return Response(res.data, status=400)
+
             transparency_focus = self.service.createTransparencyFocus(
-                data.validated_data['establishment_id'], data.validated_data['numeral_id'], data.validated_data['files'], month, year, today, maxDatePublish)
+                data.validated_data['establishment_id'],
+                numeral_id.id,
+                data.validated_data['files'], month, year, today, maxDatePublish)
 
             res = MessageTransactional(
                 data={

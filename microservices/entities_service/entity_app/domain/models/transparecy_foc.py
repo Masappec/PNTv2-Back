@@ -33,5 +33,3 @@ class TransparencyFocal(BaseModel):
     class Meta:
         verbose_name = 'Transparencia Focalizada'
         verbose_name_plural = 'Transparencias Focalizada'
-
-        unique_together = ('establishment', 'numeral', 'month', 'year')
