@@ -111,14 +111,14 @@ class SolicityService:
 
         return self.solicity_repository.create_extencion_solicity(motive, solicity_id, user_id)
 
-    def create_solicity_response(self, solicity_id, user_id, text, category, files, attachments):
+    def create_solicity_response(self, solicity_id, user_id, text, category_id, files, attachments):
         """
         Crea una respuesta de solicitud
 
         Args:
             solicity_response (dict): Diccionario con los datos de la respuesta de solicitud
         """
-        return self.solicity_repository.create_solicity_response(solicity_id, user_id, text, category, files, attachments)
+        return self.solicity_repository.create_solicity_response(solicity_id, user_id, text, category_id, files, attachments)
 
     def update_solicity(self,
                         id: int,

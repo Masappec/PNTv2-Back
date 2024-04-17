@@ -2,7 +2,7 @@ import datetime
 from rest_framework import serializers
 from entity_app.domain.models.publication import Attachment, Publication, Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
-from entity_app.domain.models.solicity import Solicity, TimeLineSolicity
+from entity_app.domain.models.solicity import Solicity, SolicityResponse, TimeLineSolicity
 from entity_app.domain.models.transparency_active import Numeral, TemplateFile, ColumnFile, TransparencyActive
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
@@ -175,13 +175,14 @@ class SolicityCreateResponseSerializer(serializers.Serializer):
     text = serializers.CharField()
     files = serializers.ListField(child=serializers.IntegerField())
     attachment = serializers.ListField(child=serializers.IntegerField())
-    category = serializers.CharField()
+    category_id = serializers.IntegerField()
 
 
 class SolicitySerializer(serializers.ModelSerializer):
     estblishment_name = serializers.CharField(
         source='establishment.name', read_only=True)
     time_line = serializers.SerializerMethodField(method_name='get_time_line')
+    responses = serializers.SerializerMethodField(method_name='get_responses')
 
     class Meta:
 
@@ -201,6 +202,21 @@ class SolicitySerializer(serializers.ModelSerializer):
             })
         return list_
 
+    def get_responses(self, obj):
+        responses = SolicityResponse.objects.filter(solicity=obj)
+        data = SolicityResponseSerializer(responses, many=True).data
+        return data
+
+
+class SolicityResponseSerializer(serializers.ModelSerializer):
+    """Solicity response serializer."""
+    class Meta:
+        """Meta class."""
+        model = SolicityResponse
+        fields = '__all__'
+
+        read_only_fields = ('id', 'is_active', 'solicity', 'user')
+
 
 class CreateExtensionSerializer(serializers.Serializer):
 
@@ -218,14 +234,6 @@ class CreateManualSolicitySerializer(serializers.Serializer):
     text = serializers.CharField()
     expiry_date = serializers.DateTimeField()
     establishment_id = serializers.IntegerField()
-
-
-class SolicityResponseSerializer(serializers.Serializer):
-    text = serializers.CharField()
-    category = serializers.CharField()
-    files = serializers.ListField(child=serializers.IntegerField())
-    attachments = serializers.ListField(child=serializers.IntegerField())
-    solicity_id = serializers.IntegerField()
 
 
 class ColumnFileSerializer(serializers.ModelSerializer):
@@ -357,7 +365,6 @@ class TransparecyActiveCreate(serializers.Serializer):
 
 class TransparencyColaboratyCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
-    numeral_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
 
 

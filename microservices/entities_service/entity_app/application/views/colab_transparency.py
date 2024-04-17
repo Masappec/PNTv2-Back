@@ -16,6 +16,10 @@ from entity_app.adapters.serializers import TransparencyColaboratyCreate, Messag
 from drf_yasg.utils import swagger_auto_schema
 
 
+from entity_app.domain.services.numeral_service import NumeralService
+from entity_app.adapters.impl.numeral_impl import NumeralImpl
+
+
 class CreateTransparencyColaboraty(APIView):
 
     serializer_class = TransparencyColaboratyCreate
@@ -26,6 +30,7 @@ class CreateTransparencyColaboraty(APIView):
     def __init__(self, **kwargs):
         self.service = TransparencyColaborativeService(
             TransparencyColaborativeImpl())
+        self.numeral_service = NumeralService(NumeralImpl())
 
     @swagger_auto_schema(
         request_body=TransparencyColaboratyCreate,
@@ -42,8 +47,10 @@ class CreateTransparencyColaboraty(APIView):
         maxDatePublish = datetime.now() + timedelta(days=15)
 
         try:
+            numeral_id = self.numeral_service.get_all().filter(
+                type_transparency='C').first()
             transparency_colaborative = self.service.createTransparencyColaborative(
-                data.validated_data['establishment_id'], data.validated_data['numeral_id'], data.validated_data['files'], month, year, today, maxDatePublish)
+                data.validated_data['establishment_id'], numeral_id.id, data.validated_data['files'], month, year, today, maxDatePublish)
 
             res = MessageTransactional(
                 data={
