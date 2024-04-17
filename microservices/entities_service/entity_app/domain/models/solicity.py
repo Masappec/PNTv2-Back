@@ -89,8 +89,7 @@ class SolicityResponse(BaseModel):
     is_active = models.BooleanField(default=True)
     files = models.ManyToManyField('FilePublication', blank=True)
     attachments = models.ManyToManyField('Attachment', blank=True)
-    category = models.ForeignKey(
-        'Category', on_delete=models.CASCADE, null=True, blank=True)
+    category = models.CharField(max_length=255)
 
     objects = models.Manager()
 

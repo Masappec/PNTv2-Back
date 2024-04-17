@@ -575,7 +575,9 @@ class SolicityCreateResponseView(APIView):
         try:
 
             solicity_response = self.service.create_solicity_response(
-                data.id_solicitud, request.user.id, data.text, data.category_id, data.files, data.attachment)
+                data.validated_data['id_solicitud'],
+                request.user.id, data.validated_data['text'],
+                data.validated_data['category'], data.validated_data['files'], data.validated_data['attachment'])
 
             res = MessageTransactional(
                 data={
