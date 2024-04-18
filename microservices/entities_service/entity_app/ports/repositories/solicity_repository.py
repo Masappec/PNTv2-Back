@@ -177,3 +177,7 @@ class SolicityRepository(ABC):
     @abstractmethod
     def get_solicity_by_id_and_user(self, solicity_id, user_id) -> Solicity:
         pass
+
+    @abstractmethod
+    def get_solicity_by_id(self, solicity_id) -> Solicity:
+        pass

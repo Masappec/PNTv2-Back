@@ -18,9 +18,13 @@ class HasPermission(BasePermission):
             return True
 
         user_id = request.user.id
-
+        
+        per = permission_required.split(',')
+        
+        
+        
         is_permited = User.objects.get(id=user_id).groups.filter(
-            permissions__codename=permission_required).exists()
+            permissions__codename__in=per).exists()
         print(is_permited, permission_required)
         return is_permited
 

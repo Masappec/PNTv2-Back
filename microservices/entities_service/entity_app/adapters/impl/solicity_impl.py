@@ -193,11 +193,22 @@ class SolicityImpl(SolicityRepository):
 
         insistenci = Insistency.objects.filter(
             solicity_id=solicity_id, user_id=user_id, status=Status.CREATED).exists()
+        solicity = Solicity.objects.get(id=solicity_id)
+
         response = SolicityResponse.objects.create(solicity_id=solicity_id,
                                                    user_id=user_id,
                                                    text=text,
                                                    user_created_id=user_id, user_updated_id=user_id)
-        status = TypeStages.RESPONSE_INSISTENCY if insistenci else Status.PROCESSING
+
+        status = TypeStages.PENDING
+
+        if solicity.user_created_id == user_id:
+            status = TypeStages.INSISTENCY
+
+        else:
+            status = TypeStages.RESPONSE
+
+        solicity.status = status
 
         TimeLineSolicity.objects.create(solicity_id=solicity_id, status=status)
 
@@ -252,3 +263,6 @@ class SolicityImpl(SolicityRepository):
 
     def get_solicity_by_id_and_user(self, solicity_id, user_id):
         return Solicity.objects.get(id=solicity_id, user_created_id=user_id)
+
+    def get_solicity_by_id(self, solicity_id):
+        return Solicity.objects.get(id=solicity_id)
