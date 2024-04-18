@@ -548,11 +548,11 @@ class SolicityCreateResponseView(APIView):
     """ Solicity Create Response """
 
     permission_classes = [IsAuthenticated,
-                          HasPermission, BelongsToEstablishment]
+                          HasPermission]
     serializer_class = SolicityCreateResponseSerializer
     pagination_class = StandardResultsSetPagination
     output_serializer_class = SolicityResponseSerializer
-    permission_required = 'add_solicity_response'
+    permission_required = 'add_solicityresponse'
 
     def __init__(self):
         self.service = SolicityService(SolicityImpl())
@@ -576,17 +576,17 @@ class SolicityCreateResponseView(APIView):
 
             solicity_response = self.service.create_solicity_response(
                 data.validated_data['id_solicitud'],
-                request.user.id, data.validated_data['text'],
-                data.validated_data['category_id'], data.validated_data['files'],
+                request.user.id, data.validated_data['text'], data.validated_data['files'],
                 data.validated_data['attachment'])
-
+            data_ser = self.output_serializer_class(solicity_response)
             res = MessageTransactional(
                 data={
                     'message': 'Solicity respondida correctamente',
                     'status': 200,
-                    'json': self.output_serializer_class(solicity_response).data
+                    'json': data_ser.data
                 }
             )
+            res.is_valid(raise_exception=True)
 
             return Response(res.data, status=201)
 

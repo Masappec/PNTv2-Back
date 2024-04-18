@@ -185,7 +185,7 @@ class SolicityImpl(SolicityRepository):
                                        user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED, expiry_date=expiry_date,
                                        is_manual=True)
 
-    def create_solicity_response(self, solicity_id, user_id, text, category_id, files, attachments):
+    def create_solicity_response(self, solicity_id, user_id, text, files, attachments):
 
         file_instances = FilePublication.objects.filter(id__in=files)
 
@@ -193,13 +193,13 @@ class SolicityImpl(SolicityRepository):
 
         insistenci = Insistency.objects.filter(
             solicity_id=solicity_id, user_id=user_id, status=Status.CREATED).exists()
-        response = SolicityResponse.objects.create(solicity_id=solicity_id, user_id=user_id, text=text,
-                                                   category_id=category_id,
+        response = SolicityResponse.objects.create(solicity_id=solicity_id,
+                                                   user_id=user_id,
+                                                   text=text,
                                                    user_created_id=user_id, user_updated_id=user_id)
         status = TypeStages.RESPONSE_INSISTENCY if insistenci else Status.PROCESSING
 
-        TimeLineSolicity.objects.create(
-            solicity_id, status)
+        TimeLineSolicity.objects.create(solicity_id=solicity_id, status=status)
 
         response.files.set(file_instances)
         response.attachments.set(attachments_instances)

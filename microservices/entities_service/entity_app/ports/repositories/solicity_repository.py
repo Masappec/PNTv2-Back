@@ -101,7 +101,7 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
-    def create_solicity_response(self, solicity_id, user_id, text, category_id, files, attachments):
+    def create_solicity_response(self, solicity_id, user_id, text, files, attachments):
         """
         Crea una respuesta de solicitud
 

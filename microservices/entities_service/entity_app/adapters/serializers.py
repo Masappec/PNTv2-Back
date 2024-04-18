@@ -175,7 +175,6 @@ class SolicityCreateResponseSerializer(serializers.Serializer):
     text = serializers.CharField()
     files = serializers.ListField(child=serializers.IntegerField())
     attachment = serializers.ListField(child=serializers.IntegerField())
-    category_id = serializers.IntegerField()
 
 
 class SolicitySerializer(serializers.ModelSerializer):
