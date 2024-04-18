@@ -209,12 +209,25 @@ class SolicitySerializer(serializers.ModelSerializer):
 
 class SolicityResponseSerializer(serializers.ModelSerializer):
     """Solicity response serializer."""
+    files = FilePublicationSerializer(many=True)
+    attachments = AttachmentSerializer(many=True)
+    user = serializers.SerializerMethodField(method_name='get_user')
+
     class Meta:
         """Meta class."""
         model = SolicityResponse
         fields = '__all__'
 
         read_only_fields = ('id', 'is_active', 'solicity', 'user')
+
+    def get_user(self, obj):
+        return {
+            'id': obj.user.id,
+            'first_name': obj.user.first_name,
+            'last_name': obj.user.last_name,
+            'email': obj.user.email
+
+        }
 
 
 class CreateExtensionSerializer(serializers.Serializer):
