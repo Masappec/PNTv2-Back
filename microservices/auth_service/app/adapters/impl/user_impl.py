@@ -172,7 +172,12 @@ class UserRepositoryImpl(UserRepository):
 
     def assign_role(self, user_id: int, role_id: Role):
         # delete all roles for user
-        User.objects.get(pk=user_id).groups.clear()
+        user_obj = User.objects.get(pk=user_id)
+        user_obj.groups.clear()
+
+        if role_id.name.lower().replace(' ', '') == 'superadministradorapntdpe':
+            user_obj.is_superuser = True
+            user_obj.save()
         return role_id.user_set.add(user_id)
 
     def delete_permanent_user(self, user_id: int):
