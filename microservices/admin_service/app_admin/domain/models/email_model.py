@@ -1,6 +1,7 @@
 from django.db import models
 from .base_model import BaseModel
 
+
 class Email(BaseModel):
     from_email = models.CharField(max_length=255)
     to_email = models.CharField(max_length=255)
@@ -23,7 +24,7 @@ class Email(BaseModel):
         verbose_name_plural = 'Emails'
 
     def __str__(self):
-        return str(self.subject) + " | " + str(self.body)
+        return str(self.subject) + " | " + str(self.to_email)
 
     @staticmethod
     def STATUS_PENDING():

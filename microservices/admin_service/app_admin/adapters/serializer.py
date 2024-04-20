@@ -107,6 +107,15 @@ class FormFieldsListSerializer(ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
 
+        options = instance.options
+        if options is not None:
+            try:
+
+                options = json.loads(options)
+                representation['options'] = options
+
+            except Exception as e:
+                pass
         content_type = instance.content_type
         if content_type is None:
             return representation

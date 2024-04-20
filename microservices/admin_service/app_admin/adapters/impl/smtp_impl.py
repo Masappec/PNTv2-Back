@@ -13,7 +13,7 @@ class StmpImpl(SmtpRepository):
 
     def send_email(self, to_email: str, subject: str, body: str, bcc: str, cc: str, reply_to: str, user_id: int):
         email_from = self.get_config()[constants.KEY_USER_SMTP]
-
+        print('email_from ', email_from)
         return Email.objects.create(
             from_email=email_from,
             to_email=to_email,
@@ -59,10 +59,11 @@ class StmpImpl(SmtpRepository):
 
     def send_email_with_template_and_context(self, email: Email, template: str, context: dict):
         try:
+            print('send_email_with_template_and_context ', email)
             html_content = render_to_string(template, context)
             email.body = html_content
             email.status = Email.STATUS_PENDING()
-            email.save()
+            # email.save()
             message = mail.EmailMessage(
                 subject=email.subject,
                 body=html_content,
@@ -74,7 +75,8 @@ class StmpImpl(SmtpRepository):
             )
 
             backend = self.get_email_backend()
-            backend.send_messages([message])
+            count = backend.send_messages([message])
+            print('count ', count)
             email.status = Email.STATUS_SENT()
             email.save()
 

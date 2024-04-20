@@ -19,3 +19,12 @@ class RedisClient:
 
     def pubsub(self):
         return self.client.pubsub()
+
+    def set(self, key, value):
+        self.client.set(key, value)
+
+    def expire(self, key, time):
+        self.client.expire(key, time)
+
+    def get(self, key):
+        return self.client.get(key)

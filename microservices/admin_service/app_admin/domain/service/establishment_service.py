@@ -29,14 +29,14 @@ class EstablishmentService:
             establishment_ = self.establishment_repository.create_establishment(
                 establishment, file)
 
-            self.publisher.publish(json.dumps({
+            self.publisher.publish({
                 'type': ESTABLISHMENT_CREATED,
                 'payload': {
                     'numerals_id': list_ids,
                     'establishment_id': establishment_.id,
                 }
             })
-            )
+
             return establishment_
         except ObjectDoesNotExist:
             raise ValueError("Instiución no existe")
@@ -57,13 +57,13 @@ class EstablishmentService:
             est = self.establishment_repository.update_establishment(
                 establishment_id, establishment)
 
-            self.publisher.publish(json.dumps({
-                'type': ESTABLISHMENT_UPDATED,
-                'payload': {
-                    'numerals_id': [],
-                    'establishment_id': establishment_id,
-                }
-            })
+            self.publisher.publish(
+                {
+                    'type': ESTABLISHMENT_UPDATED,
+                    'payload': {
+                        'numerals_id': [],
+                        'establishment_id': establishment_id,
+                    }}
             )
             return est
         except ObjectDoesNotExist:

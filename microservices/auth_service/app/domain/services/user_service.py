@@ -136,13 +136,13 @@ class UserService:
             'last_name': user.validated_data['last_name'],
         }
         user_ = self.user_repository.create_user(data)
-        self.publisher.publish(json.dumps({
+        self.publisher.publish({
             'type': USER_CREATED,
             'payload': {
                 'user_id': user_.id,
                 'establishment_id': user.validated_data['establishment_id']
             }
-        }))
+        })
         return user_
 
     def update_user(self, user_id: int, user: UserCreateAdminSerializer):
@@ -169,13 +169,13 @@ class UserService:
         if user.validated_data['password']:
             data['password'] = user.validated_data['password']
 
-        self.publisher.publish(json.dumps({
+        self.publisher.publish({
             'type': USER_UPDATED,
             'payload': {
                 'user_id': user_id,
                 'establishment_id': user.validated_data['establishment_id']
             }
-        }))
+        })
 
         return self.user_repository.update_user(user_id, data)
 

@@ -8,6 +8,8 @@ from app_admin.utils.contants import EMAIL_FROM_NAME
 from admin_service.settings import FRONTEND_PASSWORD_CONFIRMATION_URL, FRONTEND_ACTIVATE_ACCOUNT_URL
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+import random
+import uuid
 
 
 def auth_send_password_reset_event(current_user_id, username, email, reset_password_url):
@@ -36,9 +38,11 @@ def auth_send_password_reset_event(current_user_id, username, email, reset_passw
 
 
 def auth_send_activate_account_event(email, uidb64, token, username):
-    print("TASK AUTH SEND ACTIVATE ACCOUNT EVENT  ")
+    print(
+        "TASK AUTH SEND ACTIVATE ACCOUNT EVENT  {email} {uidb64} {token} {username} ")
     data = {
         'type': 'auth_activate_account',
+        'id': uuid.uuid4(),
         'payload': {
                 'uidb64': uidb64,
                 'username': username,

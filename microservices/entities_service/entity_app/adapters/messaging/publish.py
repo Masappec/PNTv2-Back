@@ -1,6 +1,8 @@
 from django.conf import settings
 
 from entity_app.adapters.messaging.redis.client import RedisClient
+import json
+import uuid
 
 
 class Publisher:
@@ -16,4 +18,6 @@ class Publisher:
         self.channel = channel
 
     def publish(self, message):
+        message['id'] = str(uuid.uuid4())
+        message = json.dumps(message)
         self.redis_client.publish(self.channel, message)

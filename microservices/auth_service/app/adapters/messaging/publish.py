@@ -1,7 +1,8 @@
 from django.conf import settings
 # publish.py (Microservicio 1)
-
+import uuid
 from app.adapters.messaging.redis.client import RedisClient
+import json
 
 
 class Publisher:
@@ -17,4 +18,7 @@ class Publisher:
         self.channel = channel
 
     def publish(self, message):
+        message['id'] = str(uuid.uuid4())
+
+        message = json.dumps(message)
         self.redis_client.publish(self.channel, message)

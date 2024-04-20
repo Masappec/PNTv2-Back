@@ -12,10 +12,8 @@ class CallbackObserver:
         if channel == self.channel:
 
             dict_ = json.loads(message['data'])
-            print(self.type, dict_['type'], dict_['payload'])
             if self.type == dict_['type']:
                 print(f"Recibido mensaje de tipo  {self.type}")
                 payload = dict_['payload']
 
-                print(payload)
                 self.callback(**payload)

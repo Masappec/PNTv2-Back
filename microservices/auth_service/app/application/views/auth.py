@@ -110,7 +110,7 @@ class RegisterApiView(CreateAPIView):
             uidb64 = urlsafe_base64_encode(force_bytes(user_obj.id))
             data.is_valid(raise_exception=True)
 
-            self.publisher.publish(json.dumps({
+            self.publisher.publish({
                 'type': USER_REGISTER,
                 'payload': {
                     'uidb64': uidb64,
@@ -118,7 +118,7 @@ class RegisterApiView(CreateAPIView):
                     'email': data.validated_data['email'],
                     'token': account_activation_token.make_token(user_obj)
                 }
-            })
+            }
             )
             res = MessageTransactional(data={
                 'message': 'Usuario creado exitosamente',
