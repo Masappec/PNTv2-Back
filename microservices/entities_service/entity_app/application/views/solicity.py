@@ -172,6 +172,41 @@ class SolicityDetailView(APIView):
             return Response(res.data, status=400)
 
 
+class SolicityDetailEstablishmentView(APIView):
+    """Solicity view."""
+
+    permission_classes = [IsAuthenticated, HasPermission]
+    permission_required = 'view_solicityresponse'
+    serializer_class = SolicitySerializer
+    output_serializer_class = SolicitySerializer
+
+    def __init__(self):
+        self.service = SolicityService(SolicityImpl())
+
+    def get(self, request, solicity_id):
+        """Get solicity."""
+        try:
+            solicity = self.service.get_solicity_by_id(
+                solicity_id)
+
+            return Response({
+                'message': 'Publicacion creada correctamente',
+                'status': 201,
+                'json': self.output_serializer_class(solicity).data
+            }, status=201)
+        except Exception as e:
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
+
 class UpdateSolicityView(APIView):
     """Solicity view."""
 
@@ -552,7 +587,7 @@ class SolicityCreateResponseView(APIView):
     serializer_class = SolicityCreateResponseSerializer
     pagination_class = StandardResultsSetPagination
     output_serializer_class = SolicityResponseSerializer
-    permission_required = 'add_solicityresponse'
+    permission_required = 'add_solicityresponse,add_solicity'
 
     def __init__(self):
         self.service = SolicityService(SolicityImpl())

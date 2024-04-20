@@ -177,6 +177,19 @@ class SolicityService:
         """
         return self.solicity_repository.get_entity_solicities(entity_id)
 
+    def get_solicity_by_id(self, solicity_id):
+        """
+        Obtiene una solicitud por id
+
+        Args:
+            solicity_id (int): id de la solicitud
+        """
+        try:
+            return self.solicity_repository.get_solicity_by_id(solicity_id)
+        except Exception as e:
+
+            raise ValueError("No se encontro la solicitud")
+
     def validate_user_establishment(self, user_id, establishment_id):
         """
         Valida si el usuario pertenece al establecimiento
