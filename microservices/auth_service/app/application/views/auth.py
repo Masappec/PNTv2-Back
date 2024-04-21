@@ -12,7 +12,8 @@ from app.adapters.impl.role_impl import RoleRepositoryImpl
 from app.domain.services.role_service import RoleService
 from app.adapters.impl.permission_impl import PermissionRepositoryImpl
 from app.domain.services.permission_service import PermissionService
-from app.adapters.serializer import MessageTransactional, RegisterSerializer, UserLoginSerializer, UserCreateResponseSerializer
+from app.adapters.serializer import MessageTransactional, RegisterSerializer, \
+    UserLoginSerializer, UserCreateResponseSerializer, PersonSerializer
 from app.domain.services.user_service import UserService
 from app.adapters.impl.user_impl import UserRepositoryImpl
 from app.adapters.impl.person_impl import PersonRepositoryImpl
@@ -35,6 +36,10 @@ class LoginApiView(TokenObtainPairView):
         self.permission_service = PermissionService(
             permission_repository=PermissionRepositoryImpl())
 
+        self.person_service = PersonService(
+            person_repository=PersonRepositoryImpl()
+        )
+
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
 
@@ -48,6 +53,7 @@ class LoginApiView(TokenObtainPairView):
         data = UserLoginSerializer(data=user_data)
         data.is_valid(raise_exception=True)
         response.data['user'] = data.data
+        response.data['person'] = self.get_person_data(user_data['id'])
 
         return response
 
@@ -60,6 +66,14 @@ class LoginApiView(TokenObtainPairView):
     def get_permissions_by_user(self, id):
         # Agrega tus permisos personalizados aquí
         return self.permission_service.get_permissions_by_user(id)
+
+    def get_person_data(self, user_id):
+        # Aquí deberías implementar la lógica para obtener los datos adicionales del usuario
+        # Puedes usar el servicio User o el UserRepository según tu arquitectura
+        # Ejemplo: user_service.get_user_data(request.user)
+        person = self.person_service.get_person_by_userid(user_id)
+
+        return PersonSerializer(person).data
 
 
 class RegisterApiView(CreateAPIView):
@@ -134,13 +148,11 @@ class RegisterApiView(CreateAPIView):
             if user_obj is not None:
                 self.user_service.delete_permanent_user(user_obj.id)
 
-            res = MessageTransactional(data={
-                'message': e.__str__()[0:100],
+            return Response({
+                'message': e.__str__(),
                 'status': 400,
-                'json': {}
-            })
-            res.is_valid(raise_exception=True)
-            return Response(res.data, status=400)
+                'json': '{}'
+            }, status=400)
 
 
 class ActivateAccountApiView(APIView):

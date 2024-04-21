@@ -8,6 +8,10 @@ services:
     networks:
       - pnt_network
 
+    volumes:
+      - ./redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+
   auth_microservice:
     build:
       context: ./microservices/auth_service

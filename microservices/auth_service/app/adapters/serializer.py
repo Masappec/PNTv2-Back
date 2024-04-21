@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, \
     BooleanField, IntegerField, JSONField, ListField, PrimaryKeyRelatedField, EmailField
-from app.domain.models import User, Permission, Role
+from app.domain.models import User, Permission, Role, Person
 
 
 class GroupSerializer(ModelSerializer):
@@ -9,6 +9,11 @@ class GroupSerializer(ModelSerializer):
         model = Role
         fields = ('id', 'name')
 
+class PersonSerializer(ModelSerializer):
+
+    class Meta:
+        model = Person
+        fields = '__all__'
 
 class UserCreateResponseSerializer(Serializer):
     id = IntegerField()

@@ -6,6 +6,7 @@ from app_admin.adapters.messaging.redis.client import RedisClient
 import json
 import uuid
 import time
+import random
 
 
 class Subscribe:
@@ -22,37 +23,41 @@ class Subscribe:
         timestamp = int(time.time() * 1000)  # Marca de tiempo en milisegundos
         # Utiliza solo los primeros 8 caracteres del UUID
         unique_id = str(uuid.uuid4())[:8]
-        return f"{sender_id}_{timestamp}_{unique_id}"
+        return f"{sender_id}_{timestamp}_{unique_id}_{random.randint(0, 1000)}"
 
     def subscribe_channel(self):
         try:
             pubsub = self.redis_client.pubsub()
             pubsub.subscribe(self.channel)
             for message in pubsub.listen():
+                time.sleep(10)
                 if message['type'] == 'message':
+                    print("Mensaje recibido: ", message)
                     dict_ = json.loads(message['data'])
                     message_id = self.generate_message_id(dict_['id'])
 
                     # Verificar si el mensaje ya ha sido procesado
                     if not message_id:
-                        print("Message does not have an ID. Skipping.")
-                        return
+                        print("Message does not have an ID. Skipping. ")
+                        continue
 
                     if self.redis_client.get(message_id):
-                        print(f"Message with ID {
+                        print(f"Message with ID  {
                               message_id} already processed. Skipping.")
-                        return
+                        continue
                     # Si el mensaje no ha sido procesado, procesarlo y actualizar el registro
+                    print(self.processed_messages)
                     observers_affects = [observer for observer in self.observers if observer.channel == self.channel
                                          and observer.type == dict_['type']]
 
+                    print("Observers afectados: ", observers_affects)
                     for observer in observers_affects:
+                        self.redis_client.set(message_id, "processed")
+                        self.processed_messages.add(message_id)
+                        self.redis_client.expire(message_id, 60 * 60 * 24)
                         observer.update(message, observer.channel)
 
                     # Agregar el ID del mensaje al conjunto de mensajes procesados
-                    self.redis_client.set(message_id, "processed")
-                    self.processed_messages.add(message_id)
-                    self.redis_client.expire(message_id, 60 * 60 * 24)
 
         except Exception as e:
             print("Error al suscribirse al canal: ", e)

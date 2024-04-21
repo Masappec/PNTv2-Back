@@ -19,5 +19,6 @@ class Publisher:
 
     def publish(self, message):
         message['id'] = str(uuid.uuid4())
+        print("Publicando mensaje:   ", message)
         message = json.dumps(message)
         self.redis_client.publish(self.channel, message)

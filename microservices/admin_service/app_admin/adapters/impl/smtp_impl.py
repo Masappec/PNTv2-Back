@@ -11,9 +11,11 @@ import app_admin.utils.contants as constants
 
 class StmpImpl(SmtpRepository):
 
+    def __init__(self) -> None:
+        self.backend = self.get_email_backend()
+
     def send_email(self, to_email: str, subject: str, body: str, bcc: str, cc: str, reply_to: str, user_id: int):
         email_from = self.get_config()[constants.KEY_USER_SMTP]
-        print('email_from ', email_from)
         return Email.objects.create(
             from_email=email_from,
             to_email=to_email,
@@ -48,18 +50,17 @@ class StmpImpl(SmtpRepository):
                 reply_to=email.reply_to,
             )
 
-            self.get_email_backend().send_messages([message])
+            self.backend.send_messages([message])
             email.status = Email.STATUS_SENT()
             email.save()
         except Exception as e:
             email.status = Email.STATUS_ERROR()
             email.error = str(e)
             email.save()
-            raise e
+            print('Error al enviar correo', e)
 
     def send_email_with_template_and_context(self, email: Email, template: str, context: dict):
         try:
-            print('send_email_with_template_and_context ', email)
             html_content = render_to_string(template, context)
             email.body = html_content
             email.status = Email.STATUS_PENDING()
@@ -76,7 +77,6 @@ class StmpImpl(SmtpRepository):
 
             backend = self.get_email_backend()
             count = backend.send_messages([message])
-            print('count ', count)
             email.status = Email.STATUS_SENT()
             email.save()
 
@@ -130,8 +130,6 @@ class StmpImpl(SmtpRepository):
             port = config.filter(name=constants.KEY_PORT_SMTP).first()
             use_tls = config.filter(name=constants.KEY_USE_TLS_SMTP).first()
 
-            print(host.value, port.value, user.value,
-                  password.value, use_tls.value)
             return EmailBackend(
                 host=host.value,
                 port=port.value,
@@ -142,7 +140,7 @@ class StmpImpl(SmtpRepository):
 
             )
         except Exception as e:
-            raise Exception('Error al obtener configuración de SMTP')
+            print('Error al obtener el backend', e)
 
     def get_config(self):
         config = Configuration.objects.filter(

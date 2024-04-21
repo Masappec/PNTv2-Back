@@ -209,7 +209,7 @@ class SolicityImpl(SolicityRepository):
             status = TypeStages.RESPONSE
 
         solicity.status = status
-
+        solicity.save()
         TimeLineSolicity.objects.create(solicity_id=solicity_id, status=status)
 
         response.files.set(file_instances)
@@ -239,8 +239,7 @@ class SolicityImpl(SolicityRepository):
         return response
 
     def get_user_solicities(self, user_id):
-        return Solicity.objects.filter(user_created_id=user_id, is_active=True, status__in=[Status.READING, Status.SEND,
-                                                                                            Status.PROCESSING, Status.FINISHED])
+        return Solicity.objects.filter(user_created_id=user_id, is_active=True)
 
     def get_entity_solicities(self, entity_id):
         return Solicity.objects.filter(establishment__id=entity_id, is_active=True)
@@ -258,8 +257,8 @@ class SolicityImpl(SolicityRepository):
         if establishment is None:
             return ValueError('User does not have an establishment')
         return Solicity.objects.filter(establishment_id=establishment.establishment_id,
-                                       is_active=True, status__in=[Status.READING, Status.SEND,
-                                                                   Status.PROCESSING, Status.FINISHED])
+                                       is_active=True
+                                       ).exclude(status=Status.DRAFT)
 
     def get_solicity_by_id_and_user(self, solicity_id, user_id):
         return Solicity.objects.get(id=solicity_id, user_created_id=user_id)

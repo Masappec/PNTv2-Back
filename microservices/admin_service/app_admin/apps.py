@@ -13,11 +13,12 @@ class AppAdmin(AppConfig):
     def build_user_events(self):
         from app_admin.adapters.messaging.callback_observer import CallbackObserver
         from shared.tasks.user_task import send_user_created_event
-        from app_admin.adapters.messaging.channels import CHANNEL_USER
+        from app_admin.adapters.messaging.channels import CHANNEL_USER, CHANNEL_SOLICIY
         from app_admin.adapters.messaging.events import USER_CREATED, USER_UPDATED, USER_REGISTER, \
-            USER_PASSWORD_RESET_REQUESTED
+            USER_PASSWORD_RESET_REQUESTED, SOLICITY_CITIZEN_CREATED, SOLICITY_RESPONSE_ESTABLISHMENT, SOLICITY_RESPONSE_USER, SOLICITY_FOR_EXPIRED, SOLICITY_USER_EXPIRED
         from shared.tasks.auth_task import auth_send_activate_account_event
         from shared.tasks.auth_task import auth_send_password_reset_event
+        from shared.tasks.solicity_task import send_email_citizen_create_solicity, send_email_establishment_response, send_mail_citizen_response
         callbacks = []
 
         user_create_observer = CallbackObserver(
@@ -42,3 +43,21 @@ class AppAdmin(AppConfig):
         # Establece el hilo como demonio para que se detenga cuando la aplicación se cierre
         subscribe_thread.daemon = True
         subscribe_thread.start()
+
+        callbacks_solicity = []
+        citizen_create_solicity = CallbackObserver(
+            callback=send_email_citizen_create_solicity, channel=CHANNEL_SOLICIY, type=SOLICITY_CITIZEN_CREATED)
+        establishment_response = CallbackObserver(
+            callback=send_email_establishment_response, channel=CHANNEL_SOLICIY, type=SOLICITY_RESPONSE_ESTABLISHMENT)
+        user_response = CallbackObserver(
+            callback=send_mail_citizen_response, channel=CHANNEL_SOLICIY, type=SOLICITY_RESPONSE_USER)
+
+        callbacks_solicity.append(citizen_create_solicity)
+        callbacks_solicity.append(establishment_response)
+        callbacks_solicity.append(user_response)
+
+        subscribe_thread_solicity = Thread(
+            target=create_subscription, args=(CHANNEL_SOLICIY, callbacks_solicity,))
+
+        subscribe_thread_solicity.daemon = True
+        subscribe_thread_solicity.start()
