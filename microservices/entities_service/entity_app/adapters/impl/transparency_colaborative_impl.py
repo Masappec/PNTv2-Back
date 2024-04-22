@@ -39,3 +39,16 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
             establishment_id=user_es.establishment.id, id=pk).delete()
 
         return response
+
+    def update_transparency_colaborative(self, pk, user_id, newfiles):
+
+        user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
+
+        response = TransparencyColab.objects.get(
+            establishment_id=user_es.establishment.id, id=pk)
+
+        file_instances = FilePublication.objects.filter(id__in=newfiles)
+
+        response.files.set(file_instances)
+
+        return response

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class TransparencyColaborativeRepository(ABC):
 
     @abstractmethod
@@ -12,4 +13,7 @@ class TransparencyColaborativeRepository(ABC):
 
     @abstractmethod
     def deleteTransparencyColaborativeUser(self, pk, user_id):
+        pass
+
+    def update_transparency_colaborative(self, pk, user_id, newfiles):
         pass

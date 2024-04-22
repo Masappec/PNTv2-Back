@@ -6,6 +6,10 @@ from typing import List
 import csv
 
 
+def get_day_for_publish():
+    return 5
+
+
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 

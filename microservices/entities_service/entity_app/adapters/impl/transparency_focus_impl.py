@@ -43,3 +43,18 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
             establishment_id=user_es.establishment.id, id=pk).delete()
 
         return response
+
+    def update_transparency_focus(self, pk, user_id, newfiles):
+
+        user_es = UserEstablishmentExtended.objects.filter(
+            user_id=user_id).first()
+        if not user_es:
+            raise ValueError("El usuario no tiene establecimiento")
+        response = TransparencyFocal.objects.get(
+            establishment_id=user_es.establishment.id, id=pk)
+
+        file_instances = FilePublication.objects.filter(id__in=newfiles)
+
+        response.files.set(file_instances)
+
+        return response

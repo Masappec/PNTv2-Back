@@ -155,3 +155,54 @@ class TransparencyFocusDelete(APIView):
             }
 
             return Response(res, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TransparencyFocusUpdate(APIView):
+
+    serializer_class = TransparencyFocusCreate
+    permission_classes = [IsAuthenticated, HasPermission]
+    permission_required = 'change_transparencyfocal'
+
+    def __init__(self, **kwargs):
+        self.service = TransparencyFocusService(TransparencyFocalImpl())
+
+    @swagger_auto_schema(
+        operation_description="Update a publication",
+        response={
+            200: TransparencyFocusSerializer,
+            400: MessageTransactional
+        },
+        request_body=serializer_class,
+        # form data
+
+    )
+    def put(self, request, pk, *args, **kwargs):
+
+        data = self.serializer_class(data=request.data)
+        data.is_valid(raise_exception=True)
+
+        try:
+
+            response = self.service.update_transparency_focus(
+                pk, request.user.id, data.validated_data['files'])
+
+            res = MessageTransactional(
+                data={
+                    'message': 'Publicacion actualizada correctamente',
+                    'status': 200,
+                    'json': TransparencyFocusSerializer(response).data
+                }
+            )
+
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=200)
+
+        except Exception as e:
+
+            res = {
+                'message': str(e),
+                'status': status.HTTP_400_BAD_REQUEST,
+                'json': {}
+            }
+
+            return Response(res, status=status.HTTP_400_BAD_REQUEST)

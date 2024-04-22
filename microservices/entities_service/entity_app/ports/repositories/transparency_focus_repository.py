@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class TransparencyFocusRepository(ABC):
 
     @abstractmethod
@@ -14,3 +15,6 @@ class TransparencyFocusRepository(ABC):
     def deleteTransparencyFocusUser(self, pk, user_id):
         pass
 
+    @abstractmethod
+    def update_transparency_focus(self, pk, user_id, newfiles):
+        pass

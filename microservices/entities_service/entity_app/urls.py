@@ -12,8 +12,10 @@ from entity_app.application.views.solicity import SolicityView, SolicityCreateDr
 
 from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail, ListNumeral, PublishNumeral
 
-from entity_app.application.views.colab_transparency import CreateTransparencyColaboraty, TransparencyColaborativeView, TransparencyColaborativeDelete
-from entity_app.application.views.focus_transparency import CreateTransparencyFocalizada, TransparencyFocusView, TransparencyFocusDelete
+from entity_app.application.views.colab_transparency import CreateTransparencyColaboraty, TransparencyColaborativeView, \
+    TransparencyColaborativeDelete, TransparencyCollabUpdate
+from entity_app.application.views.focus_transparency import CreateTransparencyFocalizada, TransparencyFocusView, \
+    TransparencyFocusDelete, TransparencyFocusUpdate
 
 from entity_app.application.views.template_file import TemplateFileValidate
 from entity_app.application.views.transparency_active import TransparencyActivePublicListView
@@ -92,9 +94,13 @@ urlpatterns = [
          name='list-transparency-colaborative'),
     path('transparency/colaborative/delete/<pk>',
          TransparencyColaborativeDelete.as_view(), name='delete-transparency-colaborative'),
+    path('transparency/colaborative/update/<pk>',
+         TransparencyCollabUpdate.as_view(), name='update-transparency-colaborative'),
 
     path('transparency/focus/create', CreateTransparencyFocalizada.as_view(),
          name='create-transparency-focus'),
+    path('transparency/focus/update/<pk>',
+         TransparencyFocusUpdate.as_view(), name='update-transparency-focus'),
     path('transparency/focus/list', TransparencyFocusView.as_view(),
          name='list-transparency-focus'),
     path('transparency/focus/delete/<pk>',
