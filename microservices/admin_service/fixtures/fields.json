@@ -14,7 +14,28 @@
             "order": 3,
             "role": "Ciudadano",
             "type_field": "select",
-            "options": "[{\"name\":\"Masculino\",\"id\":\"Masculino\",\"color\":\"#00B8D9\"},{\"name\":\"Femenino\",\"id\":\"Femenino\",\"color\":\"#00B8D9\"},{\"name\":\"LGBTIQ+\",\"id\":\"LGBTIQ+\",\"color\":\"#00B8D9\"},{\"name\":\"Otro\",\"id\":\"Otro\",\"color\":\"#00B8D9\"}]",
+            "options": [
+                {
+                    "name": "Masculino",
+                    "id": "Masculino",
+                    "color": "#00B8D9"
+                },
+                {
+                    "name": "Femenino",
+                    "id": "Femenino",
+                    "color": "#00B8D9"
+                },
+                {
+                    "name": "LGBTIQ+",
+                    "id": "LGBTIQ+",
+                    "color": "#00B8D9"
+                },
+                {
+                    "name": "Otro",
+                    "id": "Otro",
+                    "color": "#00B8D9"
+                }
+            ],
             "permission_required": "add_user_ciudadano",
             "content_type": null,
             "object_id": null
@@ -35,7 +56,28 @@
             "order": 4,
             "role": "Ciudadano",
             "type_field": "select",
-            "options": "[{\"id\":\"Meztizo\",\"name\":\"Meztizo\",\"color\":\"#00B8D9\"},{\"id\":\"PuebloMontubio\",\"name\":\"PuebloMontubio\",\"color\":\"#00B8D9\"},{\"id\":\"PueblooNacionalidadIndígena\",\"name\":\"PueblooNacionalidadIndígena\",\"color\":\"#00B8D9\"},{\"id\":\"PuebloAfrodescendiente\",\"name\":\"PuebloAfrodescendiente\",\"color\":\"#00B8D9\"}]",
+            "options": [
+                {
+                    "id": "Meztizo",
+                    "name": "Meztizo",
+                    "color": "#00B8D9"
+                },
+                {
+                    "id": "Pueblo Montubio",
+                    "name": "Pueblo Montubio",
+                    "color": "#00B8D9"
+                },
+                {
+                    "id": "Pueblo o Nacionalidad Indígena",
+                    "name": "Pueblo o Nacionalidad Indígena",
+                    "color": "#00B8D9"
+                },
+                {
+                    "id": "Pueblo Afrodescendiente",
+                    "name": "Pueblo Afrodescendiente",
+                    "color": "#00B8D9"
+                }
+            ],
             "permission_required": "add_user_ciudadano",
             "content_type": null,
             "object_id": null
