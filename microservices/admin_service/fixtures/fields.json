@@ -1,0 +1,44 @@
+[
+    {
+        "model": "app_admin.formfields",
+        "fields": {
+            "created_at": "2023-12-29T15:43:09.828Z",
+            "updated_at": "2023-12-31T15:04:02.122Z",
+            "deleted": false,
+            "deleted_at": null,
+            "name": "gender",
+            "description": "Género",
+            "form_type": "Usuario",
+            "model": "Person",
+            "is_active": true,
+            "order": 3,
+            "role": "Ciudadano",
+            "type_field": "text",
+            "options": "[{\"name\":\"Masculino\",\"id\":\"Masculino\",\"color\":\"#00B8D9\"},{\"name\":\"Femenino\",\"id\":\"Femenino\",\"color\":\"#00B8D9\"},{\"name\":\"LGBTIQ+\",\"id\":\"LGBTIQ+\",\"color\":\"#00B8D9\"},{\"name\":\"Otro\",\"id\":\"Otro\",\"color\":\"#00B8D9\"}]",
+            "permission_required": "add_user_ciudadano",
+            "content_type": null,
+            "object_id": null
+        }
+    },
+    {
+        "model": "app_admin.formfields",
+        "fields": {
+            "created_at": "2023-12-29T15:43:09.828Z",
+            "updated_at": "2023-12-31T15:04:02.122Z",
+            "deleted": false,
+            "deleted_at": null,
+            "name": "race",
+            "description": "Identificación cultural",
+            "form_type": "Usuario",
+            "model": "Person",
+            "is_active": true,
+            "order": 4,
+            "role": "Ciudadano",
+            "type_field": "text",
+            "options": "[{\"id\":\"Meztizo\",\"name\":\"Meztizo\",\"color\":\"#00B8D9\"},{\"id\":\"PuebloMontubio\",\"name\":\"PuebloMontubio\",\"color\":\"#00B8D9\"},{\"id\":\"PueblooNacionalidadIndígena\",\"name\":\"PueblooNacionalidadIndígena\",\"color\":\"#00B8D9\"},{\"id\":\"PuebloAfrodescendiente\",\"name\":\"PuebloAfrodescendiente\",\"color\":\"#00B8D9\"}]",
+            "permission_required": "add_user_ciudadano",
+            "content_type": null,
+            "object_id": null
+        }
+    }
+]
