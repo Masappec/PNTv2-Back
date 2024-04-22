@@ -35,10 +35,10 @@ def send_email_citizen_create_solicity(
 
         for _email in email:
             print('Enviando correo a {0} {1}'.format(_email, timezone.now()))
-            '''mail = service.send_email(
-                email, 'Nueva Solicitud SAIP', 'Nueva Solicitud SAIP', '', '', '', user_id)
+            mail = service.send_email(
+                _email, 'Nueva Solicitud SAIP', 'Nueva Solicitud SAIP', '', '', '', user_id)
             service.send_email_with_template_and_context(
-                mail, 'emails/solicity/citizen_create.html', context)'''
+                mail, 'emails/solicity/citizen_create.html', context)
         return True
 
     except Exception as e:
