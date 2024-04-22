@@ -1,0 +1,17 @@
+FROM python:3.12
+
+WORKDIR /code
+
+COPY requirements.txt requirements.txt
+
+
+
+RUN pip install -r requirements.txt
+
+
+COPY . .
+
+EXPOSE 8000
+
+#python -m celery -A auth_service worker -l info"
+CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:8000 & python -m celery -A public_api_service beat -l info & python -m celery -A public_api_service worker -l info"]

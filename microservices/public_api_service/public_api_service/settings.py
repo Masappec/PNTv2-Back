@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,11 +76,28 @@ WSGI_APPLICATION = 'public_api_service.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': os.getenv('MONGO_DB_NAME', 'public_api_service'),
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': os.getenv('MONGO_DB_HOST', 'localhost'),
+            'port': os.getenv('MONGO_DB_PORT', 27017),
+            'username': os.getenv('MONGO_DB_USERNAME', 'root'),
+            'password': os.getenv('MONGO_DB_PASSWORD', 'root'),
+            'authSource': 'admin',
+            'authMechanism': 'SCRAM-SHA-1',
+        }
     }
 }
+REDIS_HOST = os.getenv('REDIS_HOST', 'redis_db')
+REDIS_PORT = os.getenv('REDIS_PORT', 6379)
+REDIS_DB = os.getenv('REDIS_DB', 0)
 
+
+CELERY_BROKER_URL = os.getenv(
+    'CELERY_BROKER_URL', f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}')
+CELERY_RESULT_BACKEND = os.getenv(
+    'CELERY_RESULT_BACKEND', f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}')
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

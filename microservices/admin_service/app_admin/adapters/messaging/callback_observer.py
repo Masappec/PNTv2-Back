@@ -17,3 +17,4 @@ class CallbackObserver:
                 payload = dict_['payload']
 
                 self.callback(**payload)
+        return True

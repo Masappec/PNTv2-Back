@@ -71,7 +71,7 @@ def send_email_establishment_response(
                 _email, 'Respuesta Solicitud SAIP', 'Respuesta Solicitud SAIP', '', '', '', user_id)
             service.send_email_with_template_and_context(
                 mail, 'emails/solicity/establishment_response.html', context)
-            service.print_message('Enviando correo a  {0}'.format(_email))
+            service.print_message('Enviando correo a  {0} '.format(_email))
 
     except Exception as e:
         print("TASK AUTH SEND ACTIVATE ACCOUNT EVENT ", e)
@@ -104,7 +104,6 @@ def send_mail_citizen_response(
             service.send_email_with_template_and_context(
                 mail, 'emails/solicity/citizen_response.html', context)
             service.print_message('Enviando correo a  {0}'.format(_email))
-
 
             service.print_message('Enviando correo a {0}'.format(_email))
     except Exception as e:

@@ -28,3 +28,6 @@ class RedisClient:
 
     def get(self, key):
         return self.client.get(key)
+
+    def pubsub_channels(self):
+        return self.client.pubsub_channels()

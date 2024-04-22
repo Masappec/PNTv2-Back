@@ -39,3 +39,4 @@ urlpatterns = [
          name='pedagogy-area-list'),
 
 ]
+
