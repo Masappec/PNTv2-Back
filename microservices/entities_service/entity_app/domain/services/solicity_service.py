@@ -1,6 +1,6 @@
 from entity_app.ports.repositories.solicity_repository import SolicityRepository
 from datetime import datetime
-from entity_app.domain.models.solicity import Solicity, TimeLineSolicity
+from entity_app.domain.models.solicity import Insistency, Solicity, TimeLineSolicity, Status
 from entity_app.adapters.messaging.publish import Publisher
 from entity_app.adapters.messaging.channels import CHANNEL_SOLICIY
 from entity_app.adapters.messaging.events import SOLICITY_CITIZEN_CREATED, SOLICITY_RESPONSE_ESTABLISHMENT, \
@@ -160,49 +160,77 @@ class SolicityService:
         solicity = self.get_solicity_by_id(solicity_id)
 
         # si es el usuario que creo la solicitud
-
         if solicity.user_created_id == user_id:
 
             # verificar si esta dentro dentro del plazo de vencimiento
-            '''if solicity.expiry_date < datetime.now():
-                #puede agregar comentarios
-                self.solicity_repository.create_extencion_solicity(text, solicity_id, user_id)
+            if solicity.expiry_date < datetime.now():
+                # puede agregar comentarios
+                self.solicity_repository.create_extencion_solicity(
+                    text, solicity_id, user_id)
 
             else:
-                #entro al periodo de insitencia
-                self.solicity_repository.create_insistency_solicity(solicity_id, user_id, text)
 
-        else:'''
+                exists = Insistency.objects.filter(
+                    solicity_id=solicity_id, user_id=user_id).exists()
+                # si existe una existencia
+                if exists:
+                    self.solicity_repository.create_extencion_solicity(
+                        text, solicity_id, user_id)
 
-            es = UserEstablishmentExtended.objects.filter(
-                establishment_id=solicity.establishment_id).distinct('user_id').all()
-            self.publisher.publish({
-                'type': SOLICITY_RESPONSE_USER,
-                'payload': {
-                    'solicity_id': solicity_id,
-                    'user_id': solicity.user_created_id,
-                    'number_saip': solicity.number_saip,
-                    'establishment_id': solicity.establishment_id,
-                    'email': [e.user.email for e in es]
+                else:
 
-                }
-            })
+                    # es una insistencia
+                    self.solicity_repository.create_insistency_solicity(
+                        solicity_id, user_id, text)
+
+                    # cambia el estado
+                    solicity.status = Status.INSISTENCY_SEND
+                    solicity.save()
+
+                    # guarda el historial
+                    self.solicity_repository.save_timeline(
+                        solicity_id=solicity_id, user_id=user_id, status=Status.INSISTENCY_SEND)
+
+                    # obtiene los usuarios del establecimiento
+                    es = UserEstablishmentExtended.objects.filter(
+                        establishment_id=solicity.establishment_id).distinct('user_id').all()
+                    # publica el evento
+                    self.publisher.publish({
+                        'type': SOLICITY_RESPONSE_USER,
+                        'payload': {
+                            'solicity_id': solicity_id,
+                            'user_id': solicity.user_created_id,
+                            'number_saip': solicity.number_saip,
+                            'establishment_id': solicity.establishment_id,
+                            'email': [e.user.email for e in es]
+
+                        }
+                    })
+
         else:
+            if solicity.expiry_date < datetime.now():
+                # puede response la insistencia
+                self.solicity_repository.create_solicity_response(
+                    text, solicity_id, user_id)
+                es = UserEstablishmentExtended.objects.filter(
+                    establishment_id=solicity.establishment_id).distinct('user_id').all()
+                self.publisher.publish({
+                    'type': SOLICITY_RESPONSE_USER,
+                    'payload': {
+                        'solicity_id': solicity_id,
+                        'user_id': solicity.user_created_id,
+                        'number_saip': solicity.number_saip,
+                        'establishment_id': solicity.establishment_id,
+                        'email': [e.user.email for e in es]
 
-            self.publisher.publish({
-                'type': SOLICITY_RESPONSE_ESTABLISHMENT,
-                'payload': {
-                    'solicity_id': solicity_id,
-                    'user_id': solicity.user_created_id,
-                    'number_saip': solicity.number_saip,
-                    'establishment_id': solicity.establishment_id,
-                    'email': [solicity.user_created.email]
+                    }
+                })
+            else:
 
+                self.solicity_repository.create_solicity_response(
+                    solicity_id, user_id, text, files, attachments)
 
-                }
-            })
-
-        return self.solicity_repository.create_solicity_response(solicity_id, user_id, text, files, attachments)
+        return solicity
 
     def update_solicity(self,
                         id: int,

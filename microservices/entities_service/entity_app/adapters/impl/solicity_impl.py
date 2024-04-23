@@ -148,7 +148,7 @@ class SolicityImpl(SolicityRepository):
             user_updated=user,
             status=Status.SEND)
         TimeLineSolicity.objects.create(
-            solicity_id=solicity.id, status=TypeStages.SEND)
+            solicity_id=solicity.id, status=Status.SEND)
         return solicity
 
     def get_solicity_last_draft(self, user_id) -> Solicity | None:
@@ -176,7 +176,6 @@ class SolicityImpl(SolicityRepository):
         return Extension.objects.create(motive=motive, solicity_id=solicity_id, user_id=user_id, user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
 
     def create_insistency_solicity(self, solicity_id, user_id, title, text):
-        TimeLineSolicity.objects.create(solicity_id, TypeStages.INSISTENCY)
 
         return Insistency.objects.create(solicity_id=solicity_id, user_id=user_id, title=title, text=text, user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
 
@@ -191,26 +190,10 @@ class SolicityImpl(SolicityRepository):
 
         attachments_instances = Attachment.objects.filter(id__in=attachments)
 
-        insistenci = Insistency.objects.filter(
-            solicity_id=solicity_id, user_id=user_id, status=Status.CREATED).exists()
-        solicity = Solicity.objects.get(id=solicity_id)
-
         response = SolicityResponse.objects.create(solicity_id=solicity_id,
                                                    user_id=user_id,
                                                    text=text,
                                                    user_created_id=user_id, user_updated_id=user_id)
-
-        status = TypeStages.PENDING
-
-        if solicity.user_created_id == user_id:
-            status = TypeStages.INSISTENCY
-
-        else:
-            status = TypeStages.RESPONSE
-
-        solicity.status = status
-        solicity.save()
-        TimeLineSolicity.objects.create(solicity_id=solicity_id, status=status)
 
         response.files.set(file_instances)
         response.attachments.set(attachments_instances)
@@ -232,9 +215,6 @@ class SolicityImpl(SolicityRepository):
         response.attachments.set(attachments_instances)
 
         response.save()
-
-        TimeLineSolicity.objects.create(
-            response.solicity_id, TypeStages.RESPONSE)
 
         return response
 
