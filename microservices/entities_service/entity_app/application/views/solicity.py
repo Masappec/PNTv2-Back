@@ -284,7 +284,7 @@ class SolicityView(ListAPIView):
             search = request.query_params.get('search', None)
             if search is not None:
                 queryset = queryset.filter(
-                    Q(text__icontains=search))
+                    Q(number_saip__icontains=search) | Q(establishment__name__icontains=search))
 
             page = self.paginate_queryset(queryset)
             if page is not None:
@@ -533,7 +533,7 @@ class SolicityResponseView(ListAPIView):
 
     def get_queryset(self, use_id):
         """Get queryset."""
-        return self.service.get_entity_user_solicities(use_id)
+        return self.service.get_entity_user_solicities(use_id).order_by('-created_at')
 
     def get(self, request, *args, **kwargs):
         """
@@ -555,10 +555,15 @@ class SolicityResponseView(ListAPIView):
                 request.user.id
             )
 
+            # ['number_saip', 'first_name', 'last_name', 'status', 'expiry_date', 'motive']
+            order_by = request.query_params.get('sort[]', None)
+            if order_by is not None:
+                queryset = queryset.order_by(order_by)
+
             search = request.query_params.get('search', None)
             if search is not None:
                 queryset = queryset.filter(
-                    Q(name__icontains=search) | Q(description__icontains=search))
+                    Q(number_saip__icontains=search) | Q(first_name__icontains=search) | Q(last_name__icontains=search))
 
             page = self.paginate_queryset(queryset)
             if page is not None:

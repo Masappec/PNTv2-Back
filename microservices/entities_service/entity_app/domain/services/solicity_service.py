@@ -159,7 +159,21 @@ class SolicityService:
 
         solicity = self.get_solicity_by_id(solicity_id)
 
+        # si es el usuario que creo la solicitud
+
         if solicity.user_created_id == user_id:
+
+            # verificar si esta dentro dentro del plazo de vencimiento
+            '''if solicity.expiry_date < datetime.now():
+                #puede agregar comentarios
+                self.solicity_repository.create_extencion_solicity(text, solicity_id, user_id)
+
+            else:
+                #entro al periodo de insitencia
+                self.solicity_repository.create_insistency_solicity(solicity_id, user_id, text)
+
+        else:'''
+
             es = UserEstablishmentExtended.objects.filter(
                 establishment_id=solicity.establishment_id).distinct('user_id').all()
             self.publisher.publish({

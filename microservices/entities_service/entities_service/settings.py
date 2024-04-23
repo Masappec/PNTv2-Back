@@ -106,6 +106,7 @@ CELERY_RESULT_BACKEND = os.getenv(
 CELERY_TIMEZONE = 'UTC'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+timezone = 'America/Guayaquil'
 
 DATABASES = {
     'default': {

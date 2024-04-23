@@ -38,7 +38,14 @@ def send_email_citizen_create_solicity(
             mail = service.send_email(
                 _email, 'Nueva Solicitud SAIP', 'Nueva Solicitud SAIP', '', '', '', user_id)
             service.send_email_with_template_and_context(
-                mail, 'emails/solicity/citizen_create.html', context)
+                mail, 'emails/solicity/establishment/citizen_create.html', context)
+
+        mail = service.send_email(
+            user.email, 'Nueva Solicitud SAIP', 'Nueva Solicitud SAIP', '', '', '', user_id)
+
+        service.send_email_with_template_and_context(
+            mail, 'emails/solicity/citizen/citizen_create.html', context)
+
         return True
 
     except Exception as e:
@@ -70,8 +77,14 @@ def send_email_establishment_response(
             mail = service.send_email(
                 _email, 'Respuesta Solicitud SAIP', 'Respuesta Solicitud SAIP', '', '', '', user_id)
             service.send_email_with_template_and_context(
-                mail, 'emails/solicity/establishment_response.html', context)
+                mail, 'emails/solicity/establishment/establishment_response.html', context)
             service.print_message('Enviando correo a  {0} '.format(_email))
+
+        mail = service.send_email(
+            user.email, 'Respuesta Solicitud SAIP', 'Respuesta Solicitud SAIP', '', '', '', user_id)
+
+        service.send_email_with_template_and_context(
+            mail, 'emails/solicity/citizen/citizen_response.html', context)
 
     except Exception as e:
         print("TASK AUTH SEND ACTIVATE ACCOUNT EVENT ", e)
@@ -106,6 +119,12 @@ def send_mail_citizen_response(
             service.print_message('Enviando correo a  {0}'.format(_email))
 
             service.print_message('Enviando correo a {0}'.format(_email))
+
+        mail = service.send_email(
+            user.email, 'Respuesta Solicitud SAIP', 'Respuesta Solicitud SAIP', '', '', '', user_id)
+
+        service.send_email_with_template_and_context(
+            mail, 'emails/solicity/establishment/establishment_response.html', context)
     except Exception as e:
         print("TASK AUTH SEND ACTIVATE ACCOUNT EVENT ", e)
         return False
