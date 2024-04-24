@@ -137,7 +137,7 @@ class SolicityService:
 
         return self.solicity_repository.create_insistency_solicity(solicity_id, user_id, title, text)
 
-    def create_extencion_solicity(self, motive, solicity_id, user_id):
+    def create_extencion_solicity(self, motive, solicity_id, user_id, files, attachments):
         """
         Crea una prorroga
 
@@ -147,7 +147,7 @@ class SolicityService:
 
         """
 
-        return self.solicity_repository.create_extencion_solicity(motive, solicity_id, user_id)
+        return self.solicity_repository.create_extencion_solicity(motive, solicity_id, user_id, files, attachments)
 
     def create_solicity_response(self, solicity_id, user_id, text, files, attachments):
         """
@@ -169,13 +169,13 @@ class SolicityService:
                     text, solicity_id, user_id)
 
             else:
-
                 exists = Insistency.objects.filter(
                     solicity_id=solicity_id, user_id=user_id).exists()
                 # si existe una existencia
                 if exists:
+                    # mando como comentario
                     self.solicity_repository.create_extencion_solicity(
-                        text, solicity_id, user_id)
+                        text, solicity_id, user_id, files, attachments)
 
                 else:
 
@@ -210,10 +210,42 @@ class SolicityService:
         else:
             if solicity.expiry_date < datetime.now():
                 # puede response la insistencia
+                exists = Insistency.objects.filter(
+                    solicity_id=solicity_id, user_id=user_id).exists()
+
+                if exists:
+                    self.solicity_repository.create_solicity_response(
+                        solicity_id=solicity_id, user_id=user_id, text=text, files=files, attachments=attachments)
+
+                    solicity.status = Status.INSISTENCY_RESPONSED
+
+                    solicity.save()
+
+                    self.save_timeline(solicity_id, user_id,
+                                       Status.INSISTENCY_RESPONSED)
+                    es = UserEstablishmentExtended.objects.filter(
+                        establishment_id=solicity.establishment_id).distinct('user_id').all()
+                    self.publisher.publish({
+                        'type': SOLICITY_RESPONSE_USER,
+                        'payload': {
+                            'solicity_id': solicity_id,
+                            'user_id': solicity.user_created_id,
+                            'number_saip': solicity.number_saip,
+                            'establishment_id': solicity.establishment_id,
+                            'email': [e.user.email for e in es]
+
+                        }
+                    })
+                else:
+                    self.solicity_repository.create_extencion_solicity(
+                        text, solicity_id, user_id, files, attachments)
+
+            else:
+                solicity.status = Status.RESPONSE
+                solicity.save()
+                self.save_timeline(solicity_id, user_id, Status.RESPONSE)
                 self.solicity_repository.create_solicity_response(
-                    text, solicity_id, user_id)
-                es = UserEstablishmentExtended.objects.filter(
-                    establishment_id=solicity.establishment_id).distinct('user_id').all()
+                    solicity_id, user_id, text, files, attachments)
                 self.publisher.publish({
                     'type': SOLICITY_RESPONSE_USER,
                     'payload': {
@@ -225,10 +257,6 @@ class SolicityService:
 
                     }
                 })
-            else:
-
-                self.solicity_repository.create_solicity_response(
-                    solicity_id, user_id, text, files, attachments)
 
         return solicity
 

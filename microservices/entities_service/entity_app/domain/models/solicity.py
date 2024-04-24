@@ -113,6 +113,8 @@ class Extension(BaseModel):
         max_length=10, choices=Status.choices, default=Status.CREATED)
     expiry_date = models.DateTimeField(null=True, blank=True)
     motive = models.TextField()
+    files = models.ManyToManyField('FilePublication', blank=True)
+    attachments = models.ManyToManyField('Attachment', blank=True)
 
     objects = models.Manager()
 
