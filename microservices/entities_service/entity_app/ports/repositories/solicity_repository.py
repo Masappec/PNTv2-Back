@@ -90,7 +90,7 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
-    def create_extencion_solicity(self, motive, solicity_id, user_id):
+    def create_extencion_solicity(self, motive, solicity_id, user_id, files, attachments):
         """
         Crea una prorroga
 

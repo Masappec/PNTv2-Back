@@ -160,7 +160,7 @@ class SolicityImpl(SolicityRepository):
     def save_timeline(self, solicity_id, user_id, status) -> TimeLineSolicity:
         return TimeLineSolicity.objects.create(solicity_id=solicity_id, user_id=user_id, status=status)
 
-    def create_extencion_solicity(self, motive, solicity_id, user_id):
+    def create_extencion_solicity(self, motive, solicity_id, user_id, files, attachments):
         """
         Crea una prorroga
 
@@ -173,7 +173,11 @@ class SolicityImpl(SolicityRepository):
             Insistency: instancia de la prorroga
         """
 
-        return Extension.objects.create(motive=motive, solicity_id=solicity_id, user_id=user_id, user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
+        ext = Extension.objects.create(motive=motive, solicity_id=solicity_id, user_id=user_id,
+                                       user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
+        ext.files.set(files)
+        ext.attachments.set(attachments)
+        return ext
 
     def create_insistency_solicity(self, solicity_id, user_id, title, text):
 
