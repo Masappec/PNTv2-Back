@@ -24,7 +24,7 @@ class Command(BaseCommand):
             '--quantity', help='Quantity of data to generate', type=int)
 
         parser.add_argument(
-            '--type', help='Type of data to generate', type=str, action='store_true')
+            '--type', help='Type of data to generate', action='store_true')
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
