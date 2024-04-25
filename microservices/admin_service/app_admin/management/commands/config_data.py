@@ -23,6 +23,9 @@ class Command(BaseCommand):
         parser.add_argument(
             '--quantity', help='Quantity of data to generate', type=int)
 
+        parser.add_argument(
+            '--type', help='Type of data to generate', type=str)
+
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         all = options.get('all', False)
@@ -40,3 +43,6 @@ class Command(BaseCommand):
 
         if options.get('ti', False):
             self.service.create_type_institution()
+
+        if options.get('type', False):
+            self.service.create_function_organization()
