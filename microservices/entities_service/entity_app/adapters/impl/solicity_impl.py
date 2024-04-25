@@ -158,7 +158,7 @@ class SolicityImpl(SolicityRepository):
         return data
 
     def save_timeline(self, solicity_id, user_id, status) -> TimeLineSolicity:
-        return TimeLineSolicity.objects.create(solicity_id=solicity_id, user_id=user_id, status=status)
+        return TimeLineSolicity.objects.create(solicity_id=solicity_id, user_created_id=user_id, status=status)
 
     def create_extencion_solicity(self, motive, solicity_id, user_id, files, attachments):
         """
@@ -174,14 +174,18 @@ class SolicityImpl(SolicityRepository):
         """
 
         ext = Extension.objects.create(motive=motive, solicity_id=solicity_id, user_id=user_id,
-                                       user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
+                                       user_created_id=user_id, user_updated_id=user_id, status=Status.SEND)
         ext.files.set(files)
         ext.attachments.set(attachments)
         return ext
 
-    def create_insistency_solicity(self, solicity_id, user_id, title, text):
+    def create_insistency_solicity(self, solicity_id, user_id, text):
 
-        return Insistency.objects.create(solicity_id=solicity_id, user_id=user_id, title=title, text=text, user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED)
+        return Insistency.objects.create(solicity_id=solicity_id,
+                                         user_id=user_id,  motive=text,
+                                         user_created_id=user_id,
+                                         user_updated_id=user_id,
+                                         status=Status.SEND)
 
     def create_manual_solicity(self, title, text, establishment_id, user_id, expiry_date):
         return Solicity.objects.create(title=title, text=text, establishment_id=establishment_id, user_id=user_id,

@@ -80,7 +80,7 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
-    def create_insistency_solicity(self, solicity_id, user_id, title, text):
+    def create_insistency_solicity(self, solicity_id, user_id, text):
         """
         Crea una solicitud de insitencia
 

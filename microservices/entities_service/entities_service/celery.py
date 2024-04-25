@@ -13,7 +13,12 @@ app.conf.beat_schedule = {
     'add-every-30-seconds': {
         # 'task': 'shared.tasks.ta_task',
         'task': 'shared.tasks.emit.ping_task',
-        'schedule': crontab(minute=0, hour=0, day_of_month=1),
+        'schedule': 30.0
+    },
+    'change_status_solicity': {
+        'task': 'shared.tasks.solicity_process.change_status_solicity',
+        # 30 seconds
+        'schedule': 30.0
     },
 }
 app.conf.timezone = 'UTC'

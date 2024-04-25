@@ -40,7 +40,7 @@ class Solicity(BaseModel):
         'EstablishmentExtended', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     status = models.CharField(
-        max_length=10, choices=Status.choices, default=Status.CREATED)
+        max_length=50, choices=Status.choices, default=Status.DRAFT)
     expiry_date = models.DateTimeField(null=True, blank=True)
     have_extension = models.BooleanField(default=False)
     is_manual = models.BooleanField(default=False)
@@ -78,7 +78,7 @@ class Insistency(BaseModel):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     status = models.CharField(
-        max_length=10, choices=Status.choices, default=Status.CREATED)
+        max_length=50, choices=Status.choices, default=Status.SEND)
     expiry_date = models.DateTimeField(null=True, blank=True)
     motive = models.TextField()
 
@@ -110,7 +110,7 @@ class Extension(BaseModel):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     status = models.CharField(
-        max_length=10, choices=Status.choices, default=Status.CREATED)
+        max_length=50, choices=Status.choices, default=Status.SEND)
     expiry_date = models.DateTimeField(null=True, blank=True)
     motive = models.TextField()
     files = models.ManyToManyField('FilePublication', blank=True)

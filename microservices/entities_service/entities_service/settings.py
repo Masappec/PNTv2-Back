@@ -61,7 +61,7 @@ MIDDLEWARE = [
 ]
 
 CELERY_IMPORTS = ('shared.tasks.emit',
-                  'shared.tasks.establishment_task', 'shared.tasks.ta_task')
+                  'shared.tasks.establishment_task', 'shared.tasks.ta_task', 'shared.tasks.solicity_process')
 
 # enable cors all domain
 CORS_ORIGIN_ALLOW_ALL = True

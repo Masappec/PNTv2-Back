@@ -41,3 +41,9 @@ def create_custom_permissions():
         name='Puede ver solicitudes de un establecimiento',
         content_type=content_type,
     )
+
+    permission = Permission.objects.get_or_create(
+        codename='add_manual_solicity',
+        name='Puede crear solicitudes manuales',
+        content_type=content_type,
+    )

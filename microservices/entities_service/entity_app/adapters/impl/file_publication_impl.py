@@ -3,7 +3,7 @@ from entity_app.domain.models.publication import FilePublication
 from entity_app.domain.models.establishment import EstablishmentExtended, UserEstablishmentExtended
 from django.apps import apps
 from django.contrib.auth.models import User
-from entity_app.models import TransparencyActive
+from entity_app.models import TransparencyActive, TransparencyColab, TransparencyFocal
 
 
 class FilePublicationImpl(FilePublicationRepository):
@@ -28,7 +28,7 @@ class FilePublicationImpl(FilePublicationRepository):
     def delete(self, file_publication_id):
         return FilePublication.objects.get(id=file_publication_id).delete()
 
-    def get_by_user_establishment(self, user_id):
+    def get_by_user_establishment(self, user_id, type):
 
         user = User.objects.get(id=user_id)
 
@@ -37,10 +37,21 @@ class FilePublicationImpl(FilePublicationRepository):
 
         user_establishment = UserEstablishmentExtended.objects.get(
             user_id=user_id)
+        if type == 'TA':
+            ta = TransparencyActive.objects.filter(
+                establishment_id=user_establishment.establishment_id)
+            return FilePublication.objects.filter(transparency_active__in=ta).distinct('id')
 
-        return FilePublication.objects.filter(
-            publication__file_publication__userestablishment=user_establishment
-        ).distinct()
+        if type == 'TC':
+            tc = TransparencyColab.objects.filter(
+                establishment_id=user_establishment.establishment_id)
+
+            return FilePublication.objects.filter(transparency_colab__in=tc).distinct('id')
+        if type == 'TF':
+            tf = TransparencyFocal.objects.filter(
+                establishment_id=user_establishment.establishment_id)
+
+            return FilePublication.objects.filter(transparency_focal__in=tf).distinct('id')
 
     def get_files_from_transparency_active(self, user_id):
         user = User.objects.get(id=user_id)

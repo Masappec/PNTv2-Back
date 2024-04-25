@@ -125,8 +125,8 @@ SIMPLE_JWT = {
 
 }
 CELERY_IMPORTS = ('shared.tasks.user_task',
-                  'shared.tasks.auth_task', 'shared.tasks.ta_task')
-
+                  'shared.tasks.auth_task', 'shared.tasks.ta_task',
+                  'shared.tasks.solicity_procces')
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

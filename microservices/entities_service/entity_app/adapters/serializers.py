@@ -2,7 +2,7 @@ import datetime
 from rest_framework import serializers
 from entity_app.domain.models.publication import Attachment, Publication, Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
-from entity_app.domain.models.solicity import Solicity, SolicityResponse, TimeLineSolicity
+from entity_app.domain.models.solicity import Solicity, SolicityResponse, TimeLineSolicity, Extension, Insistency
 from entity_app.domain.models.transparency_active import Numeral, TemplateFile, ColumnFile, TransparencyActive
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
@@ -182,6 +182,9 @@ class SolicitySerializer(serializers.ModelSerializer):
         source='establishment.name', read_only=True)
     time_line = serializers.SerializerMethodField(method_name='get_time_line')
     responses = serializers.SerializerMethodField(method_name='get_responses')
+    comments = serializers.SerializerMethodField(method_name='get_comments')
+    insistency = serializers.SerializerMethodField(
+        method_name='get_insistency')
 
     class Meta:
 
@@ -205,6 +208,31 @@ class SolicitySerializer(serializers.ModelSerializer):
         responses = SolicityResponse.objects.filter(solicity=obj)
         data = SolicityResponseSerializer(responses, many=True).data
         return data
+
+    def get_comments(self, obj):
+        comments = Extension.objects.filter(solicity=obj)
+
+        return ExtensionSerializer(comments, many=True).data
+
+    def get_insistency(self, obj):
+
+        insistency = Insistency.objects.filter(solicity=obj)
+
+        return InsistencySerializer(insistency, many=True).data
+
+
+class ExtensionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Extension
+        fields = '__all__'
+
+
+class InsistencySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Insistency
+        fields = '__all__'
 
 
 class SolicityResponseSerializer(serializers.ModelSerializer):
