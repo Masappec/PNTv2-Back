@@ -35,8 +35,8 @@ class FilePublicationImpl(FilePublicationRepository):
         if user.is_superuser:
             return FilePublication.objects.all()
 
-        user_establishment = UserEstablishmentExtended.objects.get(
-            user_id=user_id)
+        user_establishment = UserEstablishmentExtended.objects.filter(
+            user_id=user_id, is_active=True).first()
         if type == 'TA':
             ta = TransparencyActive.objects.filter(
                 establishment_id=user_establishment.establishment_id)

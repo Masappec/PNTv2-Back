@@ -135,9 +135,8 @@ class FilePublicationDelete(APIView):
 class FilePublicationListEstablishemtSession(ListAPIView):
 
     serializer_class = FilePublicationSerializer
-    permission_classes = [IsAuthenticated, HasPermission]
+    permission_classes = [IsAuthenticated, ]
     pagination_class = StandardResultsSetPagination
-    permission_required = 'view_filepublication'
 
     def __init__(self, **kwargs):
 
@@ -165,7 +164,7 @@ class FilePublicationListEstablishemtSession(ListAPIView):
             return Response(serializer.data)
 
         except Exception as e:
-
+            print("Error ", e)
             res = {
                 'message': e,
                 'status': status.HTTP_400_BAD_REQUEST,

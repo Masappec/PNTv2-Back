@@ -26,6 +26,8 @@ class FilePublicationService:
 
     def get_by_user_establishment(self, user_id, type_transparency):
         try:
-            return self.file_repository.get_by_user_establishment(user_id, type_transparency)
+            data = self.file_repository.get_by_user_establishment(
+                user_id, type_transparency)
+            return data
         except ObjectDoesNotExist:
             raise Exception("Usuario no encontrado")
