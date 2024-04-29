@@ -15,5 +15,10 @@ class TransparencyColaborativeRepository(ABC):
     def deleteTransparencyColaborativeUser(self, pk, user_id):
         pass
 
+    @abstractmethod
     def update_transparency_colaborative(self, pk, user_id, newfiles):
+        pass
+
+    @abstractmethod
+    def get_by_year_month(self, year: int, month: int, establishment_id: int):
         pass

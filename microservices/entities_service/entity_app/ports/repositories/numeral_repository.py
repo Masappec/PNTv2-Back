@@ -34,3 +34,9 @@ class NumeralRepository(ABC):
 
     def create_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual, get_transparency_by_numeral, status="ingress"):
         pass
+
+    def get_numeral_focalized_or_collab(self, type: str):
+        pass
+
+    def update_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual, status="ingress"):
+        pass

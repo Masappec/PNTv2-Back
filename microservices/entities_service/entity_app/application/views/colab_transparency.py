@@ -172,3 +172,55 @@ class TransparencyCollabUpdate(APIView):
             }
 
             return Response(res, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TransparecyCollabPublicView(APIView):
+
+    permission_classes = []
+    serializer_class = ListTransparencyColaborative
+
+    def __init__(self, **kwargs):
+        self.service = TransparencyColaborativeService(
+            TransparencyColaborativeImpl())
+
+    def get(self, request, *args, **kwargs):
+        """
+        Get a list of users.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        try:
+            year = request.query_params.get('year', None)
+            month = request.query_params.get('month', None)
+            establishment_id = request.query_params.get(
+                'establishment_id', None)
+
+            if establishment_id is None:
+                raise ValueError('Debe seleccionar un establecimiento')
+
+            if year is None:
+                year = datetime.now().year
+
+            if month is None:
+                month = datetime.now().month
+
+            queryset = None
+
+            queryset = self.service.get_by_year_month(
+                year, month, establishment_id)
+
+            serializer = self.serializer_class(queryset, many=True)
+            return Response(serializer.data)
+
+        except Exception as e:
+            return Response({
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }, status=400)

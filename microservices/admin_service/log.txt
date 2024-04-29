@@ -53,3 +53,15 @@ Fri Apr 26 20:11:27 2024 - Mensaje recibido: {'type': 'message', 'pattern': None
 Fri Apr 26 20:12:01 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "bbd001d8-6b39-4f93-8a5e-67bdac93b750"}'}
 Fri Apr 26 20:12:33 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "50d3b31d-db97-4e08-8411-e9e7d87ad40c"}'}
 Fri Apr 26 20:13:07 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "ed3d50fe-4480-481f-84ef-98f6157b5cd6"}'}
+Sat Apr 27 13:27:45 2024 - Iniciando suscripción al canal user
+Sat Apr 27 13:27:45 2024 - Iniciando suscripción al canal solicity
+Sun Apr 28 01:36:43 2024 - Iniciando suscripción al canal user
+Sun Apr 28 01:36:43 2024 - Iniciando suscripción al canal solicity
+Sun Apr 28 11:54:24 2024 - Iniciando suscripción al canal user
+Sun Apr 28 11:54:24 2024 - Iniciando suscripción al canal solicity
+Sun Apr 28 15:11:15 2024 - Iniciando suscripción al canal user
+Sun Apr 28 15:11:15 2024 - Iniciando suscripción al canal solicity
+Sun Apr 28 16:49:35 2024 - Iniciando suscripción al canal user
+Sun Apr 28 16:49:35 2024 - Iniciando suscripción al canal solicity
+Sun Apr 28 19:50:44 2024 - Iniciando suscripción al canal user
+Sun Apr 28 19:50:44 2024 - Iniciando suscripción al canal solicity

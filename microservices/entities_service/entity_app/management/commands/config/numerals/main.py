@@ -123,7 +123,7 @@ class NumeralServiceData:
     def read_json_generate(self):
 
         dir = os.path.dirname(__file__)
-        dir = os.path.join(dir, 'test.json')
+        dir = os.path.join(dir, 'others.json')
         with open(dir, encoding='utf-8') as file:
             data = json.load(file)
             for numeral in data:
@@ -134,12 +134,17 @@ class NumeralServiceData:
                 description = description.replace('Art.', '')
                 description = description.replace('. ', '')
                 description = description.replace('.', '')
-
+                type = 'A'
+                if description == 'Transparencia colaborativa':
+                    type = 'C'
+                if description == 'Transparencia focalizada':
+                    type = 'F'
                 numero = re.search(r'\d+', name)
 
                 numeral_object = Numeral.objects.create(
-                    name="Numeral " + numero.group() if numero else '',
+                    name="Numeral " + numero.group() if numero else description,
                     description=description,
+                    type_transparency=type,
                 )
 
                 for template in numeral['templates']:

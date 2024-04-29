@@ -33,7 +33,8 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
         return response
 
     def deleteTransparencyColaborativeUser(self, pk, user_id):
-        user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
+        user_es = UserEstablishmentExtended.objects.filter(
+            user_id=user_id, is_active=True).last()
 
         response = TransparencyColab.objects.get(
             establishment_id=user_es.establishment.id, id=pk).delete()
@@ -52,3 +53,6 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
         response.files.set(file_instances)
 
         return response
+
+    def get_by_year_month(self, year: int, month: int, establishment_id: int):
+        return TransparencyColab.objects.filter(year=year, month=month, establishment_id=establishment_id)

@@ -18,3 +18,6 @@ class TransparencyFocusService:
     def update_transparency_focus(self, pk, user_id, newfiles):
 
         return self.transparency_focus_repository.update_transparency_focus(pk, user_id, newfiles)
+
+    def get_by_year_month(self, year: int, month: int, establishment_id: int):
+        return self.transparency_focus_repository.get_by_year_month(year, month, establishment_id)

@@ -34,3 +34,6 @@ class NumeralService:
 
     def get_all(self) -> List[Numeral]:
         return self.numeral_repository.get_all()
+
+    def get_numeral_focalized_or_collab(self, type: str):
+        return self.numeral_repository.get_numeral_focalized_or_collab(type)

@@ -327,6 +327,8 @@ class NumeralResponseSerializer(serializers.ModelSerializer):
     """Numeral response serializer."""
     templates = PartialTemplateFileSerializer(many=True)
     published = serializers.SerializerMethodField(method_name='get_published')
+    publication = serializers.SerializerMethodField(
+        method_name='get_publication')
 
     class Meta:
         """Meta class."""
@@ -343,6 +345,17 @@ class NumeralResponseSerializer(serializers.ModelSerializer):
             return True
 
         return False
+
+    def get_publication(self, obj):
+
+        transparency = TransparencyActive.objects.filter(numeral=obj, published=True,
+                                                         establishment_id=self.context['establishment_id'],
+                                                         month=datetime.datetime.now().month, year=datetime.datetime.now().year).first()
+
+        if transparency:
+            return TransparencyActiveListSerializer(transparency).data
+
+        return None
 
 
 class EstablishmentSerializer(serializers.ModelSerializer):

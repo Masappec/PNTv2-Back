@@ -1,0 +1,276 @@
+[
+    {
+        "name": "Transparencia focalizada",
+        "templates": [
+            {
+                "name": "1. Conjunto de datos (Focalizad",
+                "description": "Transparencia focalizada",
+                "vertical_template": false,
+                "max_insert": null,
+                "columns": [
+                    {
+                        "name": "Nombre de entidad ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Temática de la información",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Fecha de publicación de la información ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Enlace  a archivo que contiene la información ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    }
+                ]
+            },
+            {
+                "name": "1.Metadatos (Focalizada)",
+                "description": "Transparencia focalizada",
+                "vertical_template": true,
+                "max_insert": 1,
+                "columns": [
+                    {
+                        "name": "PERIODICIDAD DE ACTUALIZACIÓN DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "CORREO ELECTRÓNICO DE LA PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "NÚMERO TELEFÓNICO DE LA PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "LICENCIA",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    }
+                ]
+            },
+            {
+                "name": "1. Diccionario (Focalizada)",
+                "description": "Transparencia focalizada",
+                "vertical_template": true,
+                "max_insert": 1,
+                "columns": [
+                    {
+                        "name": "Descripción",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre del campo",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre de entidad ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Temática de la información",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Fecha de publicación de la información ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Enlace a archivo que contiene la información ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Transparencia colaborativa",
+        "templates": [
+            {
+                "name": "1. Conjunto de datos (Colaborat",
+                "description": "Transparencia colaborativa",
+                "vertical_template": false,
+                "max_insert": null,
+                "columns": [
+                    {
+                        "name": "Nombre de entidad ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Fecha en la que se realizó espacio de colaboración",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Modalidad del espacio de colaboración",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Lugar o plataforma en la que se realizó espacio de colaboración ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Persona u organización proponente del espacio de colaboración",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Enlace al archivo de avances o resultados del espacio de colaboración",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    }
+                ]
+            },
+            {
+                "name": "1.Metadatos (Colaborativa)",
+                "description": "Transparencia colaborativa",
+                "vertical_template": true,
+                "max_insert": 1,
+                "columns": [
+                    {
+                        "name": "PERIODICIDAD DE ACTUALIZACIÓN DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "CORREO ELECTRÓNICO DE LA PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "NÚMERO TELEFÓNICO DE LA PERSONA RESPONSABLE DE LA UNIDAD POSEEDORA DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "LICENCIA",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    }
+                ]
+            },
+            {
+                "name": "1. Diccionario (Colaborativa)",
+                "description": "Transparencia colaborativa",
+                "vertical_template": true,
+                "max_insert": 1,
+                "columns": [
+                    {
+                        "name": "Descripción",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre del campo",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre de entidad ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Fecha en la que se realizó espacio de colaboración",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Modalidad del espacio de colaboración",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Lugar o plataforma en la que se realizó espacio de colaboración ",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Persona u organización proponente del espacio de colaboración",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Enlace al archivo de avances o resultados del espacio de colaboración",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    }
+                ]
+            }
+        ]
+    }
+]

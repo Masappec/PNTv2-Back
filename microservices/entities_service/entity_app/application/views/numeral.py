@@ -78,19 +78,34 @@ class NumeralDetail(APIView):
         manual_parameters=[
             openapi.Parameter('numeral_id', openapi.IN_QUERY,
                               type=openapi.TYPE_STRING, description="Numeral id"),
+            openapi.Parameter('type', openapi.IN_QUERY,
+                              type=openapi.TYPE_STRING, description="Type of numeral")
         ]
     )
     def get(self, request):
 
         try:
-            if request.query_params.get('numeral_id') is None:
-                return Response({
-                    'message': 'numeral_id is required',
-                    'status': status.HTTP_400_BAD_REQUEST,
-                    'json': {}
-                }, status=status.HTTP_400_BAD_REQUEST)
-            numeral = self.service.get(request.query_params.get('numeral_id'))
+            numeral = None
+            if request.query_params.get('type') is not None:
+                numeral = self.service.get_numeral_focalized_or_collab(
+                    request.query_params.get('type'))
 
+            else:
+                if request.query_params.get('numeral_id') is None:
+                    return Response({
+                        'message': 'numeral_id is required',
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'json': {}
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
+                numeral = self.service.get(
+                    request.query_params.get('numeral_id'))
+            if numeral is None:
+                return Response({
+                    'message': 'Numeral not found',
+                    'status': status.HTTP_404_NOT_FOUND,
+                    'json': {}
+                }, status=status.HTTP_404_NOT_FOUND)
             serializer = self.serializer_class(numeral)
 
             return Response(serializer.data)
@@ -224,6 +239,75 @@ class PublishNumeral(APIView):
             res.is_valid(raise_exception=True)
 
             return Response(res.data, status=200)
+        except Exception as e:
+            print("Error:", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=400)
+
+
+class NumeralEditPublish(APIView):
+
+    permission_classes = [IsAuthenticated,
+                          HasPermission, BelongsToEstablishment]
+    serializer_class = TransparecyActiveCreate
+    output_serializer_class = TransparencyCreateResponseSerializer
+
+    permission_required = 'add_transparencyactive'
+
+    def __init__(self):
+        self.service = NumeralService(
+            numeral_repository=NumeralImpl()
+        )
+
+    @swagger_auto_schema(
+        operation_description="Edit Publish numeral",
+        request_body=TransparecyActiveCreate,
+        responses={200: TransparencyCreateResponseSerializer}
+    )
+    def put(self, request, *args, **kwargs):
+        """
+        Edit Publish Numeral
+        """
+
+        try:
+            data = self.serializer_class(data=request.data)
+            data.is_valid(raise_exception=True)
+            month = datetime.now().month
+            year = datetime.now().year
+            fecha_actual = datetime.now()
+            transparency = self.service.get_transparency_by_numeral(
+                data.validated_data['numeral_id'], month, year,
+                data.validated_data['establishment_id']
+            )
+
+            if transparency is None:
+                raise Exception("No existe una publicacion para este numeral")
+
+            transparency.files.clear()
+            transparency.files.set(data.validated_data['files'])
+            transparency.save()
+            mensaje = ""
+
+            result = self.output_serializer_class(transparency)
+
+            res = MessageTransactional(
+                data={
+                    'message': 'Publicacion editada correctamente',
+                    'status': 201,
+                    'json': result.data
+                }
+            )
+
+            res.is_valid(raise_exception=True)
+            return Response(res.data, status=200)
+
         except Exception as e:
             print("Error:", e)
             res = MessageTransactional(

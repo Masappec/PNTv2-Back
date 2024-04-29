@@ -2,7 +2,7 @@ from django.contrib import admin
 from .domain.models.publication import Publication, FilePublication, TypePublication, Tag
 from entity_app.domain.models.solicity import Solicity, Category, TimeLineSolicity, Insistency, Extension, SolicityResponse
 from entity_app.domain.models.transparency_active import EstablishmentNumeral, Numeral, TemplateFile, ColumnFile, TransparencyActive
-
+from entity_app.domain.models.transparecy_foc import TransparencyFocal
 # Register your models here.
 admin.site.register(Publication)
 admin.site.register(FilePublication)
@@ -19,3 +19,4 @@ admin.site.register(TimeLineSolicity)
 admin.site.register(Insistency)
 admin.site.register(Extension)
 admin.site.register(SolicityResponse)
+admin.site.register(TransparencyFocal)

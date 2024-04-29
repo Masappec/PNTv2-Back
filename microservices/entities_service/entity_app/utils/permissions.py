@@ -18,11 +18,9 @@ class HasPermission(BasePermission):
             return True
 
         user_id = request.user.id
-        
+
         per = permission_required.split(',')
-        
-        
-        
+
         is_permited = User.objects.get(id=user_id).groups.filter(
             permissions__codename__in=per).exists()
         print(is_permited, permission_required)
@@ -41,7 +39,7 @@ class IsOwnerResponseSolicity(BasePermission):
 class BelongsToEstablishment(BasePermission):
     def has_permission(self, request, view):
 
-        if request.method == 'POST':
+        if request.method == 'POST' or request.method == 'PUT':
             establishment_id = request.data.get('establishment_id')
         else:
             establishment_id = request.query_params.get('establishtment_id')
@@ -57,6 +55,10 @@ class BelongsToEstablishment(BasePermission):
 class NumeralIsOwner(BasePermission):
 
     def has_permission(self, request, view):
+
+        if request.query_params.get('type') is not None:
+            return True
+
         id_numeral = request.query_params.get('numeral_id')
 
         if request.user.is_superuser:

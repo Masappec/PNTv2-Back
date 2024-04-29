@@ -17,3 +17,6 @@ class TransparencyColaborativeService:
 
     def update_transparency_colaborative(self, pk, user_id, newfiles):
         return self.transparency_colaborative_repository.update_transparency_colaborative(pk, user_id, newfiles)
+
+    def get_by_year_month(self, year: int, month: int, establishment_id: int):
+        return self.transparency_colaborative_repository.get_by_year_month(year, month, establishment_id)

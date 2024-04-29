@@ -26,7 +26,7 @@ class NumeralImpl(NumeralRepository):
 
         return Numeral.objects.filter(id__in=numerals_ids).annotate(
             numeral_id_int=Cast('id', IntegerField())
-        ).order_by('numeral_id_int')
+        ).order_by('name')
 
     def get_all_transparency(self):
         return TransparencyActive.objects.get()
@@ -63,3 +63,6 @@ class NumeralImpl(NumeralRepository):
         )
         obj.files.set(files)
         return obj
+
+    def get_numeral_focalized_or_collab(self, type: str):
+        return Numeral.objects.filter(type_transparency=type).first()
