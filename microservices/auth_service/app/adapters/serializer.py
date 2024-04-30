@@ -9,11 +9,13 @@ class GroupSerializer(ModelSerializer):
         model = Role
         fields = ('id', 'name')
 
+
 class PersonSerializer(ModelSerializer):
 
     class Meta:
         model = Person
         fields = '__all__'
+
 
 class UserCreateResponseSerializer(Serializer):
     id = IntegerField()
@@ -41,7 +43,7 @@ class UserListSerializer(Serializer):
     first_name = CharField(max_length=255, source='person.first_name')
     last_name = CharField(max_length=255, source='person.last_name')
     username = CharField(max_length=255)
-    email = CharField(max_length=255)
+    email = EmailField(max_length=255)
     identification = CharField(max_length=255, source='person.identification')
     phone = CharField(max_length=255, source='person.phone')
     city = CharField(max_length=255, source='person.city')
@@ -55,7 +57,8 @@ class RegisterSerializer(Serializer):
 
     first_name = CharField(max_length=255)
     last_name = CharField(max_length=255)
-    username = EmailField(max_length=255)
+    username = CharField(max_length=255)
+    email = EmailField(max_length=255)
     password = CharField(max_length=255)
     confirm_password = CharField(max_length=255)
     identification = CharField(
@@ -76,6 +79,7 @@ class UserCreateAdminSerializer(Serializer):
     first_name = CharField(max_length=255)
     last_name = CharField(max_length=255)
     username = CharField(max_length=255)
+    email = EmailField(max_length=255)
     password = CharField(max_length=255, allow_null=True, allow_blank=True)
     identification = CharField(max_length=255)
     phone = CharField(max_length=255, allow_null=True, allow_blank=True)

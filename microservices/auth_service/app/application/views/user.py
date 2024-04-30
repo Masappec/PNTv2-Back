@@ -128,7 +128,15 @@ class UserCreateAPI(APIView):
         try:
             data = self.serializer_class(data=request.data)
             data.is_valid(raise_exception=True)
+            find_user = self.user_service.get_user_by_email(
+                data.validated_data['email'])
+            if find_user:
+                raise ValueError('Este correo ya está en uso')
 
+            find_user = self.user_service.get_user_by_username(
+                data.validate_data['username'])
+            if find_user:
+                raise ValueError('Este nombre de usuario ya está en uso')
             # crea el usuario
             user = self.user_service.create_user_admin(data)
 

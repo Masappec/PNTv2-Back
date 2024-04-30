@@ -16,6 +16,7 @@ from entity_app.adapters.serializers import SolicitySerializer, SolicityCreateDr
 from entity_app.domain.services.solicity_service import SolicityService
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
 from drf_yasg.utils import swagger_auto_schema
+from entity_app.utils.functions import get_timedelta_for_expired
 
 
 class CreateExtensionSolicityView(APIView):
@@ -226,7 +227,7 @@ class UpdateSolicityView(APIView):
 
             solicity = self.service.update_solicity(
                 **serializer.validated_data,
-                expiry_date=datetime.now() + timedelta(days=10),
+                expiry_date=datetime.now() + get_timedelta_for_expired(),
                 user_id=request.user.id
             )
 
@@ -332,7 +333,8 @@ class SolicityCreateDraftView(APIView):
         try:
             data_validated = data.validated_data
             data_validated['user_id'] = request.user.id
-            data_validated['expiry_date'] = datetime.now() + timedelta(days=10)
+            data_validated['expiry_date'] = datetime.now() + \
+                get_timedelta_for_expired()
             solicity = self.service.create_solicity_draft(
                 **data_validated
             )
@@ -386,7 +388,7 @@ class SolicityWithoutDraftView(APIView):
         try:
             solicity = self.service.send_solicity_without_draft(
                 **data.validated_data,
-                expiry_date=datetime.now() + timedelta(days=10),
+                expiry_date=datetime.now() + get_timedelta_for_expired(),
                 user_id=request.user.id
             )
 
@@ -489,7 +491,7 @@ class SolicitySendView(APIView):
         solicity = None
 
         try:
-            date = datetime.now() + timedelta(days=10)
+            date = datetime.now() + get_timedelta_for_expired()
             solicity = self.service.send_solicity_from_draft(
                 **data.validated_data,
                 expiry_date=date,

@@ -4,7 +4,12 @@ import uuid
 from django.utils.text import slugify
 from typing import List
 import csv
+from datetime import datetime, timedelta
 
+
+
+def get_timedelta_for_expired():
+    return timedelta(hours=2)
 
 def get_day_for_publish():
     return 5

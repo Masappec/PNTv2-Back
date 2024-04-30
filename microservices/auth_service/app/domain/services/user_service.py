@@ -54,7 +54,6 @@ class UserService:
         Returns:
             User: Retorna un objeto usuario con los datos del usuario registrado
         """
-        user['email'] = user['username']
         user['password'] = make_password(user['password'])
 
         data = self.user_repository.register_cityzen_user(user)

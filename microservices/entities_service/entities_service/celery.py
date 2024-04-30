@@ -2,6 +2,7 @@ import os
 from celery import Celery
 from django.conf import settings
 from celery.schedules import crontab
+from celery.signals import worker_init
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "entities_service.settings")
 app = Celery("entities_celery")
@@ -22,3 +23,11 @@ app.conf.beat_schedule = {
     },
 }
 app.conf.timezone = 'UTC'
+
+
+@worker_init.connect
+def worker_init(**kwargs):
+    from entity_app.thread import Subscriptor
+
+    thread = Subscriptor()
+    thread.run()

@@ -117,30 +117,39 @@ class RegisterApiView(CreateAPIView):
         user_obj = None
         try:
 
+            
+            find_user = self.user_service.get_user_by_email(data.validated_data['email'])
+            if find_user:
+                raise ValueError('Este correo ya está en uso')
+            
+            find_user = self.user_service.get_user_by_username(data.validate_data['username'])
+            if find_user:
+                raise ValueError('Este nombre de usuario ya está en uso')
+            
             user = self.user_service.register_cityzen_user(data.validated_data)
+            
+            if user is not None: 
+                data = UserCreateResponseSerializer(data=user)
+                user_obj = self.user_service.get_user_object(user['id'])
+                
+                uidb64 = urlsafe_base64_encode(force_bytes(user_obj.id))
+                data.is_valid(raise_exception=True)
 
-            data = UserCreateResponseSerializer(data=user)
-            user_obj = self.user_service.get_user_object(user['id'])
-            uidb64 = urlsafe_base64_encode(force_bytes(user_obj.id))
-            data.is_valid(raise_exception=True)
-
-            self.publisher.publish({
-                'type': USER_REGISTER,
-                'payload': {
-                    'uidb64': uidb64,
-                    'username': data.validated_data['username'],
-                    'email': data.validated_data['email'],
-                    'token': account_activation_token.make_token(user_obj)
+                self.publisher.publish({
+                    'type': USER_REGISTER,
+                    'payload': {
+                        'uidb64': uidb64,
+                        'username': data.validated_data['username'],
+                        'email': data.validated_data['email'],
+                        'token': account_activation_token.make_token(user_obj)
+                    }
                 }
-            }
-            )
-            res = MessageTransactional(data={
-                'message': 'Usuario creado exitosamente',
-                'status': 201,
-                'json': data.data
-            })
-            res.is_valid(raise_exception=True)
-            return Response(res.data, status=201)
+                )
+                return Response({
+                    'message': 'Usuario creado exitosamente',
+                    'status': 201,
+                    'json': data.validated_data
+                }, status=201)
         except Exception as e:
             print(e)
             if person is not None:
@@ -151,7 +160,7 @@ class RegisterApiView(CreateAPIView):
             return Response({
                 'message': e.__str__(),
                 'status': 400,
-                'json': '{}'
+                'json': {}
             }, status=400)
 
 
