@@ -103,7 +103,6 @@ class EstablishmentCreateAPI(APIView):
         },
         request_body=serializer_class,
         # form data
-
     )
     def post(self, request, *args, **kwargs):
         """

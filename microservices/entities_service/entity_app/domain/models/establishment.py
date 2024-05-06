@@ -26,6 +26,9 @@ class EstablishmentExtended(models.Model):
     class Meta:
         managed = False
         db_table = 'app_admin_establishment'
+        
+        verbose_name = 'Institución'
+        verbose_name_plural = 'Instituciones'
 
 
 class UserEstablishmentExtended(BaseModel):

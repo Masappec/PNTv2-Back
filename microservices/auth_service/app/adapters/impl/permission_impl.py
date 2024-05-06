@@ -27,21 +27,26 @@ class PermissionRepositoryImpl(PermissionRepository):
             'resetpasswordtoken','userestablishmentextended','lawenforcement','accesstoinformation',
             'formfields','tutorialvideo','normativedocument','frequentlyaskedquestions','userestablishment',
             'email','typepublication','filepublication','establishmentextended','typeformats','activitylog',
-            'userestablishmentextended','attachment','columnfile','templatefile','numeral','establishmentnumeral','role'
-            
+            'userestablishmentextended','attachment','columnfile','templatefile','numeral','establishmentnumeral','role',
+            'periodictasks', 'insistency', 'publication', 'solarschedule', 'periodictask', 'intervalschedule', 'crontabschedule',
+            'clockedschedule', 'typeorganization', 'functionorganization', 'Datos Personales', 'category', 'extension',
+            'tag',
+            'typeinstitution', 'timelinesolicity'
         ])
     
     def get_permissions_by_role(self, role_id: int):
         return Permission.objects.filter(group__id=role_id).exclude(
             content_type__model__in=[
-            'contenttype', 'logentry', 'permission','session' ,'basemodel','accesstoinformation',
-            'resetpasswordtoken','userestablishmentextended','lawenforcement','accesstoinformation',
-            'formfields','tutorialvideo','normativedocument','frequentlyaskedquestions','userestablishment',
-            'email','typepublication','filepublication','establishmentextended','typeformats','activitylog',
-            'userestablishmentextended','attachment','columnfile','templatefile','numeral','establishmentnumeral',
-            'role'
-            
-        ]
+                'contenttype', 'logentry', 'permission', 'session', 'basemodel', 'accesstoinformation',
+                'resetpasswordtoken', 'userestablishmentextended', 'lawenforcement', 'accesstoinformation',
+                'formfields', 'tutorialvideo', 'normativedocument', 'frequentlyaskedquestions', 'userestablishment',
+                'email', 'typepublication', 'filepublication', 'establishmentextended', 'typeformats', 'activitylog',
+                'userestablishmentextended', 'attachment', 'columnfile', 'templatefile', 'numeral', 'establishmentnumeral', 'role',
+                'periodictasks', 'insistency', 'publication', 'solarschedule', 'periodictask', 'intervalschedule', 'crontabschedule',
+                'clockedschedule', 'typeorganization', 'functionorganization', 'Datos Personales', 'category', 'extension',
+                'tag',
+                'typeinstitution', 'timelinesolicity'
+            ]
             
         )
     

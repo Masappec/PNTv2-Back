@@ -29,8 +29,8 @@ class User(AbstractUser, BaseModel):
 
     class Meta:
         db_table = 'auth_user'
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
+        verbose_name = 'Usuario'
+        verbose_name_plural = 'Usuarios'
         ordering = ['-created_at']
 
     @staticmethod

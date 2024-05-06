@@ -5,8 +5,7 @@ from django.contrib.auth.models import Group
 
 def create_custom_permissions():
     content_type = ContentType.objects.get_for_model(Group)
-    content_type_admin = ContentType.objects.get_for_model(Group)
-
+    
     permission = Permission.objects.get_or_create(
         codename='add_user_ciudadano',
         name='Puede crear usuario ciudadano',
@@ -46,4 +45,11 @@ def create_custom_permissions():
         codename='add_manual_solicity',
         name='Puede crear solicitudes manuales',
         content_type=content_type,
+    )
+
+    
+    permission = Permission.objects.get_or_create(
+        codename='update_my_establishment',
+        name = 'Actualizar datos de mi institución',
+        content_type_id=ContentType.objects.get(name='Establishment')
     )

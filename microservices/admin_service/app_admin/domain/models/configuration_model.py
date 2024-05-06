@@ -14,7 +14,7 @@ class Configuration(BaseModel):
         verbose_name = 'Configuración'
         verbose_name_plural = 'Configuraciones'
         permissions = (
-            ('can_view_configuration', 'Can view configuration'),
+            ('can_view_configuration', 'Puede ver configuración'),
 
         )
 

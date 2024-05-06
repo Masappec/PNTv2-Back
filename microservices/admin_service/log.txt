@@ -72,3 +72,5 @@ Tue Apr 30 13:28:56 2024 - Iniciando suscripción al canal solicity
 Tue Apr 30 13:44:09 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_register", "payload": {"uidb64": "Mzg", "username": "andersonsinaluisa", "email": "andersonsinaluisa", "token": "c6au5b-baa8c6eb44b1fb4470936309582ed124"}, "id": "06e76e99-86b4-4a92-95a6-ce899ca92c0b"}'}
 Tue Apr 30 15:49:41 2024 - Iniciando suscripción al canal user
 Tue Apr 30 15:49:41 2024 - Iniciando suscripción al canal solicity
+Mon May  6 13:43:11 2024 - Iniciando suscripción al canal user
+Mon May  6 13:43:11 2024 - Iniciando suscripción al canal solicity

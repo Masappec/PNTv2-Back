@@ -1,7 +1,9 @@
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, \
-    BooleanField, IntegerField, JSONField, ListField, PrimaryKeyRelatedField, EmailField
+    BooleanField, IntegerField, JSONField, ListField, PrimaryKeyRelatedField, EmailField, SerializerMethodField
+        
 from app.domain.models import User, Permission, Role, Person
-
+#import contenttype
+from django.contrib.contenttypes.models import ContentType
 
 class GroupSerializer(ModelSerializer):
 
@@ -105,13 +107,15 @@ class UserLoginSerializer(Serializer):
 
 
 class PermissionSerializer(ModelSerializer):
-
+    content_type = CharField(source='content_type.name')
     class Meta:
         model = Permission
         fields = ('id', 'name', 'codename', 'content_type')
 
 
+
 class PermissionListSerializer(ModelSerializer):
+    content_type = CharField(source='content_type.name')
 
     class Meta:
         model = Permission

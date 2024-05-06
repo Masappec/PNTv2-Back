@@ -49,8 +49,9 @@ class FilePublication(BaseModel):
     description = models.TextField(null=True, blank=True)
     url_download = models.FileField(upload_to='publications/', null=True, blank=True)
     is_active = models.BooleanField(default=True, null=True, blank=True)
-
+    is_colab = models.BooleanField(default=False, null=True, blank=True)
     objects = models.Manager()
+    file_join = models.ManyToManyField('FilePublication', blank=True, related_name='file_join',null=True)
     
     class Meta:
         verbose_name = 'Archivo Publicación'
