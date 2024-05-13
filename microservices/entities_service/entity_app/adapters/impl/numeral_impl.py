@@ -5,11 +5,19 @@ from typing import List
 from django.db.models.query import QuerySet
 from entity_app.ports.repositories.numeral_repository import NumeralRepository
 from entity_app.domain.models.transparency_active import Numeral, EstablishmentNumeral, TransparencyActive
+from entity_app.domain.models.publication import FilePublication
 from django.db.models import Value, IntegerField
 from django.db.models.functions import Cast
 
+from entity_app.adapters.messaging.publish import Publisher
+from entity_app.adapters.messaging.channels import CHANNEL_ESTABLISHMENT_NUMERAL
+from entity_app.adapters.messaging.events import TRANSPARENCY_ACTIVE_UPLOAD
+
 
 class NumeralImpl(NumeralRepository):
+
+    def __init__(self) -> None:
+        self.publisher = Publisher(CHANNEL_ESTABLISHMENT_NUMERAL)
 
     def get_all(self):
         return Numeral.objects.all()
@@ -62,6 +70,31 @@ class NumeralImpl(NumeralRepository):
 
         )
         obj.files.set(files)
+
+        # mover de ubicacion los archivos seleccionados
+        list_files = FilePublication.objects.filter(
+            id__in=files)
+        for file in list_files:
+            root = 'transparencia/' + \
+                str(obj.establishment.identification) + '/' + \
+                str(obj.numeral.name) + '/' + \
+                str(obj.year) + '/' + str(obj.month)
+            FilePublication.move_file(file, root)
+
+        # filepaths, date, month, year, user, establishment_identification
+
+        self.publisher.publish({
+            'type': TRANSPARENCY_ACTIVE_UPLOAD,
+            'payload': {
+                'filepaths': [file.url_download.path for file in list_files],
+                'date': fecha_actual.strftime('%Y-%m-%d'),
+                'month': month,
+                'year': year,
+                'user': establishment_id,
+                'establishment_identification': obj.establishment.identification
+            }
+        })
+
         return obj
 
     def get_numeral_focalized_or_collab(self, type: str):

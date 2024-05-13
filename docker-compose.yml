@@ -26,8 +26,8 @@ services:
       - DB_NAME=auth_database
       - DB_USER=auth_user
       - DB_PASSWORD=auth_password
-      - CELERY_BROKER_URL=redis://redis_db:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+      - CELERY_BROKER_URL=redis://redis_db:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis_db:6379/1
       - FRONTEND_PASSWORD_CONFIRMATION_URL=https://transparencia.ec/auth/reset-password/:token
       - FRONTEND_ACTIVATE_ACCOUNT_URL=https://transparencia.ec/auth/activate-account/:uidb64/:token
       - REDIS_HOST = redis_db
@@ -53,8 +53,8 @@ services:
       - DB_NAME=auth_database
       - DB_USER=auth_user
       - DB_PASSWORD=auth_password
-      - CELERY_BROKER_URL=redis://redis_db:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+      - CELERY_BROKER_URL=redis://redis_db:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis_db:6379/1
       - REDIS_HOST = redis_db
       - REDIS_PORT = 6379
       - REDIS_DB = 0
@@ -81,8 +81,8 @@ services:
       - DB_NAME=auth_database
       - DB_USER=auth_user
       - DB_PASSWORD=auth_password
-      - CELERY_BROKER_URL=redis://redis_db:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis_db:6379/0
+      - CELERY_BROKER_URL=redis://redis_db:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis_db:6379/1
       - REDIS_HOST = redis_db
       - REDIS_PORT = 6379
       - REDIS_DB = 0
@@ -93,7 +93,6 @@ services:
       POSTGRES_DB: auth_database
       POSTGRES_USER: auth_user
       POSTGRES_PASSWORD: auth_password
-
 
     networks:
       - pnt_network

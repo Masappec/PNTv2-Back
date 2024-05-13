@@ -1,5 +1,5 @@
 
-from admin_service.celery import app
+from public_api_service.celery import app
 
 
 @app.task()

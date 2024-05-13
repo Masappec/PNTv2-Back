@@ -7,7 +7,7 @@ from app_admin.adapters.messaging.events import USER_CREATED, USER_UPDATED, USER
     USER_PASSWORD_RESET_REQUESTED, SOLICITY_CITIZEN_CREATED, SOLICITY_RESPONSE_ESTABLISHMENT, SOLICITY_RESPONSE_USER, SOLICITY_FOR_EXPIRED, SOLICITY_USER_EXPIRED
 from shared.tasks.auth_task import auth_send_activate_account_event
 from shared.tasks.auth_task import auth_send_password_reset_event
-from shared.tasks.solicity_task import send_email_citizen_create_solicity, send_email_establishment_response, send_mail_citizen_response
+from shared.tasks.solicity_task import send_email_citizen_create_solicity, send_email_establishment_response, send_email_for_expired_citizen, send_email_for_expired_establishment, send_mail_citizen_response
 import os
 
 
@@ -40,7 +40,12 @@ class Subscriptor:
             CallbackObserver(callback=send_email_establishment_response,
                              channel=CHANNEL_SOLICIY, type=SOLICITY_RESPONSE_ESTABLISHMENT),
             CallbackObserver(callback=send_mail_citizen_response,
-                             channel=CHANNEL_SOLICIY, type=SOLICITY_RESPONSE_USER)
+                             channel=CHANNEL_SOLICIY, type=SOLICITY_RESPONSE_USER),
+            CallbackObserver(callback=send_email_for_expired_citizen,
+                             channel=CHANNEL_SOLICIY, type=SOLICITY_USER_EXPIRED),
+            CallbackObserver(callback=send_email_for_expired_establishment,
+                             channel=CHANNEL_SOLICIY, type=SOLICITY_FOR_EXPIRED)
+
         ]
         self.start_subscription_thread(CHANNEL_SOLICIY, solicity_callbacks)
 

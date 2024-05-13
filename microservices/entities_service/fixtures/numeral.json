@@ -14,7 +14,7 @@
             "name": "Numeral 28",
             "description": "   Partidos Politicos y Organizaciones Politicas",
             "parent": null,
-            "is_default": true,
+            "is_default": false,
             "type_transparency": "A",
             "templates": [
                 650,
@@ -38,7 +38,7 @@
             "name": "Numeral 27",
             "description": "  Tribunal Contencioso Electoral",
             "parent": null,
-            "is_default": true,
+            "is_default": false,
             "type_transparency": "A",
             "templates": [
                 653,
@@ -134,7 +134,7 @@
             "name": "Numeral 22",
             "description": "  Consejo de la Judicatura",
             "parent": null,
-            "is_default": true,
+            "is_default": false,
             "type_transparency": "A",
             "templates": [
                 665,
@@ -158,7 +158,7 @@
             "name": "Numeral 24",
             "description": "  Gobiernos Autónomos Descentralizados",
             "parent": null,
-            "is_default": true,
+            "is_default": false,
             "type_transparency": "A",
             "templates": [
                 668,
@@ -401,7 +401,7 @@
             "name": "Numeral 20",
             "description": "  Ministerio de Economía y Finanzas",
             "parent": null,
-            "is_default": true,
+            "is_default": false,
             "type_transparency": "A",
             "templates": [
                 701,

@@ -90,7 +90,7 @@ class UserRepositoryImpl(UserRepository):
             User: The user object.
         """
 
-        return User.objects.get(email=email)
+        return User.objects.filter(email=email).first()
 
     def get_user_by_username(self, username: str):
         """
@@ -105,6 +105,8 @@ class UserRepositoryImpl(UserRepository):
         user = User.objects.prefetch_related('groups').prefetch_related(
             'person').filter(is_active=True, username=username).first()
 
+        if not user:
+            return None
         # return user with groups name
 
         groups = [{

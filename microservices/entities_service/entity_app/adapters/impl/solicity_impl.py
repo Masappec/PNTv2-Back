@@ -187,6 +187,13 @@ class SolicityImpl(SolicityRepository):
                                          user_updated_id=user_id,
                                          status=Status.SEND)
 
+    def create_comment_solicity(self, solicity_id, user_id, text):
+        return Extension.objects.create(solicity_id=solicity_id,
+                                        user_id=user_id,  motive=text,
+                                        user_created_id=user_id,
+                                        user_updated_id=user_id,
+                                        status=Status.SEND)
+
     def create_manual_solicity(self, title, text, establishment_id, user_id, expiry_date):
         return Solicity.objects.create(title=title, text=text, establishment_id=establishment_id, user_id=user_id,
                                        user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED, expiry_date=expiry_date,

@@ -130,14 +130,18 @@ def send_mail_citizen_response(
         return False
 
 
-@app.task()
 def send_email_for_expired_citizen(
     solicity_id: int,
     establishment_id: int,
     user_id: int,
     number_saip: str,
     email: List[str],
+    first_name: str,
+    last_name: str,
+    status: str,
+    date: str
 ):
+    print('Ejecutando tarea de envio de correo {0}'.format(timezone.now()))
 
     try:
         user = User.objects.get(id=user_id)
@@ -161,15 +165,22 @@ def send_email_for_expired_citizen(
         return False
 
 
-@app.task()
+'''{"number_saip": "936909", "date": "2024-05-11", "first_name": "ASDASD", "last_name": "ASDASD", 
+"establishment_id": 1291, "status": "SEND", "user_id": 3}'''
+
+
 def send_email_for_expired_establishment(
     solicity_id: int,
     establishment_id: int,
     user_id: int,
     number_saip: str,
     email: List[str],
+    first_name: str,
+    last_name: str,
+    status: str,
+    date: str
 ):
-
+    print('Ejecutando tarea de envio de correo {0}'.format(timezone.now()))
     try:
         user = User.objects.get(id=user_id)
 

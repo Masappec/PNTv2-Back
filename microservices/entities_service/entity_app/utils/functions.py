@@ -7,9 +7,9 @@ import csv
 from datetime import datetime, timedelta
 
 
-
 def get_timedelta_for_expired():
-    return timedelta(hours=2)
+    return timedelta(days=1)
+
 
 def get_day_for_publish():
     return 5

@@ -261,7 +261,7 @@ class SolicityResponseSerializer(serializers.ModelSerializer):
 class CreateExtensionSerializer(serializers.Serializer):
 
     motive = serializers.CharField()
-    solicity = SolicitySerializer()
+    solicity_id = serializers.IntegerField()
 
 
 class CreateInsistencySerializer(serializers.Serializer):

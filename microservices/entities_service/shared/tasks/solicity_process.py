@@ -6,6 +6,8 @@ from entity_app.adapters.messaging.publish import Publisher
 from entity_app.adapters.messaging.channels import CHANNEL_SOLICIY
 from entity_app.adapters.messaging.events import SOLICITY_FOR_EXPIRED
 from entities_service.celery import app
+from entity_app.domain.models.establishment import UserEstablishmentExtended
+from entity_app.domain.models.solicity import TypeStages
 
 
 @app.task()
@@ -21,6 +23,10 @@ def change_status_solicity():
                                          status__in=[Status.INSISTENCY_SEND, Status.SEND])
 
     response = SolicityResponse.objects.filter(solicity__in=solicities)
+    es = UserEstablishmentExtended.objects.filter(
+        establishment_id__in=solicities.values_list(
+            'establishment_id', flat=True)
+    ).distinct('user_id').all()
     for solicity in solicities:
 
         response = response.filter(solicity=solicity)
@@ -30,27 +36,43 @@ def change_status_solicity():
             publiher.publish({'type': SOLICITY_FOR_EXPIRED,
                              'payload': {
                                  'number_saip': solicity.number_saip,
-                                 'date': solicity.date,
+                                 'date': solicity.date.strftime('%Y-%m-%d'),
                                  'first_name': solicity.first_name,
                                  'last_name': solicity.last_name,
                                  'establishment_id': solicity.establishment.id,
                                  'status': solicity.status,
-                                 'user_id': solicity.user_created.id
+                                 'user_id': solicity.user_created.id,
+                                 'solicity_id': solicity.id,
+                                 'email': [es.user.email for es in es.filter(establishment_id=solicity.establishment.id)]
                              }})
 
     date = datetime.now()
     solicities = Solicity.objects.filter(expiry_date__lte=date,
                                          status__in=[Status.INSISTENCY_SEND, Status.SEND])
 
+    print(solicities)
     for solicity in solicities:
         response = response.filter(solicity=solicity)
 
         if not response.exists():
-            if solicity.status == Status.INSISTENCY_SEND:
 
+            if solicity.status == Status.SEND:
+                solicity.status = Status.INSISTENCY_PERIOD
+                solicity.save()
+                TimeLineSolicity.objects.create(
+                    solicity=solicity, status=TypeStages.INSISTENCY)
+            elif solicity.status == Status.INSISTENCY_SEND:
                 solicity.status = Status.INSISTENCY_NO_RESPONSED
                 solicity.save()
-            else:
-
-                solicity.status = Status.NO_RESPONSED
+                TimeLineSolicity.objects.create(
+                    solicity=solicity, status=TypeStages.INSISTENCY)
+            elif solicity.status == Status.INSISTENCY_NO_RESPONSED:
+                solicity.status = Status.PERIOD_INFORMAL_MANAGEMENT
                 solicity.save()
+                TimeLineSolicity.objects.create(
+                    solicity=solicity, status=Status.PERIOD_INFORMAL_MANAGEMENT)
+            elif solicity.status == Status.PERIOD_INFORMAL_MANAGEMENT:
+                solicity.status = Status.FINISHED_WITHOUT_RESPONSE
+                solicity.save()
+                TimeLineSolicity.objects.create(
+                    solicity=solicity, status=Status.FINISHED_WITHOUT_RESPONSE)

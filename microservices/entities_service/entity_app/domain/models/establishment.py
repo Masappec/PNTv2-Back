@@ -20,13 +20,13 @@ class EstablishmentExtended(models.Model):
     email_authority = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
-
+    identification = models.CharField(max_length=255, null=True, blank=True)
     objects = models.Manager()
 
     class Meta:
         managed = False
         db_table = 'app_admin_establishment'
-        
+
         verbose_name = 'Institución'
         verbose_name_plural = 'Instituciones'
 

@@ -15,6 +15,11 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
+from entity_app.domain.models.publication import FilePublication
+from entity_app.adapters.messaging.channels import CHANNEL_ESTABLISHMENT_NUMERAL
+from entity_app.adapters.messaging.publish import Publisher
+from entity_app.adapters.messaging.events import TRANSPARENCY_ACTIVE_UPLOAD
+
 
 class NumeralsByEstablishment(APIView):
 
@@ -116,6 +121,50 @@ class NumeralDetail(APIView):
                 'status': status.HTTP_400_BAD_REQUEST,
                 'json': {}
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ListNumeralAllow(APIView):
+    """Publication view."""
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = NumeralDetailSerializer
+
+    def __init__(self):
+        self.service = NumeralService(
+            numeral_repository=NumeralImpl()
+        )
+
+    def get(self, request, *args, **kwargs):
+        """
+        Get a list of transparency.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        try:
+            queryset = self.service.get_by_default(False)
+
+            serializer = self.serializer_class(queryset, many=True)
+
+            return Response(serializer.data)
+        except Exception as e:
+
+            error = MessageTransactional(
+                data={
+                    'message': e.__str__(),
+                    'status': 400,
+                    'json': {}
+                }
+            )
+            error.is_valid()
+            if error.errors:
+                return Response(error.errors)
+            return Response(error.data, status=400)
 
 
 class ListNumeral(ListAPIView):
@@ -265,6 +314,7 @@ class NumeralEditPublish(APIView):
         self.service = NumeralService(
             numeral_repository=NumeralImpl()
         )
+        self.publisher = Publisher(CHANNEL_ESTABLISHMENT_NUMERAL)
 
     @swagger_auto_schema(
         operation_description="Edit Publish numeral",
@@ -293,10 +343,28 @@ class NumeralEditPublish(APIView):
             transparency.files.clear()
             transparency.files.set(data.validated_data['files'])
             transparency.save()
-            mensaje = ""
+            list_files = FilePublication.objects.filter(
+                id__in=data.validated_data['files'])
+            for file in list_files:
+                root = 'transparencia/' + \
+                    str(transparency.establishment.identification) + '/' + \
+                    str(transparency.numeral.name) + '/' + \
+                    str(transparency.year) + '/' + str(transparency.month)
+                FilePublication.move_file(
+                    file, root)
 
             result = self.output_serializer_class(transparency)
-
+            self.publisher.publish({
+                'type': TRANSPARENCY_ACTIVE_UPLOAD,
+                'payload': {
+                    'filepaths': [file.url_download.path for file in list_files],
+                    'date': fecha_actual.strftime('%Y-%m-%d'),
+                    'month': month,
+                    'year': year,
+                    'user': transparency.establishment_id,
+                    'establishment_identification': transparency.establishment.identification
+                }
+            })
             res = MessageTransactional(
                 data={
                     'message': 'Publicacion editada correctamente',

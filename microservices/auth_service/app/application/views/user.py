@@ -134,7 +134,7 @@ class UserCreateAPI(APIView):
                 raise ValueError('Este correo ya está en uso')
 
             find_user = self.user_service.get_user_by_username(
-                data.validate_data['username'])
+                data.validated_data['username'])
             if find_user:
                 raise ValueError('Este nombre de usuario ya está en uso')
             # crea el usuario
@@ -297,11 +297,11 @@ class UserUpdate(APIView):
             return Response(res.data, status=200)
         except Exception as e:
             print("Error:", str(e))
-            #rollback
+            # rollback
             if user is not None:
                 if init_rol.id != group_first:
                     self.user_service.assign_role(pk, init_rol)
-            
+
             res = MessageTransactional(
                 data={
                     'message': str(e),
@@ -312,9 +312,6 @@ class UserUpdate(APIView):
             res.is_valid(raise_exception=True)
 
             return Response(res.data, status=400)
-
-
-
 
 
 class UserDetail(APIView):
@@ -358,7 +355,7 @@ class UserDetail(APIView):
         try:
             user = self.user_service.get_user_object(pk)
             person = self.person_service.get_person_by_userid(user.id)
-            
+
             data_response = self.serializer_class(data={
                 'id': user.id,
                 'first_name': user.first_name,
@@ -375,13 +372,13 @@ class UserDetail(APIView):
                     'name': group.name
                 } for group in user.groups.all()],
             })
-            
+
             data_response.is_valid(raise_exception=True)
             return Response(data_response.data, status=200)
-        
+
         except Exception as e:
             print("Error: ", str(e))
-            
+
             res = MessageTransactional(
                 data={
                     'message': str(e),
@@ -433,10 +430,10 @@ class UserDeactivate(APIView):
         user_selected = self.user_service.get_user_object(pk)
         if user_selected.is_superuser:
             return Response({'message': 'No se puede desactivar un usuario administrador'}, status=400)
-        
+
         if user_selected.is_active:
             self.user_service.delete_user(pk)
             return Response({'message': 'Usuario desactivado correctamente'}, status=202)
-        
+
         self.user_service.active_user(pk)
         return Response({'message': 'Usuario Activado correctamente'}, status=200)

@@ -77,6 +77,17 @@ class SolicityService:
 
         return solicity
 
+    def comment_solicity(self, solicity_id, user_id, text):
+        """
+        Crea un comentario en una solicitud
+
+        Args:
+            solicity_id (int): id de la solicitud
+            user_id (int): id del usuario
+            text (str): texto del comentario
+        """
+        return self.solicity_repository.create_comment_solicity(solicity_id, user_id, text)
+
     def send_solicity_without_draft(self,
                                     number_saip: str,
                                     establishment: int,

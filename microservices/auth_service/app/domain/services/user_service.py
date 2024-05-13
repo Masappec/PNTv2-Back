@@ -227,11 +227,7 @@ class UserService:
         Returns:
             User: The user object.
         """
-        try:
-            return self.user_repository.get_user_by_username(username)
-        except Exception as e:
-            print(e)
-            raise ValueError("User not found")
+        return self.user_repository.get_user_by_username(username)
 
     def login(self, user: dict):
         """

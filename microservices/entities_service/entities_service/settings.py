@@ -103,7 +103,7 @@ CELERY_BROKER_URL = os.getenv(
     'CELERY_BROKER_URL', f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}')
 CELERY_RESULT_BACKEND = os.getenv(
     'CELERY_RESULT_BACKEND', f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}')
-CELERY_TIMEZONE = 'UTC'
+CELERY_TIMEZONE = 'America/Guayaquil'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 timezone = 'America/Guayaquil'
@@ -183,6 +183,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+
 
 USE_I18N = True
 

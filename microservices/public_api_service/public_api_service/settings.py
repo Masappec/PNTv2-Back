@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import mongoengine
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -70,29 +72,45 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'public_api_service.wsgi.application'
 
-
+DATABASE_NAME = os.getenv('MONGO_DB_NAME', 'public_api_service')
+DATABASE_HOST = os.getenv('MONGO_DB_HOST', 'localhost')
+USERNAME = os.getenv('MONGO_DB_USERNAME', 'root')
+PASSWORD = os.getenv('MONGO_DB_PASSWORD', 'root')
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# mongoengine.connect(db=DATABASE_NAME, host=DATABASE_HOST,
+#                    username=USERNAME, password=PASSWORD)
 
+
+#                    username=USERNAME, password=PASSWORD)
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': os.getenv('MONGO_DB_NAME', 'public_api_service'),
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': os.getenv('MONGO_DB_HOST', 'localhost'),
-            'port': os.getenv('MONGO_DB_PORT', 27017),
-            'username': os.getenv('MONGO_DB_USERNAME', 'root'),
-            'password': os.getenv('MONGO_DB_PASSWORD', 'root'),
-            'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1',
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'pnt_auth_db'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'root'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
+MONGODB_DATABASES = {
+    'default': {
+        'name': DATABASE_NAME,
+        'host': DATABASE_HOST,
+        'port': 27017,
+        'username': USERNAME,
+        'password': PASSWORD
+
+    }
+}
+
+INSTALLED_APPS += ["django_mongoengine"]
+
 REDIS_HOST = os.getenv('REDIS_HOST', 'redis_db')
 REDIS_PORT = os.getenv('REDIS_PORT', 6379)
 REDIS_DB = os.getenv('REDIS_DB', 0)
 
+CELERY_IMPORTS = ('core.tasks.emit',)
 
 CELERY_BROKER_URL = os.getenv(
     'CELERY_BROKER_URL', f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}')

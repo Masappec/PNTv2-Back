@@ -33,12 +33,18 @@ class CreateExtensionSolicityView(APIView):
             serializer = self.serializer_class(data=request.data)
             serializer.is_valid(raise_exception=True)
             user_id = request.user.id
-            response = self.service.create_extencion_solicity(
-                serializer.validated_data['motive'],
-                serializer.validated_data['solicity_id'],
-                user_id
+            response = self.service.comment_solicity(
+                solicity_id=serializer.validated_data['solicity_id'],
+                user_id=user_id,
+                text=serializer.validated_data['text']
+
             )
-            return Response(response, status=status.HTTP_201_CREATED)
+            return Response({
+                'message': 'Comentario creado correctamente',
+                'status': 201,
+                'json': {}
+
+            }, status=status.HTTP_201_CREATED)
         except Exception as e:
             data = {
                 'message': str(e),

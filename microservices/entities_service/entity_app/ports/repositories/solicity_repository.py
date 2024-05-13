@@ -70,6 +70,10 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
+    def create_comment_solicity(self, solicity_id, user_id, text):
+        pass
+
+    @abstractmethod
     def create_manual_solicity(self, title, text, establishment_id, user_id, expiry_date):
         """
         Crea una solicitud de manual

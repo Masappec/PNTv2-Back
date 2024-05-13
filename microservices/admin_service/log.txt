@@ -1,76 +1,26 @@
-Tue Apr 23 20:01:12 2024 - Iniciando suscripción al canal user
-Tue Apr 23 20:01:12 2024 - Iniciando suscripción al canal solicity
-Tue Apr 23 20:02:06 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 38, "establishment_id": 21, "user_id": 4, "number_saip": "635879", "email": []}, "id": "6dd0a4c8-b2e5-4bc4-886f-09c68f16793d"}'}
-Wed Apr 24 12:58:15 2024 - Iniciando suscripción al canal user
-Wed Apr 24 12:58:15 2024 - Iniciando suscripción al canal solicity
-Wed Apr 24 12:59:09 2024 - Iniciando suscripción al canal user
-Wed Apr 24 12:59:09 2024 - Iniciando suscripción al canal solicity
-Wed Apr 24 13:00:07 2024 - Iniciando suscripción al canal user
-Wed Apr 24 13:00:07 2024 - Iniciando suscripción al canal solicity
-Wed Apr 24 13:00:56 2024 - Iniciando suscripción al canal user
-Wed Apr 24 13:00:56 2024 - Iniciando suscripción al canal solicity
-Wed Apr 24 13:14:49 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 226, "establishment_id": 1291, "user_id": 3, "number_saip": "977269", "email": []}, "id": "aa20ede9-aef4-4d98-820e-7d7e61aaa811"}'}
-Wed Apr 24 13:27:03 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_created", "payload": {"user_id": 210, "establishment_id": 2}, "id": "95dcdf29-84ae-4661-85d0-263df8769f1c"}'}
-Wed Apr 24 13:28:56 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_updated", "payload": {"user_id": "210", "establishment_id": 2}, "id": "4b69493a-2d23-45d1-b6b4-c5699e11b88d"}'}
-Wed Apr 24 13:31:11 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 227, "establishment_id": 2, "user_id": 3, "number_saip": "607551", "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "d77b9b77-3849-4c97-9dfa-27fd9bbb537f"}'}
-Wed Apr 24 13:46:34 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 228, "establishment_id": 2, "user_id": 3, "number_saip": "504390", "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "a810d974-2afe-4892-935e-c60768bbbcb4"}'}
-Wed Apr 24 13:51:25 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 229, "establishment_id": 2, "user_id": 3, "number_saip": "449319", "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "32666042-de1f-4f72-9b1f-c8f687cefe64"}'}
-Wed Apr 24 13:53:27 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 230, "establishment_id": 2, "user_id": 3, "number_saip": "544075", "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "8c8b4493-9ff3-4205-aad8-05b85edba9ae"}'}
-Wed Apr 24 13:54:00 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_user", "payload": {"solicity_id": 230, "user_id": 3, "number_saip": "544075", "establishment_id": 2, "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "20017b04-45f6-44bd-b10c-feb9cc643e70"}'}
-Wed Apr 24 15:23:53 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_user", "payload": {"solicity_id": 230, "user_id": 3, "number_saip": "544075", "establishment_id": 2, "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "77a5a653-e7b7-407b-99b9-27c86b71c3be"}'}
-Wed Apr 24 15:53:21 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_user", "payload": {"solicity_id": 230, "user_id": 3, "number_saip": "544075", "establishment_id": 2, "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "8a4cccee-0667-4258-a189-f2cf31dbbf31"}'}
-Wed Apr 24 17:40:22 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 231, "establishment_id": 2, "user_id": 3, "number_saip": "161746", "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "d7094a9d-0dd1-4ae1-b13b-51c351c53c51"}'}
-Wed Apr 24 17:41:57 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 231, "user_id": 3, "number_saip": "161746", "establishment_id": 2, "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "4178aa1a-164c-4ba9-a6e9-6dd8bc4d3606"}'}
-Wed Apr 24 17:44:42 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_user", "payload": {"solicity_id": 231, "user_id": 3, "number_saip": "161746", "establishment_id": 2, "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "64e20a39-6184-4c27-a908-fd93bd1de4cd"}'}
-Wed Apr 24 17:45:26 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 231, "user_id": 3, "number_saip": "161746", "establishment_id": 2, "email": ["kwywgmt489@tormails.com", "anderson5@gmail.com"]}, "id": "839aa96a-a854-4fc0-9516-62830e5a2ae8"}'}
-Wed Apr 24 20:27:26 2024 - Iniciando suscripción al canal user
-Wed Apr 24 20:27:26 2024 - Iniciando suscripción al canal solicity
-Wed Apr 24 20:29:23 2024 - Iniciando suscripción al canal user
-Wed Apr 24 20:29:23 2024 - Iniciando suscripción al canal solicity
-Wed Apr 24 20:31:24 2024 - Iniciando suscripción al canal user
-Wed Apr 24 20:31:24 2024 - Iniciando suscripción al canal solicity
-Wed Apr 24 20:33:33 2024 - Iniciando suscripción al canal user
-Wed Apr 24 20:33:33 2024 - Iniciando suscripción al canal solicity
-Wed Apr 24 20:36:09 2024 - Iniciando suscripción al canal user
-Wed Apr 24 20:36:09 2024 - Iniciando suscripción al canal solicity
-Thu Apr 25 16:26:31 2024 - Iniciando suscripción al canal user
-Thu Apr 25 16:26:31 2024 - Iniciando suscripción al canal solicity
-Thu Apr 25 16:36:03 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 39, "establishment_id": 1, "user_id": 4, "number_saip": "874413", "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "8d011cea-1991-4807-a4c5-d20547892619"}'}
-Thu Apr 25 16:36:41 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_updated", "payload": {"user_id": "3", "establishment_id": 2}, "id": "3a44698f-23dc-4880-a1e8-a19966cbe369"}'}
-Thu Apr 25 16:39:31 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 40, "establishment_id": 2, "user_id": 4, "number_saip": "419560", "email": ["anderson@gmail.com"]}, "id": "9463dc5f-e7ef-4057-87d0-fcea3bcf5a29"}'}
-Thu Apr 25 16:39:59 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "946f1618-5e5a-40c1-88b9-05ea4bd822cd"}'}
-Thu Apr 25 16:41:09 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "bf60ebe6-13d0-4e29-8e88-c4afd0386f41"}'}
-Thu Apr 25 16:43:33 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_user", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "b481368c-f51d-4bbb-917e-83f3305b7315"}'}
-Thu Apr 25 16:44:00 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "b4ac7147-19e2-47d2-9dbc-e1a8c69c9787"}'}
-Thu Apr 25 16:45:29 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_user", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "42b06ff9-5ebe-4024-a5ed-558041888a50"}'}
-Fri Apr 26 16:31:50 2024 - Iniciando suscripción al canal user
-Fri Apr 26 16:31:50 2024 - Iniciando suscripción al canal solicity
-Fri Apr 26 18:29:38 2024 - Iniciando suscripción al canal user
-Fri Apr 26 18:29:38 2024 - Iniciando suscripción al canal solicity
-Fri Apr 26 20:10:47 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "5e907cc4-fd5d-4473-907b-1c4685366124"}'}
-Fri Apr 26 20:11:14 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "1726b28b-9e79-4b23-b31f-89a7f46a9585"}'}
-Fri Apr 26 20:11:27 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "38e901c0-c020-431a-ba45-f6aa085991c7"}'}
-Fri Apr 26 20:12:01 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "bbd001d8-6b39-4f93-8a5e-67bdac93b750"}'}
-Fri Apr 26 20:12:33 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "50d3b31d-db97-4e08-8411-e9e7d87ad40c"}'}
-Fri Apr 26 20:13:07 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 39, "user_id": 4, "number_saip": "874413", "establishment_id": 1, "email": ["afullink@gmail.com", "anderson@gmail.com"]}, "id": "ed3d50fe-4480-481f-84ef-98f6157b5cd6"}'}
-Sat Apr 27 13:27:45 2024 - Iniciando suscripción al canal user
-Sat Apr 27 13:27:45 2024 - Iniciando suscripción al canal solicity
-Sun Apr 28 01:36:43 2024 - Iniciando suscripción al canal user
-Sun Apr 28 01:36:43 2024 - Iniciando suscripción al canal solicity
-Sun Apr 28 11:54:24 2024 - Iniciando suscripción al canal user
-Sun Apr 28 11:54:24 2024 - Iniciando suscripción al canal solicity
-Sun Apr 28 15:11:15 2024 - Iniciando suscripción al canal user
-Sun Apr 28 15:11:15 2024 - Iniciando suscripción al canal solicity
-Sun Apr 28 16:49:35 2024 - Iniciando suscripción al canal user
-Sun Apr 28 16:49:35 2024 - Iniciando suscripción al canal solicity
-Sun Apr 28 19:50:44 2024 - Iniciando suscripción al canal user
-Sun Apr 28 19:50:44 2024 - Iniciando suscripción al canal solicity
-Tue Apr 30 13:26:12 2024 - Iniciando suscripción al canal user
-Tue Apr 30 13:26:12 2024 - Iniciando suscripción al canal solicity
-Tue Apr 30 13:28:56 2024 - Iniciando suscripción al canal user
-Tue Apr 30 13:28:56 2024 - Iniciando suscripción al canal solicity
-Tue Apr 30 13:44:09 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_register", "payload": {"uidb64": "Mzg", "username": "andersonsinaluisa", "email": "andersonsinaluisa", "token": "c6au5b-baa8c6eb44b1fb4470936309582ed124"}, "id": "06e76e99-86b4-4a92-95a6-ce899ca92c0b"}'}
-Tue Apr 30 15:49:41 2024 - Iniciando suscripción al canal user
-Tue Apr 30 15:49:41 2024 - Iniciando suscripción al canal solicity
-Mon May  6 13:43:11 2024 - Iniciando suscripción al canal user
-Mon May  6 13:43:11 2024 - Iniciando suscripción al canal solicity
+Mon May 13 02:04:07 2024 - Iniciando suscripción al canal user
+Mon May 13 02:04:07 2024 - Iniciando suscripción al canal solicity
+Mon May 13 02:10:17 2024 - Iniciando suscripción al canal user
+Mon May 13 02:10:17 2024 - Iniciando suscripción al canal solicity
+Mon May 13 02:41:04 2024 - Iniciando suscripción al canal user
+Mon May 13 02:41:04 2024 - Iniciando suscripción al canal solicity
+Mon May 13 02:45:00 2024 - Iniciando suscripción al canal user
+Mon May 13 02:45:00 2024 - Iniciando suscripción al canal solicity
+Mon May 13 02:48:30 2024 - Iniciando suscripción al canal user
+Mon May 13 02:48:30 2024 - Iniciando suscripción al canal solicity
+Mon May 13 02:55:06 2024 - Iniciando suscripción al canal user
+Mon May 13 02:55:06 2024 - Iniciando suscripción al canal solicity
+Mon May 13 02:57:04 2024 - Iniciando suscripción al canal user
+Mon May 13 02:57:04 2024 - Iniciando suscripción al canal solicity
+Mon May 13 03:33:47 2024 - Iniciando suscripción al canal user
+Mon May 13 03:33:47 2024 - Iniciando suscripción al canal solicity
+Mon May 13 03:34:33 2024 - Iniciando suscripción al canal user
+Mon May 13 03:34:33 2024 - Iniciando suscripción al canal solicity
+Mon May 13 03:36:23 2024 - Iniciando suscripción al canal user
+Mon May 13 03:36:23 2024 - Iniciando suscripción al canal solicity
+Mon May 13 03:43:53 2024 - Iniciando suscripción al canal user
+Mon May 13 03:43:53 2024 - Iniciando suscripción al canal solicity
+Mon May 13 04:02:45 2024 - Iniciando suscripción al canal user
+Mon May 13 04:02:45 2024 - Iniciando suscripción al canal solicity
+Mon May 13 04:03:45 2024 - Iniciando suscripción al canal user
+Mon May 13 04:03:45 2024 - Iniciando suscripción al canal solicity

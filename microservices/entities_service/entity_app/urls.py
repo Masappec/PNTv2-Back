@@ -10,7 +10,7 @@ from entity_app.application.views.solicity import SolicityView, SolicityCreateDr
     SolicityResponseView, SolicityCreateResponseView, SolicityWithoutDraftView, SolicityGetLastDraftView, \
     SolicitySendView, SolicityDetailView, UpdateSolicityView, SolicityDetailEstablishmentView
 
-from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail, ListNumeral, PublishNumeral, NumeralEditPublish
+from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail, ListNumeral, ListNumeralAllow, PublishNumeral, NumeralEditPublish
 
 from entity_app.application.views.colab_transparency import CreateTransparencyColaboraty, TransparencyColaborativeView, \
     TransparencyColaborativeDelete, TransparencyCollabUpdate, TransparecyCollabPublicView
@@ -76,6 +76,7 @@ urlpatterns = [
 
     path('numerals/', NumeralsByEstablishment.as_view(),
          name='numerals-by-establishment'),
+    path("numerals/allow/", ListNumeralAllow.as_view(), name="numerals-allow"),
     path('numerals/detail/', NumeralDetail.as_view(), name='numeral-detail'),
     path('numerals/transparency', ListNumeral.as_view(),
          name='numero-transparency'),
