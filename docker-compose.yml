@@ -73,7 +73,7 @@ services:
       - redis_db
     volumes:
       - ./microservices/entities_service:/code
-
+      - shared_media:/code/media
     networks:
       - pnt_network
     environment:
@@ -148,7 +148,9 @@ services:
 volumes:
   auth_microservice:
   admin_microservice:
-
+  public_micorservice:
+  shared_media:
+    driver: local
 networks:
   pnt_network:
     driver: bridge
