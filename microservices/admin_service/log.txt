@@ -40,3 +40,5 @@ Tue May 14 14:11:30 2024 - Iniciando suscripción al canal user
 Tue May 14 14:11:30 2024 - Iniciando suscripción al canal solicity
 Tue May 14 16:09:11 2024 - Iniciando suscripción al canal user
 Tue May 14 16:09:11 2024 - Iniciando suscripción al canal solicity
+Tue May 14 21:31:35 2024 - Iniciando suscripción al canal user
+Tue May 14 21:31:35 2024 - Iniciando suscripción al canal solicity
