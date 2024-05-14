@@ -41,11 +41,13 @@ services:
     networks:
       - pnt_network
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - ./mongo_data:/data/db
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
 
     environment:
+      MONGO_INITDB_ROOT_DATABASE: public_api_service
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
 
@@ -97,8 +99,8 @@ services:
       - REDIS_DB=0
       - MONGO_DB_HOST=mongo_db
       - MONGO_DB_PORT=27017
-      - MONGO_DB_USERNAME=public_user
-      - MONGO_DB_PASSWORD=public_password
+      - MONGO_DB_USERNAME=root
+      - MONGO_DB_PASSWORD=rootpassword
       - MONGO_DB_NAME=public_api_service
       - DB_HOST=db_auth
       - DB_NAME=auth_database
