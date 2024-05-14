@@ -45,4 +45,4 @@ class Command(BaseCommand):
             self.service.create_type_institution()
 
         if options.get('type', False):
-            self.service.create_function_organization()
+            self.service.create_type_organization()
