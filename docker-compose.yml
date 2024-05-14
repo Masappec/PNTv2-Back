@@ -89,7 +89,7 @@ services:
   public_micorservice:
     build:
       context: ./microservices/public_api_service
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - "8003:8000"
     depends_on:
@@ -131,6 +131,11 @@ services:
     image: mongo:latest
     networks:
       - pnt_network
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo_data:/data/db
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
 
   api_gateway:
     image: nginx:latest
