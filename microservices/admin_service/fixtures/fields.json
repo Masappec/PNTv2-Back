@@ -58,25 +58,30 @@
             "type_field": "select",
             "options": [
                 {
-                    "id": "Meztizo",
-                    "name": "Meztizo",
+                    "id": "Meztiza",
+                    "name": "Meztiza",
                     "color": "#00B8D9"
                 },
                 {
-                    "id": "Pueblo Montubio",
-                    "name": "Pueblo Montubio",
+                    "id": "Pueblo montubio",
+                    "name": "Pueblo montubio",
                     "color": "#00B8D9"
                 },
                 {
-                    "id": "Pueblo o Nacionalidad Indígena",
-                    "name": "Pueblo o Nacionalidad Indígena",
+                    "id": "Pueblo o nacionalidadades indígenas",
+                    "name": "Pueblo o nacionalidadades indígenas",
                     "color": "#00B8D9"
                 },
                 {
-                    "id": "Pueblo Afrodescendiente",
-                    "name": "Pueblo Afrodescendiente",
+                    "id": "Pueblo afrodescendiente",
+                    "name": "Pueblo afrodescendiente",
                     "color": "#00B8D9"
-                }
+                },
+                {
+                    "id": "Blanca",
+                    "name": "Blanca",
+                    "color": "#00B8D9"
+                },
             ],
             "permission_required": "add_user_ciudadano",
             "content_type": null,
