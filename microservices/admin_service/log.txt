@@ -52,3 +52,19 @@ Wed May 15 16:00:52 2024 - Mensaje recibido: {'type': 'message', 'pattern': None
 Wed May 15 16:02:22 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_updated", "payload": {"user_id": "3", "establishment_id": 1}, "id": "6d24af3e-5849-4df5-8255-fbed4b1ea558"}'}
 Wed May 15 16:03:53 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_created", "payload": {"user_id": 4, "establishment_id": 1}, "id": "9a5f6ff3-2abd-4e96-881e-3c2b0e8d4572"}'}
 Wed May 15 16:08:52 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_register", "payload": {"uidb64": "NQ", "username": "asinaluisa5", "email": "andersonsinaluisa3@sgmail.com", "token": "c72sui-6abd6f20df16860461f04ad44849761d"}, "id": "6d09a765-4f40-4cac-9157-c8b1bcd3d976"}'}
+Wed May 15 21:44:32 2024 - Iniciando suscripción al canal user
+Wed May 15 21:44:32 2024 - Iniciando suscripción al canal solicity
+Wed May 15 21:49:47 2024 - Iniciando suscripción al canal user
+Wed May 15 21:49:47 2024 - Iniciando suscripción al canal solicity
+Wed May 15 21:50:32 2024 - Iniciando suscripción al canal user
+Wed May 15 21:50:32 2024 - Iniciando suscripción al canal solicity
+Wed May 15 21:51:30 2024 - Iniciando suscripción al canal user
+Wed May 15 21:51:30 2024 - Iniciando suscripción al canal solicity
+Wed May 15 21:52:18 2024 - Iniciando suscripción al canal user
+Wed May 15 21:52:18 2024 - Iniciando suscripción al canal solicity
+Wed May 15 21:53:08 2024 - Iniciando suscripción al canal user
+Wed May 15 21:53:08 2024 - Iniciando suscripción al canal solicity
+Wed May 15 21:54:24 2024 - Iniciando suscripción al canal user
+Wed May 15 21:54:24 2024 - Iniciando suscripción al canal solicity
+Wed May 15 21:55:29 2024 - Iniciando suscripción al canal user
+Wed May 15 21:55:29 2024 - Iniciando suscripción al canal solicity

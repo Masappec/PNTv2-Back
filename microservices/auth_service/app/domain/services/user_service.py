@@ -127,10 +127,14 @@ class UserService:
                   User model that has been created
                   with the provided user dictionary.
         """
+        password = user.validated_data['password']
+        if not password:
+            password = self.generate_password()
+        password = make_password(password)
         data = {
             'username': user.validated_data['username'],
             'email': user.validated_data['username'],
-            'password': user.validated_data['password'] if user.validated_data['password'] else self.generate_password(),
+            'password': user.validated_data['password'],
             'first_name': user.validated_data['first_name'],
             'last_name': user.validated_data['last_name'],
         }
@@ -161,12 +165,12 @@ class UserService:
         """
         data = {
             'username': user.validated_data['username'],
-            'email': user.validated_data['username'],
+            'email': user.validated_data['email'],
             'first_name': user.validated_data['first_name'],
             'last_name': user.validated_data['last_name'],
         }
         if user.validated_data['password']:
-            data['password'] = user.validated_data['password']
+            data['password'] = make_password(user.validated_data['password'])
 
         self.publisher.publish({
             'type': USER_UPDATED,

@@ -9,9 +9,11 @@ class AppConfig(AppConfig):
 
     
     def ready(self):
-        post_migrate.connect(self.create_custom_permissions_handler, sender=self)
-        import app.ports.signals.password_reset_token_created
+        #post_migrate.connect(self.create_custom_permissions_handler, sender=self)
+        #import app.ports.signals.password_reset_token_created
+        from app.utils.config import create_custom_permissions
 
+        #create_custom_permissions()
         
     def create_custom_permissions_handler(self, **kwargs):
             # Verifica si la señal post_migrate es para la base de datos predeterminada

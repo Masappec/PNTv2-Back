@@ -296,7 +296,7 @@ class UserUpdate(APIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=200)
         except Exception as e:
-            print("Error:", str(e))
+            print("Error: ", str(e))
             # rollback
             if user is not None:
                 if init_rol.id != group_first:

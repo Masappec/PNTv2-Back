@@ -504,3 +504,85 @@ class FieldForFormCreate(APIView):
             'institutions': [{'id': x.id, 'name': x.name} for x in repository_institution.get_all()],
             'organizations': [{'id': x.id, 'name': x.name} for x in repository_organization.get_all()]
         })
+
+
+
+
+
+
+class GetByUserId(APIView):
+    
+    serializer_class = EstablishmentCreateResponseSerializer
+    permission_classes = [IsAuthenticated]
+    
+    
+    def __init__(self):
+        """
+        The constructor for the EstablishmentDetail class.
+        """
+        self.establishment_service = EstablishmentService(
+            EstablishmentRepositoryImpl())
+        self.law_enforcement = LawEnforcementService(LawEnforcementImpl())
+        
+        
+    def get(self, request, *args, **kwargs):
+        """
+        Get a establishment.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+        
+        try:
+            
+            user_id = request.query_params.get('user_id')
+            if user_id is None:
+                raise Exception('El parametro user_id es requerido')
+            
+            
+            establishment = self.establishment_service.get_establishment_by_user_id(
+                user_id)
+            info = self.establishment_service.get_first_access_to_information(
+                establishment.id)
+            law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(
+                establishment.id)
+            serializer = self.serializer_class(data={
+                'id': establishment.id,
+                'name': establishment.name,
+                'abbreviation': establishment.abbreviation,
+                'logo': establishment.logo.url if establishment.logo else None,
+                'highest_authority': establishment.highest_authority,
+                'first_name_authority': establishment.first_name_authority,
+                'last_name_authority': establishment.last_name_authority,
+                'job_authority': establishment.job_authority,
+                'email_authority': establishment.email_authority,
+                'highest_committe': law_enforcement.highest_committe if law_enforcement is not None else None,
+                'first_name_committe': law_enforcement.first_name_committe if law_enforcement is not None else None,
+                'last_name_committe': law_enforcement.last_name_committe if law_enforcement is not None else None,
+                'job_committe': law_enforcement.job_committe if law_enforcement is not None else None,
+                'email_committe': law_enforcement.email_committe if law_enforcement is not None else None,
+                'email_accesstoinformation': info.email if info is not None else None,
+                'address': establishment.address if establishment.address else '',
+                'type_institution': establishment.type_institution.id if establishment.type_institution else None,
+                'type_organization': establishment.type_organization.id if establishment.type_organization else None,
+                'function_organization': establishment.function_organization.id if establishment.function_organization else None,
+                'identification': establishment.identification if establishment.identification else None
+
+            })
+
+            serializer.is_valid(raise_exception=True)
+            return Response(serializer.data)
+        except Exception as e:
+            print("Error: ", e)
+            res = MessageTransactional(
+                data={
+                    'message': str(e),
+                    'status': 400,
+                    'json': {}
+                }
+            )

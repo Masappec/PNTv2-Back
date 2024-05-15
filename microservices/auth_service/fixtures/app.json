@@ -1,0 +1,65 @@
+[
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Puede Agregar solicitudes manuales",
+            "content_type": {
+                "model": {
+                    "name":"solicityresponse"
+                }
+            },
+            "codename": "add_manual_solicity"
+        }
+    },
+    
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Puede actualizar información de la entidad",
+            "content_type": {
+                "model": "establishment"
+            },
+            "codename": "add_manual_solicity"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Puede ver usuarios de entidad",
+            "content_type": {
+                "model": "user"
+            },
+            "codename": "user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Puede agregar usuarios de entidad",
+            "content_type": {
+                "model": "user"
+            },
+            "codename": "user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Puede eliminar usuarios de entidad",
+            "content_type": {
+                "model": "user"
+            },
+            "codename": "user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Puede actualizar usuarios de entidad",
+            "content_type": {
+                "model": "user"
+            },
+            "codename": "user"
+        }
+    }
+]

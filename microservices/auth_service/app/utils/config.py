@@ -48,8 +48,61 @@ def create_custom_permissions():
     )
 
     
+    
+
     permission = Permission.objects.get_or_create(
-        codename='update_my_establishment',
-        name = 'Actualizar datos de mi institución',
-        content_type_id=ContentType.objects.get(name='Establishment')
+        codename='add_user_establishment',
+        name='Puede agregar usuarios de entidad',
+        content_type=ContentType.objects.filter(model='user').first()
     )
+    
+    permission = Permission.objects.get_or_create(
+        codename='delete_user_establishment',
+        name='Puede eliminar usuarios de entidad',
+        content_type=ContentType.objects.filter(model='user').first()
+    )
+    
+    permission = Permission.objects.get_or_create(
+        codename='update_user_establishment',
+        name='Puede actualizar usuarios de entidad',
+        content_type=ContentType.objects.filter(model='user').first()
+    )
+    
+    permission = Permission.objects.get_or_create(
+        codename='view_user_establishment',
+        name='Puede ver usuarios de entidad',
+        content_type=ContentType.objects.filter(model='user').first()
+    )
+    
+    permission = Permission.objects.get_or_create(
+        codename='view_establishment_internal',
+        name='Puede ver informacion de institución',
+        content_type=ContentType.objects.get(model='establishment')
+    )
+    
+    permission = Permission.objects.get_or_create(
+        codename='add_establishment_internal',
+        name='Puede agregar informacion de institución',
+        content_type=ContentType.objects.get(model='establishment')
+    )
+    
+    permission = Permission.objects.get_or_create(
+        codename='delete_establishment_internal',
+        name='Puede eliminar informacion de institución',
+        content_type=ContentType.objects.get(model='establishment')
+    )
+    
+    permission = Permission.objects.get_or_create(
+        codename='update_establishment_internal',
+        name='Puede actualizar informacion de institución',
+        content_type=ContentType.objects.get(model='establishment')
+    )
+    
+    
+    permission = Permission.objects.get_or_create(
+        codename='add_manual_solicity',
+        name='Puede agregar solicitudes manuales',
+        content_type=ContentType.objects.get(model='solicityresponse')
+    )
+    
+    
