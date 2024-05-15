@@ -81,7 +81,7 @@
                     "id": "Blanca",
                     "name": "Blanca",
                     "color": "#00B8D9"
-                },
+                }
             ],
             "permission_required": "add_user_ciudadano",
             "content_type": null,
