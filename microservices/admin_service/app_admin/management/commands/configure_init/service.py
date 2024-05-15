@@ -87,7 +87,7 @@ class ConfigureService:
 
     def create_type_organization(self):
         print("Creando tipos de organizacion...")
-        for type_org in data_type_establishment:
+        for type_org in data_type_org:
             self.type_organization.create_type_organization(
                 type_org['Tipo Organización'])
 

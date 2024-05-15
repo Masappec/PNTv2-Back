@@ -139,10 +139,15 @@ class NumeralServiceData:
                     type = 'C'
                 if description == 'Transparencia focalizada':
                     type = 'F'
+                    
                 numero = re.search(r'\d+', name)
-
+                nombre =''
+                if name.startswith('Art'):
+                    nombre = name
+                else:
+                    nombre = 'Numeral ' + numero.group() if numero else name
                 numeral_object = Numeral.objects.create(
-                    name="Numeral " + numero.group() if numero else description,
+                    name=nombre,
                     description=description,
                     type_transparency=type,
                     is_default=is_default

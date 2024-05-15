@@ -21,10 +21,9 @@ def send_user_created_event(user_id, establishment_id):
 
         establishments = service.get_establishment_by_user(user_id)
 
-        print([establishment.is_active for establishment in establishments])
         service.assign_user(user_id, establishment_id)
 
     except Exception as e:
-        print(f"Task failed: Error al asignar usuario  {
+        print(f"Task failed: Error al asignar usuario   {
               user_id} al establecimiento {establishment_id}")
         raise e

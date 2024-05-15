@@ -196,7 +196,7 @@ class SolicityService:
                     }
                 })
 
-            else:
+            '''else:
                 if extensions == 10:
                     raise ValueError(
                         "No se pueden agregar mas comentarios a esta solicitud")
@@ -213,7 +213,7 @@ class SolicityService:
                         'email': [e.user.email for e in es]
 
                     }
-                })
+                })'''
 
             return solicity
 

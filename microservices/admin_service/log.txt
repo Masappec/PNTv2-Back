@@ -42,3 +42,13 @@ Tue May 14 16:09:11 2024 - Iniciando suscripción al canal user
 Tue May 14 16:09:11 2024 - Iniciando suscripción al canal solicity
 Tue May 14 21:31:35 2024 - Iniciando suscripción al canal user
 Tue May 14 21:31:35 2024 - Iniciando suscripción al canal solicity
+Wed May 15 13:20:46 2024 - Iniciando suscripción al canal user
+Wed May 15 13:20:46 2024 - Iniciando suscripción al canal solicity
+Wed May 15 15:18:41 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_register", "payload": {"uidb64": "Mg", "username": "asinaluisa", "email": "andersonsinaluisa@sgmail.com", "token": "c72qiv-083fdfde59c6f0da1b49a249446ec8fd"}, "id": "525b6056-4e5e-4751-94b9-ccbd2405d277"}'}
+Wed May 15 15:59:40 2024 - Iniciando suscripción al canal user
+Wed May 15 15:59:40 2024 - Iniciando suscripción al canal solicity
+Wed May 15 16:00:14 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_updated", "payload": {"user_id": "3", "establishment_id": 1}, "id": "4b7178f3-71b4-479c-b2b3-10466fffbd62"}'}
+Wed May 15 16:00:52 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_updated", "payload": {"user_id": "3", "establishment_id": 1}, "id": "e5defe92-791e-49aa-b50b-f2c29da745db"}'}
+Wed May 15 16:02:22 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_updated", "payload": {"user_id": "3", "establishment_id": 1}, "id": "6d24af3e-5849-4df5-8255-fbed4b1ea558"}'}
+Wed May 15 16:03:53 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_created", "payload": {"user_id": 4, "establishment_id": 1}, "id": "9a5f6ff3-2abd-4e96-881e-3c2b0e8d4572"}'}
+Wed May 15 16:08:52 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_register", "payload": {"uidb64": "NQ", "username": "asinaluisa5", "email": "andersonsinaluisa3@sgmail.com", "token": "c72sui-6abd6f20df16860461f04ad44849761d"}, "id": "6d09a765-4f40-4cac-9157-c8b1bcd3d976"}'}

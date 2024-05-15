@@ -48,15 +48,16 @@ class LoginApiView(TokenObtainPairView):
 
         # Agrega datos adicionales del usuario a la respuesta
         user_data = self.get_user_data(request)
-        user_data['user_permissions'] = self.get_permissions_by_user(
-            user_data['id'])
-        data = UserLoginSerializer(data=user_data)
-        data.is_valid(raise_exception=True)
-        response.data['user'] = data.data
-        response.data['person'] = self.get_person_data(user_data['id'])
+        if user_data:
+            user_data['user_permissions'] = self.get_permissions_by_user(
+                user_data['id'])
+            data = UserLoginSerializer(data=user_data)
+            data.is_valid(raise_exception=True)
+            response.data['user'] = data.data
+            response.data['person'] = self.get_person_data(user_data['id'])
 
-        return response
-
+            return response
+        return Response({'message': 'Usuario no encontrado'}, status=404)
     def get_user_data(self, request):
         # Aquí deberías implementar la lógica para obtener los datos adicionales del usuario
         # Puedes usar el servicio User o el UserRepository según tu arquitectura
@@ -122,7 +123,8 @@ class RegisterApiView(CreateAPIView):
             if find_user:
                 raise ValueError('Este correo ya está en uso')
             
-            find_user = self.user_service.get_user_by_username(data.validate_data['username'])
+            find_user = self.user_service.get_user_by_username(
+                data.validated_data['username'])
             if find_user:
                 raise ValueError('Este nombre de usuario ya está en uso')
             

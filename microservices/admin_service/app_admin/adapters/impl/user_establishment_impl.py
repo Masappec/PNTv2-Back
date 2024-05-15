@@ -25,13 +25,9 @@ class UserEstablishmentImpl(UserEstablishmentRepository):
 
     def remove_user(self, user_id: int, establishment_id: int):
         print("Eliminando usuario ", user_id, establishment_id)
-        est = UserEstablishment.objects.filter(
-            user_id=user_id, establishment_id=establishment_id).first()
+        UserEstablishment.objects.filter(
+            user_id=user_id, establishment_id=establishment_id).delete()
 
-        if est is None:
-            return
-        est.is_active = False
-        est.save()
 
     def remove_all_users(self, establishment_id: int):
         UserEstablishment.objects.filter(
