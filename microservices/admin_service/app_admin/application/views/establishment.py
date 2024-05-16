@@ -506,16 +506,11 @@ class FieldForFormCreate(APIView):
         })
 
 
-
-
-
-
 class GetByUserId(APIView):
-    
+
     serializer_class = EstablishmentCreateResponseSerializer
     permission_classes = [IsAuthenticated]
-    
-    
+
     def __init__(self):
         """
         The constructor for the EstablishmentDetail class.
@@ -523,8 +518,7 @@ class GetByUserId(APIView):
         self.establishment_service = EstablishmentService(
             EstablishmentRepositoryImpl())
         self.law_enforcement = LawEnforcementService(LawEnforcementImpl())
-        
-        
+
     def get(self, request, *args, **kwargs):
         """
         Get a establishment.
@@ -537,14 +531,13 @@ class GetByUserId(APIView):
         Returns:
             object: The response object.
         """
-        
+
         try:
-            
+
             user_id = request.query_params.get('user_id')
             if user_id is None:
                 raise Exception('El parametro user_id es requerido')
-            
-            
+
             establishment = self.establishment_service.get_establishment_by_user_id(
                 user_id)
             info = self.establishment_service.get_first_access_to_information(
@@ -579,10 +572,9 @@ class GetByUserId(APIView):
             return Response(serializer.data)
         except Exception as e:
             print("Error: ", e)
-            res = MessageTransactional(
-                data={
-                    'message': str(e),
-                    'status': 400,
-                    'json': {}
-                }
-            )
+
+            return Response(data={
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }, status=400)
