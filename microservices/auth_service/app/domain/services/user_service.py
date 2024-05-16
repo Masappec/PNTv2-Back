@@ -104,7 +104,7 @@ class UserService:
         try:
             data = {
                 'username': user.validated_data['username'],
-                'email': user.validated_data['username'],
+                'email': user.validated_data['email'],
                 'password': user.validated_data['password'],
                 'first_name': user.validated_data['first_name'],
                 'last_name': user.validated_data['last_name'],
@@ -133,7 +133,7 @@ class UserService:
         password = make_password(password)
         data = {
             'username': user.validated_data['username'],
-            'email': user.validated_data['username'],
+            'email': user.validated_data['email'],
             'password': user.validated_data['password'],
             'first_name': user.validated_data['first_name'],
             'last_name': user.validated_data['last_name'],

@@ -56,35 +56,47 @@ class CreateExtensionSolicityView(APIView):
 
 
 class CreateManualSolicity(APIView):
-    serializer_class = CreateExtensionSerializer
-
     permission_classes = [IsAuthenticated, HasPermission]
+    serializer_class = SolicityCreateDraftSerializer
+    output_serializer_class = SolicitySerializer
+    pagination_class = StandardResultsSetPagination
     permission_required = 'add_manual_solicity'
 
     def __init__(self):
-        self.service = SolicityService(solicity_repository=SolicityImpl())
+        self.service = SolicityService(SolicityImpl())
 
-    def post(self, request):
+    @swagger_auto_schema(
+        operation_description="create a draft of solicity",
+        response={201: output_serializer_class, 400: MessageTransactional},
+        request_body=serializer_class,
+        # form data
+    )
+    def post(self, request, *args, **kwargs):
+        data = self.serializer_class(data=request.data)
+        data.is_valid(raise_exception=True)
+        solicity = None
+
         try:
-            serializer = self.serializer_class(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            user_id = request.user.id
-            response = self.service.create_manual_solicity(
-                establishment_id=serializer.validated_data['establishment_id'],
-                expiry_date=serializer.validated_data['expiry_date'],
-                text=serializer.validated_data['text'],
-                title=serializer.validated_data['title'],
-                user_id=user_id
+            data_validated = data.validated_data
+            data_validated['user_id'] = request.user.id
+            data_validated['expiry_date'] = datetime.now() + \
+                get_timedelta_for_expired()
+            solicity = self.service.create_manual_solicity(
+                **data_validated
             )
-            return Response(response, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            data = {
-                'message': str(e),
-                'status': status.HTTP_400_BAD_REQUEST,
-                'json': {}
-            }
 
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                'message': 'Publicacion creada correctamente',
+                'status': 201,
+                'json': self.output_serializer_class(solicity).data
+            }, status=201)
+        except Exception as e:
+            print("Error:v", e)
+            return Response({
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }, status=400)
 
 
 class DeleteSolicityResponse(APIView):

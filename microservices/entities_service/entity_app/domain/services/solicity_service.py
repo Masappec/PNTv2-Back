@@ -130,14 +130,30 @@ class SolicityService:
     def save_timeline(self, solicity_id, user_id, status) -> TimeLineSolicity:
         return self.solicity_repository.save_timeline(solicity_id, user_id, status)
 
-    def create_manual_solicity(self, title, text, establishment_id, user_id, expiry_date):
+    def create_manual_solicity(self,
+                               number_saip: str,
+                               establishment: int,
+                               city: str,
+                               first_name: str,
+                               last_name: str,
+                               email: str,
+                               phone: str,
+                               gender: str,
+                               race_identification: str,
+                               text: str,
+                               format_receipt: str,
+                               format_send: str,
+                               expiry_date: datetime,
+                               user_id: int) -> Solicity:
         """
         Crea una solicitud de manual
 
         Args:
             solicity (dict): Diccionario con los datos de la solicitud de manual
         """
-        return self.solicity_repository.create_manual_solicity(title, text, establishment_id, user_id, expiry_date)
+        return self.solicity_repository.create_manual_solicity(
+            number_saip, establishment, city, first_name, last_name, email, phone,
+            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
 
     def create_insistency_solicity(self, solicity_id, user_id, text):
         """

@@ -74,13 +74,21 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
-    def create_manual_solicity(self, title, text, establishment_id, user_id, expiry_date):
-        """
-        Crea una solicitud de manual
-
-        Args:
-            solicity (dict): Diccionario con los datos de la solicitud de manual
-        """
+    def create_manual_solicity(self,
+                               number_saip: str,
+                               establishment: int,
+                               city: str,
+                               first_name: str,
+                               last_name: str,
+                               email: str,
+                               phone: str,
+                               gender: str,
+                               race_identification: str,
+                               text: str,
+                               format_receipt: str,
+                               format_send: str,
+                               expiry_date: datetime,
+                               user_id: int) -> Solicity:
         pass
 
     @abstractmethod

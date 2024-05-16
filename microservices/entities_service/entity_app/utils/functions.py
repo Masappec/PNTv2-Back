@@ -5,6 +5,8 @@ from django.utils.text import slugify
 from typing import List
 import csv
 from datetime import datetime, timedelta
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Permission
 
 
 def get_timedelta_for_expired():

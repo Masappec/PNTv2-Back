@@ -194,10 +194,44 @@ class SolicityImpl(SolicityRepository):
                                         user_updated_id=user_id,
                                         status=Status.SEND)
 
-    def create_manual_solicity(self, title, text, establishment_id, user_id, expiry_date):
-        return Solicity.objects.create(title=title, text=text, establishment_id=establishment_id, user_id=user_id,
-                                       user_created_id=user_id, user_updated_id=user_id, status=Status.CREATED, expiry_date=expiry_date,
-                                       is_manual=True)
+    def create_manual_solicity(self,
+                               number_saip: str,
+                               establishment: int,
+                               city: str,
+                               first_name: str,
+                               last_name: str,
+                               email: str,
+                               phone: str,
+                               gender: str,
+                               race_identification: str,
+                               text: str,
+                               format_receipt: str,
+                               format_send: str,
+                               expiry_date: datetime,
+                               user_id: int) -> Solicity:
+        user = User.objects.get(id=user_id)
+
+        solicity = Solicity.objects.create(
+            number_saip=number_saip,
+            establishment_id=establishment.pk,
+            city=city,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone=phone,
+            gender=gender,
+            race_identification=race_identification,
+            text=text,
+            format_receipt=format_receipt,
+            format_send=format_send,
+            expiry_date=expiry_date,
+            user_created=user,
+            user_updated=user,
+            status=Status.SEND,
+            is_manual=True)
+        TimeLineSolicity.objects.create(
+            solicity_id=solicity.id, status=Status.SEND)
+        return solicity
 
     def create_solicity_response(self, solicity_id, user_id, text, files, attachments):
 
