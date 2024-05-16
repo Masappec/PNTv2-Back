@@ -2,6 +2,8 @@
 
 from app_admin.ports.repositories.establishment_repository import EstablishmentRepository
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
+
 from app_admin.domain.models.establishment_model import Establishment
 
 from shared.tasks.establishment_task import establishment_created_event
@@ -40,6 +42,12 @@ class EstablishmentService:
             return establishment_
         except ObjectDoesNotExist:
             raise ValueError("Instiución no existe")
+        except IntegrityError:
+            if 'unique constraint' in str(IntegrityError):
+                raise ValueError("Ya existe una institución con esta identificación")
+            else:
+                raise ValueError(
+                    "Ya existe una institución con esta identificación")
         except Exception as e:
             raise e
 

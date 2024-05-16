@@ -43,14 +43,15 @@ class NumeralImpl(NumeralRepository):
         return Numeral.objects.filter(id__in=ids)
 
     def asign_numeral_to_establishment(self, ids_numeral: List[Numeral], establishment_id: int):
-
+        numerals = self.get_by_entity(establishment_id)
         for numeral in ids_numeral:
-
-            EstablishmentNumeral.objects.create(
-                establishment_id=establishment_id,
-                numeral=numeral,
-                value='default'
-            )
+            if not numerals.filter(id=numeral.id).exists():
+            
+                EstablishmentNumeral.objects.create(
+                    establishment_id=establishment_id,
+                    numeral=numeral,
+                    value='default'
+                )
 
     def get_by_default(self, default: bool) -> QuerySet[Numeral]:
         return Numeral.objects.filter(is_default=default, type_transparency='A').order_by('name')

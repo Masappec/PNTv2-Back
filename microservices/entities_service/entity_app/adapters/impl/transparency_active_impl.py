@@ -12,12 +12,17 @@ class TransparencyActiveImpl(TransparencyActiveRepository):
         ).order_by('numeral__name')
 
     def get_by_numeral(self, numeral_id: int, month: int, year: int, establishment_id: int):
-        return TransparencyActive.objects.filter(
+        #ordenar los archivos por Conjunto de datos, Metadatos, Diccionario
+        ta = TransparencyActive.objects.filter(
             numeral_id=numeral_id,
             month=month,
             year=year,
             establishment_id=establishment_id
         ).order_by('numeral__name')
+
+        
+        return ta
+            
 
     def get_by_year(self, year: int, establishment_id: int):
         return TransparencyActive.objects.filter(
