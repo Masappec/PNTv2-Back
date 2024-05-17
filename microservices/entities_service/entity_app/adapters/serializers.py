@@ -33,6 +33,7 @@ class FilePublicationSerializer(serializers.ModelSerializer):
             'name',
             'description',
             'url_download',
+            'created_at'
         )
 
         read_only_fields = ('id', 'url_download')
