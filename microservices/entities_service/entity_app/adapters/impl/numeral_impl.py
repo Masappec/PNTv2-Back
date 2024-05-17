@@ -80,7 +80,7 @@ class NumeralImpl(NumeralRepository):
                 str(obj.establishment.identification) + '/' + \
                 str(obj.numeral.name) + '/' + \
                 str(obj.year) + '/' + str(obj.month)
-
+            FilePublication.move_file(file, root)
         # filepaths, date, month, year, user, establishment_identification
 
         self.publisher.publish({

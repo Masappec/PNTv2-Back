@@ -91,3 +91,7 @@ Thu May 16 23:57:05 2024 - Iniciando suscripción al canal user
 Thu May 16 23:57:05 2024 - Iniciando suscripción al canal solicity
 Thu May 16 23:59:20 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_created", "payload": {"user_id": 5, "establishment_id": 1}, "id": "ad996a00-35d2-4056-be71-0e05ea9b91b1"}'}
 Fri May 17 00:00:49 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_created", "payload": {"user_id": 6, "establishment_id": 1}, "id": "f6ae5b02-8892-478f-81ad-dc5aeb90b659"}'}
+Fri May 17 13:32:42 2024 - Iniciando suscripción al canal user
+Fri May 17 13:32:42 2024 - Iniciando suscripción al canal solicity
+Fri May 17 16:43:58 2024 - Iniciando suscripción al canal user
+Fri May 17 16:43:58 2024 - Iniciando suscripción al canal solicity

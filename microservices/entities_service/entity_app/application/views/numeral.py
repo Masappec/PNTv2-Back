@@ -350,7 +350,8 @@ class NumeralEditPublish(APIView):
                     str(transparency.establishment.identification) + '/' + \
                     str(transparency.numeral.name) + '/' + \
                     str(transparency.year) + '/' + str(transparency.month)
-                
+                FilePublication.move_file(file, root)
+
             result = self.output_serializer_class(transparency)
             self.publisher.publish({
                 'type': TRANSPARENCY_ACTIVE_UPLOAD,
