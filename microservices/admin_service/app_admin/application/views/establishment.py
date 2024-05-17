@@ -57,10 +57,12 @@ class EstablishmentListAPI(ListAPIView):
         """
         queryset = self.get_queryset()
         search = request.query_params.get('search', None)
+        function = request.query_params.get('funcion', None)
         if search is not None:
             queryset = queryset.filter(
                 Q(name__icontains=search) | Q(abbreviation__icontains=search))
-
+        if function is not None:
+            queryset = queryset.filter(function_organization__name=function)
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)

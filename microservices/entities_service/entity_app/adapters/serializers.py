@@ -24,6 +24,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class FilePublicationSerializer(serializers.ModelSerializer):
+    url_download = serializers.ReadOnlyField(source='relative_url')
 
     class Meta:
         model = FilePublication

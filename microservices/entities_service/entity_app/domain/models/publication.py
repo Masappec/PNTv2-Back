@@ -66,6 +66,10 @@ class FilePublication(BaseModel):
         verbose_name = 'Archivo Publicación'
         verbose_name_plural = 'Archivo Publicaciones'
 
+    @property
+    def relative_url(self):
+        return self.url_download.url
+
     @staticmethod
     def move_file(archivo_publicacion, nueva_ruta):
         """

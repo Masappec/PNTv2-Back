@@ -59,7 +59,9 @@ class EstablishmentPublicList(ListAPIView):
         if search is not None:
             queryset = queryset.filter(
                 Q(name__icontains=search) | Q(abbreviation__icontains=search))
-
+        function = request.query_params.get('funcion', None)
+        if function is not None:
+            queryset = queryset.filter(function_organization__name=function)
         establishments_by_letter = {}
         for establishment in queryset:
             first_letter = establishment.name[0].upper()

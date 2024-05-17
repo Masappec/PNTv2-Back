@@ -46,7 +46,7 @@ class NumeralImpl(NumeralRepository):
         numerals = self.get_by_entity(establishment_id)
         for numeral in ids_numeral:
             if not numerals.filter(id=numeral.id).exists():
-            
+
                 EstablishmentNumeral.objects.create(
                     establishment_id=establishment_id,
                     numeral=numeral,
@@ -80,7 +80,6 @@ class NumeralImpl(NumeralRepository):
                 str(obj.establishment.identification) + '/' + \
                 str(obj.numeral.name) + '/' + \
                 str(obj.year) + '/' + str(obj.month)
-            FilePublication.move_file(file, root)
 
         # filepaths, date, month, year, user, establishment_identification
 
