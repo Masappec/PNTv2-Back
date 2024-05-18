@@ -7,11 +7,17 @@ from entity_app.adapters.serializers import FilePublicationSerializer, MessageTr
 from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from django.db.models import Q
 from entity_app.utils.pagination import StandardResultsSetPagination
 from rest_framework.permissions import IsAuthenticated
 from entity_app.utils.permissions import HasPermission
+
+import requests
+from django.http import HttpResponse
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 class FilePublicationCreateView(APIView):
@@ -171,4 +177,41 @@ class FilePublicationListEstablishemtSession(ListAPIView):
                 'json': {}
             }
 
+            return Response(res, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetFileFromUri(APIView):
+
+    def get(self, request):
+        uri = request.query_params.get('uri', None)
+        if uri is None:
+            res = {
+                'message': 'Uri is required',
+                'status': status.HTTP_400_BAD_REQUEST,
+                'json': {}
+            }
+            return Response(res, status=status.HTTP_400_BAD_REQUEST)
+        if uri == '':
+            res = {
+                'message': 'Uri is required',
+                'status': status.HTTP_400_BAD_REQUEST,
+                'json': {}
+            }
+            return Response(res, status=status.HTTP_400_BAD_REQUEST)
+        file = requests.get(uri)
+        if file.status_code == 200:
+            content = file.content
+            # Devolver el contenido del archivo como una respuesta HTTP directa
+            response = HttpResponse(
+                content, content_type='application/octet-stream')
+            # Establecer el encabezado Content-Disposition para sugerir al navegador que descargue el archivo
+            response['Content-Disposition'] = f'attachment; filename="{
+                uri.split("/")[-1]}"'
+            return response
+        else:
+            res = {
+                'message': 'Error al obtener el archivo',
+                'status': status.HTTP_400_BAD_REQUEST,
+                'json': {}
+            }
             return Response(res, status=status.HTTP_400_BAD_REQUEST)

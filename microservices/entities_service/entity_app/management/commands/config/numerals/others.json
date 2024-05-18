@@ -3,7 +3,7 @@
         "name": "Transparencia focalizada",
         "templates": [
             {
-                "name": "1. Conjunto de datos (Focalizad",
+                "name": "Conjunto de datos",
                 "description": "Transparencia focalizada",
                 "vertical_template": false,
                 "max_insert": null,
@@ -35,11 +35,17 @@
                 ]
             },
             {
-                "name": "1.Metadatos (Focalizada)",
+                "name": "Metadatos",
                 "description": "Transparencia focalizada",
                 "vertical_template": true,
                 "max_insert": 1,
                 "columns": [
+                    {
+                        "name": "FECHA ACTUALIZACIÓN DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
                     {
                         "name": "PERIODICIDAD DE ACTUALIZACIÓN DE LA INFORMACIÓN:",
                         "type": "str",
@@ -79,11 +85,17 @@
                 ]
             },
             {
-                "name": "1. Diccionario (Focalizada)",
+                "name": "Diccionario",
                 "description": "Transparencia focalizada",
                 "vertical_template": true,
                 "max_insert": 1,
                 "columns": [
+                    {
+                        "name": "Institución",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
                     {
                         "name": "Descripción",
                         "type": "str",
@@ -128,7 +140,7 @@
         "name": "Transparencia colaborativa",
         "templates": [
             {
-                "name": "1. Conjunto de datos (Colaborat",
+                "name": "Conjunto de datos",
                 "description": "Transparencia colaborativa",
                 "vertical_template": false,
                 "max_insert": null,
@@ -172,11 +184,17 @@
                 ]
             },
             {
-                "name": "1.Metadatos (Colaborativa)",
+                "name": "Metadatos",
                 "description": "Transparencia colaborativa",
                 "vertical_template": true,
                 "max_insert": 1,
                 "columns": [
+                    {
+                        "name": "FECHA ACTUALIZACIÓN DE LA INFORMACIÓN:",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
                     {
                         "name": "PERIODICIDAD DE ACTUALIZACIÓN DE LA INFORMACIÓN:",
                         "type": "str",
@@ -216,11 +234,17 @@
                 ]
             },
             {
-                "name": "1. Diccionario (Colaborativa)",
+                "name": "Diccionario",
                 "description": "Transparencia colaborativa",
                 "vertical_template": true,
                 "max_insert": 1,
                 "columns": [
+                    {
+                        "name": "Institución",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
                     {
                         "name": "Descripción",
                         "type": "str",

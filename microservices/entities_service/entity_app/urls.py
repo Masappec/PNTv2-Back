@@ -3,7 +3,7 @@ from entity_app.application.views.public import PublicationPublicView, Publicati
 from entity_app.application.views.publication import PublicationCreateAPI, PublicationUpdateAPI, \
     PublicationsView, PublicatioDetail, PublicationUpdateState
 
-from entity_app.application.views.file_publication import FilePublicationCreateView, FilePublicationListEstablishemtSession, FilePublicationDelete
+from entity_app.application.views.file_publication import FilePublicationCreateView, GetFileFromUri, FilePublicationListEstablishemtSession, FilePublicationDelete
 from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
 from entity_app.application.views.solicity import SolicityView, SolicityCreateDraftView, \
@@ -32,6 +32,9 @@ urlpatterns = [
          name='file-publication-list'),
     path('publications/file/delete/<pk>',
          FilePublicationDelete.as_view(), name='file-publication-delete'),
+
+    path('publications/file/from-uri/', GetFileFromUri.as_view(),
+         name='file-publication-get'),
 
     path('tags/list', TagView.as_view(), name='tag-list'),
     path('tags/create', TagCreateView.as_view(), name='tag-create'),
