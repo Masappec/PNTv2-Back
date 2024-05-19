@@ -3,6 +3,7 @@ from app_admin.ports.repositories.establishment_repository import EstablishmentR
 from app_admin.domain.models import Establishment, UserEstablishment
 from datetime import datetime
 from django.utils import timezone
+from app_admin.utils.function import unique_slug_generator
 
 
 class EstablishmentRepositoryImpl(EstablishmentRepository):
@@ -93,18 +94,20 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
     def update_establishment(self, establishment_id: int, establishment: dict):
 
         establishment_selected = Establishment.objects.filter(
-            id=establishment_id)
-        establishment_selected.update(
-            name=establishment['name'],
-            abbreviation=establishment['abbreviation'],
-            updated_at=datetime.now(),
-            highest_authority=establishment['highest_authority'],
-            first_name_authority=establishment['first_name_authority'],
-            last_name_authority=establishment['last_name_authority'],
-            job_authority=establishment['job_authority'],
-            email_authority=establishment['email_authority'],
-        )
-        return establishment_selected.first()
+            id=establishment_id).first()
+        slug = unique_slug_generator(establishment_selected)
+
+        establishment_selected.name = establishment['name']
+        establishment_selected.abbreviation = establishment['abbreviation']
+        establishment_selected.slug = slug
+        establishment_selected.updated_at = datetime.now()
+        establishment_selected.highest_authority = establishment['highest_authority']
+        establishment_selected.first_name_authority = establishment['first_name_authority']
+        establishment_selected.last_name_authority = establishment['last_name_authority']
+        establishment_selected.job_authority = establishment['job_authority']
+        establishment_selected.email_authority = establishment['email_authority']
+        establishment_selected.save()
+        return establishment_selected
 
     def update_logo(self, establishment_id: int, file):
         establishment = Establishment.objects.get(id=establishment_id)

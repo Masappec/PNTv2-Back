@@ -87,6 +87,9 @@ class Establishment(BaseModel):
             self.slug = unique_slug_generator(self)
         super(Establishment, self).save(*args, **kwargs)
 
+    def update(self, *args, **kwargs):
+        self.slug = unique_slug_generator(self)
+        super(Establishment, self).save(*args, **kwargs)
     # generate code secuence
 
     # permisos personalizados

@@ -106,3 +106,5 @@ Sat May 18 17:14:06 2024 - Mensaje recibido: {'type': 'message', 'pattern': None
 Sat May 18 17:14:16 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_updated", "payload": {"user_id": "2", "establishment_id": 1}, "id": "6345b69c-be26-4c57-ae06-7d28f5726742"}'}
 Sun May 19 01:47:32 2024 - Iniciando suscripción al canal user
 Sun May 19 01:47:32 2024 - Iniciando suscripción al canal solicity
+Sun May 19 02:42:50 2024 - Iniciando suscripción al canal user
+Sun May 19 02:42:50 2024 - Iniciando suscripción al canal solicity
