@@ -77,23 +77,17 @@ class FilePublication(BaseModel):
         """
         if archivo_publicacion.url_download:
             # Construye el nombre del archivo en la nueva ubicación
-            nueva_ruta = settings.MEDIA_ROOT + nueva_ruta
-            nombre_archivo = os.path.basename(
-                archivo_publicacion.url_download.name)
-            nueva_ruta_archivo = os.path.join(nueva_ruta, nombre_archivo)
+            nueva_ruta_carpeta = settings.MEDIA_ROOT + nueva_ruta
+            nueva_ruta_archivo = os.path.join(nueva_ruta_carpeta,
+                                              archivo_publicacion.description+'.csv')
             # crea la carpeta si no existe
-            if not os.path.exists(nueva_ruta):
-                os.makedirs(nueva_ruta)
-            # Abre el archivo original y el nuevo archivo
-            with open(archivo_publicacion.url_download.path, 'rb') as archivo_original:
-                with open(nueva_ruta_archivo, 'wb') as nuevo_archivo:
-                    # Copia el contenido del archivo original al nuevo archivo
-                    nuevo_archivo.write(archivo_original.read())
-
-            # Actualiza el campo 'FileField' con la nueva ubicación
-            archivo_publicacion.url_download.name = os.path.relpath(
-                nueva_ruta_archivo, settings.MEDIA_ROOT)
-
+            if not os.path.exists(nueva_ruta_carpeta):
+                os.makedirs(nueva_ruta_carpeta)
+            os.rename(archivo_publicacion.url_download.path,
+                      nueva_ruta_archivo)
+            # Actualiza la ruta del archivo en la base de datos
+            archivo_publicacion.url_download = os.path.join(
+                nueva_ruta, archivo_publicacion.description+'.csv')
             # Guarda el objeto para reflejar los cambios en la base de datos
             archivo_publicacion.save()
 
