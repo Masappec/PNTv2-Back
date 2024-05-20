@@ -28,6 +28,8 @@ class TransparencyFocal(BaseModel):
         if not self.slug:
             self.slug = str(self.month) + '-' + str(self.year) + '-' + \
                 unique_slug_generator(self.establishment)
+            self.slug = unique_slug_generator(self, self.slug)
+
         super(TransparencyFocal, self).save(*args, **kwargs)
 
     class Meta:

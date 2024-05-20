@@ -24,10 +24,10 @@ class FilePublicationService:
     def delete(self, file_publication_id):
         return self.file_repository.delete(file_publication_id)
 
-    def get_by_user_establishment(self, user_id, type_transparency):
+    def get_by_user_establishment(self, user_id, type_transparency, numeral_id=None):
         try:
             data = self.file_repository.get_by_user_establishment(
-                user_id, type_transparency)
+                user_id, type_transparency, numeral_id)
             return data
         except ObjectDoesNotExist:
             raise Exception("Usuario no encontrado")

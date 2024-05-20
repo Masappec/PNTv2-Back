@@ -150,11 +150,13 @@ class FilePublicationListEstablishemtSession(ListAPIView):
 
     def get_queryset(self, request, user_id):
         type = request.query_params.get('type', None)
-        return self.sevice.get_by_user_establishment(user_id, type)
+        numeral_id = request.query_params.get('numeral_id', None)
+        return self.sevice.get_by_user_establishment(user_id, type, numeral_id)
 
     def get(self, request, *args, **kwargs):
 
         try:
+
             queryset = self.get_queryset(request, request.user.id)
             search = request.query_params.get('search', None)
             if search is not None:
@@ -184,33 +186,41 @@ class GetFileFromUri(APIView):
 
     def get(self, request):
         uri = request.query_params.get('uri', None)
-        if uri is None:
+        try:
+            if uri is None:
+                res = {
+                    'message': 'Uri is required',
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'json': {}
+                }
+                return Response(res, status=status.HTTP_400_BAD_REQUEST)
+            if uri == '':
+                res = {
+                    'message': 'Uri is required',
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'json': {}
+                }
+                return Response(res, status=status.HTTP_400_BAD_REQUEST)
+            file = requests.get(uri)
+            if file.status_code == 200:
+                content = file.content
+                # Devolver el contenido del archivo como una respuesta HTTP directa
+                response = HttpResponse(
+                    content, content_type='application/octet-stream')
+                # Establecer el encabezado Content-Disposition para sugerir al navegador que descargue el archivo
+                response['Content-Disposition'] = f'attachment; filename="{
+                    uri.split("/")[-1]}"'
+                return response
+            else:
+                res = {
+                    'message': 'Error al obtener el archivo',
+                    'status': status.HTTP_400_BAD_REQUEST,
+                    'json': {}
+                }
+                return Response(res, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
             res = {
-                'message': 'Uri is required',
-                'status': status.HTTP_400_BAD_REQUEST,
-                'json': {}
-            }
-            return Response(res, status=status.HTTP_400_BAD_REQUEST)
-        if uri == '':
-            res = {
-                'message': 'Uri is required',
-                'status': status.HTTP_400_BAD_REQUEST,
-                'json': {}
-            }
-            return Response(res, status=status.HTTP_400_BAD_REQUEST)
-        file = requests.get(uri)
-        if file.status_code == 200:
-            content = file.content
-            # Devolver el contenido del archivo como una respuesta HTTP directa
-            response = HttpResponse(
-                content, content_type='application/octet-stream')
-            # Establecer el encabezado Content-Disposition para sugerir al navegador que descargue el archivo
-            response['Content-Disposition'] = f'attachment; filename="{
-                uri.split("/")[-1]}"'
-            return response
-        else:
-            res = {
-                'message': 'Error al obtener el archivo',
+                'message': 'Ocurrio un error al obtener el archivo, verifique la url',
                 'status': status.HTTP_400_BAD_REQUEST,
                 'json': {}
             }

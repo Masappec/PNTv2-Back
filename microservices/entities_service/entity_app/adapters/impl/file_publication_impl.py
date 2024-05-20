@@ -28,7 +28,7 @@ class FilePublicationImpl(FilePublicationRepository):
     def delete(self, file_publication_id):
         return FilePublication.objects.get(id=file_publication_id).delete()
 
-    def get_by_user_establishment(self, user_id, type):
+    def get_by_user_establishment(self, user_id, type, numeral_id):
 
         user = User.objects.get(id=user_id)
 
@@ -39,17 +39,17 @@ class FilePublicationImpl(FilePublicationRepository):
             user_id=user_id, is_active=True).last()
         if type == 'TA':
             ta = TransparencyActive.objects.filter(
-                establishment_id=user_establishment.establishment_id)
+                establishment_id=user_establishment.establishment_id, numeral_id=numeral_id)
             return FilePublication.objects.filter(transparency_active__in=ta).distinct('id')
 
         if type == 'TC':
             tc = TransparencyColab.objects.filter(
-                establishment_id=user_establishment.establishment_id)
+                establishment_id=user_establishment.establishment_id, numeral_id=numeral_id)
 
             return FilePublication.objects.filter(transparency_colab__in=tc).distinct('id')
         if type == 'TF':
             tf = TransparencyFocal.objects.filter(
-                establishment_id=user_establishment.establishment_id)
+                establishment_id=user_establishment.establishment_id, numeral_id=numeral_id)
 
             return FilePublication.objects.filter(transparency_focal__in=tf).distinct('id')
 

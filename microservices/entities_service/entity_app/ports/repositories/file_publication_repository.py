@@ -27,5 +27,5 @@ class FilePublicationRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_user_establishment(self, user_establishment_id, type: str):
+    def get_by_user_establishment(self, user_establishment_id, type: str, numeral_id: int) -> QuerySet[FilePublication]:
         pass
