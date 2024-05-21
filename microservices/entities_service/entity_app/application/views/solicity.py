@@ -23,7 +23,7 @@ class CreateExtensionSolicityView(APIView):
 
     serializer_class = CreateExtensionSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'add_extension'
+    permission_required = 'add_solicity'
 
     def __init__(self, **kwargs: Any):
         self.service = SolicityService(solicity_repository=SolicityImpl())
@@ -36,7 +36,7 @@ class CreateExtensionSolicityView(APIView):
             response = self.service.comment_solicity(
                 solicity_id=serializer.validated_data['solicity_id'],
                 user_id=user_id,
-                text=serializer.validated_data['text']
+                text=serializer.validated_data['motive']
 
             )
             return Response({
