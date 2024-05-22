@@ -123,3 +123,4 @@ Sun May 19 03:07:13 2024 - Mensaje recibido: {'type': 'message', 'pattern': None
 Sun May 19 04:09:27 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": ["/code/media/transparencia/0953227857001/Numeral 1.1/2024/5/Diccionario.csv", "/code/media/transparencia/0953227857001/Numeral 1.1/2024/5/Conjunto de datos.csv", "/code/media/transparencia/0953227857001/Numeral 1.1/2024/5/Metadatos.csv"], "date": "2024-05-19", "month": 5, "year": 2024, "user": 1, "establishment_identification": "0953227857001"}, "id": "fc76225a-54c0-45cd-8e30-1c34275fdb70"}'}
 Mon May 20 02:22:06 2024 - Iniciando suscripción al canal establishment_numeral
 Mon May 20 15:46:45 2024 - Iniciando suscripción al canal establishment_numeral
+Wed May 22 03:48:56 2024 - Iniciando suscripción al canal establishment_numeral

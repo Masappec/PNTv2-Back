@@ -193,8 +193,11 @@ class SolicityService:
 
         is_citizen = solicity.user_created_id == user_id
 
+        # si el estado actual es enviado
         if solicity.status == Status.SEND:
+            # si el usuario es no es el ciudadano
             if not is_citizen:
+                # si el usuario es el establecimiento response
                 solicity.status = Status.RESPONSED
                 solicity.save()
                 self.save_timeline(solicity_id, user_id, Status.RESPONSED)
@@ -233,14 +236,28 @@ class SolicityService:
 
             return solicity
 
+        # si la solicitud esta en estado de respuesta
         if solicity.status == Status.RESPONSED:
+
+            # validar si ya expiro la solicitud
+            if extensions == 10:
+                raise ValueError(
+                    "No se pueden agregar mas comentarios a esta solicitud")
+            self.solicity_repository.create_comment_solicity(
+                solicity_id, user_id, text)
+
+            return solicity
+
+        if solicity.status == Status.INSISTENCY_PERIOD:
             if is_citizen:
+                self.solicity_repository.create_insistency_solicity(
+                    solicity_id, user_id, text)
+
                 solicity.status = Status.INSISTENCY_SEND
                 solicity.save()
                 self.save_timeline(solicity_id, user_id,
                                    Status.INSISTENCY_SEND)
-                self.solicity_repository.create_insistency_solicity(
-                    solicity_id, user_id, text)
+
                 self.publisher.publish({
                     'type': SOLICITY_RESPONSE_USER,
                     'payload': {
@@ -253,50 +270,17 @@ class SolicityService:
                     }
                 })
 
+                return solicity
             else:
-                if extensions == 10:
-                    raise ValueError(
-                        "No se pueden agregar mas comentarios a esta solicitud")
+                raise ValueError(
+                    "No se pueden agregar mas comentarios a esta solicitud")
 
-                self.solicity_repository.create_extencion_solicity(
-                    text, solicity_id, user_id, files, attachments)
-                self.publisher.publish({
-                    'type': SOLICITY_RESPONSE_ESTABLISHMENT,
-                    'payload': {
-                        'solicity_id': solicity_id,
-                        'user_id': solicity.user_created_id,
-                        'number_saip': solicity.number_saip,
-                        'establishment_id': solicity.establishment_id,
-                        'email': [e.user.email for e in es]
-
-                    }
-                })
-
-            return solicity
-        if solicity.status == Status.INSISTENCY_SEND or solicity.status:
+        if solicity.status == Status.INSISTENCY_SEND:
             if is_citizen:
-                if extensions == 10:
-                    raise ValueError(
-                        "No se pueden agregar mas comentarios a esta solicitud")
-
-                self.solicity_repository.create_extencion_solicity(
-                    text, solicity_id, user_id, files, attachments)
-                self.publisher.publish({
-                    'type': SOLICITY_RESPONSE_USER,
-                    'payload': {
-                        'solicity_id': solicity_id,
-                        'user_id': solicity.user_created_id,
-                        'number_saip': solicity.number_saip,
-                        'establishment_id': solicity.establishment_id,
-                        'email': [e.user.email for e in es]
-
-                    }
-                })
+                raise ValueError(
+                    "No se pueden agregar mas comentarios a esta solicitud durante el periodo de insitencia")
 
             else:
-                if extensions == 10:
-                    raise ValueError(
-                        "No se pueden agregar mas comentarios a esta solicitud")
 
                 self.solicity_repository.create_solicity_response(
                     solicity_id, user_id, text, files, attachments)
@@ -352,6 +336,17 @@ class SolicityService:
 
                     }
                 })
+
+                return solicity
+            else:
+
+                raise ValueError(
+                    " No se pueden agregar mas comentarios a esta solicitud")
+
+        if solicity.status == Status.INFORMAL_MANAGMENT_SEND:
+            if is_citizen:
+                raise ValueError(
+                    "No se pueden agregar mas comentarios a esta solicitud durante el periodo de insitencia")
             else:
                 solicity.status = Status.INFORMAL_MANAGMENT_RESPONSED
                 solicity.save()
@@ -370,6 +365,19 @@ class SolicityService:
 
                     }
                 })
+
+                return solicity
+
+        if solicity.status == Status.INFORMAL_MANAGMENT_RESPONSED:
+            if extensions == 10:
+                raise ValueError(
+                    "No se pueden agregar mas comentarios a esta solicitud")
+
+            else:
+                self.solicity_repository.create_extencion_solicity(
+                    text, solicity_id, user_id, files, attachments)
+                return solicity
+
                 # si es el usuario que creo la solicitud
         else:
             if extensions == 10:
@@ -378,30 +386,7 @@ class SolicityService:
 
             self.solicity_repository.create_extencion_solicity(
                 text, solicity_id, user_id, files, attachments)
-            if solicity.user_created == user_id:
-                self.publisher.publish({
-                    'type': SOLICITY_RESPONSE_USER,
-                    'payload': {
-                        'solicity_id': solicity_id,
-                        'user_id': solicity.user_created_id,
-                        'number_saip': solicity.number_saip,
-                        'establishment_id': solicity.establishment_id,
-                        'email': [e.user.email for e in es]
 
-                    }
-                })
-            else:
-                self.publisher.publish({
-                    'type': SOLICITY_RESPONSE_ESTABLISHMENT,
-                    'payload': {
-                        'solicity_id': solicity_id,
-                        'user_id': solicity.user_created_id,
-                        'number_saip': solicity.number_saip,
-                        'establishment_id': solicity.establishment_id,
-                        'email': [e.user.email for e in es]
-
-                    }
-                })
         return solicity
 
     def update_solicity(self,

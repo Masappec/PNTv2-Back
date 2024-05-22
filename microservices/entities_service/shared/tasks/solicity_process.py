@@ -8,6 +8,7 @@ from entity_app.adapters.messaging.events import SOLICITY_FOR_EXPIRED
 from entities_service.celery import app
 from entity_app.domain.models.establishment import UserEstablishmentExtended
 from entity_app.domain.models.solicity import TypeStages
+from entity_app.utils.functions import get_timedelta_for_expired
 
 
 @app.task()
@@ -15,12 +16,11 @@ def change_status_solicity():
     # obtener la fecha de hoy
 
     publiher = Publisher(CHANNEL_SOLICIY)
-    print('change_status_solicity')
 
     date = datetime.now() + timedelta(days=2)
     # obtener las solicitudes que vencen el dos dias
     solicities = Solicity.objects.filter(expiry_date__lte=date,
-                                         status__in=[Status.INSISTENCY_SEND, Status.SEND])
+                                         status__in=[Status.INSISTENCY_SEND, Status.SEND, Status.INFORMAL_MANAGMENT_SEND]).all()
 
     response = SolicityResponse.objects.filter(solicity__in=solicities)
     es = UserEstablishmentExtended.objects.filter(
@@ -58,6 +58,7 @@ def change_status_solicity():
 
             if solicity.status == Status.SEND:
                 solicity.status = Status.INSISTENCY_PERIOD
+                solicity.expiry_date = datetime.now() + get_timedelta_for_expired()
                 solicity.save()
                 TimeLineSolicity.objects.create(
                     solicity=solicity, status=TypeStages.INSISTENCY)
@@ -68,6 +69,8 @@ def change_status_solicity():
                     solicity=solicity, status=TypeStages.INSISTENCY)
             elif solicity.status == Status.INSISTENCY_NO_RESPONSED:
                 solicity.status = Status.PERIOD_INFORMAL_MANAGEMENT
+                solicity.expiry_date = datetime.now() + get_timedelta_for_expired()
+
                 solicity.save()
                 TimeLineSolicity.objects.create(
                     solicity=solicity, status=Status.PERIOD_INFORMAL_MANAGEMENT)
