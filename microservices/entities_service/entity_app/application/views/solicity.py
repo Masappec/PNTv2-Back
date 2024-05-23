@@ -654,3 +654,50 @@ class SolicityCreateResponseView(APIView):
                 'status': 400,
                 'json': {}
             }, status=400)
+
+
+
+class SolicityChangeStatus(APIView):
+    
+    permission_classes = [IsAuthenticated,
+                          HasPermission]
+    output_serializer_class = SolicitySerializer
+    permission_required = 'view_solicity'
+    
+    def __init__(self):
+        self.service = SolicityService(SolicityImpl())
+
+    
+    def post(self,request):
+        try:
+            data = request.data
+            
+            solicity_id = data.get('solicity_id')
+            
+            if solicity_id:
+                solicity = self.service.change_status_by_id(solicity_id)
+                
+                return Response({
+                    'message': 'Solicity respondida correctamente',
+                    'status': 200,
+                    'json': self.output_serializer_class(solicity).data
+                }, status=201)
+            else:
+                raise ValueError('Numero de solicitud no encontrada')
+        except ValueError as e:
+
+            return Response({
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }, status=400)
+            
+        except Exception as e:
+
+            return Response({
+                'message': str(e),
+                'status': 500,
+                'json': {}
+            }, status=400)
+            
+            

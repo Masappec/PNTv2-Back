@@ -88,6 +88,8 @@ class SolicityService:
         """
         return self.solicity_repository.create_comment_solicity(solicity_id, user_id, text)
 
+    def change_status_by_id(self,solicity_id):
+        return self.solicity_repository.change_status_by_id(solicity_id)
     def send_solicity_without_draft(self,
                                     number_saip: str,
                                     establishment: int,
@@ -321,7 +323,7 @@ class SolicityService:
 
                 self.solicity_repository.create_insistency_solicity(
                     solicity_id, user_id, text)
-                solicity.status == Status.INFORMAL_MANAGMENT_SEND
+                solicity.status = Status.INFORMAL_MANAGMENT_SEND
                 solicity.save()
                 self.save_timeline(solicity_id, user_id,
                                    Status.INFORMAL_MANAGMENT_SEND)

@@ -271,6 +271,8 @@ class CreateInsistencySerializer(serializers.Serializer):
     solicity = SolicitySerializer()
 
 
+
+
 class CreateManualSolicitySerializer(serializers.Serializer):
     title = serializers.CharField()
     text = serializers.CharField()

@@ -70,7 +70,7 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
-    def create_comment_solicity(self, solicity_id, user_id, text):
+    def create_comment_solicity(self, solicity_id, user_id, text,status):
         pass
 
     @abstractmethod
@@ -192,4 +192,10 @@ class SolicityRepository(ABC):
 
     @abstractmethod
     def get_solicity_by_id(self, solicity_id) -> Solicity:
+        pass
+
+
+
+    @abstractmethod
+    def change_status_by_id(self,solicity_id)->Solicity:
         pass

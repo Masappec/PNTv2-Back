@@ -6,11 +6,37 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from entity_app.domain.models.solicity import Solicity, TimeLineSolicity, TypeStages
-
+from entity_app.utils.functions import get_timedelta_for_expired
 
 class SolicityImpl(SolicityRepository):
 
-    # def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
+    def change_status_by_id(self, solicity_id):
+        solicity = Solicity.objects.get(id=solicity_id)
+        
+        month = datetime.now().month
+        day = datetime.now().day
+        year = datetime.now().year
+        
+        expired_month = solicity.expiry_date.month
+        expired_day = solicity.expiry_date.day
+        expired_year = solicity.expiry_date.year
+        if month == expired_month and expired_day == day and expired_year==year:
+            newstatus = ''
+            if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
+                newstatus = Status.INSISTENCY_PERIOD
+                
+            if solicity.status == Status.INSISTENCY_RESPONSED or solicity.status == Status.INSISTENCY_NO_RESPONSED:    
+                newstatus = Status.PERIOD_INFORMAL_MANAGEMENT
+            if newstatus=='':
+                raise ValueError('Esta solicitud aun está vigente')
+            
+            solicity.status = newstatus
+            solicity.expiry_date = datetime.now()+get_timedelta_for_expired()
+            solicity.save()
+            return solicity
+        else:
+            raise ValueError('Esta solicitud aun está vigente')
+        # def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
     def create_solicity_draft(self,
                               number_saip: str,
                               establishment_id: int,
@@ -188,11 +214,13 @@ class SolicityImpl(SolicityRepository):
                                          status=Status.SEND)
 
     def create_comment_solicity(self, solicity_id, user_id, text):
+        
+        solicity = Solicity.objects.get(id=solicity_id)
         return Extension.objects.create(solicity_id=solicity_id,
                                         user_id=user_id,  motive=text,
                                         user_created_id=user_id,
                                         user_updated_id=user_id,
-                                        status=Status.SEND)
+                                        status=solicity.status)
 
     def create_manual_solicity(self,
                                number_saip: str,
@@ -268,7 +296,7 @@ class SolicityImpl(SolicityRepository):
         return response
 
     def get_user_solicities(self, user_id):
-        return Solicity.objects.filter(user_created_id=user_id, is_active=True)
+        return Solicity.objects.filter(user_created_id=user_id, is_active=True).order_by('-created_at')
 
     def get_entity_solicities(self, entity_id):
         return Solicity.objects.filter(establishment__id=entity_id, is_active=True)
