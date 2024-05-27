@@ -4,6 +4,7 @@ from app_admin.domain.models import Establishment, UserEstablishment
 from datetime import datetime
 from django.utils import timezone
 from app_admin.utils.function import unique_slug_generator
+from django.contrib.auth.models import User
 
 
 class EstablishmentRepositoryImpl(EstablishmentRepository):
@@ -147,3 +148,10 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
             return UserEstablishment.objects.filter(user_id=user_id, is_active=True).last().establishment
         except Exception:
             raise ValueError("El usuario no pertenece a ninguna institución")
+
+    def get_users_by_establishment(self, establishment_id: int):
+        # return objects User
+        users_ = UserEstablishment.objects.filter(
+            establishment_id=establishment_id)
+
+        return User.objects.filter(id__in=[user.user_id for user in users_])

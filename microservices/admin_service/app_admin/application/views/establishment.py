@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 
 from app_admin.adapters.serializer import EstablishmentListSerializer, EstablishmentCreateSerializer, \
-    MessageTransactional, EstablishmentCreateResponseSerializer
+    MessageTransactional, EstablishmentCreateResponseSerializer, UserListSerializer
 from app_admin.utils.pagination import StandardResultsSetPagination
 from app_admin.domain.service.establishment_service import EstablishmentService
 from app_admin.adapters.impl.establishment_impl import EstablishmentRepositoryImpl
@@ -19,6 +19,7 @@ from app_admin.adapters.impl.access_information_impl import AccessInformationImp
 from app_admin.adapters.impl.function_organization_impl import FunctionOrganizationImpl
 from app_admin.adapters.impl.type_institution_impl import TypeInstitutionImpl
 from app_admin.adapters.impl.type_organization_impl import TypeOrganizationImpl
+from app_admin.utils.permission import HasPermission
 
 
 class EstablishmentListAPI(ListAPIView):
@@ -84,9 +85,10 @@ class EstablishmentCreateAPI(APIView):
             EstablishmentCreateAPI: An instance of the EstablishmentCreateAPI class.
     """
     serializer_class = EstablishmentCreateSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, HasPermission]
 
     output_serializer_class = EstablishmentListSerializer
+    permission_required = 'add_establishment'
 
     def __init__(self):
         """
@@ -580,3 +582,70 @@ class GetByUserId(APIView):
                 'status': 400,
                 'json': {}
             }, status=400)
+
+
+class UserEstablishmentListAPI(ListAPIView):
+    """
+    Endpoint para listar todos los usuarios.
+
+    Args:
+       ListAPIView (_type_): The ListAPIView class is a generic view 
+       that provides a list of objects.
+
+    Returns:
+        UserListAPI: An instance of the UserListAPI class.
+    """
+    pagination_class = StandardResultsSetPagination
+    serializer_class = UserListSerializer
+    permission_classes = [IsAuthenticated, HasPermission]
+    permission_required = 'view_users_internal'
+
+    def __init__(self):
+        """
+        The constructor for the UserListAPI class.
+        """
+        self.user_service = EstablishmentService(EstablishmentRepositoryImpl())
+
+    def get_queryset(self, establishment_id=None):
+        """
+        Get a list of users.
+
+        Returns:
+            User: The list of users.
+        """
+
+        return self.user_service.get_users_by_establishment(establishment_id)
+
+    # search by username
+
+    def get(self, request, *args, **kwargs):
+        """
+        Get a list of users.
+
+        Args:
+            request (object): The request object.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            object: The response object.
+        """
+
+        user = request.user
+        establishment = self.user_service.get_establishment_by_user_id(user.id)
+        if establishment is None:
+            raise ValueError('El usuario no pertenece a ninguna institución')
+
+        queryset = self.get_queryset(establishment.id)
+        search = request.query_params.get('search', None)
+        if search is not None:
+            queryset = queryset.filter(
+                Q(username__icontains=search) | Q(email__icontains=search))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

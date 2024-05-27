@@ -32,7 +32,7 @@ class UserListAPI(ListAPIView):
     pagination_class = StandardResultsSetPagination
     serializer_class = UserListSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'auth.view_user'
+    permission_required = 'view_user'
 
     def __init__(self):
         """

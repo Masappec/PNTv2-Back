@@ -1,6 +1,6 @@
 from django.urls import path, include
 from app_admin.application.views.establishment import EstablishmentListAPI, EstablishmentDetail, \
-    EstablishmentCreateAPI, EstablismentUpdate, EstablishmentDeactive,GetByUserId, EstablishmentDetailUserSession, FieldForFormCreate
+    EstablishmentCreateAPI, EstablismentUpdate, EstablishmentDeactive, GetByUserId, UserEstablishmentListAPI, EstablishmentDetailUserSession, FieldForFormCreate
 from app_admin.application.views.form_fields import FormField
 from app_admin.application.views.public import EstablishmentPublicList, PedagogyAreaPublicView, EstablishmentPublicDetail
 from app_admin.application.views.smtp import SMTPGET, SMTPUPDATE
@@ -20,6 +20,8 @@ urlpatterns = [
          EstablishmentDetailUserSession.as_view(), name=""),
     path("establishment/form-fields", FieldForFormCreate.as_view(), name=""),
     path("establishment/user", GetByUserId.as_view(), name=""),
+    path('establishment/user/list', UserEstablishmentListAPI.as_view(),
+         name='user-establishment-list'),
 
 
     path('public/form-fields/', FormField.as_view(), name='form-fields'),
@@ -40,4 +42,3 @@ urlpatterns = [
          name='pedagogy-area-list'),
 
 ]
-

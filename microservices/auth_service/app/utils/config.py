@@ -34,3 +34,9 @@ def create_custom_permissions():
         name='Puede crear usuario Supervisora PNT DPE',
         content_type=content_type,
     )
+
+    permission = Permission.objects.get_or_create(
+        codename='view_users_internal',
+        name='Puede ver usuarios internos',
+        content_type=content_type,
+    )

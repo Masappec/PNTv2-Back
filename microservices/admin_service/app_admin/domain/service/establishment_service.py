@@ -44,7 +44,8 @@ class EstablishmentService:
             raise ValueError("Instiución no existe")
         except IntegrityError:
             if 'unique constraint' in str(IntegrityError):
-                raise ValueError("Ya existe una institución con esta identificación")
+                raise ValueError(
+                    "Ya existe una institución con esta identificación")
             else:
                 raise ValueError(
                     "Ya existe una institución con esta identificación")
@@ -150,3 +151,6 @@ class EstablishmentService:
 
     def get_establishment_by_user_id(self, user_id: int) -> Establishment:
         return self.establishment_repository.get_establishment_by_user_id(user_id)
+
+    def get_users_by_establishment(self, establishment_id: int):
+        return self.establishment_repository.get_users_by_establishment(establishment_id)

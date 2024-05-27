@@ -4,6 +4,8 @@ from rest_framework.serializers import ModelSerializer, Serializer, CharField, I
 from app_admin.domain.models import Configuration, Establishment, \
     FormFields, FrequentlyAskedQuestions, TutorialVideo, NormativeDocument, TypeInstitution, \
     FunctionOrganization, TypeOrganization
+from django.contrib.auth.models import User
+import json
 
 
 class EstablishmentListSerializer(ModelSerializer):
@@ -120,7 +122,7 @@ class FormFieldsListSerializer(ModelSerializer):
         if content_type is None:
             return representation
         object_id = instance.object_id
-        print(content_type, object_id )
+        print(content_type, object_id)
         related_model = content_type.model_class()
         if related_model:
             related_instances = related_model.objects.all().values('id', 'name')
@@ -195,3 +197,10 @@ class PedagogyAreaSerializerResponse(Serializer):
     faq = FAQSerializerResponse(many=True)
     tutorial = TutorialSerializerResponse(many=True)
     normative = NormativeSerializerResponse(many=True)
+
+
+class UserListSerializer(ModelSerializer):
+
+    class Meta:
+        model = User
+        exclude = ['password']
