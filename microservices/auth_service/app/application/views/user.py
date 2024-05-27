@@ -91,7 +91,7 @@ class UserCreateAPI(APIView):
     """
     serializer_class = UserCreateAdminSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'auth.add_user'
+    permission_required = 'add_user'
     output_serializer_class = UserCreateResponseSerializer
 
     def __init__(self):
@@ -216,7 +216,7 @@ class UserUpdate(APIView):
     """
     serializer_class = UserCreateAdminSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'auth.change_user'
+    permission_required = 'change_user'
     output_serializer_class = UserCreateResponseSerializer
 
     def __init__(self):
