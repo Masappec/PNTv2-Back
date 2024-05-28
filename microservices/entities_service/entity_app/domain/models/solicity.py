@@ -54,7 +54,7 @@ class Solicity(BaseModel):
     format_send = models.CharField(max_length=255)
     format_receipt = models.CharField(max_length=255)
     objects = models.Manager()
-
+    date_mail_send = models.DateTimeField(null=True, blank=True)
     class Meta:
         verbose_name = 'Solicitud'
         verbose_name_plural = 'Solicitudes'

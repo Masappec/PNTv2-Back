@@ -1,6 +1,6 @@
 from entity_app.domain.models import Solicity, TimeLineSolicity, Extension, \
     Insistency, Status, SolicityResponse
-from datetime import datetime
+from datetime import datetime,date
 from datetime import timedelta
 from entity_app.adapters.messaging.publish import Publisher
 from entity_app.adapters.messaging.channels import CHANNEL_SOLICIY
@@ -16,13 +16,15 @@ def change_status_solicity():
     # obtener la fecha de hoy
 
     publiher = Publisher(CHANNEL_SOLICIY)
-
-    date = datetime.now() + timedelta(days=2)
+    date.today()
+    date_ = datetime.now() + timedelta(days=2)
     # obtener las solicitudes que vencen el dos dias
-    solicities = Solicity.objects.filter(expiry_date__lte=date,
+    solicities = Solicity.objects.filter(expiry_date=date_,
                                          status__in=[Status.INSISTENCY_SEND, 
                                                      Status.SEND, 
-                                                     Status.INFORMAL_MANAGMENT_SEND]).all()
+                                                     Status.INFORMAL_MANAGMENT_SEND],
+                                         date_mail_send__isnull=True)
+                                         
 
     response = SolicityResponse.objects.filter(solicity__in=solicities)
     es = UserEstablishmentExtended.objects.filter(
@@ -33,8 +35,8 @@ def change_status_solicity():
 
         response = response.filter(solicity=solicity)
 
-        if not response.exists():
-
+        if not response.exists() and solicity.date_mail_send != date.today():
+            solicity.date_mail_send = datetime.now()
             publiher.publish({'type': SOLICITY_FOR_EXPIRED,
                              'payload': {
                                  'number_saip': solicity.number_saip,
@@ -48,8 +50,7 @@ def change_status_solicity():
                                  'email': [es.user.email for es in es.filter(establishment_id=solicity.establishment.id)]
                              }})
 
-    date = datetime.now()
-    solicities = Solicity.objects.filter(expiry_date__lte=date,
+    solicities = Solicity.objects.filter(expiry_date=date.today(),
                                          status__in=[Status.INSISTENCY_SEND, Status.SEND,Status.INFORMAL_MANAGMENT_SEND])
 
     for solicity in solicities:
