@@ -19,7 +19,7 @@ def change_status_solicity():
     date.today()
     date_ = datetime.now() + timedelta(days=2)
     # obtener las solicitudes que vencen el dos dias
-    solicities = Solicity.objects.filter(expiry_date=date_,
+    solicities = Solicity.objects.filter(expiry_date__lte=date_,
                                          status__in=[Status.INSISTENCY_SEND, 
                                                      Status.SEND, 
                                                      Status.INFORMAL_MANAGMENT_SEND],
@@ -49,8 +49,13 @@ def change_status_solicity():
                                  'solicity_id': solicity.id,
                                  'email': [es.user.email for es in es.filter(establishment_id=solicity.establishment.id)]
                              }})
+    today_start = datetime.combine(date.today(), datetime.min.time())
 
-    solicities = Solicity.objects.filter(expiry_date=date.today(),
+
+# Obtén el final del día de hoy
+    today_end = today_start + timedelta(days=1)
+    solicities = Solicity.objects.filter(expiry_date__gte=today_start,
+                                         expiry_date__lt=today_end,
                                          status__in=[Status.INSISTENCY_SEND, Status.SEND,Status.INFORMAL_MANAGMENT_SEND])
 
     for solicity in solicities:
