@@ -153,10 +153,25 @@ class SolicityService:
         Args:
             solicity (dict): Diccionario con los datos de la solicitud de manual
         """
-        return self.solicity_repository.create_manual_solicity(
+        
+        solicity =  self.solicity_repository.create_manual_solicity(
             number_saip, establishment, city, first_name, last_name, email, phone,
             gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
+        es = UserEstablishmentExtended.objects.filter(
+            establishment_id=solicity.establishment_id).distinct('user_id').all()
+        self.publisher.publish({
+            'type': SOLICITY_CITIZEN_CREATED,
+            'payload': {
+                'solicity_id': solicity.id,
+                'establishment_id': solicity.establishment_id,
+                'user_id': user_id,
+                'number_saip': number_saip,
+                'email': [e.user.email for e in es]
 
+            }
+        })
+        
+        return solicity
     def create_insistency_solicity(self, solicity_id, user_id, text):
         """
         Crea una solicitud de insitencia
