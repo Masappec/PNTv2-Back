@@ -25,7 +25,7 @@ def change_status_solicity():
                                                      Status.INFORMAL_MANAGMENT_SEND],
                                          date_mail_send__isnull=True)
                                          
-
+    print(solicities)
     response = SolicityResponse.objects.filter(solicity__in=solicities)
     es = UserEstablishmentExtended.objects.filter(
         establishment_id__in=solicities.values_list(
