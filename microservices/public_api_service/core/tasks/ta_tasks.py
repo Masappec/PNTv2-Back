@@ -10,7 +10,7 @@ def on_update_ta(filepaths, date, month, year, user, establishment_identificatio
             with open(filepath, 'r') as file:
                 content = file.read()
 
-                csv = pd.DataFrame([x.split(',')
+                csv = pd.DataFrame([x.split(';')
                                    for x in content.split('\n') if x])
                 data = csv.values.tolist()
                 columns = data.pop(0)
@@ -32,4 +32,3 @@ def on_update_ta(filepaths, date, month, year, user, establishment_identificatio
         except Exception as e:
             print('Error reading file:', e)
             continue
-        ''''''

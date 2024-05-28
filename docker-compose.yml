@@ -89,33 +89,33 @@ services:
       - REDIS_HOST = redis_db
       - REDIS_PORT = 6379
       - REDIS_DB = 0
-  #public_micorservice:
-  #  build:
-  #    context: ./microservices/public_api_service
-  #    dockerfile: Dockerfile
-  #  ports:
-  #    - "8003:8000"
-  #  depends_on:
-  #    - mongo_db
-  #    - redis_db
-  #  volumes:
-  #    - ./microservices/public_api_service:/code
-  #    - shared_media:/code/media
-  #  environment:
-  #    - CELERY_BROKER_URL=redis://redis_db:6379/2
-  #    - CELERY_RESULT_BACKEND=redis://redis_db:6379/2
-  #    - REDIS_HOST=redis_db
-  #    - REDIS_PORT=6379
-  #    - REDIS_DB=0
-  #    - MONGO_DB_HOST=mongo_db
-  #    - MONGO_DB_PORT=27017
-  #    - MONGO_DB_USERNAME=root
-  #    - MONGO_DB_PASSWORD=rootpassword
-  #    - MONGO_DB_NAME=public_api_service
-  #    - DB_HOST=db_auth
-  #    - DB_NAME=auth_database
-  #    - DB_USER=auth_user
-  #    - DB_PASSWORD=auth_password
+  public_micorservice:
+    build:
+      context: ./microservices/public_api_service
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8000"
+    depends_on:
+      - mongo_db
+      - redis_db
+    volumes:
+      - ./microservices/public_api_service:/code
+      - shared_media:/code/media
+    environment:
+      - CELERY_BROKER_URL=redis://redis_db:6379/2
+      - CELERY_RESULT_BACKEND=redis://redis_db:6379/2
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - MONGO_DB_HOST=mongo_db
+      - MONGO_DB_PORT=27017
+      - MONGO_DB_USERNAME=root
+      - MONGO_DB_PASSWORD=rootpassword
+      - MONGO_DB_NAME=public_api_service
+      - DB_HOST=db_auth
+      - DB_NAME=auth_database
+      - DB_USER=auth_user
+      - DB_PASSWORD=auth_password
 
   #  networks:
   #    - pnt_network
