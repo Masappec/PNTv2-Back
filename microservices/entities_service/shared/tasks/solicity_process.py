@@ -35,8 +35,9 @@ def change_status_solicity():
 
         response = response.filter(solicity=solicity)
 
-        if not response.exists() and solicity.date_mail_send != date.today():
+        if not response.exists():
             solicity.date_mail_send = datetime.now()
+            solicity.save()
             publiher.publish({'type': SOLICITY_FOR_EXPIRED,
                              'payload': {
                                  'number_saip': solicity.number_saip,
