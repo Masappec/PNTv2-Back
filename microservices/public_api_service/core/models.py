@@ -21,3 +21,5 @@ class Metadata(EmbeddedDocument):
 class CSVData(Document):
     metadata = EmbeddedDocumentField(Metadata)
     data = ListField(ListField(StringField()))
+
+

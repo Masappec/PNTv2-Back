@@ -195,3 +195,5 @@ Mon May 27 00:16:43 2024 - Mensaje recibido: {'type': 'message', 'pattern': None
 Mon May 27 00:17:37 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 2, "user_id": 3, "number_saip": "184973", "establishment_id": 1, "email": ["andersonsinaluisa@gmail.com"]}, "id": "3f5e8522-123d-44d0-9f3d-1018fb4ba19e"}'}
 Mon May 27 03:46:13 2024 - Iniciando suscripción al canal user
 Mon May 27 03:46:13 2024 - Iniciando suscripción al canal solicity
+Wed May 29 18:27:25 2024 - Iniciando suscripción al canal user
+Wed May 29 18:27:25 2024 - Iniciando suscripción al canal solicity
