@@ -18,7 +18,7 @@ from drf_yasg import openapi
 from entity_app.domain.models.publication import FilePublication
 from entity_app.adapters.messaging.channels import CHANNEL_ESTABLISHMENT_NUMERAL
 from entity_app.adapters.messaging.publish import Publisher
-from entity_app.adapters.messaging.events import TRANSPARENCY_ACTIVE_UPLOAD
+from entity_app.adapters.messaging.events import TRANSPARENCY_ACTIVE_UPDATE
 
 
 class NumeralsByEstablishment(APIView):
@@ -354,14 +354,15 @@ class NumeralEditPublish(APIView):
 
             result = self.output_serializer_class(transparency)
             self.publisher.publish({
-                'type': TRANSPARENCY_ACTIVE_UPLOAD,
+                'type': TRANSPARENCY_ACTIVE_UPDATE,
                 'payload': {
-                    'filepaths': [file.url_download.path for file in list_files],
+                    'filepaths': [file.url_download.path for file in list_files.filter(description='Conjunto de datos')],
                     'date': fecha_actual.strftime('%Y-%m-%d'),
                     'month': month,
                     'year': year,
                     'user': transparency.establishment_id,
-                    'establishment_identification': transparency.establishment.identification
+                    'establishment_identification': transparency.establishment.identification,
+                    'numeral': transparency.numeral.name
                 }
             })
             res = MessageTransactional(

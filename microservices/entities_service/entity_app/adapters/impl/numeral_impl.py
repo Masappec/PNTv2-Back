@@ -86,12 +86,15 @@ class NumeralImpl(NumeralRepository):
         self.publisher.publish({
             'type': TRANSPARENCY_ACTIVE_UPLOAD,
             'payload': {
-                'filepaths': [file.url_download.path for file in list_files],
+                'filepaths': [file.url_download.path for file in list_files.filter(
+                    description='Conjunto de datos')],
                 'date': fecha_actual.strftime('%Y-%m-%d'),
                 'month': month,
                 'year': year,
                 'user': establishment_id,
-                'establishment_identification': obj.establishment.identification
+                'establishment_identification': obj.establishment.identification,
+                'numeral': obj.numeral.name
+
             }
         })
 
