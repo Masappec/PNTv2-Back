@@ -219,6 +219,7 @@ class GetFileFromUri(APIView):
                 }
                 return Response(res, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
+            print(e )
             res = {
                 'message': 'Ocurrio un error al obtener el archivo, verifique la url',
                 'status': status.HTTP_400_BAD_REQUEST,
