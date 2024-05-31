@@ -105,9 +105,11 @@ class MainViewStream(APIView):
         def stream_queryset(queryset):
             for obj in queryset:
                 data = self.OutputSerializerStream(obj).data
-                yield json.dumps(data) + "\n"
+                yield f"data: {json.dumps(data)}\n\n"
 
         response = StreamingHttpResponse(
-            stream_queryset(res), content_type="application/json")
-        response['Content-Disposition'] = 'attachment; filename="data.json"'
+            stream_queryset(res), content_type="text/event-stream")
+        response['Cache-Control'] = 'no-cache'
+        # Para nginx, deshabilita el buffering si es necesario
+        response['X-Accel-Buffering'] = 'no'
         return response

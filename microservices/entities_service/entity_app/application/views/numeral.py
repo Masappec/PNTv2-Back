@@ -362,7 +362,8 @@ class NumeralEditPublish(APIView):
                     'year': year,
                     'user': transparency.establishment_id,
                     'establishment_identification': transparency.establishment.identification,
-                    'numeral': transparency.numeral.name
+                    'numeral': transparency.numeral.name,
+                    'establishment_name': transparency.establishment.name,
                 }
             })
             res = MessageTransactional(
