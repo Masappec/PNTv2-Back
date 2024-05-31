@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'public_api_service.wsgi.application'
 DATABASE_NAME = os.getenv('MONGO_DB_NAME', 'public_api_service')
 DATABASE_HOST = os.getenv('MONGO_DB_HOST', 'localhost')
 USERNAME = os.getenv('MONGO_DB_USERNAME', 'root')
-PASSWORD = os.getenv('MONGO_DB_PASSWORD', 'root')
+PASSWORD = os.getenv('MONGO_DB_PASSWORD', 'rootpassword')
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # mongoengine.connect(db=DATABASE_NAME, host=DATABASE_HOST,
