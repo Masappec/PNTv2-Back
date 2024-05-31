@@ -94,7 +94,8 @@ class NumeralImpl(NumeralRepository):
                 'user': establishment_id,
                 'establishment_identification': obj.establishment.identification,
                 'numeral': obj.numeral.name,
-                'establishment_name': obj.establishment.name
+                'establishment_name': obj.establishment.name,
+                'numeral_description': obj.numeral.description
 
             }
         })

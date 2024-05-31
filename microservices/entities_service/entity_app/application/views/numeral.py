@@ -364,6 +364,8 @@ class NumeralEditPublish(APIView):
                     'establishment_identification': transparency.establishment.identification,
                     'numeral': transparency.numeral.name,
                     'establishment_name': transparency.establishment.name,
+                    'numeral_description': transparency.numeral.description
+
                 }
             })
             res = MessageTransactional(

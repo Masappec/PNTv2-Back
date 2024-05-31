@@ -16,6 +16,7 @@ class Metadata(EmbeddedDocument):
     user_upload = StringField(default="user")
     date_upload = StringField(default="date")
     path = StringField(default="path")
+    numeral_description = StringField(default="numeral")
     establishment_name = StringField(default="establishment")
 
 

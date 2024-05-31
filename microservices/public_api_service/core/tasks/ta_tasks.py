@@ -9,7 +9,8 @@ def detect_encoding(file_path):
         return result['encoding']
     
 
-def on_update_ta(filepaths, date, month, year, user, establishment_identification, numeral, establishment_name):
+def on_update_ta(filepaths, date, month, year, user, establishment_identification, numeral, establishment_name,
+                 numeral_description):
 
     file = None
     for filepath in filepaths:
@@ -33,7 +34,8 @@ def on_update_ta(filepaths, date, month, year, user, establishment_identificatio
                     path=filepath,
                     establishment_identification=establishment_identification,
                     numeral=numeral,
-                    establishment_name=establishment_name
+                    establishment_name=establishment_name,
+                    numeral_description=numeral_description
 
                 )
                 csv_data = CSVData(metadata=metadata, data=data)
@@ -62,6 +64,7 @@ def on_delete_ta(month, year, establishment_identification, numeral):
             
         
         
-def on_replace_ta(filepaths, date, month, year, user, establishment_identification, numeral, establishment_name):
+def on_replace_ta(filepaths, date, month, year, user, establishment_identification, numeral, establishment_name,
+                 numeral_description):
     on_delete_ta(month, year, establishment_identification, numeral)
-    on_update_ta(filepaths, date, month, year, user, establishment_identification, numeral, establishment_name)
+    on_update_ta(filepaths, date, month, year, user, establishment_identification, numeral, establishment_name, numeral_description)
