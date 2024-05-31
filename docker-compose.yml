@@ -117,8 +117,8 @@ services:
       - DB_USER=auth_user
       - DB_PASSWORD=auth_password
 
-  #  networks:
-  #    - pnt_network
+    networks:
+      - pnt_network
 
   db_auth:
     image: postgres:latest
