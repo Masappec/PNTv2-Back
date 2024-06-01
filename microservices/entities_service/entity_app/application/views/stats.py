@@ -40,7 +40,7 @@ class StatsCitizen(APIView):
                                                      Status.INSISTENCY_RESPONSED,
                                                      Status.INFORMAL_MANAGMENT_RESPONSED])
 
-            total_not_responsed = Solicity.objects.filter(establishment_id=establishment).exclude(status__in=[Status.RESPONSED,
+            total_not_responsed = Solicity.objects.exclude(status__in=[Status.RESPONSED,
                                                         Status.INSISTENCY_RESPONSED,
                                                         Status.INFORMAL_MANAGMENT_RESPONSED])
         if year:
