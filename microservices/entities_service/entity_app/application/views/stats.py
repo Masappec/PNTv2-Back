@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 class StatsCitizen(APIView):
     
+    permission_classes = []
     def get(self, request):
         
         year = request.query_params.get('year', None)
