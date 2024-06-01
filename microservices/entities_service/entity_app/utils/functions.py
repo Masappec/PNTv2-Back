@@ -10,7 +10,7 @@ from django.contrib.auth.models import Permission
 
 
 def get_timedelta_for_expired():
-    return timedelta(days=1)
+    return timedelta(minutes=30)
 
 
 def get_day_for_publish():

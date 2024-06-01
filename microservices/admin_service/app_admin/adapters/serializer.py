@@ -1,4 +1,5 @@
 from django.db.models import ImageField
+from django.contrib.auth.models import Group
 from rest_framework.fields import ListField
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, JSONField, PrimaryKeyRelatedField
 from app_admin.domain.models import Configuration, Establishment, \
@@ -199,7 +200,15 @@ class PedagogyAreaSerializerResponse(Serializer):
     normative = NormativeSerializerResponse(many=True)
 
 
+class GroupSerializer(ModelSerializer):
+
+    class Meta:
+        model = Group
+        fields = ('id', 'name')
+
+
 class UserListSerializer(ModelSerializer):
+    group = ListField(child=GroupSerializer(), allow_null=True)
 
     class Meta:
         model = User

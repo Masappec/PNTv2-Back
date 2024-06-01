@@ -91,7 +91,7 @@ class UserCreateAPI(APIView):
     """
     serializer_class = UserCreateAdminSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'add_user'
+    permission_required = 'add_user,view_users_internal'
     output_serializer_class = UserCreateResponseSerializer
 
     def __init__(self):
@@ -216,7 +216,7 @@ class UserUpdate(APIView):
     """
     serializer_class = UserCreateAdminSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'change_user'
+    permission_required = 'change_user,view_users_internal'
     output_serializer_class = UserCreateResponseSerializer
 
     def __init__(self):
@@ -327,7 +327,7 @@ class UserDetail(APIView):
     """
     serializer_class = UserCreateResponseSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'auth.view_user'
+    permission_required = 'view_user,view_users_internal'
 
     def __init__(self):
         """
@@ -404,7 +404,7 @@ class UserDeactivate(APIView):
     """
     permission_classes = [IsAuthenticated]
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'auth.delete_user'
+    permission_required = 'delete_user,view_users_internal'
 
     def __init__(self):
         """

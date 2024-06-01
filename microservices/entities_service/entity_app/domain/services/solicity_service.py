@@ -271,7 +271,7 @@ class SolicityService:
             return solicity
 
         if solicity.status == Status.INSISTENCY_PERIOD:
-            if not is_citizen or solicity.is_manual:
+            if is_citizen or solicity.is_manual:
                 self.solicity_repository.create_insistency_solicity(
                     solicity_id, user_id, text)
 
@@ -336,7 +336,7 @@ class SolicityService:
             return solicity
 
         if solicity.status == Status.PERIOD_INFORMAL_MANAGEMENT:
-            if not is_citizen or solicity.is_manual:
+            if  is_citizen or solicity.is_manual:
                 if extensions == 10:
                     raise ValueError(
                         "No se pueden agregar mas comentarios a esta solicitud")

@@ -154,4 +154,11 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         users_ = UserEstablishment.objects.filter(
             establishment_id=establishment_id)
 
-        return User.objects.filter(id__in=[user.user_id for user in users_])
+        users = User.objects.filter(id__in=[user.user_id for user in users_]).prefetch_related(
+            'groups')
+        
+        for user in users:
+            group = [group for group in user.groups.all()]
+            # join list to string
+            user.group = group
+        return users

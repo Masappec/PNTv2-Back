@@ -16,22 +16,16 @@ def change_status_solicity():
     # obtener la fecha de hoy
 
     publiher = Publisher(CHANNEL_SOLICIY)
-    date.today()
-    date_ = datetime.now() + timedelta(days=2)
+    date_ = datetime.now() + timedelta(minutes=15)
     # obtener las solicitudes que vencen el dos dias
     solicities = Solicity.objects.filter(expiry_date__lte=date_,
-                                         expiry_date__gte=date_,
                                          status__in=[Status.INSISTENCY_SEND, 
                                                      Status.SEND, 
                                                      Status.INFORMAL_MANAGMENT_SEND],
                                          date_mail_send__isnull=True)
                                          
-    print(solicities)
     response = SolicityResponse.objects.filter(solicity__in=solicities)
-    es = UserEstablishmentExtended.objects.filter(
-        establishment_id__in=solicities.values_list(
-            'establishment_id', flat=True)
-    ).distinct('user_id').all()
+    es = UserEstablishmentExtended.objects.all()
     for solicity in solicities:
 
         response = response.filter(solicity=solicity)
@@ -51,13 +45,9 @@ def change_status_solicity():
                                  'solicity_id': solicity.id,
                                  'email': [es.user.email for es in es.filter(establishment_id=solicity.establishment.id)]
                              }})
-    today_start = datetime.combine(date.today(), datetime.min.time())
 
 
-# Obtén el final del día de hoy
-    today_end = today_start + timedelta(days=1)
-    solicities = Solicity.objects.filter(expiry_date__gte=today_start,
-                                         expiry_date__lt=today_end,
+    solicities = Solicity.objects.filter(expiry_date__lte=datetime.now(),
                                          status__in=[Status.INSISTENCY_SEND, Status.SEND,Status.INFORMAL_MANAGMENT_SEND])
 
     for solicity in solicities:
@@ -67,18 +57,29 @@ def change_status_solicity():
 
         if solicity.status == Status.SEND:
             solicity.status = Status.NO_RESPONSED
-            solicity.expiry_date = datetime.now() + get_timedelta_for_expired()
+            solicity.date_mail_send = None
             solicity.save()
             TimeLineSolicity.objects.create(
                 solicity=solicity, status=Status.NO_RESPONSED)
         elif solicity.status == Status.INSISTENCY_SEND:
             solicity.status = Status.INSISTENCY_NO_RESPONSED
+            solicity.date_mail_send = None
+
             solicity.save()
             TimeLineSolicity.objects.create(
                 solicity=solicity, status=Status.INSISTENCY_NO_RESPONSED)
-        
+        elif solicity.status == Status.INFORMAL_MANAGMENT_SEND:
+            solicity.status = Status.INFORMAL_MANAGMENT_NO_RESPONSED
+            solicity.date_mail_send = None
+
+            solicity.save()
+            TimeLineSolicity.objects.create(
+                solicity=solicity, status=Status.INFORMAL_MANAGMENT_NO_RESPONSED)
+            
         elif solicity.status == Status.INFORMAL_MANAGMENT_NO_RESPONSED:
             solicity.status = Status.FINISHED_WITHOUT_RESPONSE
+            solicity.date_mail_send = None
+
             solicity.save()
             TimeLineSolicity.objects.create(
                 solicity=solicity, status=Status.FINISHED_WITHOUT_RESPONSE)
