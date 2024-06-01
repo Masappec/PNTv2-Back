@@ -138,7 +138,12 @@ services:
       - "27017:27017"
     volumes:
       - ./mongo_data:/data/db
-      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js¨
+
+    environment:
+      MONGO_INITDB_ROOT_DATABASE: public_api_service
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
 
   api_gateway:
     image: nginx:latest
