@@ -146,7 +146,9 @@ class SolicityService:
                                format_receipt: str,
                                format_send: str,
                                expiry_date: datetime,
-                               user_id: int) -> Solicity:
+                               user_id: int,
+                                date: datetime
+                               ) -> Solicity:
         """
         Crea una solicitud de manual
 
@@ -156,7 +158,10 @@ class SolicityService:
         
         solicity =  self.solicity_repository.create_manual_solicity(
             number_saip, establishment, city, first_name, last_name, email, phone,
-            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
+            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id,date)
+        
+        
+        
         es = UserEstablishmentExtended.objects.filter(
             establishment_id=solicity.establishment_id).distinct('user_id').all()
         self.publisher.publish({
@@ -213,7 +218,7 @@ class SolicityService:
         # si el estado actual es enviado
         if solicity.status == Status.SEND:
             # si el usuario es no es el ciudadano
-            if not is_citizen:
+            if not is_citizen or solicity.is_manual:
                 # si el usuario es el establecimiento response
                 solicity.status = Status.RESPONSED
                 solicity.save()
@@ -266,7 +271,7 @@ class SolicityService:
             return solicity
 
         if solicity.status == Status.INSISTENCY_PERIOD:
-            if is_citizen:
+            if not is_citizen or solicity.is_manual:
                 self.solicity_repository.create_insistency_solicity(
                     solicity_id, user_id, text)
 
@@ -293,7 +298,7 @@ class SolicityService:
                     "No se pueden agregar mas comentarios a esta solicitud")
 
         if solicity.status == Status.INSISTENCY_SEND:
-            if is_citizen:
+            if not is_citizen or solicity.is_manual:
                 raise ValueError(
                     "No se pueden agregar mas comentarios a esta solicitud durante el periodo de insitencia")
 
@@ -331,7 +336,7 @@ class SolicityService:
             return solicity
 
         if solicity.status == Status.PERIOD_INFORMAL_MANAGEMENT:
-            if is_citizen:
+            if not is_citizen or solicity.is_manual:
                 if extensions == 10:
                     raise ValueError(
                         "No se pueden agregar mas comentarios a esta solicitud")
@@ -361,7 +366,7 @@ class SolicityService:
                     " No se pueden agregar mas comentarios a esta solicitud")
 
         if solicity.status == Status.INFORMAL_MANAGMENT_SEND:
-            if is_citizen:
+            if not is_citizen or solicity.is_manual:
                 raise ValueError(
                     "No se pueden agregar mas comentarios a esta solicitud durante el periodo de insitencia")
             else:

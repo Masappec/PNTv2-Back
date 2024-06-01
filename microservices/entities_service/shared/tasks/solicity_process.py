@@ -20,6 +20,7 @@ def change_status_solicity():
     date_ = datetime.now() + timedelta(days=2)
     # obtener las solicitudes que vencen el dos dias
     solicities = Solicity.objects.filter(expiry_date__lte=date_,
+                                         expiry_date__gte=date_,
                                          status__in=[Status.INSISTENCY_SEND, 
                                                      Status.SEND, 
                                                      Status.INFORMAL_MANAGMENT_SEND],

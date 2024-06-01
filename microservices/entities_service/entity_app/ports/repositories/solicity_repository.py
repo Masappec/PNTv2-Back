@@ -88,7 +88,9 @@ class SolicityRepository(ABC):
                                format_receipt: str,
                                format_send: str,
                                expiry_date: datetime,
-                               user_id: int) -> Solicity:
+                               user_id: int,
+                               date: datetime,
+                               ) -> Solicity:
         pass
 
     @abstractmethod

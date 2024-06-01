@@ -56,7 +56,7 @@ class MainView(APIView):
                 metadata__establishment_identification=ruc
             )
 
-        
+
         
         return Response(self.OutputSerializer(res, many=True).data)
         
@@ -86,7 +86,7 @@ class MainViewStream(APIView):
         year = serializer.validated_data['year']
         month = serializer.validated_data['month']
         ruc = serializer.validated_data['establishment']
-        if not ruc:
+        if ruc=='':
             res = CSVData.objects(
                 metadata__numeral__in=numerals,
                 metadata__year=year,
@@ -101,7 +101,10 @@ class MainViewStream(APIView):
                 metadata__article=articles,
                 metadata__establishment_identification=ruc
             )
+        print(f"Total documentos que coinciden : {len(res)}")
 
+        for result in res:
+            print(result.metadata.to_mongo())
         def stream_queryset(queryset):
             for obj in queryset:
                 data = self.OutputSerializerStream(obj).data

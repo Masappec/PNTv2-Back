@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Any
 from rest_framework.views import APIView
 
-from entity_app.adapters.serializers import CreateExtensionSerializer, SolicityResponseSerializer
+from entity_app.adapters.serializers import CreateExtensionSerializer, SolicityResponseSerializer, SolicityManualSerializer 
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
 from rest_framework.response import Response
 from rest_framework import status
@@ -57,7 +57,7 @@ class CreateExtensionSolicityView(APIView):
 
 class CreateManualSolicity(APIView):
     permission_classes = [IsAuthenticated, HasPermission]
-    serializer_class = SolicityCreateDraftSerializer
+    serializer_class = SolicityManualSerializer
     output_serializer_class = SolicitySerializer
     pagination_class = StandardResultsSetPagination
     permission_required = 'add_manual_solicity'

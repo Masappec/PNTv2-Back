@@ -157,6 +157,15 @@ class SolicityCreateDraftSerializer(serializers.ModelSerializer):
                    'have_extension', 'is_manual', 'expiry_date', 'user_created', 'user_updated', 'user_deleted',
                    'created_at', 'updated_at', 'deleted_at', 'deleted')
 
+class SolicityManualSerializer(serializers.ModelSerializer):
+    """Solicity create serializer"""
+
+    class Meta:
+        model = Solicity
+        exclude = ('id', 'ip', 'is_active', 'status',
+                   'address',
+                   'have_extension', 'is_manual', 'expiry_date', 'user_created', 'user_updated', 'user_deleted',
+                   'created_at', 'updated_at', 'deleted_at', 'deleted')
 
 class SolicityCreateWithDraftSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()

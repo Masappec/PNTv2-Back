@@ -99,7 +99,8 @@ class SolicityImpl(SolicityRepository):
             solicity.user_updated = user
             solicity.status = Status.DRAFT
             solicity.save()
-
+        solicity.number_saip = f'{solicity.id}/{solicity.date.year}'
+        solicity.save()
         return solicity
 
     def send_solicity_from_draft(self,
@@ -137,6 +138,8 @@ class SolicityImpl(SolicityRepository):
         solicity.user_updated = user
         solicity.status = Status.SEND
         solicity.save()
+        solicity.number_saip = f'{solicity.id}/{solicity.date.year}'
+        solicity.save()
         return solicity
 
     def send_solicity_without_draft(self,
@@ -173,6 +176,8 @@ class SolicityImpl(SolicityRepository):
             user_created=user,
             user_updated=user,
             status=Status.SEND)
+        solicity.number_saip = f'{solicity.id}/{solicity.date.year}'
+        solicity.save()
         TimeLineSolicity.objects.create(
             solicity_id=solicity.id, status=Status.SEND)
         return solicity
@@ -236,7 +241,9 @@ class SolicityImpl(SolicityRepository):
                                format_receipt: str,
                                format_send: str,
                                expiry_date: datetime,
-                               user_id: int) -> Solicity:
+                               user_id: int,
+                            date: datetime,
+                               ) -> Solicity:
         user = User.objects.get(id=user_id)
 
         solicity = Solicity.objects.create(
@@ -256,7 +263,11 @@ class SolicityImpl(SolicityRepository):
             user_created=user,
             user_updated=user,
             status=Status.SEND,
+            date=date,
             is_manual=True)
+        
+        solicity.number_saip = f'{solicity.id}/{solicity.date.year}'
+        solicity.save()
         TimeLineSolicity.objects.create(
             solicity_id=solicity.id, status=Status.SEND)
         return solicity

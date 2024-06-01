@@ -2,7 +2,7 @@ from django.urls import path, include
 from entity_app.application.views.public import PublicationPublicView, PublicationDetail
 from entity_app.application.views.publication import PublicationCreateAPI, PublicationUpdateAPI, \
     PublicationsView, PublicatioDetail, PublicationUpdateState
-
+from entity_app.application.views.stats import StatsCitizen
 from entity_app.application.views.file_publication import FilePublicationCreateView, GetFileFromUri, FilePublicationListEstablishemtSession, FilePublicationDelete
 from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
@@ -19,7 +19,9 @@ from entity_app.application.views.focus_transparency import CreateTransparencyFo
 
 from entity_app.application.views.template_file import TemplateFileValidate
 from entity_app.application.views.transparency_active import TransparencyActivePublicListView
-urlpatterns = [
+urlpatterns = [     
+               
+     path('stats/citizen', StatsCitizen.as_view(), name='stats-citizen'),
 
     path('public/transparency/active/list',
          PublicationPublicView.as_view(), name='publication-list'),
