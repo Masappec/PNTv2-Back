@@ -23,7 +23,7 @@ def change_status_solicity():
                                                      Status.SEND, 
                                                      Status.INFORMAL_MANAGMENT_SEND],
                                          date_mail_send__isnull=True)
-                                         
+    print(solicities,date_)
     response = SolicityResponse.objects.filter(solicity__in=solicities)
     es = UserEstablishmentExtended.objects.all()
     for solicity in solicities:
