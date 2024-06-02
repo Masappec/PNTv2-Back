@@ -17,10 +17,7 @@ class SolicityImpl(SolicityRepository):
         day = datetime.now().day
         year = datetime.now().year
         
-        expired_month = solicity.expiry_date.month
-        expired_day = solicity.expiry_date.day
-        expired_year = solicity.expiry_date.year
-        if month == expired_month and expired_day == day and expired_year==year:
+        if datetime.now() > solicity.expiry_date:
             newstatus = ''
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 newstatus = Status.INSISTENCY_PERIOD
