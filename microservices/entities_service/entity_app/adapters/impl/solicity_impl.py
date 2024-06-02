@@ -7,17 +7,14 @@ from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from entity_app.domain.models.solicity import Solicity, TimeLineSolicity, TypeStages
 from entity_app.utils.functions import get_timedelta_for_expired
-
+from django.utils import timezone
 class SolicityImpl(SolicityRepository):
 
     def change_status_by_id(self, solicity_id):
         solicity = Solicity.objects.get(id=solicity_id)
         
-        month = datetime.now().month
-        day = datetime.now().day
-        year = datetime.now().year
         
-        if datetime.now() > solicity.expiry_date:
+        if timezone.now() > solicity.expiry_date:
             newstatus = ''
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 newstatus = Status.INSISTENCY_PERIOD
