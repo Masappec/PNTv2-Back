@@ -42,7 +42,7 @@ class Subscriptor:
             CallbackObserver(callback=send_mail_citizen_response,
                              channel=CHANNEL_SOLICIY, type=SOLICITY_RESPONSE_USER),
             CallbackObserver(callback=send_email_for_expired_citizen,
-                             channel=CHANNEL_SOLICIY, type=SOLICITY_USER_EXPIRED),
+                             channel=CHANNEL_SOLICIY, type=SOLICITY_FOR_EXPIRED),
             CallbackObserver(callback=send_email_for_expired_establishment,
                              channel=CHANNEL_SOLICIY, type=SOLICITY_FOR_EXPIRED)
 
