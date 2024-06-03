@@ -70,7 +70,7 @@ class SolicityService:
                 'solicity_id': solicity.id,
                 'establishment_id': solicity.establishment_id,
                 'user_id': user_id,
-                'number_saip': number_saip,
+                'number_saip': solicity.number_saip,
                 'email': [e.user.email for e in es]
             }
         })
@@ -118,7 +118,7 @@ class SolicityService:
                 'solicity_id': solicity.id,
                 'establishment_id': solicity.establishment_id,
                 'user_id': user_id,
-                'number_saip': number_saip,
+                'number_saip': solicity.number_saip,
                 'email': [e.user.email for e in es]
 
             }
@@ -170,7 +170,7 @@ class SolicityService:
                 'solicity_id': solicity.id,
                 'establishment_id': solicity.establishment_id,
                 'user_id': user_id,
-                'number_saip': number_saip,
+                'number_saip': solicity.number_saip,
                 'email': [e.user.email for e in es]
 
             }
