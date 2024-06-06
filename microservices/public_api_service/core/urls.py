@@ -1,9 +1,10 @@
 #urls.py
 from django.urls import path
 
-from core.application.views.main import MainView, MainViewStream
+from core.application.views.main import MainView, MainViewStream, PersonalRemuneraciones
 
 urlpatterns = [
     path('public_api/', MainView.as_view()),
     path('public_api_stream/', MainViewStream.as_view()),
+    path('public/personal-remuneraciones/', PersonalRemuneraciones.as_view())
 ]
