@@ -112,17 +112,17 @@ class PersonalRemuneraciones(APIView):
                     unidad = row_dict.get(
                         numeral_columns_map[numeral]["unidad_campo"], "").strip()
                     
-                    if lev.similarity(name,nombre) > 0.2:
+                    
                     
 
-                        numeral_21_data.append({
-                            "puesto": puesto,
-                            "unidad": unidad,
-                            "remuneracion": "",
-                            "grado": "",
-                            "nombre": nombre,
-                            "regimen": ""
-                        })
+                    numeral_21_data.append({
+                        "puesto": puesto,
+                        "unidad": unidad,
+                        "remuneracion": "",
+                        "grado": "",
+                        "nombre": nombre,
+                        "regimen": ""
+                    })
 
                 elif numeral == "Numeral 2.2":
                     
