@@ -38,7 +38,7 @@ def on_update_ta(filepaths, date, month, year, user, establishment_identificatio
                     numeral_description=numeral_description
 
                 )
-                csv_data = CSVData(metadata=metadata, data=data)
+                csv_data = CSVData(metadata=metadata, data=[str(row) for row in data])
                 csv_data.save()
                 print('CSVData saved:', csv_data)
         except Exception as e:
