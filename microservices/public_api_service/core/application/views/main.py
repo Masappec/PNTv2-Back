@@ -134,7 +134,7 @@ class PersonalRemuneraciones(APIView):
                         numeral_columns_map[numeral]["puesto_campo"], "").strip()
                     unidad = row_dict.get(
                         numeral_columns_map[numeral]["unidad_campo"], "").strip()
-                    if lev.similarity(name,nombre) > 0.4:
+                    if lev.similarity(name,nombre) > 0.8:
                         numeral_21_data.append({
                             "puesto": puesto,
                             "unidad": unidad,
