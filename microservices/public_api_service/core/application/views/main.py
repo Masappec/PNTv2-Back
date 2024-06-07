@@ -113,16 +113,15 @@ class PersonalRemuneraciones(APIView):
                         numeral_columns_map[numeral]["unidad_campo"], "").strip()
                     
                     
-                    
-
-                    numeral_21_data.append({
-                        "puesto": puesto,
-                        "unidad": unidad,
-                        "remuneracion": "",
-                        "grado": "",
-                        "nombre": nombre,
-                        "regimen": ""
-                    })
+                    if lev.similarity(name, nombre) > 0.4:
+                        numeral_21_data.append({
+                            "puesto": puesto,
+                            "unidad": unidad,
+                            "remuneracion": "",
+                            "grado": "",
+                            "nombre": nombre,
+                            "regimen": ""
+                        })
 
                 elif numeral == "Numeral 2.2":
                     
@@ -134,15 +133,15 @@ class PersonalRemuneraciones(APIView):
                         numeral_columns_map[numeral]["puesto_campo"], "").strip()
                     unidad = row_dict.get(
                         numeral_columns_map[numeral]["unidad_campo"], "").strip()
-
-                    numeral_21_data.append({
-                        "puesto": puesto,
-                        "unidad": unidad,
-                        "remuneracion": "",
-                        "grado": "",
-                        "nombre": nombre,
-                        "regimen": ""
-                    })
+                    if lev.similarity(name,nombre) > 0.4:
+                        numeral_21_data.append({
+                            "puesto": puesto,
+                            "unidad": unidad,
+                            "remuneracion": "",
+                            "grado": "",
+                            "nombre": nombre,
+                            "regimen": ""
+                        })
 
                 elif numeral == "Numeral 3":
                     puesto = row_dict.get(
