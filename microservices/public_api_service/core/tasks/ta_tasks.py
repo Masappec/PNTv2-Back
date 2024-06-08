@@ -2,7 +2,7 @@ import pandas as pd
 from core.models import Metadata, CSVData
 import chardet
 
-
+from io import StringIO
 def detect_encoding(file_path):
     with open(file_path, 'rb') as f:
         result = chardet.detect(f.read())
@@ -19,16 +19,17 @@ def on_update_ta(filepaths, date, month, year, user, establishment_identificatio
             with open(filepath, 'r', encoding=encoding) as file:
                 content = file.read()
                 content = content.replace('\ufeff', '')
-                csv = pd.DataFrame([x.split(';')
-                                   for x in content.split('\n') if x])
+                csv = pd.read_csv(StringIO(content),
+                                 delimiter=';', quotechar='"')
+
+                
                 
                 #remplazar los NaN por '', para evitar problemas con el tipo de dato,
                 #convertir los numeros a string
                 csv = csv.applymap(lambda x: str(x) if pd.notnull(x) else '')
                 csv = csv.fillna('')
                 data = csv.values.tolist()
-                columns = data.pop(0)
-                print(columns, data)
+                columns = csv.columns
                 metadata = Metadata(
                     filename=filepath,
                     columns=columns,

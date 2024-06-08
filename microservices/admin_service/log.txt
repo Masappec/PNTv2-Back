@@ -293,3 +293,25 @@ Wed Jun  5 21:06:08 2024 - Mensaje recibido: {'type': 'message', 'pattern': None
 Wed Jun  5 21:06:20 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "210/2024", "date": "2024-06-01", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 1, "status": "INSISTENCY_SEND", "user_id": 3, "solicity_id": 210, "email": ["andersonsinaluisa@gmail.com", "andersonsinaluisa4@gmail.com", "andersonsinaluis44a@gmail.com", "andersdsdsonsinaluisa@gmail.com"]}, "id": "43195066-74fb-4999-8441-e1cfd8b81761"}'}
 Fri Jun  7 09:57:06 2024 - Iniciando suscripción al canal user
 Fri Jun  7 09:57:06 2024 - Iniciando suscripción al canal solicity
+Fri Jun  7 21:06:48 2024 - Iniciando suscripción al canal user
+Fri Jun  7 21:06:48 2024 - Iniciando suscripción al canal solicity
+Fri Jun  7 21:39:32 2024 - Iniciando suscripción al canal user
+Fri Jun  7 21:39:32 2024 - Iniciando suscripción al canal solicity
+Sat Jun  8 08:36:26 2024 - Iniciando suscripción al canal user
+Sat Jun  8 08:36:26 2024 - Iniciando suscripción al canal solicity
+Sat Jun  8 13:23:55 2024 - Iniciando suscripción al canal user
+Sat Jun  8 13:23:55 2024 - Iniciando suscripción al canal solicity
+Sat Jun  8 14:43:41 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 212, "establishment_id": 1, "user_id": 7, "number_saip": "212/2024", "email": ["andersonsinaluisa@gmail.com", "andersonsinaluisa4@gmail.com", "andersonsinaluis44a@gmail.com", "andersdsdsonsinaluisa@gmail.com"]}, "id": "69c579ea-4614-4c12-94d6-299d4e325dab"}'}
+Sat Jun  8 14:45:21 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 213, "establishment_id": 1, "user_id": 7, "number_saip": "213/2024", "email": ["andersonsinaluisa@gmail.com", "andersonsinaluisa4@gmail.com", "andersonsinaluis44a@gmail.com", "andersdsdsonsinaluisa@gmail.com"]}, "id": "d525a791-cabd-4ef6-90a7-eb34a1fcf3be"}'}
+Sat Jun  8 14:59:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "212/2024", "date": "2024-06-06", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 1, "status": "SEND", "user_id": 7, "solicity_id": 212, "email": ["andersonsinaluisa@gmail.com", "andersonsinaluisa4@gmail.com", "andersonsinaluis44a@gmail.com", "andersdsdsonsinaluisa@gmail.com"]}, "id": "4bb60aaf-7f87-4f57-92d9-ee6146f2443e"}'}
+Sat Jun  8 15:01:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "213/2024", "date": "2024-06-08", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 1, "status": "SEND", "user_id": 7, "solicity_id": 213, "email": ["andersonsinaluisa@gmail.com", "andersonsinaluisa4@gmail.com", "andersonsinaluis44a@gmail.com", "andersdsdsonsinaluisa@gmail.com"]}, "id": "99ba40e6-e543-4672-843d-29d1f94bba8c"}'}
+Sat Jun  8 15:07:18 2024 - Iniciando suscripción al canal user
+Sat Jun  8 15:07:18 2024 - Iniciando suscripción al canal solicity
+Sat Jun  8 15:08:54 2024 - Iniciando suscripción al canal user
+Sat Jun  8 15:08:54 2024 - Iniciando suscripción al canal solicity
+Sat Jun  8 15:14:52 2024 - Iniciando suscripción al canal user
+Sat Jun  8 15:14:52 2024 - Iniciando suscripción al canal solicity
+Sat Jun  8 15:15:43 2024 - Iniciando suscripción al canal user
+Sat Jun  8 15:15:43 2024 - Iniciando suscripción al canal solicity
+Sat Jun  8 15:27:24 2024 - Iniciando suscripción al canal user
+Sat Jun  8 15:27:24 2024 - Iniciando suscripción al canal solicity
