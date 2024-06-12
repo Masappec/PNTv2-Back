@@ -1,19 +1,46 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from datetime import datetime
-from core.models import TransparencyActive
+from core.models import TransparencyActive, FilePublication
 from rest_framework import serializers
+from drf_yasg.utils import swagger_auto_schema
+
+
+class FilePublicationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FilePublication
+        fields = (
+            'id',
+            'name',
+            'description',
+            'url_download',
+        )
 
 class PresupuestoView(APIView):
     
     
-    class OutputSerializer(serializers.ModelSerializer):
+    class InputSerializerPresupuesto(serializers.Serializer):
+        ruc = serializers.CharField()
+        year = serializers.IntegerField()
+        month = serializers.IntegerField()
+    class OutputSerializerPresupuesto(serializers.ModelSerializer):
+        files = FilePublicationSerializer(many=True)
+        establishment_name = serializers.SerializerMethodField(
+            method_name='get_establishment_name')
         class Meta:
             model = TransparencyActive
             fields = '__all__'
             
+        def get_establishment_name(self, obj):
+            return obj.establishment.name
             
-    def get(self, request, *args, **kwargs):
+            
+    @swagger_auto_schema(
+        request_body=InputSerializerPresupuesto,
+        responses={200: OutputSerializerPresupuesto}
+    )
+    def post(self, request, *args, **kwargs):
         """
         Get a list of users.
 
@@ -26,12 +53,14 @@ class PresupuestoView(APIView):
             object: The response object.
         """
         try:
-            year = request.query_params.get('year', None)
-            month = request.query_params.get('month', None)
-            establishment_id = request.query_params.get(
-                'establishment_id', None)
+            serializer = self.InputSerializerPresupuesto(data=request.data)
+            serializer.is_valid(raise_exception=True)
 
-            if establishment_id is None:
+            year = serializer.validated_data['year']
+            month = serializer.validated_data['month']
+            ruc = serializer.validated_data['ruc']
+
+            if ruc is None:
                 raise ValueError('Debe seleccionar un establecimiento')
 
             if year is None:
@@ -45,11 +74,11 @@ class PresupuestoView(APIView):
             queryset = TransparencyActive.objects.filter(
                 year=year,
                 month=month,
-                establishment_id=establishment_id,
-                numeral__name= 'Numeral 16'
+                establishment__identification=ruc,
+                numeral__name='Numeral 6'
             )
 
-            serializer = self.OutputSerializer(queryset, many=True)
+            serializer = self.OutputSerializerPresupuesto(queryset, many=True)
             return Response(serializer.data)
 
         except Exception as e:

@@ -28,10 +28,11 @@ schema_view = get_schema_view(
         license=openapi.License(name="BSD License"),
     ),
     public=True,
+    #url='https://transparencia/backend/v1/public/',
+    
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('',include('core.urls')),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0),
          name='schema-json'),

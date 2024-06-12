@@ -64,8 +64,7 @@ class EstablishmentNumeral(models.Model):
 class Numeral(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    templates = models.ManyToManyField(
-        'TemplateFile', related_name='numerals', blank=True)
+    
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
     is_default = models.BooleanField(default=True)
@@ -82,7 +81,7 @@ class Numeral(models.Model):
         return str(self.name)
     
 
-class FilePublication(BaseModel):
+class FilePublication(models.Model):
 
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
