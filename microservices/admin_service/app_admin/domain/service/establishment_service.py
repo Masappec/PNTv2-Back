@@ -65,12 +65,17 @@ class EstablishmentService:
         try:
             est = self.establishment_repository.update_establishment(
                 establishment_id, establishment)
+            ids = establishment['extra_numerals']
+            if ids:
 
+                list_ids = establishment['extra_numerals'].split(',')
+            else:
+                list_ids = []
             self.publisher.publish(
                 {
                     'type': ESTABLISHMENT_UPDATED,
                     'payload': {
-                        'numerals_id': [],
+                        'numerals_id': list_ids,
                         'establishment_id': establishment_id,
                     }}
             )
