@@ -3,62 +3,206 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recuperación de Contraseña</title>
+    <title>Registro de Usuario - Portal Nacional de Transparencia</title>
     <style>
       body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
-        padding: 0;
+        padding: 100px 0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      .email p {
+        margin: 8px 0;
+      }
+
+      .email {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding-top: 32px;
+      }
+      .email__header {
+        text-align: center;
+        padding: 0 16px 16px 16px;
+        border-bottom: 1px solid #f3f4f6;
+        margin-bottom: 32px;
+      }
+      .email__title {
+        margin: 0;
+        font-size: 24px;
+        color: #198fb1;
+        margin-top: 16px;
+      }
+      .email__logo {
+        width: 100%;
+        max-width: 240px;
+        height: auto;
+        margin: 0 auto;
+      }
+      .email__content {
+        padding: 32px 16px;
+        padding-top: 0;
+        line-height: 1.6;
+        color: #4e4e4e;
+      }
+      .email__accent-block {
+        margin: 16px auto;
+        background-color: #f3f4f6;
+        width: 100%;
+        padding: 16px;
+        max-width: max-content;
+        border-radius: 8px;
+        color: #198fb1;
+        font-weight: 600;
+        font-size: 40px;
+      }
+      .email__prefooter {
+        padding: 16px 16px 32px 16px;
+        border-top: 1px solid #f3f4f6;
+        font-size: 12px;
+        color: #6e6e6e;
+      }
+      .email__footer {
+        padding: 32px 16px;
+        background-color: #333333;
+        font-size: 14px;
+      }
+      .email__footer-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .email__footer-logo {
+        width: 100%;
+        max-width: 100px;
+        height: auto;
+        margin: 0;
+      }
+      .email__footer-links {
+        display: block;
+        margin-top: 16px;
+        text-align: end;
+        font-size: 12px;
+      }
+      .email__footer-social {
         display: flex;
         align-items: center;
-        justify-content: center;
-        height: 100vh;
+        gap: 16px;
+        color: #fff;
       }
-
-      .container {
-        max-width: 600px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      .email__footer-social-icons {
+        display: flex;
+        gap: 8px;
       }
-
-      h2 {
-        color: #333;
-        margin-bottom: 20px;
-      }
-
-      p {
-        color: #555;
-        line-height: 1.5;
-      }
-
-      a {
-        color: white;
+      .email__footer-social-icons a {
         text-decoration: none;
-        background-color: #007bff;
-        padding: 10px 20px;
-        border-radius: 4px;
-        display: inline-block;
       }
-
-      a:hover {
+      .email__footer-social-icons a svg {
+        margin-left: 8px;
+      }
+      .email__footer-links a {
+        color: #9ca3af;
         text-decoration: underline;
+        margin-left: 8px;
+      }
+      .email__footer-links a:hover {
+        color: #fff;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h2>Nueva Solicitud de Ciudadano</h2>
-      <p>Estimado Administrador de {{establishment}},</p>
-      <p>Se ha registrado una nueva solicitud de ciudadano en el sistema.</p>
-      <p>Numero de SAIP asignado: <strong>{{ saip }}</strong></p>
+    <div class="email">
+      <div class="email__header">
+        <img
+          class="email__logo"
+          src="https://i.postimg.cc/m2Q1hLkP/portal-nacional-transparencia.png"
+          alt="Logo del Portal Nacional de Transparencia"
+        />
+        <h1 class="email__title">Nueva Solicitud de Ciudadano</h1>
+      </div>
+      <div class="email__content">
+        <h2>Nueva Solicitud de Ciudadano</h2>
+        <p>Estimado Administrador de {{establishment}},</p>
+        <p>Se ha registrado una nueva solicitud de ciudadano en el sistema.</p>
+        <p>Numero de SAIP asignado: <strong>{{ saip }}</strong></p>
 
-      <p>Información del Ciudadano:</p>
-      <ul>
-        <li>Nombre: <strong>{{ first_name }} {{ last_name }}</strong></li>
-      </ul>
+        <p>Información del Ciudadano:</p>
+        <ul>
+          <li>Nombre: <strong>{{ first_name }} {{ last_name }}</strong></li>
+        </ul>
+      </div>
+
+      <div class="email__prefooter">
+        <p>
+          <strong>Importante:</strong> Este es un correo generado
+          automáticamente, por lo que no debes responder a este mensaje. Si
+          tienes alguna pregunta o necesitas asistencia adicional, por favor
+          contacta a nuestro equipo de soporte a través de [... completar]
+        </p>
+      </div>
+
+      <div class="email__footer">
+        <div class="email__footer-header">
+          <img
+            class="email__footer-logo"
+            src="https://i.postimg.cc/3WMrYvmt/defensoria-white.png"
+            alt="Logo de la Defensoría del Pueblo"
+          />
+          <div class="email__footer-social">
+            <span>Síguenos en</span>
+            <div class="email__footer-social-icons">
+              <a href="#">
+                <svg
+                  fill="#f2f2f2"
+                  stroke-width="0"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  height="27"
+                  width="27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"
+                  ></path>
+                </svg>
+              </a>
+              <a href="#">
+                <svg
+                  fill="#f2f2f2"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  height="27"
+                  width="27"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"
+                  ></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="email__footer-links">
+          <a
+            href="https://transparencia.ec/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Portal Nacional de Transparencia</a
+          >
+          <a
+            href="https://transparencia.ec/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Políticas y Condiciones de Uso</a
+          >
+        </div>
+      </div>
     </div>
   </body>
 </html>
