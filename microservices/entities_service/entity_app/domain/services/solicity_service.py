@@ -237,13 +237,23 @@ class SolicityService:
                     }
                 })
 
-            '''else:
-                if extensions == 10:
-                    raise ValueError(
-                        "No se pueden agregar mas comentarios a esta solicitud")
+            
 
-                self.solicity_repository.create_extencion_solicity(
-                    text, solicity_id, user_id, files, attachments)
+            return solicity
+
+        # si la solicitud esta en estado de respuesta
+        if solicity.status == Status.RESPONSED:
+
+            # validar si ya expiro la solicitud
+            if is_citizen or solicity.is_manual:
+                self.solicity_repository.create_insistency_solicity(
+                    solicity_id, user_id, text)
+
+                solicity.status = Status.INSISTENCY_SEND
+                solicity.save()
+                self.save_timeline(solicity_id, user_id,
+                                   Status.INSISTENCY_SEND)
+
                 self.publisher.publish({
                     'type': SOLICITY_RESPONSE_USER,
                     'payload': {
@@ -254,21 +264,12 @@ class SolicityService:
                         'email': [e.user.email for e in es]
 
                     }
-                })'''
+                })
 
-            return solicity
-
-        # si la solicitud esta en estado de respuesta
-        if solicity.status == Status.RESPONSED:
-
-            # validar si ya expiro la solicitud
-            if extensions == 10:
+                return solicity
+            else:
                 raise ValueError(
                     "No se pueden agregar mas comentarios a esta solicitud")
-            self.solicity_repository.create_comment_solicity(
-                solicity_id, user_id, text)
-
-            return solicity
 
         if solicity.status == Status.INSISTENCY_PERIOD:
             if is_citizen or solicity.is_manual:
@@ -325,15 +326,7 @@ class SolicityService:
 
             return solicity
 
-        if solicity.status == Status.INSISTENCY_RESPONSED:
-            if extensions == 10:
-                raise ValueError(
-                    "No se pueden agregar mas comentarios a esta solicitud")
-
-            self.solicity_repository.create_extencion_solicity(
-                text, solicity_id, user_id, files, attachments)
-
-            return solicity
+        
 
         if solicity.status == Status.PERIOD_INFORMAL_MANAGEMENT:
             if  is_citizen or solicity.is_manual:
@@ -390,24 +383,7 @@ class SolicityService:
 
                 return solicity
 
-        if solicity.status == Status.INFORMAL_MANAGMENT_RESPONSED:
-            if extensions == 10:
-                raise ValueError(
-                    "No se pueden agregar mas comentarios a esta solicitud")
-
-            else:
-                self.solicity_repository.create_extencion_solicity(
-                    text, solicity_id, user_id, files, attachments)
-                return solicity
-
-                # si es el usuario que creo la solicitud
-        else:
-            if extensions == 10:
-                raise ValueError(
-                    "No se pueden agregar mas comentarios a esta solicitud")
-
-            self.solicity_repository.create_extencion_solicity(
-                text, solicity_id, user_id, files, attachments)
+        
 
         return solicity
 

@@ -7,6 +7,7 @@ from datetime import datetime
 from django.core import mail
 from django.template.loader import render_to_string
 import app_admin.utils.contants as constants
+from django.utils.html import strip_tags
 
 
 class StmpImpl(SmtpRepository):
@@ -65,17 +66,26 @@ class StmpImpl(SmtpRepository):
             email.body = html_content
             email.status = Email.STATUS_PENDING()
             # email.save()
-            message = mail.EmailMessage(
+            html_content = render_to_string(
+                template, context)
+
+
+            text_content = strip_tags(html_content)
+            message = mail.EmailMultiAlternatives(
                 subject=email.subject,
-                body=html_content,
+                body=text_content,
                 from_email=email.from_email,
                 to=[email.to_email],
                 bcc=email.bcc,
                 cc=email.cc,
                 reply_to=email.reply_to,
+                #html y css
+                
             )
 
             backend = self.get_email_backend()
+            message.attach_alternative(html_content, "text/html")
+
             count = backend.send_messages([message])
             email.status = Email.STATUS_SENT()
             email.save()

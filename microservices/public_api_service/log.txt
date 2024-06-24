@@ -86,3 +86,11 @@ Wed Jun 12 09:48:05 2024 - Iniciando suscripción al canal establishment_numeral
 Wed Jun 12 09:50:35 2024 - Iniciando suscripción al canal establishment_numeral
 Wed Jun 12 10:02:39 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": ["/code/media/transparencia/0959998855/Numeral 6/2024/6/Conjunto de datos.csv"], "date": "2024-06-12", "month": 6, "year": 2024, "user": 1, "establishment_identification": "0959998855", "numeral": "Numeral 6", "establishment_name": "GITHUB DESKTOP", "numeral_description": "Presupuesto de la institucion"}, "id": "a861dba6-bfef-438e-a36c-28daae819407"}'}
 Wed Jun 12 10:30:07 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": ["/code/media/transparencia/0959998855/Numeral 5/2024/6/Conjunto de datos.csv"], "date": "2024-06-12", "month": 6, "year": 2024, "user": 1, "establishment_identification": "0959998855", "numeral": "Numeral 5", "establishment_name": "GITHUB DESKTOP", "numeral_description": "Servicios"}, "id": "e74cfed1-edd6-4417-9479-e457a364b87f"}'}
+Sat Jun 22 13:56:13 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Jun 22 15:29:14 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Jun 22 15:32:16 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Jun 22 15:37:02 2024 - Iniciando suscripción al canal establishment_numeral
+Sun Jun 23 19:14:30 2024 - Iniciando suscripción al canal establishment_numeral
+Sun Jun 23 23:34:00 2024 - Iniciando suscripción al canal establishment_numeral
+Sun Jun 23 23:35:57 2024 - Iniciando suscripción al canal establishment_numeral
+Sun Jun 23 23:39:01 2024 - Iniciando suscripción al canal establishment_numeral

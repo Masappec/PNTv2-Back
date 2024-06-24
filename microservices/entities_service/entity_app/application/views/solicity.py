@@ -299,7 +299,9 @@ class SolicityView(ListAPIView):
         try:
 
             queryset = self.get_queryset(request.user.id)
-
+            order_by = request.query_params.get('sort[]', None)
+            if order_by is not None:
+                queryset = queryset.order_by(order_by)
             search = request.query_params.get('search', None)
             if search is not None:
                 queryset = queryset.filter(

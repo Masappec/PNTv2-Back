@@ -11,10 +11,6 @@ import json
 
 class EstablishmentListSerializer(ModelSerializer):
     address = CharField(max_length=255, allow_blank=True, allow_null=True)
-    type_institution = CharField(max_length=255, allow_null=True)
-    type_organization = CharField(max_length=255, allow_null=True)
-    function_organization = CharField(max_length=255, allow_null=True)
-
     class Meta:
         model = Establishment
         fields = '__all__'
@@ -22,7 +18,12 @@ class EstablishmentListSerializer(ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['logo'] = instance.logo.url if instance.logo else None
+        representation['type_institution'] = instance.type_institution.name if instance.type_institution else None
+        representation['type_organization'] = instance.type_organization.name if instance.type_organization else None
+        representation['function_organization'] = instance.function_organization.name if instance.function_organization else None
         return representation
+    
+    
 
 
 class EstablishmentCreateSerializer(Serializer):

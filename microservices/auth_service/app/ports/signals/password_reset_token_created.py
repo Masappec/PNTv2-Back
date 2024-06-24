@@ -20,7 +20,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     :param args:
     :param kwargs:
     :return:"""
-
+    print('CREADOOOO')
     publisher = Publisher(CHANNEL_USER)
 
     publisher.publish({
