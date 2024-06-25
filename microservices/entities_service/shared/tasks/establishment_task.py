@@ -14,18 +14,8 @@ def establishment_created_event(numerals_id: list, establishment_id: int):
 
             service.asign_numeral_to_establishment(
                 defaults_numerals, establishment_id)
-        return {
-            'type': 'establishment_created',
-            'payload': {
-                'numerals_id': numerals_id,
-                'establishment_id': establishment_id
-            },
-        }
-    except Exception as e:
-        print(e)
-        pass
-
-    try:
+       
+    
         if numerals_id:
             list_numeral = service.filter_by_list_ids(numerals_id)
             service.asign_numeral_to_establishment(

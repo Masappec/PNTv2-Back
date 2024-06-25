@@ -64,6 +64,9 @@ class SolicityService:
 
         es = UserEstablishmentExtended.objects.filter(
             establishment_id=solicity.establishment_id).distinct().all()
+        
+        
+        self.save_timeline(solicity.id, user_id, Status.SEND)
         self.publisher.publish({
             'type': SOLICITY_CITIZEN_CREATED,
             'payload': {
