@@ -108,8 +108,8 @@ class PersonalRemuneraciones(APIView):
                     unidad = row_dict.get(
                         numeral_columns_map[numeral]["unidad_campo"], "").strip()
                     #contains
-                    if name in nombre or name.lower() in nombre.lower() \
-                    or nombre in name or nombre.lower() in name.lower():
+                    if name.lower() in nombre.lower() or nombre.lower() in name.lower():
+                        
                         numeral_21_data.append({
                             "puesto": puesto,
                             "unidad": unidad,
@@ -129,7 +129,8 @@ class PersonalRemuneraciones(APIView):
                         numeral_columns_map[numeral]["puesto_campo"], "").strip()
                     unidad = row_dict.get(
                         numeral_columns_map[numeral]["unidad_campo"], "").strip()
-                    if lev.similarity(name, nombre) > 0.4:
+                    if name.lower() in nombre.lower() or nombre.lower() in name.lower():
+
                         numeral_21_data.append({
                             "puesto": puesto,
                             "unidad": unidad,
