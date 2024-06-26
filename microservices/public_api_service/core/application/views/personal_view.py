@@ -108,7 +108,8 @@ class PersonalRemuneraciones(APIView):
                     unidad = row_dict.get(
                         numeral_columns_map[numeral]["unidad_campo"], "").strip()
                     #contains
-                    if name in nombre or name.lower() in nombre.lower():
+                    if name in nombre or name.lower() in nombre.lower() \
+                    or nombre in name or nombre.lower() in name.lower():
                         numeral_21_data.append({
                             "puesto": puesto,
                             "unidad": unidad,
