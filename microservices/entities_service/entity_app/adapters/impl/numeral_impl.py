@@ -45,13 +45,13 @@ class NumeralImpl(NumeralRepository):
     def asign_numeral_to_establishment(self, ids_numeral: List[Numeral], establishment_id: int):
         numerals = self.get_by_entity(establishment_id)
         #eliminar ls que no estan en la lista
-        for numeral in numerals:
+        '''for numeral in numerals:
             if not ids_numeral.filter(id=numeral.id).exists():
                 EstablishmentNumeral.objects.filter(
                     establishment_id=establishment_id,
                     numeral=numeral,
                     numeral__is_default=False
-                ).delete()
+                ).delete()'''
         
         for numeral in ids_numeral:
             

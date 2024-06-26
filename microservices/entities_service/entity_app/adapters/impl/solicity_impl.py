@@ -29,6 +29,10 @@ class SolicityImpl(SolicityRepository):
             solicity.save()
             return solicity
         else:
+            if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
+                solicity.status = Status.INSISTENCY_PERIOD
+                solicity.save()
+                return solicity
             raise ValueError('Esta solicitud aun está vigente')
         # def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
     def create_solicity_draft(self,

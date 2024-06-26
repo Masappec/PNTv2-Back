@@ -37,7 +37,7 @@ class AudienciasView(APIView):
         for doc in res:
             
             for data in doc.data:
-                if lev.similarity(name, data[0]) > 0.4:
+                if lev.similarity(name, data[0]) > 0.3:
 
                     lista.append({
                         "institucion":doc.metadata.establishment_name,

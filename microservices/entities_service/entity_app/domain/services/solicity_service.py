@@ -302,7 +302,7 @@ class SolicityService:
                     "No se pueden agregar mas comentarios a esta solicitud")
 
         if solicity.status == Status.INSISTENCY_SEND:
-            if not is_citizen or solicity.is_manual:
+            if is_citizen:
                 raise ValueError(
                     "No se pueden agregar mas comentarios a esta solicitud durante el periodo de insitencia")
 
@@ -332,10 +332,8 @@ class SolicityService:
         
 
         if solicity.status == Status.PERIOD_INFORMAL_MANAGEMENT:
-            if  is_citizen or solicity.is_manual:
-                if extensions == 10:
-                    raise ValueError(
-                        "No se pueden agregar mas comentarios a esta solicitud")
+            if is_citizen or solicity.is_manual:
+                
 
                 self.solicity_repository.create_insistency_solicity(
                     solicity_id, user_id, text)
@@ -362,7 +360,7 @@ class SolicityService:
                     " No se pueden agregar mas comentarios a esta solicitud")
 
         if solicity.status == Status.INFORMAL_MANAGMENT_SEND:
-            if not is_citizen or solicity.is_manual:
+            if is_citizen:
                 raise ValueError(
                     "No se pueden agregar mas comentarios a esta solicitud durante el periodo de insitencia")
             else:
