@@ -77,6 +77,8 @@ class Establishment(BaseModel):
     objects = models.Manager()
 
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
+    
+    visits = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = 'Institución'

@@ -68,7 +68,9 @@ class UserListAPI(ListAPIView):
         if search is not None:
             queryset = queryset.filter(
                 Q(username__icontains=search) | Q(email__icontains=search))
-
+        
+        
+        
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)

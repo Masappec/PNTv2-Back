@@ -379,6 +379,11 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class EstablishmentScoreSerializer(serializers.Serializer):
+    establishment = EstablishmentSerializer()
+    score = serializers.FloatField()
+    
+    
 class TransparencyCreateResponseSerializer(serializers.ModelSerializer):
     """Numeral response serializer."""
     files = FilePublicationSerializer(many=True)

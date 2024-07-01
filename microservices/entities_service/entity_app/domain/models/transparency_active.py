@@ -107,6 +107,7 @@ class TransparencyActive(BaseModel):
 
     objects = models.Manager()
 
+    
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = str(self.month) + '-' + str(self.year) + '-' + \

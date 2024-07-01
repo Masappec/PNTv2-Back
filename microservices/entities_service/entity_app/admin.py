@@ -12,7 +12,6 @@ admin.site.register(Solicity)
 admin.site.register(EstablishmentNumeral)
 admin.site.register(Numeral)
 admin.site.register(TemplateFile)
-admin.site.register(ColumnFile)
 admin.site.register(TransparencyActive)
 admin.site.register(Category)
 admin.site.register(TimeLineSolicity)
@@ -20,3 +19,10 @@ admin.site.register(Insistency)
 admin.site.register(Extension)
 admin.site.register(SolicityResponse)
 admin.site.register(TransparencyFocal)
+
+
+@admin.register(ColumnFile)
+class ColumnFileAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+    list_filter = ('name', )
+    search_fields = ('name', )

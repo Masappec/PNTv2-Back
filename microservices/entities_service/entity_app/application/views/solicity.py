@@ -300,12 +300,20 @@ class SolicityView(ListAPIView):
 
             queryset = self.get_queryset(request.user.id)
             order_by = request.query_params.get('sort[]', None)
+            range_start = request.query_params.get('range_start', "")
+            range_end = request.query_params.get('range_end', "")
             if order_by is not None:
                 queryset = queryset.order_by(order_by)
             search = request.query_params.get('search', None)
             if search is not None:
                 queryset = queryset.filter(
                     Q(number_saip__icontains=search) | Q(establishment__name__icontains=search))
+            if range_start !="" and range_end !="":
+                
+                queryset = queryset.filter(
+                    created_at__range=[range_start, range_end
+                                        ])
+                
 
             page = self.paginate_queryset(queryset)
             if page is not None:
@@ -587,6 +595,11 @@ class SolicityResponseView(ListAPIView):
                 queryset = queryset.filter(
                     Q(number_saip__icontains=search) | Q(first_name__icontains=search) | Q(last_name__icontains=search))
 
+            
+            status = request.query_params.get('status', "")
+            
+            if status !="":
+                queryset = queryset.filter(status=status)
             page = self.paginate_queryset(queryset)
             if page is not None:
                 serializer = self.get_serializer(page, many=True)
