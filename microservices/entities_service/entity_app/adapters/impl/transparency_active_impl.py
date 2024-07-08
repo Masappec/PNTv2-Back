@@ -1,6 +1,6 @@
 from entity_app.ports.repositories.transparency_active import TransparencyActiveRepository
 from entity_app.models import TransparencyActive
-
+from django.db.models.query import QuerySet
 
 class TransparencyActiveImpl(TransparencyActiveRepository):
 
@@ -24,7 +24,7 @@ class TransparencyActiveImpl(TransparencyActiveRepository):
         return ta
             
 
-    def get_by_year(self, year: int, establishment_id: int):
+    def get_by_year(self, year: int, establishment_id: int) -> QuerySet[TransparencyActive]:
         return TransparencyActive.objects.filter(
             year=year,
             establishment_id=establishment_id

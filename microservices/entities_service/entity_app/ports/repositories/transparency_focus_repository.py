@@ -22,3 +22,8 @@ class TransparencyFocusRepository(ABC):
     @abstractmethod
     def get_by_year_month(self, year: int, month: int, establishment_id: int):
         pass
+
+
+    @abstractmethod
+    def get_by_year(self, year: int, establishment_id: int):
+        pass

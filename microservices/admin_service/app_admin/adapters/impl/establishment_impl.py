@@ -141,7 +141,11 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         return establishment
 
     def get_establishment_by_slug(self, slug: str):
-        return Establishment.objects.get(slug=slug)
+        est =  Establishment.objects.get(slug=slug)
+        est.visits = est.visits + 1
+        est.save()
+        
+        return est
 
     def get_establishment_by_user_id(self, user_id: int):
         try:

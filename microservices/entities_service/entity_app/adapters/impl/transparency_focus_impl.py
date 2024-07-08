@@ -63,3 +63,10 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
             establishment_id=establishment_id, year=year, month=month)
 
         return response
+
+
+    def get_by_year(self, year: int, establishment_id: int):
+        response = TransparencyFocal.objects.filter(
+            establishment_id=establishment_id, year=year)
+
+        return response

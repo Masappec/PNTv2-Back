@@ -47,7 +47,7 @@ class AudienciasView(APIView):
                         "fecha":data[3],
                         "modalidad":data[4],
                         "lugar":data[5],
-                        "descripción":data[6],
+                        "descripcion":data[6],
                         "duracion":data[7],
                         "externa":data[8],
                         "institucion_ext":data[9],

@@ -56,3 +56,7 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
 
     def get_by_year_month(self, year: int, month: int, establishment_id: int):
         return TransparencyColab.objects.filter(year=year, month=month, establishment_id=establishment_id)
+
+    
+    def get_by_year(self, year: int, establishment_id: int):
+        return TransparencyColab.objects.filter(year=year, establishment_id=establishment_id)

@@ -24,3 +24,22 @@ class StandardResultsSetPagination(PageNumberPagination):
             'from' : self.page.start_index(),
             'to' : self.page.end_index(),
         })
+        
+
+class StandardResultsSetPaginationDicts(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'limit'
+    max_page_size = 1000
+
+    def get_paginated_response(self, data):
+        return Response({
+            'total': self.page.paginator.count if self.page.paginator else 0,
+            'limit': self.page.paginator.per_page,
+            'results': data,
+            'current': self.page.number,
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
+            'total_pages': self.page.paginator.num_pages,
+            'from': self.page.start_index(),
+            'to': self.page.end_index(),
+        })

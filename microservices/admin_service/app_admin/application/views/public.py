@@ -116,6 +116,7 @@ class EstablishmentPublicDetail(APIView):
 
             establishment = self.establishment_service.get_establishment_by_slug(
                 slug)
+            
             info = self.establishment_service.get_first_access_to_information(
                 establishment.id)
             law_enforcement = self.law_enforcement.get_law_enforcement_by_establishment(

@@ -27,7 +27,7 @@ class PersonalRemuneraciones(APIView):
 
     class InputSerializerPr(serializers.Serializer):
         names = serializers.CharField()
-        institution = serializers.CharField()
+        institution = serializers.CharField(allow_blank=True)
 
     class OutputSerializerPr(serializers.Serializer):
         names = serializers.CharField()
@@ -47,16 +47,21 @@ class PersonalRemuneraciones(APIView):
         institution = serializer.validated_data['institution']
 
         numerals_list = [
-            "Numeral 2.1",
-            "Numeral 2.2",
+            "Numeral 2",
             "Numeral 3"
         ]
 
         try:
-            res = CSVData.objects(
-                metadata__numeral__in=numerals_list,
-                metadata__establishment_identification=institution
-            )
+            
+            if institution =="":
+                res = CSVData.objects(
+                    metadata__numeral__in=numerals_list
+                )
+            else:
+                res = CSVData.objects(
+                    metadata__numeral__in=numerals_list,
+                    metadata__establishment_identification=institution
+                )
 
             if not res:
                 return Response([], status=200)
@@ -72,13 +77,8 @@ class PersonalRemuneraciones(APIView):
         additional_data = {}
 
         numeral_columns_map = {
-            "Numeral 2.1": {
-                "nombre_campo": "Apellidos y Nombres de los servidores y servidoras",
-                "puesto_campo": "Puesto Institucional",
-                "unidad_campo": "Unidad a la que pertenece"
-            },
-            "Numeral 2.2": {
-                "nombre_campo": "Apellidos y Nombres de los servidores y servidoras",
+            "Numeral 2": {
+                "nombre_campo": "Apellidos y Nombres",
                 "puesto_campo": "Puesto Institucional",
                 "unidad_campo": "Unidad a la que pertenece"
             },
@@ -98,9 +98,8 @@ class PersonalRemuneraciones(APIView):
 
             for row in data:
                 row_dict = dict(zip(columns, row))
-                print(row_dict)
 
-                if numeral == "Numeral 2.1":
+                if numeral == "Numeral 2":
                     nombre = row_dict.get(
                         numeral_columns_map[numeral]["nombre_campo"], "").strip()
                     puesto = row_dict.get(
@@ -119,26 +118,6 @@ class PersonalRemuneraciones(APIView):
                             "regimen": ""
                         })
 
-                elif numeral == "Numeral 2.2":
-
-                    # buscar todas los elementos
-
-                    nombre = row_dict.get(
-                        numeral_columns_map[numeral]["nombre_campo"], "").strip()
-                    puesto = row_dict.get(
-                        numeral_columns_map[numeral]["puesto_campo"], "").strip()
-                    unidad = row_dict.get(
-                        numeral_columns_map[numeral]["unidad_campo"], "").strip()
-                    if name.lower() in nombre.lower() or nombre.lower() in name.lower():
-
-                        numeral_21_data.append({
-                            "puesto": puesto,
-                            "unidad": unidad,
-                            "remuneracion": "",
-                            "grado": "",
-                            "nombre": nombre,
-                            "regimen": ""
-                        })
 
                 elif numeral == "Numeral 3":
                     puesto = row_dict.get(

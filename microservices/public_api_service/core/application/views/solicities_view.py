@@ -22,7 +22,7 @@ class SolicitiesView(APIView):
         serializer.is_valid(raise_exception=True)
         ruc = serializer.validated_data['ruc']
         res = CSVData.objects(
-            metadata__numeral='Numeral 5',
+            metadata__numeral='Numeral 5-22',
             metadata__establishment_identification=ruc
         )
         lista = []
@@ -38,6 +38,8 @@ class SolicitiesView(APIView):
                     "numero_personas": data[2],
                     "enlace_descarga_formulario": data[3],
                     "enlace_servicio": data[4],
+                    "anio": doc.metadata.year,
+                    "mes": doc.metadata.month,
                 })
 
         return Response(lista)

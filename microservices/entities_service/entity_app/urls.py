@@ -19,6 +19,10 @@ from entity_app.application.views.focus_transparency import CreateTransparencyFo
 
 from entity_app.application.views.template_file import TemplateFileValidate
 from entity_app.application.views.transparency_active import TransparencyActivePublicListView
+
+from entity_app.application.views.reports import ArchivosSubidos,ReporteArchivos,ReporteRespuestas,ReporteNoRespuestas,ReporteSolicitudes
+
+
 urlpatterns = [     
                
      path('stats/citizen', StatsCitizen.as_view(), name='stats-citizen'),
@@ -121,4 +125,18 @@ urlpatterns = [
          name='list-transparency-focus'),
     path('transparency/focus/delete/<pk>',
          TransparencyFocusDelete.as_view(), name='delete-transparency-focus'),
+    
+    
+    path('reports/view/archivos-subidos', ArchivosSubidos.as_view(), name='reports-view-archivos-subidos'),
+    
+    
+    path('reports/download/archivos-subidos', ReporteArchivos.as_view(),
+         name='reports-view-archivos-subidos'),
+    # ReporteRespuestas
+    path ('reports/download/reporte-respuestas', ReporteRespuestas.as_view(), name='reports-view-reporte-respuestas'),
+    
+    # ReporteNoRespuestas
+     path ('reports/download/reporte-no-respuestas', ReporteNoRespuestas.as_view(), name='reports-view-reporte-no-respuestas'),
+     #ReporteSolicitudes
+     path ('reports/download/reporte-solicitudes', ReporteSolicitudes.as_view(), name='reports-view-reporte-solicitudes'),
 ]
