@@ -38,3 +38,10 @@ class TransparencyActiveImpl(TransparencyActiveRepository):
 
     def get_by_id(self, id: int):
         return TransparencyActive.objects.get(id=id)
+
+    
+    def get_months_by_year(self, year: int, establishment_id: int):
+        return TransparencyActive.objects.filter(
+            year=year,
+            establishment_id=establishment_id
+        ).values('month').distinct()

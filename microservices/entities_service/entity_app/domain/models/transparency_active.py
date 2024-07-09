@@ -122,3 +122,7 @@ class TransparencyActive(BaseModel):
         verbose_name_plural = 'Transparencias Activas'
 
         unique_together = ('establishment', 'numeral', 'month', 'year')
+
+
+
+

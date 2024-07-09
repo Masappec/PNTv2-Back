@@ -24,3 +24,7 @@ class TransparencyColaborativeService:
     
     def get_by_year(self, year: int, establishment_id: int):
         return self.transparency_colaborative_repository.get_by_year(year, establishment_id)
+    
+    
+    def get_months_by_year(self, year: int, establishment_id: int):
+        return self.transparency_colaborative_repository.get_months_by_year(year, establishment_id)

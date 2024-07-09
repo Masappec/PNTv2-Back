@@ -113,3 +113,4 @@ Sun Jul  7 14:39:40 2024 - Mensaje recibido: {'type': 'message', 'pattern': None
 Sun Jul  7 14:48:22 2024 - Iniciando suscripción al canal establishment_numeral
 Sun Jul  7 15:01:38 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": ["/code/media/transparencia/0953227857001/Numeral 5-22/2024/7/Conjunto de datos.csv"], "date": "2024-07-07", "month": 7, "year": 2024, "user": 1, "establishment_identification": "0953227857001", "numeral": "Numeral 5-22", "establishment_name": "Ministerio", "numeral_description": "Servicios formularios formatos tramites"}, "id": "246d858c-5b94-4e74-978c-6140abafe97f"}'}
 Sun Jul  7 20:10:03 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Jul  8 21:18:19 2024 - Iniciando suscripción al canal establishment_numeral

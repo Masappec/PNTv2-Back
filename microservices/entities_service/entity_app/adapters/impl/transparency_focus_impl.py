@@ -70,3 +70,11 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
             establishment_id=establishment_id, year=year)
 
         return response
+    
+    
+    
+    def get_months_by_year(self, year: int, establishment_id: int):
+        response = TransparencyFocal.objects.filter(
+            establishment_id=establishment_id, year=year).values('month').distinct()
+
+        return response

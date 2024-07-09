@@ -21,3 +21,8 @@ class TransparencyActiveRepository(ABC):
 
     def get_by_id(self, id: int):
         pass
+
+
+    @abstractmethod
+    def get_months_by_year(self, year: int, establishment_id: int):
+        pass

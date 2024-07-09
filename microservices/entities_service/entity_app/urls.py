@@ -21,7 +21,7 @@ from entity_app.application.views.template_file import TemplateFileValidate
 from entity_app.application.views.transparency_active import TransparencyActivePublicListView
 
 from entity_app.application.views.reports import ArchivosSubidos,ReporteArchivos,ReporteRespuestas,ReporteNoRespuestas,ReporteSolicitudes
-
+from entity_app.application.views.public import MonthForTransparency
 
 urlpatterns = [     
                
@@ -126,7 +126,10 @@ urlpatterns = [
     path('transparency/focus/delete/<pk>',
          TransparencyFocusDelete.as_view(), name='delete-transparency-focus'),
     
-    
+     
+     
+    path('transparency/months', MonthForTransparency.as_view(), name='transparency-months'),
+     
     path('reports/view/archivos-subidos', ArchivosSubidos.as_view(), name='reports-view-archivos-subidos'),
     
     

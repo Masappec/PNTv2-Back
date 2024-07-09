@@ -56,3 +56,6 @@ class TransparencyActivePublicListView(APIView):
                 'status': 400,
                 'json': {}
             }, status=400)
+
+
+

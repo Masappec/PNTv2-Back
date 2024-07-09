@@ -11,6 +11,12 @@ from rest_framework.response import Response
 from entity_app.adapters.serializers import PublicationPublicSerializer
 from entity_app.utils.permissions import IsPublicPublication
 from entity_app.adapters.serializers import MessageTransactional
+from entity_app.adapters.impl.transparency_active_impl import TransparencyActiveImpl
+from entity_app.adapters.impl.transparency_colaborative_impl import TransparencyColaborativeImpl
+from entity_app.adapters.impl.transparency_focus_impl import TransparencyFocalImpl
+from entity_app.domain.services.transparency_active_service import TransparencyActiveService
+from entity_app.domain.services.transparency_colaborative_service import TransparencyColaborativeService
+from entity_app.domain.services.transparency_focus_service import TransparencyFocusService
 
 class PublicationPublicView(ListAPIView):
     """Publication view."""
@@ -98,3 +104,38 @@ class PublicationDetail(APIView):
                 return Response(res.errors, status=400)
             
             return Response(res.data, status=400)
+        
+
+
+class MonthForTransparency(APIView):
+    
+    permission_classes = []
+    def __init__(self, **kwargs: Any):
+        
+        self.sevice = TransparencyActiveService(TransparencyActiveImpl())
+        self.service_tf = TransparencyFocusService(TransparencyFocalImpl())
+        self.service_tc = TransparencyColaborativeService(TransparencyColaborativeImpl())
+        
+        
+    def get(self, request):
+        """Get a user by id.
+        
+        Args:
+            request (object): The request object.
+            pk (int): The user id.
+        
+        Returns:
+            object: The response object.
+        """
+        type = request.query_params.get('type', None)
+        year = request.query_params.get('year', None)
+        establishment_id = request.query_params.get('establishment_id', None)
+        
+        if type == 'A':
+            response = self.sevice.get_months_by_year(year, establishment_id)
+        elif type == 'F':
+            response = self.service_tf.get_months_by_year(year, establishment_id)
+        elif type == 'C':
+            response = self.service_tc.get_months_by_year(year, establishment_id)
+            
+        return Response(response)

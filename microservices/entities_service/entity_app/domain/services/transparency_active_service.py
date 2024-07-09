@@ -21,3 +21,7 @@ class TransparencyActiveService:
 
     def get_by_id(self, id: int):
         return self.repository.get_by_id(id)
+
+    
+    def get_months_by_year(self, year: int, establishment_id: int):
+        return self.repository.get_months_by_year(year, establishment_id)
