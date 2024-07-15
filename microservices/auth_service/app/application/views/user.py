@@ -156,8 +156,9 @@ class UserCreateAPI(APIView):
             ).id if user.groups.all().first() is not None else 0
 
             # verifica si el rol y el establecimiento son validos
-            self.role_service.is_valid_role_and_establishment(
-                group_first, data.validated_data['establishment_id'])
+            if data.validated_data['establishment_id'] !=0:
+                self.role_service.is_valid_role_and_establishment(
+                    group_first, data.validated_data['establishment_id'])
 
             # obtiene el usuario con los datos de la persona
 

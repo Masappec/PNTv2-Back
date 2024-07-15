@@ -11,7 +11,7 @@ from app.utils.permission import HasPermission
 class RoleListAPI(ListAPIView):
     serializer_class = RoleListSerializer
     permission_classes = [IsAuthenticated , HasPermission]
-    permission_required = 'view_role'
+    permission_required = 'view_role,view_group'
 
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
@@ -50,7 +50,7 @@ class RoleCreateAPI(CreateAPIView):
     
     serializer_class = RoleCreateSerializer
     permission_classes = [IsAuthenticated , HasPermission]
-    permission_required = 'add_role'
+    permission_required = 'add_role,add_group'
     
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
@@ -81,7 +81,7 @@ class RoleUpdateAPI(APIView):
 
     serializer_class = RoleCreateSerializer
     permission_classes = [IsAuthenticated , HasPermission]
-    permission_required = 'auth.change_role'
+    permission_required = 'change_role,change_group'
 
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())
@@ -96,7 +96,7 @@ class RoleUpdateAPI(APIView):
 class RoleDetailAPI(APIView):
 
     permission_classes = [IsAuthenticated , HasPermission]
-    permission_required = 'view_role'
+    permission_required = 'view_role,view_group'
 
         
     def __init__(self):
@@ -111,7 +111,7 @@ class RoleDetailAPI(APIView):
 class RoleDeleteAPI(APIView):
     
     permission_classes = [IsAuthenticated , HasPermission]
-    permission_required = 'delete_role'
+    permission_required = 'delete_role,delete_group'
     
     def __init__(self):
         self.role_service = RoleService(role_repository=RoleRepositoryImpl())

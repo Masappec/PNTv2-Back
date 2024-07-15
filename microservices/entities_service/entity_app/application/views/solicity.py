@@ -563,6 +563,9 @@ class SolicityResponseView(ListAPIView):
 
     def get_queryset(self, use_id):
         """Get queryset."""
+
+        
+        
         return self.service.get_entity_user_solicities(use_id).order_by('-created_at')
 
     def get(self, request, *args, **kwargs):

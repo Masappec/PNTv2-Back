@@ -12,7 +12,7 @@ from app_admin.utils.permission import HasPermission
 class SMTPGET(APIView):
 
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'app_admin.view_smtp'
+    permission_required = 'view_configuration'
 
     def __init__(self):
         self.smtp_service = SmtpService(StmpImpl())
@@ -38,7 +38,7 @@ class SMTPGET(APIView):
 class SMTPUPDATE(APIView):
     
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'app_admin.change_smtp'
+    permission_required = 'change_configuration'
     serializer_class = ConfigurationSerializer
     output_serializer_class = ConfigurationResponseSerializer
     

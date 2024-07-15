@@ -1,5 +1,5 @@
 from entity_app.domain.models import Solicity,Status,TimeLineSolicity,TransparencyActive, \
-    EstablishmentExtended
+    EstablishmentExtended, FilePublication
 from rest_framework.views import APIView
 from datetime import datetime
 from rest_framework.response import Response
@@ -168,3 +168,10 @@ class IndicatorsEstablishmentView(APIView):
         
         return Response(data, status=200)
         
+        
+class CountFilesView(APIView):
+    permission_classes = []
+    def get(self,request):
+        count = FilePublication.objects.all().count()
+         
+        return Response({'count':count},status=200)

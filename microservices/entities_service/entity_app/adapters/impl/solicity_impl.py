@@ -321,7 +321,9 @@ class SolicityImpl(SolicityRepository):
             user_id=user_id, is_active=True).first()
 
         if establishment is None:
-            return ValueError('User does not have an establishment')
+            
+            return Solicity.objects.all().filter(is_active=True).exclude(status=Status.DRAFT) 
+            
         return Solicity.objects.filter(establishment_id=establishment.establishment_id,
                                        is_active=True
                                        ).exclude(status=Status.DRAFT)
