@@ -29,7 +29,7 @@ class PermissionRepositoryImpl(PermissionRepository):
             'userestablishmentextended', 'attachment', 'columnfile', 'templatefile', 'numeral', 'establishmentnumeral', 'role',
             'periodictasks', 'insistency', 'publication', 'solarschedule', 'periodictask', 'intervalschedule', 'crontabschedule',
             'clockedschedule', 'typeorganization', 'functionorganization', 'Datos Personales', 'category', 'extension',
-            'tag', 'user',
+            'tag',
             'typeinstitution', 'timelinesolicity'
         ])
 
@@ -43,7 +43,7 @@ class PermissionRepositoryImpl(PermissionRepository):
                 'userestablishmentextended', 'attachment', 'columnfile', 'templatefile', 'numeral', 'establishmentnumeral', 'role',
                 'periodictasks', 'insistency', 'publication', 'solarschedule', 'periodictask', 'intervalschedule', 'crontabschedule',
                 'clockedschedule', 'typeorganization', 'functionorganization', 'Datos Personales', 'category', 'extension',
-                'tag', 'user',
+                'tag',
                 'typeinstitution', 'timelinesolicity'
             ]
 

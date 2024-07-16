@@ -13,7 +13,7 @@ class PedagogyAreaCreateView(APIView):
 
     permission_classes = [IsAuthenticated, HasPermission]
 
-    permission_required = 'app_admin.add_pedagogyarea'
+    permission_required = 'add_pedagogyarea'
     serializer_class = PedagogyAreaSerializerCreate
     output_serializer_class = PedagogyAreaSerializerResponse
 

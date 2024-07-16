@@ -45,9 +45,16 @@ class BelongsToEstablishment(BasePermission):
             establishment_id = request.query_params.get('establishtment_id')
         if request.user.is_superuser:
             return True
+        
 
         valid = UserEstablishmentExtended.objects.filter(
             user_id=request.user, establishment_id=establishment_id).exists()
+
+        user = User.objects.get(id=request.user.id)
+        
+        permisions = user.groups.all().values_list('permissions__codename', flat=True)
+        if 'view_establishment' in permisions:
+            return True
 
         return valid
 
