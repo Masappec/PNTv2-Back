@@ -117,6 +117,17 @@ class PersonalRemuneraciones(APIView):
                             "nombre": nombre,
                             "regimen": ""
                         })
+                        
+                    else:
+                        if lev.distance(name, nombre) > 0.5:
+                            numeral_21_data.append({
+                                "puesto": puesto,
+                                "unidad": unidad,
+                                "remuneracion": "",
+                                "grado": "",
+                                "nombre": nombre,
+                                "regimen": ""
+                            })
 
 
                 elif numeral == "Numeral 3":
@@ -126,6 +137,7 @@ class PersonalRemuneraciones(APIView):
                     # buscar en la lista los elementos que tenga el puesto institucional
 
                     for item in numeral_21_data:
+                        
                         if item["puesto"] == puesto:
                             item["remuneracion"] = row_dict.get(
                                 numeral_columns_map[numeral]["remuneracion_campo"], "").strip()
@@ -134,6 +146,15 @@ class PersonalRemuneraciones(APIView):
 
                             item["regimen"] = row_dict.get(
                                 numeral_columns_map[numeral]["regimen_campo"], "").strip()
+                        else:
+                            if lev.distance(puesto, item["puesto"]) > 0.5:
+                                item["remuneracion"] = row_dict.get(
+                                    numeral_columns_map[numeral]["remuneracion_campo"], "").strip()
+                                item["grado"] = row_dict.get(
+                                    numeral_columns_map[numeral]["grado_campo"], "").strip()
+
+                                item["regimen"] = row_dict.get(
+                                    numeral_columns_map[numeral]["regimen_campo"], "").strip()
 
         # Enriquecer los datos de Numeral 2.1 con los adicionales
         for item in numeral_21_data:

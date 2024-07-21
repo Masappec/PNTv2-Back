@@ -131,7 +131,7 @@ def change_status_solicity():
                 if now > created_at + timedelta(minutes=2):
 
                     
-                    insitencia = insistencies.filter(solicity=i, status=Status.SEND)\
+                    insitencia = insistencies.filter(solicity=i)\
                         .exclude(user_id=i.user_created).first()
                     
                     print("INSISTENCIA",insitencia)
