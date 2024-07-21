@@ -123,7 +123,7 @@ class NumeralServiceData:
     def read_json_generate(self):
 
         dir = os.path.dirname(__file__)
-        dir = os.path.join(dir, 'others.json')
+        dir = os.path.join(dir, 'test.json')
         with open(dir, encoding='utf-8') as file:
             data = json.load(file)
             for numeral in data:
