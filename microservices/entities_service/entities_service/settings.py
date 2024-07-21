@@ -106,8 +106,8 @@ CELERY_RESULT_BACKEND = os.getenv(
 CELERY_TIMEZONE = 'America/Guayaquil'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-timezone = 'America/Guayaquil'
-
+TIME_ZONE = 'America/Guayaquil'
+USE_TZ = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

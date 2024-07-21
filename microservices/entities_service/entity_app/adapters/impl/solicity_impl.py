@@ -27,13 +27,15 @@ class SolicityImpl(SolicityRepository):
                 raise ValueError('Esta solicitud aun está vigente')
             
             
-            
             solicity.status = newstatus
             
             solicity.expiry_date = datetime.now()+get_timedelta_for_expired()
 
                 
             solicity.save()
+            self.save_timeline(
+                solicity_id, solicity.user_created_id, newstatus)
+
             return solicity
         else:
             if solicity.status == Status.SEND:
@@ -42,10 +44,14 @@ class SolicityImpl(SolicityRepository):
 
                 solicity.expiry_date = datetime.now()+get_time_prorroga()
                 solicity.save()
+                self.save_timeline(
+                    solicity_id, solicity.user_created_id, newstatus)
                 return solicity
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 solicity.status = Status.INSISTENCY_PERIOD
                 solicity.save()
+                self.save_timeline(
+                    solicity_id, solicity.user_created_id, Status.INSISTENCY_PERIOD)
                 return solicity
             raise ValueError('Esta solicitud aun está vigente')
         # def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):

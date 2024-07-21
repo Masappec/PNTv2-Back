@@ -10,11 +10,13 @@ from entity_app.domain.models.establishment import UserEstablishmentExtended
 from entity_app.domain.models.solicity import TypeStages
 from entity_app.utils.functions import get_timedelta_for_expired
 from django.db.models import Q
+from django.utils import timezone
 
 @app.task()
 def change_status_solicity():
-    # obtener la fecha de hoy
 
+    # obtener la fecha de hoy
+    now = timezone.now()
     publiher = Publisher(CHANNEL_SOLICIY)
     date_ = datetime.now() + timedelta(minutes=15)
     # obtener las solicitudes que vencen el dos dias
@@ -106,7 +108,7 @@ def change_status_solicity():
                 solicity=solicity, status=Status.FINISHED)
                 
 
-    solicities_all = Solicity.objects.filter(status_in=[Status.PERIOD_INFORMAL_MANAGEMENT,
+    solicities_all = Solicity.objects.filter(status__in=[Status.PERIOD_INFORMAL_MANAGEMENT,
                                                         Status.INSISTENCY_PERIOD,
                                                         Status.PRORROGA])
     
@@ -119,15 +121,20 @@ def change_status_solicity():
         if i.status == Status.PERIOD_INFORMAL_MANAGEMENT:
             timeSolicity = timelines.filter(solicity=i,status=Status.PERIOD_INFORMAL_MANAGEMENT).first()
                             
-            
-            timeant = timelines.filter(solicity=i).exclude(status=Status.PERIOD_INFORMAL_MANAGEMENT).first()
+            timeant = timelines.filter(solicity=i).exclude(
+                status=Status.PERIOD_INFORMAL_MANAGEMENT).last()
             if timeSolicity:
                 #verificar si ya pasaron 15 minutos desde que se creo
-                if datetime.now() > timeSolicity.created_at + timedelta(minutes=15):
+                created_at = timezone.localtime(timeSolicity.created_at)
+
+                # verificar si ya pasaron 15 minutos desde que se creo
+                if now > created_at + timedelta(minutes=2):
+
                     
                     insitencia = insistencies.filter(solicity=i, status=Status.SEND)\
                         .exclude(user_id=i.user_created).first()
-                        
+                    
+                    print("INSISTENCIA",insitencia)
                         
                     if not insitencia:
                         i.status = timeant.status
@@ -136,14 +143,18 @@ def change_status_solicity():
                         
         if i.status == Status.INSISTENCY_PERIOD:
             timeSolicity = timelines.filter(solicity=i,status=Status.INSISTENCY_PERIOD).first()
-            timeant = timelines.filter(solicity=i).exclude(status=Status.INSISTENCY_PERIOD).first()
+            timeant = timelines.filter(solicity=i).exclude(status=Status.INSISTENCY_PERIOD).last()
             if timeSolicity:
-                #verificar si ya pasaron 15 minutos desde que se creo
-                if datetime.now() > timeSolicity.created_at + timedelta(minutes=2):
-                    
+
+                created_at = timezone.localtime(timeSolicity.created_at)
+
+                # verificar si ya pasaron 15 minutos desde que se creo
+                if now > created_at + timedelta(minutes=2):
+
                     insitencia = insistencies.filter(solicity=i, status=Status.SEND)\
                         .exclude(~Q(user_id=i.user_created)).first()
                     if not insitencia:
+                        print("INSISTENCIA",insitencia)
                         i.status = timeant.status
                         i.save()
                         timeSolicity.delete()
@@ -151,12 +162,18 @@ def change_status_solicity():
                         
         if i.status == Status.PRORROGA:
             timeSolicity = timelines.filter(solicity=i,status=Status.PRORROGA).first()
-            timeant = timelines.filter(solicity=i).exclude(status=Status.PRORROGA).first()
+            timeant = timelines.filter(solicity=i).exclude(
+                status=Status.PRORROGA).last()
             if timeSolicity:
                 #verificar si ya pasaron 15 minutos desde que se creo
-                if datetime.now() > timeSolicity.created_at + timedelta(minutes=2):
+                created_at = timezone.localtime(timeSolicity.created_at)
+
+                # verificar si ya pasaron 15 minutos desde que se creo
+                if now > created_at + timedelta(minutes=2):
+
                     
                     pror = prorrogas.filter(solicity=i).first()
+                    print("PRORROGA",pror)
                     if not pror:
                         i.status = timeant.status
                         i.save()
