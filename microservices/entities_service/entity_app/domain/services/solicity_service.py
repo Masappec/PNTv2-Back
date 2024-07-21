@@ -243,7 +243,28 @@ class SolicityService:
             
 
             return solicity
+        
+        if solicity.status == Status.PRORROGA:
+            if not is_citizen  or solicity.is_manual:
+                self.solicity_repository.create_comment_solicity(
+                    solicity_id=solicity_id,
+                    text=text,
+                    user_id=user_id
+                )
+                self.save_timeline(solicity_id, user_id, Status.PRORROGA)
+                self.publisher.publish({
+                    'type': SOLICITY_RESPONSE_ESTABLISHMENT,
+                    'payload': {
+                        'solicity_id': solicity_id,
+                        'user_id': solicity.user_created_id,
+                        'number_saip': solicity.number_saip,
+                        'establishment_id': solicity.establishment_id,
+                        'email': [e.user.email for e in es]
 
+                    }
+                })
+
+            return solicity
         # si la solicitud esta en estado de respuesta
         if solicity.status == Status.RESPONSED:
 

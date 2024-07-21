@@ -126,5 +126,16 @@ class MainViewStream(APIView):
 
 
 
-
-
+'''
+class DescargaMasiva(APIView):
+    
+    class InputSerializerStream(serializers.Serializer):
+        mes = serializers.IntegerField()
+        anio = serializers.IntegerField()
+        numeral = serializers.CharField()
+        institucion = serializers.CharField(allow_blank=True)
+        
+    
+        
+'''
+        

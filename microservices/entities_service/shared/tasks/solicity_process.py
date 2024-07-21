@@ -48,7 +48,8 @@ def change_status_solicity():
 
 
     solicities = Solicity.objects.filter(expiry_date__lte=datetime.now(),
-                                         status__in=[Status.INSISTENCY_SEND, Status.SEND,Status.INFORMAL_MANAGMENT_SEND])
+                                         status__in=[Status.INSISTENCY_SEND, Status.SEND,
+                                                     Status.INFORMAL_MANAGMENT_SEND,Status.PRORROGA])
 
     for solicity in solicities:
         response = response.filter(solicity=solicity)
@@ -68,6 +69,14 @@ def change_status_solicity():
             solicity.save()
             TimeLineSolicity.objects.create(
                 solicity=solicity, status=Status.INSISTENCY_NO_RESPONSED)
+            
+        elif solicity.status == Status.PRORROGA:
+            solicity.status = Status.NO_RESPONSED
+            solicity.date_mail_send = None
+
+            solicity.save()
+            TimeLineSolicity.objects.create(
+                solicity=solicity, status=Status.NO_RESPONSED)
         elif solicity.status == Status.INFORMAL_MANAGMENT_SEND:
             solicity.status = Status.INFORMAL_MANAGMENT_NO_RESPONSED
             solicity.date_mail_send = None

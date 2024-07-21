@@ -107,6 +107,9 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         establishment_selected.last_name_authority = establishment['last_name_authority']
         establishment_selected.job_authority = establishment['job_authority']
         establishment_selected.email_authority = establishment['email_authority']
+        establishment_selected.function_organization_id = establishment['function_organization']
+        establishment_selected.type_institution_id = establishment['type_institution']
+        establishment_selected.type_organization_id = establishment['type_organization']
         establishment_selected.save()
         return establishment_selected
 

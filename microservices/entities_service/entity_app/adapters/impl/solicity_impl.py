@@ -6,7 +6,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db.models import QuerySet
 from entity_app.domain.models.solicity import Solicity, TimeLineSolicity, TypeStages
-from entity_app.utils.functions import get_timedelta_for_expired
+from entity_app.utils.functions import get_time_prorroga, get_timedelta_for_expired
 from django.utils import timezone
 class SolicityImpl(SolicityRepository):
 
@@ -16,6 +16,8 @@ class SolicityImpl(SolicityRepository):
         
         if timezone.now() > solicity.expiry_date:
             newstatus = ''
+            
+            
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 newstatus = Status.INSISTENCY_PERIOD
                 
@@ -24,11 +26,23 @@ class SolicityImpl(SolicityRepository):
             if newstatus=='':
                 raise ValueError('Esta solicitud aun está vigente')
             
+            
+            
             solicity.status = newstatus
+            
             solicity.expiry_date = datetime.now()+get_timedelta_for_expired()
+
+                
             solicity.save()
             return solicity
         else:
+            if solicity.status == Status.SEND:
+                newstatus = Status.PRORROGA
+                solicity.status = newstatus
+
+                solicity.expiry_date = datetime.now()+get_time_prorroga()
+                solicity.save()
+                return solicity
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 solicity.status = Status.INSISTENCY_PERIOD
                 solicity.save()

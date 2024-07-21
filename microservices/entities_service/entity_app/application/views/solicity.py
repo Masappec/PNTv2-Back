@@ -602,7 +602,9 @@ class SolicityResponseView(ListAPIView):
             status = request.query_params.get('status', "")
             
             if status !="":
-                queryset = queryset.filter(status=status)
+                status_array =  status.split(',')
+                print(status_array)
+                queryset = queryset.filter(status__in=status_array)
             page = self.paginate_queryset(queryset)
             if page is not None:
                 serializer = self.get_serializer(page, many=True)
@@ -680,7 +682,7 @@ class SolicityChangeStatus(APIView):
     permission_classes = [IsAuthenticated,
                           HasPermission]
     output_serializer_class = SolicitySerializer
-    permission_required = 'view_solicity'
+    permission_required = 'view_solicity,view_solicityresponse'
     
     def __init__(self):
         self.service = SolicityService(SolicityImpl())
