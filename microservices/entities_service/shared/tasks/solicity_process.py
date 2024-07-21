@@ -9,7 +9,7 @@ from entities_service.celery import app
 from entity_app.domain.models.establishment import UserEstablishmentExtended
 from entity_app.domain.models.solicity import TypeStages
 from entity_app.utils.functions import get_timedelta_for_expired
-
+from django.db.models import Q
 
 @app.task()
 def change_status_solicity():
@@ -23,7 +23,6 @@ def change_status_solicity():
                                                      Status.SEND, 
                                                      Status.INFORMAL_MANAGMENT_SEND],
                                          date_mail_send__isnull=True)
-    print(solicities,date_)
     response = SolicityResponse.objects.filter(solicity__in=solicities)
     es = UserEstablishmentExtended.objects.all()
     for solicity in solicities:
@@ -46,10 +45,17 @@ def change_status_solicity():
                                  'email': [es.user.email for es in es.filter(establishment_id=solicity.establishment.id)]
                              }})
 
+    
+    
+    
+    
 
     solicities = Solicity.objects.filter(expiry_date__lte=datetime.now(),
                                          status__in=[Status.INSISTENCY_SEND, Status.SEND,
                                                      Status.INFORMAL_MANAGMENT_SEND,Status.PRORROGA])
+
+
+
 
     for solicity in solicities:
         response = response.filter(solicity=solicity)
@@ -99,3 +105,62 @@ def change_status_solicity():
             TimeLineSolicity.objects.create(
                 solicity=solicity, status=Status.FINISHED)
                 
+
+    solicities_all = Solicity.objects.filter(status_in=[Status.PERIOD_INFORMAL_MANAGEMENT,
+                                                        Status.INSISTENCY_PERIOD,
+                                                        Status.PRORROGA])
+    
+    timelines = TimeLineSolicity.objects.filter(solicity__in=solicities_all)
+    insistencies = Insistency.objects.filter(solicity__in=solicities_all)
+    prorrogas = Extension.objects.filter(solicity__in=solicities_all)
+    
+    for i in solicities_all:
+        
+        if i.status == Status.PERIOD_INFORMAL_MANAGEMENT:
+            timeSolicity = timelines.filter(solicity=i,status=Status.PERIOD_INFORMAL_MANAGEMENT).first()
+                            
+            
+            timeant = timelines.filter(solicity=i).exclude(status=Status.PERIOD_INFORMAL_MANAGEMENT).first()
+            if timeSolicity:
+                #verificar si ya pasaron 15 minutos desde que se creo
+                if datetime.now() > timeSolicity.created_at + timedelta(minutes=15):
+                    
+                    insitencia = insistencies.filter(solicity=i, status=Status.SEND)\
+                        .exclude(user_id=i.user_created).first()
+                        
+                        
+                    if not insitencia:
+                        i.status = timeant.status
+                        i.save()
+                        timeSolicity.delete()
+                        
+        if i.status == Status.INSISTENCY_PERIOD:
+            timeSolicity = timelines.filter(solicity=i,status=Status.INSISTENCY_PERIOD).first()
+            timeant = timelines.filter(solicity=i).exclude(status=Status.INSISTENCY_PERIOD).first()
+            if timeSolicity:
+                #verificar si ya pasaron 15 minutos desde que se creo
+                if datetime.now() > timeSolicity.created_at + timedelta(minutes=2):
+                    
+                    insitencia = insistencies.filter(solicity=i, status=Status.SEND)\
+                        .exclude(~Q(user_id=i.user_created)).first()
+                    if not insitencia:
+                        i.status = timeant.status
+                        i.save()
+                        timeSolicity.delete()
+                        
+                        
+        if i.status == Status.PRORROGA:
+            timeSolicity = timelines.filter(solicity=i,status=Status.PRORROGA).first()
+            timeant = timelines.filter(solicity=i).exclude(status=Status.PRORROGA).first()
+            if timeSolicity:
+                #verificar si ya pasaron 15 minutos desde que se creo
+                if datetime.now() > timeSolicity.created_at + timedelta(minutes=2):
+                    
+                    pror = prorrogas.filter(solicity=i).first()
+                    if not pror:
+                        i.status = timeant.status
+                        i.save()
+                        timeSolicity.delete()
+            
+            
+            
