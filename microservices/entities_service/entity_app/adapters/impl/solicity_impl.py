@@ -10,7 +10,7 @@ from entity_app.utils.functions import get_time_prorroga, get_timedelta_for_expi
 from django.utils import timezone
 class SolicityImpl(SolicityRepository):
 
-    def change_status_by_id(self, solicity_id):
+    def change_status_by_id(self, solicity_id,text,user_id)->Solicity:
         solicity = Solicity.objects.get(id=solicity_id)
         
         
@@ -19,10 +19,10 @@ class SolicityImpl(SolicityRepository):
             
             
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
-                newstatus = Status.INSISTENCY_PERIOD
+                newstatus = Status.INSISTENCY_SEND
                 
             if solicity.status == Status.INSISTENCY_RESPONSED or solicity.status == Status.INSISTENCY_NO_RESPONSED:    
-                newstatus = Status.PERIOD_INFORMAL_MANAGEMENT
+                newstatus = Status.INFORMAL_MANAGMENT_SEND
             if newstatus=='':
                 raise ValueError('Esta solicitud aun está vigente')
             
@@ -31,7 +31,11 @@ class SolicityImpl(SolicityRepository):
             
             solicity.expiry_date = datetime.now()+get_timedelta_for_expired()
 
-                
+            Insistency.objects.create(solicity_id=solicity_id,
+                                            user_id=user_id,  motive=text,
+                                            user_created_id=user_id,
+                                            user_updated_id=user_id,
+                                            status=Status.SEND)
             solicity.save()
             self.save_timeline(
                 solicity_id, solicity.user_created_id, newstatus)
@@ -41,15 +45,28 @@ class SolicityImpl(SolicityRepository):
             if solicity.status == Status.SEND:
                 newstatus = Status.PRORROGA
                 solicity.status = newstatus
-
+                
                 solicity.expiry_date = datetime.now()+get_time_prorroga()
                 solicity.save()
                 self.save_timeline(
                     solicity_id, solicity.user_created_id, newstatus)
+                
+                comment = Extension.objects.create(solicity_id=solicity_id,
+                                            user_id=user_id,  motive=text,
+                                            user_created_id=user_id,
+                                            user_updated_id=user_id,
+                                            status=Status.PRORROGA)
+                print("comment  ",comment)
                 return solicity
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
-                solicity.status = Status.INSISTENCY_PERIOD
+                solicity.status = Status.INSISTENCY_SEND
                 solicity.save()
+                
+                Insistency.objects.create(solicity_id=solicity_id,
+                                            user_id=user_id,  motive=text,
+                                            user_created_id=user_id,
+                                            user_updated_id=user_id,
+                                          status=Status.INSISTENCY_SEND)
                 self.save_timeline(
                     solicity_id, solicity.user_created_id, Status.INSISTENCY_PERIOD)
                 return solicity

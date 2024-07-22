@@ -677,9 +677,11 @@ class SolicityChangeStatus(APIView):
             data = request.data
             
             solicity_id = data.get('solicity_id')
+            text = data.get('text')
+            user_id = request.user.id
             
             if solicity_id:
-                solicity = self.service.change_status_by_id(solicity_id)
+                solicity = self.service.change_status_by_id(solicity_id, user_id, text)
                 
                 return Response({
                     'message': 'Solicity respondida correctamente',

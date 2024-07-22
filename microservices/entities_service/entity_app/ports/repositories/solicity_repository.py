@@ -199,5 +199,5 @@ class SolicityRepository(ABC):
 
 
     @abstractmethod
-    def change_status_by_id(self,solicity_id)->Solicity:
+    def change_status_by_id(self,solicity_id,text,user_id)->Solicity:
         pass
