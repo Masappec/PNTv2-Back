@@ -519,27 +519,18 @@ class SolicitySendView(APIView):
                 user_id=request.user.id
             )
 
-            res = MessageTransactional(
-                data={
+            return Response({
                     'message': 'Publicacion creada correctamente',
                     'status': 201,
                     'json': self.output_serializer_class(solicity).data
-                }
-            )
-
-            res.is_valid(raise_exception=True)
-            return Response(res.data, status=201)
+                }, status=201)
         except Exception as e:
-            print("Error:", e)
-            res = MessageTransactional(
-                data={
+            
+            return Response(data={
                     'message': str(e),
                     'status': 400,
                     'json': {}
-                }
-            )
-            res.is_valid(raise_exception=True)
-            return Response(res.data, status=400)
+                }, status=400)
 
 
 class SolicityResponseView(ListAPIView):
