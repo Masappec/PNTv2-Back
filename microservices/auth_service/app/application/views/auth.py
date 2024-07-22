@@ -133,7 +133,6 @@ class RegisterApiView(CreateAPIView):
             if user is not None: 
                 data = UserCreateResponseSerializer(data=user)
                 user_obj = self.user_service.get_user_object(user['id'])
-                
                 uidb64 = urlsafe_base64_encode(force_bytes(user_obj.id))
                 data.is_valid(raise_exception=True)
 

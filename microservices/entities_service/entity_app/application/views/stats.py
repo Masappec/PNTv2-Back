@@ -172,6 +172,9 @@ class IndicatorsEstablishmentView(APIView):
 class CountFilesView(APIView):
     permission_classes = []
     def get(self,request):
-        count = FilePublication.objects.all().count()
+        count = FilePublication.objects.filter(
+            transparency_active__published=True,
+            
+        ).count()
          
         return Response({'count':count},status=200)

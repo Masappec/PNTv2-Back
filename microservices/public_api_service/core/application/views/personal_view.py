@@ -7,10 +7,24 @@ from rest_framework_mongoengine.serializers import DocumentSerializer, EmbeddedD
 from django.http import StreamingHttpResponse
 import json
 from hermetrics.levenshtein import Levenshtein
+import difflib
+from unidecode import unidecode
+import re
 
 lev = Levenshtein()
 
 
+def similarity_ratio(word1, word2):
+    return difflib.SequenceMatcher(None, word1, word2).ratio()
+
+
+def remove_accents(text):
+    text = unidecode(text)
+    # Elimina todos los caracteres que no sean letras
+    text = re.sub(r'[^a-zA-Z]', '', text)
+    return text
+def similarity_percentage(word1, word2):
+    return similarity_ratio(word1, word2) * 100
 def slugify(value):
     string = value.lower().replace(" ", "-")
     # replazar tilde
@@ -75,6 +89,8 @@ class PersonalRemuneraciones(APIView):
     def process_results(self, documents, name):
         numeral_21_data = []
         additional_data = {}
+        
+        final_data = []
 
         numeral_columns_map = {
             "Numeral 2": {
@@ -84,9 +100,9 @@ class PersonalRemuneraciones(APIView):
             },
             "Numeral 3": {
                 "puesto_campo": "Puesto Institucional",
-                "remuneracion_campo": "Remuneración mensual unificada",
-                "grado_campo": "Grado jerárquico o escala al que pertenece el puesto",
-                "regimen_campo": "Régimen laboral al que pertenece"
+                "remuneracion_campo": "Remuneracion mensual unificada",
+                "grado_campo": "Grado jerarquico o escala al que pertenece el puesto",
+                "regimen_campo": "Regimen laboral al que pertenece"
             }
         }
 
@@ -94,18 +110,24 @@ class PersonalRemuneraciones(APIView):
             numeral = doc.metadata.numeral
             columns = doc.metadata.columns
             columns = [column.strip() for column in columns]
+            columns = [slugify(remove_accents(column)) for column in columns]
             data = doc.data
 
             for row in data:
                 row_dict = dict(zip(columns, row))
 
                 if numeral == "Numeral 2":
-                    nombre = row_dict.get(
-                        numeral_columns_map[numeral]["nombre_campo"], "").strip()
-                    puesto = row_dict.get(
-                        numeral_columns_map[numeral]["puesto_campo"], "").strip()
-                    unidad = row_dict.get(
-                        numeral_columns_map[numeral]["unidad_campo"], "").strip()
+                    columna_nombre = remove_accents(numeral_columns_map[numeral]["nombre_campo"])
+                    columna_puesto = remove_accents(numeral_columns_map[numeral]["puesto_campo"])
+                    
+                    columna_unidad = remove_accents(numeral_columns_map[numeral]["unidad_campo"])
+                    columna_nombre = slugify(columna_nombre)
+                    
+                    columna_puesto = slugify(columna_puesto)
+                    columna_unidad = slugify(columna_unidad)
+                    nombre = row_dict.get(columna_nombre, "").strip()
+                    puesto = row_dict.get(columna_puesto, "").strip()
+                    unidad = row_dict.get(columna_unidad, "").strip()
                     #contains
                     if name.lower() in nombre.lower() or nombre.lower() in name.lower():
                         
@@ -119,7 +141,9 @@ class PersonalRemuneraciones(APIView):
                         })
                         
                     else:
-                        if lev.distance(name, nombre) > 0.5:
+                        removed_accents_name = remove_accents(name.lower())
+                        removed_accents_nombre = remove_accents(nombre.lower())
+                        if similarity_percentage(removed_accents_name, removed_accents_nombre) > 40:
                             numeral_21_data.append({
                                 "puesto": puesto,
                                 "unidad": unidad,
@@ -131,39 +155,48 @@ class PersonalRemuneraciones(APIView):
 
 
                 elif numeral == "Numeral 3":
-                    puesto = row_dict.get(
-                        numeral_columns_map[numeral]["puesto_campo"], "").strip()
-
+                    columna_puesto = remove_accents(numeral_columns_map[numeral]["puesto_campo"])
+                    columna_remuneracion = remove_accents(numeral_columns_map[
+                        numeral]["remuneracion_campo"])
+                    columna_puesto = slugify(columna_puesto)
+                    columna_remuneracion = slugify(columna_remuneracion)
+                    columna_grado = remove_accents(numeral_columns_map[numeral]["grado_campo"])
+                    columna_regimen = remove_accents(numeral_columns_map[numeral]["regimen_campo"])
+                    columna_grado = slugify(columna_grado)
+                    columna_regimen = slugify(columna_regimen)
+                    
+                    
+                    puesto = row_dict.get(columna_puesto, "").strip()
+                    
+                
                     # buscar en la lista los elementos que tenga el puesto institucional
 
                     for item in numeral_21_data:
                         
                         if item["puesto"] == puesto:
                             item["remuneracion"] = row_dict.get(
-                                numeral_columns_map[numeral]["remuneracion_campo"], "").strip()
+                                columna_remuneracion, "").strip()
                             item["grado"] = row_dict.get(
-                                numeral_columns_map[numeral]["grado_campo"], "").strip()
+                                columna_grado, "").strip()
 
                             item["regimen"] = row_dict.get(
-                                numeral_columns_map[numeral]["regimen_campo"], "").strip()
+                                columna_regimen, "").strip()
+                            final_data.append(item)
+                            
+                            
                         else:
-                            if lev.distance(puesto, item["puesto"]) > 0.5:
+                            removed_accents_puesto = remove_accents(puesto.lower())
+                            removed_accents_puesto_item = remove_accents(item["puesto"].lower())
+                            if similarity_percentage(removed_accents_puesto, removed_accents_puesto_item) > 40:
                                 item["remuneracion"] = row_dict.get(
-                                    numeral_columns_map[numeral]["remuneracion_campo"], "").strip()
+                                    columna_remuneracion, "").strip()
                                 item["grado"] = row_dict.get(
-                                    numeral_columns_map[numeral]["grado_campo"], "").strip()
+                                    columna_grado, "").strip()
 
                                 item["regimen"] = row_dict.get(
-                                    numeral_columns_map[numeral]["regimen_campo"], "").strip()
+                                    columna_regimen, "").strip()
 
-        # Enriquecer los datos de Numeral 2.1 con los adicionales
-        for item in numeral_21_data:
-            nombre = item["nombre"]
-            puesto = item["puesto"]
+                                final_data.append(item)
+ 
 
-            if nombre in additional_data:
-                item.update(additional_data[nombre])
-            elif puesto in additional_data:
-                item.update(additional_data[puesto])
-
-        return numeral_21_data
+        return final_data

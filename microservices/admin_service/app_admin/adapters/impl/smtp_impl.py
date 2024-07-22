@@ -43,7 +43,7 @@ class StmpImpl(SmtpRepository):
             message = mail.EmailMessage(
                 subject=email.subject,
                 body=html_content,
-                from_email=email.from_email,
+                from_email="Portal Nacional de Transparencia <"+email.from_email+">",
                 to=[email.to_email],
                 bcc=email.bcc,
                 cc=email.cc,
@@ -74,12 +74,11 @@ class StmpImpl(SmtpRepository):
             message = mail.EmailMultiAlternatives(
                 subject=email.subject,
                 body=text_content,
-                from_email=email.from_email,
+                from_email="Portal Nacional de Transparencia <"+email.from_email+">",
                 to=[email.to_email],
                 bcc=email.bcc,
                 cc=email.cc,
                 reply_to=email.reply_to,
-                #html y css
                 
             )
 

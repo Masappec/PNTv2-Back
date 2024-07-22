@@ -60,7 +60,7 @@ def auth_send_activate_account_event(email, uidb64, token, username):
     user_id = force_str(urlsafe_base64_decode(uidb64))
 
     mail = service.send_email(
-        email, 'Activate Account ', 'Activate Account ', '', '', '', user_id)
+        email, 'Activar Cuenta Portal Nacional de Transparencia', 'Activar Cuenta Portal Nacional de Transparencia', '', '', '', user_id)
     service.send_email_with_template_and_context(
         mail, 'emails/activate-account/activate-account.html', context)
     print("TASK AUTH SEND ACTIVATE ACCOUNT EVENT ")

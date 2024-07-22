@@ -78,45 +78,28 @@ class SolicityImpl(SolicityRepository):
         """
         user = User.objects.get(id=user_id)
 
-        solicity = Solicity.objects.filter(
-            user_created_id=user_id, status=Status.DRAFT).last()
+        
 
-        if solicity is None:
 
-            solicity = Solicity.objects.create(
-                number_saip=number_saip,
-                establishment_id=establishment_id.pk,
-                city=city,
-                first_name=first_name,
-                last_name=last_name,
-                email=email,
-                phone=phone,
-                gender=gender,
-                race_identification=race_identification,
-                text=description,
-                format_receipt=format_receipt,
-                format_send=format_send,
-                expiry_date=expiry_date,
-                user_created=user,
-                user_updated=user,
-                status=Status.DRAFT)
+        solicity = Solicity.objects.create(
+            number_saip=number_saip,
+            establishment_id=establishment_id.pk,
+            city=city,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone=phone,
+            gender=gender,
+            race_identification=race_identification,
+            text=description,
+            format_receipt=format_receipt,
+            format_send=format_send,
+            expiry_date=expiry_date,
+            user_created=user,
+            user_updated=user,
+            status=Status.DRAFT)
 
-        else:
-            solicity.number_saip = number_saip
-            solicity.establishment_id = establishment_id
-            solicity.city = city
-            solicity.first_name = first_name
-            solicity.last_name = last_name
-            solicity.email = email
-            solicity.phone = phone
-            solicity.race_identification = race_identification
-            solicity.description = description
-            solicity.format_receipt = format_receipt
-            solicity.format_send = format_send
-            solicity.expiry_date = expiry_date
-            solicity.user_updated = user
-            solicity.status = Status.DRAFT
-            solicity.save()
+   
         solicity.number_saip = f'{solicity.id}/{solicity.date.year}'
         solicity.save()
         return solicity

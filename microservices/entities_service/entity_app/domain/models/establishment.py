@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime
 from entity_app.domain.models.base_model import BaseModel
-from entity_app.domain.models.transparency_active import TransparencyActive
+from entity_app.domain.models.transparency_active import EstablishmentNumeral, TransparencyActive
 from entity_app.domain.models.solicity import Status,TimeLineSolicity
 class EstablishmentManager(models.Manager):
     def get_queryset(self):
@@ -12,20 +12,44 @@ class EstablishmentManager(models.Manager):
         current_month = datetime.now().month
         current_year = datetime.now().year
 
-        establishments = self.all()
+        establishments = EstablishmentExtended.objects.all()
 
         total_establishments = establishments.count()
-        updated_count = establishments.filter(
-            transparency_active__month=current_month,
-            transparency_active__year=current_year,
-            transparency_active__status='ingress'
-        ).distinct().count()
-        not_updated_count = total_establishments - updated_count
+        updated_count = EstablishmentNumeral.objects.all()
+        
+
+        transparencias_subidas = TransparencyActive.objects.filter(
+            establishment_id__in=establishments,
+            year=current_year,
+            published=True,
+            published_at__lte=datetime.now()
+        )
+        
+        total_updated = 0
+        total_no_updated = 0
+        for establishment in establishments:
+            
+            establishment_numeral = updated_count.filter(
+                establishment_id=establishment.id).count()
+            transparencias_entidad = transparencias_subidas.filter(
+                establishment_id=establishment, year=current_year, published=True,month=current_month).count()
+            
+            if establishment_numeral>0:
+                if establishment_numeral == transparencias_entidad:
+                    total_updated += 1
+                else:
+                    total_no_updated += 1
+            else:
+                total_no_updated += 1
+        
+        
+        
+        
 
         return {
             'total': total_establishments,
-            'updated': updated_count,
-            'not_updated': not_updated_count
+            'updated': total_updated,
+            'not_updated': total_no_updated
         }
 class EstablishmentExtended(models.Model):
     name = models.CharField(max_length=255)
