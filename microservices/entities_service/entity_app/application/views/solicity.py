@@ -378,16 +378,11 @@ class SolicityCreateDraftView(APIView):
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
-            print("Error:", e)
-            res = MessageTransactional(
-                data={
-                    'message': str(e),
-                    'status': 400,
-                    'json': {}
-                }
-            )
-            res.is_valid(raise_exception=True)
-            return Response(res.data, status=400)
+            return Response({
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }, status=400)
 
 
 class SolicityWithoutDraftView(APIView):
@@ -429,15 +424,13 @@ class SolicityWithoutDraftView(APIView):
             }, status=201)
         except Exception as e:
             print("Error: ", e)
-            res = MessageTransactional(
-                data={
-                    'message': str(e),
-                    'status': 400,
-                    'json': '{}'
-                }
-            )
+            
             res.is_valid(raise_exception=True)
-            return Response(res.data, status=400)
+            return Response({
+                'message': str(e),
+                'status': 400,
+                'json': '{}'
+            }, status=400)
 
 
 class SolicityGetLastDraftView(APIView):
