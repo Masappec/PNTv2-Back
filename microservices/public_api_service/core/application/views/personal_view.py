@@ -86,6 +86,17 @@ class PersonalRemuneraciones(APIView):
         except Exception as e:
             return Response({'detail': str(e)}, status=500)
 
+    def remove_duplicates(self,dict_list):
+        seen = set()
+        unique_list = []
+        for d in dict_list:
+            # Convert each dictionary to a frozenset of its items
+            # frozenset is hashable and can be added to a set
+            tupled = frozenset(d.items())
+            if tupled not in seen:
+                seen.add(tupled)
+                unique_list.append(d)
+        return unique_list
     def process_results(self, documents, name):
         numeral_21_data = []
         additional_data = {}
@@ -199,4 +210,5 @@ class PersonalRemuneraciones(APIView):
                                 final_data.append(item)
  
 
+        final_data = self.remove_duplicates(final_data)
         return final_data
