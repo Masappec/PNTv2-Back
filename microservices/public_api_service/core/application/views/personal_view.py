@@ -170,7 +170,7 @@ class PersonalRemuneraciones(APIView):
                             "nombre": nombre,
                             "regimen": ""
                         })
-                    elif similarity_percentage(removed_accents_name, removed_accents_nombre) > 10:
+                    elif similarity_percentage(removed_accents_name, removed_accents_nombre) > 40:
 
                         numeral_21_data.append({
                             "puesto": puesto,
