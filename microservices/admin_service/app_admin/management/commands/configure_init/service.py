@@ -31,7 +31,7 @@ class ConfigureService:
         list_type_inst = self.type_organization.get_all()
         list_func = self.function_service.get_all()
         slice = data[:quantity]
-        for x in range(slice):
+        for x, establishment in range(slice):
             print(progress_bar(x, quantity), end='\r', flush=True)
             print(progress_bar(x, len(data)), end='\r', flush=True)
             establishment_ = self.establishment_service.create_establishment({
@@ -61,6 +61,7 @@ class ConfigureService:
         list_type_org = self.type_institution.get_all()
         list_type_inst = self.type_organization.get_all()
         list_func = self.function_service.get_all()
+        data = data[:100]
         for x, establishment in enumerate(data):
             print(progress_bar(x, len(data)), end='\r', flush=True)
             establishment_ = self.establishment_service.create_establishment({
