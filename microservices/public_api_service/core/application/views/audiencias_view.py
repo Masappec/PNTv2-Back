@@ -33,10 +33,10 @@ class AudienciasView(APIView):
             metadata__month=str(month)
         )
         lista = []
-
         for doc in res:
-            
+            print(doc.metadata.establishment_name )
             for data in doc.data:
+                print(data[0] )
                 if lev.similarity(name, data[0]) > 0.3:
 
                     lista.append({

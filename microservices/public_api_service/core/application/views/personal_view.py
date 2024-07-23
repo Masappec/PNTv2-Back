@@ -76,7 +76,7 @@ class PersonalRemuneraciones(APIView):
                     metadata__numeral__in=numerals_list,
                     metadata__establishment_identification=institution
                 )
-
+            
             if not res:
                 return Response([], status=200)
 
@@ -105,15 +105,15 @@ class PersonalRemuneraciones(APIView):
 
         numeral_columns_map = {
             "Numeral 2": {
-                "nombre_campo": "Apellidos y Nombres",
-                "puesto_campo": "Puesto Institucional",
-                "unidad_campo": "Unidad a la que pertenece"
+                "nombre_campo": "apellidosynombres",
+                "puesto_campo": "puestoinstitucional",
+                "unidad_campo": "unidadalaquepertenece"
             },
             "Numeral 3": {
-                "puesto_campo": "Puesto Institucional",
-                "remuneracion_campo": "Remuneracion mensual unificada",
-                "grado_campo": "Grado jerarquico o escala al que pertenece el puesto",
-                "regimen_campo": "Regimen laboral al que pertenece"
+                "puesto_campo": "puestoinstitucional",
+                "remuneracion_campo": "remuneracionmensualunificada",
+                "grado_campo": "gradojerarquicooescalaalqueperteneceelpuesto",
+                "regimen_campo": "regimenlaboralalquepertenece"
             }
         }
 
@@ -140,8 +140,10 @@ class PersonalRemuneraciones(APIView):
                     puesto = row_dict.get(columna_puesto, "").strip()
                     unidad = row_dict.get(columna_unidad, "").strip()
                     #contains
-                    if name.lower() in nombre.lower() or nombre.lower() in name.lower():
-                        
+                    removed_accents_name = remove_accents(name.lower())
+                    removed_accents_nombre = remove_accents(nombre.lower())
+                    if name.lower() in nombre.lower():
+
                         numeral_21_data.append({
                             "puesto": puesto,
                             "unidad": unidad,
@@ -150,22 +152,29 @@ class PersonalRemuneraciones(APIView):
                             "nombre": nombre,
                             "regimen": ""
                         })
-                        
-                    else:
-                        removed_accents_name = remove_accents(name.lower())
-                        removed_accents_nombre = remove_accents(nombre.lower())
-                        if similarity_percentage(removed_accents_name, removed_accents_nombre) > 40:
-                            numeral_21_data.append({
-                                "puesto": puesto,
-                                "unidad": unidad,
-                                "remuneracion": "",
-                                "grado": "",
-                                "nombre": nombre,
-                                "regimen": ""
-                            })
+                    elif nombre.lower() in name.lower():  
 
+                        numeral_21_data.append({
+                            "puesto": puesto,
+                            "unidad": unidad,
+                            "remuneracion": "",
+                            "grado": "",
+                            "nombre": nombre,
+                            "regimen": ""
+                        })
+                    elif similarity_percentage(removed_accents_name, removed_accents_nombre) > 10:
+
+                        numeral_21_data.append({
+                            "puesto": puesto,
+                            "unidad": unidad,
+                            "remuneracion": "",
+                            "grado": "",
+                            "nombre": nombre,
+                            "regimen": ""
+                        })
 
                 elif numeral == "Numeral 3":
+
                     columna_puesto = remove_accents(numeral_columns_map[numeral]["puesto_campo"])
                     columna_remuneracion = remove_accents(numeral_columns_map[
                         numeral]["remuneracion_campo"])
@@ -183,7 +192,6 @@ class PersonalRemuneraciones(APIView):
                     # buscar en la lista los elementos que tenga el puesto institucional
 
                     for item in numeral_21_data:
-                        
                         if item["puesto"] == puesto:
                             item["remuneracion"] = row_dict.get(
                                 columna_remuneracion, "").strip()
@@ -192,7 +200,6 @@ class PersonalRemuneraciones(APIView):
 
                             item["regimen"] = row_dict.get(
                                 columna_regimen, "").strip()
-                            final_data.append(item)
                             
                             
                         else:
@@ -207,8 +214,11 @@ class PersonalRemuneraciones(APIView):
                                 item["regimen"] = row_dict.get(
                                     columna_regimen, "").strip()
 
-                                final_data.append(item)
+                        final_data.append(item)
+                        
+                if final_data.__len__() == 0:
+                    for item in numeral_21_data:
+                        final_data.append(item)
  
-
         final_data = self.remove_duplicates(final_data)
         return final_data

@@ -93,6 +93,9 @@ class StmpImpl(SmtpRepository):
             email.status = Email.STATUS_ERROR()
             email.error = str(e)
             email.save()
+            #reintentar
+            self.send_email_with_template_and_context(email, template, context)
+            
             raise e
 
     def setup(self, config: dict):

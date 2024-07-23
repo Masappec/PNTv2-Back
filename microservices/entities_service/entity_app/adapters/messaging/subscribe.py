@@ -55,8 +55,10 @@ class Subscribe:
                     self.redis_client.expire(message_id, 60 * 60 * 24)
 
         except Exception as e:
-            print("Error al suscribirse al canal: ", e)
-            raise e
+            #volvemos a suscribirnos
+            self.subscribe_channel()
+            print(f"Error subscribing to channel {self.channel}: {e}")
+            
 
 
 def create_subscription(channel, observers: List[CallbackObserver]):

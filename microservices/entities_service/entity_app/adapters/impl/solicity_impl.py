@@ -20,16 +20,18 @@ class SolicityImpl(SolicityRepository):
             
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 newstatus = Status.INSISTENCY_SEND
+
                 
             if solicity.status == Status.INSISTENCY_RESPONSED or solicity.status == Status.INSISTENCY_NO_RESPONSED:    
                 newstatus = Status.INFORMAL_MANAGMENT_SEND
+
             if newstatus=='':
                 raise ValueError('Esta solicitud aun está vigente')
             
             
             solicity.status = newstatus
-            
-            solicity.expiry_date = datetime.now()+get_timedelta_for_expired()
+            solicity.expiry_date = solicity.expiry_date +get_timedelta_for_expired()
+
 
             Insistency.objects.create(solicity_id=solicity_id,
                                             user_id=user_id,  motive=text,
@@ -56,10 +58,10 @@ class SolicityImpl(SolicityRepository):
                                             user_created_id=user_id,
                                             user_updated_id=user_id,
                                             status=Status.PRORROGA)
-                print("comment  ",comment)
                 return solicity
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 solicity.status = Status.INSISTENCY_SEND
+                solicity.expiry_date = solicity.expiry_date +get_time_prorroga()
                 solicity.save()
                 
                 Insistency.objects.create(solicity_id=solicity_id,
@@ -71,7 +73,6 @@ class SolicityImpl(SolicityRepository):
                     solicity_id, solicity.user_created_id, Status.INSISTENCY_PERIOD)
                 return solicity
             raise ValueError('Esta solicitud aun está vigente')
-        # def create_citizen_solicity(self, title, text, establishment_id, user_id, expiry_date):
     def create_solicity_draft(self,
                               number_saip: str,
                               establishment_id: int,
