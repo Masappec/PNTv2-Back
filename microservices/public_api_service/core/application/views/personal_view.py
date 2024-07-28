@@ -23,8 +23,12 @@ def remove_accents(text):
     # Elimina todos los caracteres que no sean letras
     text = re.sub(r'[^a-zA-Z]', '', text)
     return text
+
+
 def similarity_percentage(word1, word2):
     return similarity_ratio(word1, word2) * 100
+
+
 def slugify(value):
     string = value.lower().replace(" ", "-")
     # replazar tilde
@@ -66,8 +70,8 @@ class PersonalRemuneraciones(APIView):
         ]
 
         try:
-            
-            if institution =="":
+
+            if institution == "":
                 res = CSVData.objects(
                     metadata__numeral__in=numerals_list
                 )
@@ -76,7 +80,7 @@ class PersonalRemuneraciones(APIView):
                     metadata__numeral__in=numerals_list,
                     metadata__establishment_identification=institution
                 )
-            
+
             if not res:
                 return Response([], status=200)
 
@@ -86,7 +90,7 @@ class PersonalRemuneraciones(APIView):
         except Exception as e:
             return Response({'detail': str(e)}, status=500)
 
-    def remove_duplicates(self,dict_list):
+    def remove_duplicates(self, dict_list):
         seen = set()
         unique_list = []
         for d in dict_list:
@@ -97,10 +101,11 @@ class PersonalRemuneraciones(APIView):
                 seen.add(tupled)
                 unique_list.append(d)
         return unique_list
+
     def process_results(self, documents, name):
         numeral_21_data = []
         additional_data = {}
-        
+
         final_data = []
 
         numeral_columns_map = {
@@ -128,18 +133,21 @@ class PersonalRemuneraciones(APIView):
                 row_dict = dict(zip(columns, row))
 
                 if numeral == "Numeral 2":
-                    columna_nombre = remove_accents(numeral_columns_map[numeral]["nombre_campo"])
-                    columna_puesto = remove_accents(numeral_columns_map[numeral]["puesto_campo"])
-                    
-                    columna_unidad = remove_accents(numeral_columns_map[numeral]["unidad_campo"])
+                    columna_nombre = remove_accents(
+                        numeral_columns_map[numeral]["nombre_campo"])
+                    columna_puesto = remove_accents(
+                        numeral_columns_map[numeral]["puesto_campo"])
+
+                    columna_unidad = remove_accents(
+                        numeral_columns_map[numeral]["unidad_campo"])
                     columna_nombre = slugify(columna_nombre)
-                    
+
                     columna_puesto = slugify(columna_puesto)
                     columna_unidad = slugify(columna_unidad)
                     nombre = row_dict.get(columna_nombre, "").strip()
                     puesto = row_dict.get(columna_puesto, "").strip()
                     unidad = row_dict.get(columna_unidad, "").strip()
-                    #contains
+                    # contains
                     removed_accents_name = remove_accents(name.lower())
                     removed_accents_nombre = remove_accents(nombre.lower())
                     if name.lower() in nombre.lower():
@@ -152,7 +160,7 @@ class PersonalRemuneraciones(APIView):
                             "nombre": nombre,
                             "regimen": ""
                         })
-                    elif nombre.lower() in name.lower():  
+                    elif nombre.lower() in name.lower():
 
                         numeral_21_data.append({
                             "puesto": puesto,
@@ -162,7 +170,7 @@ class PersonalRemuneraciones(APIView):
                             "nombre": nombre,
                             "regimen": ""
                         })
-                    elif similarity_percentage(removed_accents_name, removed_accents_nombre) > 10:
+                    elif similarity_percentage(removed_accents_name, removed_accents_nombre) > 40:
 
                         numeral_21_data.append({
                             "puesto": puesto,
@@ -175,20 +183,21 @@ class PersonalRemuneraciones(APIView):
 
                 elif numeral == "Numeral 3":
 
-                    columna_puesto = remove_accents(numeral_columns_map[numeral]["puesto_campo"])
+                    columna_puesto = remove_accents(
+                        numeral_columns_map[numeral]["puesto_campo"])
                     columna_remuneracion = remove_accents(numeral_columns_map[
                         numeral]["remuneracion_campo"])
                     columna_puesto = slugify(columna_puesto)
                     columna_remuneracion = slugify(columna_remuneracion)
-                    columna_grado = remove_accents(numeral_columns_map[numeral]["grado_campo"])
-                    columna_regimen = remove_accents(numeral_columns_map[numeral]["regimen_campo"])
+                    columna_grado = remove_accents(
+                        numeral_columns_map[numeral]["grado_campo"])
+                    columna_regimen = remove_accents(
+                        numeral_columns_map[numeral]["regimen_campo"])
                     columna_grado = slugify(columna_grado)
                     columna_regimen = slugify(columna_regimen)
-                    
-                    
+
                     puesto = row_dict.get(columna_puesto, "").strip()
-                    
-                
+
                     # buscar en la lista los elementos que tenga el puesto institucional
 
                     for item in numeral_21_data:
@@ -200,11 +209,12 @@ class PersonalRemuneraciones(APIView):
 
                             item["regimen"] = row_dict.get(
                                 columna_regimen, "").strip()
-                            
-                            
+
                         else:
-                            removed_accents_puesto = remove_accents(puesto.lower())
-                            removed_accents_puesto_item = remove_accents(item["puesto"].lower())
+                            removed_accents_puesto = remove_accents(
+                                puesto.lower())
+                            removed_accents_puesto_item = remove_accents(
+                                item["puesto"].lower())
                             if similarity_percentage(removed_accents_puesto, removed_accents_puesto_item) > 40:
                                 item["remuneracion"] = row_dict.get(
                                     columna_remuneracion, "").strip()
@@ -215,10 +225,10 @@ class PersonalRemuneraciones(APIView):
                                     columna_regimen, "").strip()
 
                         final_data.append(item)
-                        
-                if final_data.__len__() == 0:
-                    for item in numeral_21_data:
-                        final_data.append(item)
- 
+
+        if final_data.__len__() == 0:
+            for item in numeral_21_data:
+                final_data.append(item)
+
         final_data = self.remove_duplicates(final_data)
         return final_data
