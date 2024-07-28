@@ -340,7 +340,6 @@ class SolicityImpl(SolicityRepository):
     def get_entity_user_solicities(self, user_id):
         establishment = UserEstablishmentExtended.objects.filter(
             user_id=user_id, is_active=True).first()
-
         if establishment is None:
             
             return Solicity.objects.all().filter(is_active=True).exclude(status=Status.DRAFT) 
@@ -350,7 +349,12 @@ class SolicityImpl(SolicityRepository):
                                        ).exclude(status=Status.DRAFT)
 
     def get_solicity_by_id_and_user(self, solicity_id, user_id):
-        return Solicity.objects.get(id=solicity_id, user_created_id=user_id)
+        establishment = UserEstablishmentExtended.objects.filter(
+            user_id=user_id, is_active=True).first()
+        if establishment is None:
+            return Solicity.objects.get(id=solicity_id)
+        else:
+            return Solicity.objects.get(id=solicity_id, user_created_id=user_id)
 
     def get_solicity_by_id(self, solicity_id):
         return Solicity.objects.get(id=solicity_id)

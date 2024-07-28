@@ -160,7 +160,7 @@ class SolicityDetailView(APIView):
     """Solicity view."""
 
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'view_solicity'
+    permission_required = 'view_solicity,view_all_solicities'
     serializer_class = SolicitySerializer
     output_serializer_class = SolicitySerializer
 
@@ -195,7 +195,7 @@ class SolicityDetailEstablishmentView(APIView):
     """Solicity view."""
 
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'view_solicityresponse'
+    permission_required = 'view_solicityresponse,view_all_solicities'
     serializer_class = SolicitySerializer
     output_serializer_class = SolicitySerializer
 
@@ -539,7 +539,7 @@ class SolicityResponseView(ListAPIView):
     permission_classes = [IsAuthenticated, HasPermission]
     serializer_class = SolicitySerializer
     pagination_class = StandardResultsSetPagination
-    permission_required = 'view_solicityresponse'
+    permission_required = 'view_solicityresponse,view_all_solicities'
     output_serializer_class = SolicityResponseSerializer
 
     def __init__(self):
@@ -574,13 +574,21 @@ class SolicityResponseView(ListAPIView):
 
             # ['number_saip', 'first_name', 'last_name', 'status', 'expiry_date', 'motive']
             order_by = request.query_params.get('sort[]', None)
+            establishment_id = request.query_params.get('establishment_id', 0)
+            
+            
+            if establishment_id != 0:
+                queryset = queryset.filter(establishment_id=establishment_id)
+            
             if order_by is not None:
                 queryset = queryset.order_by(order_by)
 
             search = request.query_params.get('search', None)
             if search is not None:
                 queryset = queryset.filter(
-                    Q(number_saip__icontains=search) | Q(first_name__icontains=search) | Q(last_name__icontains=search))
+                    Q(number_saip__icontains=search) |
+                    Q(first_name__icontains=search) | 
+                    Q(last_name__icontains=search))
 
             
             status = request.query_params.get('status', "")

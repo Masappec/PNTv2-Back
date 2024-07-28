@@ -8,7 +8,8 @@ import pandas as pd
 import re
 import json
 from entity_app.models import TemplateFile, Numeral, ColumnFile
-
+from django.contrib.auth.models import Permission, ContentType
+from entity_app.domain.models import TransparencyActive, TransparencyFocal, TransparencyColab, Solicity, EstablishmentExtended
 
 class NumeralServiceData:
 
@@ -172,3 +173,104 @@ class NumeralServiceData:
                             regex=column['regex'],
                         )
                         template_object.columns.add(column_object)
+
+
+    def generate_permissions(self):
+        permissions = [
+            {
+                "model": "auth.permission",
+                "fields": {
+                    "name": "Ver Transparencias de Todas las entidades",
+                    "content_type": ["entity_app", "transparencyactive"],
+                    "codename": "view_all_transparencyactive"
+                }
+            },
+            {
+                "model": "auth.permission",
+                "fields": {
+                    "name": "Ver Transparencias de Todas las entidades",
+                    "content_type": ["entity_app", "transparencyfocal"],
+                    "codename": "view_all_transparencyfocal"
+                }
+            },
+            {
+                "model": "auth.permission",
+                "fields": {
+                    "name": "Ver Transparencias de Todas las entidades",
+                    "content_type": ["entity_app", "transparencycollab"],
+                    "codename": "view_all_transparencycollab"
+                }
+            },
+            {
+                "model": "auth.permission",
+                "fields": {
+                    "name": "Ver Solicitudes de Todas las entidades",
+                    "content_type": ["entity_app", "solicity"],
+                    "codename": "view_all_solicities"
+                }
+            },
+            {
+                "model": "auth.permission",
+                "fields": {
+                    "name": "Ver Estado de cumplimiento de Todas las entidades",
+                    "content_type": ["app_admin", "establishment"],
+                    "codename": "view_all_compliancestatus"
+                }
+            }
+        ]
+
+        contentTypeTA = ContentType.objects.get_for_model(TransparencyActive)
+        contentTypeTF = ContentType.objects.get_for_model(TransparencyFocal)
+        contentTypeTC = ContentType.objects.get_for_model(TransparencyColab)
+        contentTypeSolicity = ContentType.objects.get_for_model(Solicity)
+        contentTypeEstablishment = ContentType.objects.get_for_model(EstablishmentExtended)
+        
+        Permission.objects.get_or_create(
+            name="Ver Transparencias de Todas las entidades",
+            content_type=contentTypeTA,
+            codename="view_all_transparencyactive"
+        )
+        
+        Permission.objects.get_or_create(
+            name="Ver Transparencias de Todas las entidades",
+            content_type=contentTypeTF,
+            codename="view_all_transparencyfocal"
+        )
+        
+        Permission.objects.get_or_create(
+            name="Ver Transparencias de Todas las entidades",
+            content_type=contentTypeTC,
+            codename="view_all_transparencycollab"
+        )
+        
+        Permission.objects.get_or_create(
+            name="Ver Solicitudes de Todas las entidades",
+            content_type=contentTypeSolicity,
+            codename="view_all_solicities"
+        )
+        
+        
+        Permission.objects.get_or_create(
+            name="Ver Estado de cumplimiento de Todas las entidades",
+            content_type=contentTypeEstablishment,
+            codename="view_all_compliancestatus"
+        )
+        
+        Permission.objects.get_or_create(
+            name="Indicadores Generales Ciudadano",
+            content_type=contentTypeEstablishment,
+            codename="view_general_indicators"
+        )
+        
+        Permission.objects.get_or_create(
+            name="Indicadores de Entidad",
+            content_type=contentTypeEstablishment,
+            codename="view_entity_indicators"
+        )
+        
+        Permission.objects.get_or_create(
+            name="Indicadores de Monitoreo",
+            content_type=contentTypeEstablishment,
+            codename="view_monitoring_indicators"
+        )
+        

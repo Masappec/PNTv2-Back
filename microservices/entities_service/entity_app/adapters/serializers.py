@@ -414,6 +414,7 @@ class NumeralDetailSerializer(serializers.ModelSerializer):
 class TransparencyActiveListSerializer(serializers.ModelSerializer):
     numeral = serializers.SerializerMethodField(method_name='get_numeral')
     files = FilePublicationSerializer(many=True)
+    establishment =EstablishmentSerializer()
 
     class Meta:
         model = TransparencyActive
@@ -454,7 +455,7 @@ class TransparencyFocusSerializer(serializers.ModelSerializer):
 class ListTransparencyFocus(serializers.ModelSerializer):
     numeral = serializers.SerializerMethodField(method_name='get_numeral')
     files = FilePublicationSerializer(many=True)
-
+    establishment = EstablishmentSerializer()
     class Meta:
         model = TransparencyFocal
         fields = '__all__'
@@ -471,7 +472,7 @@ class ListTransparencyFocus(serializers.ModelSerializer):
 class ListTransparencyColaborative(serializers.ModelSerializer):
     numeral = serializers.SerializerMethodField(method_name='get_numeral')
     files = FilePublicationSerializer(many=True)
-
+    establishment = EstablishmentSerializer()
     class Meta:
         model = TransparencyColab
         fields = '__all__'

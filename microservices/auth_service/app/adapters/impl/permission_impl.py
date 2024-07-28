@@ -59,7 +59,7 @@ class PermissionRepositoryImpl(PermissionRepository):
                 'contenttype', 'logentry', 'permission', 'session', 'basemodel', 'accesstoinformation',
                 'resetpasswordtoken', 'userestablishmentextended', 'lawenforcement', 'accesstoinformation',
                 'formfields', 'tutorialvideo', 'normativedocument', 'frequentlyaskedquestions', 'userestablishment',
-                'email', 'typepublication', 'filepublication', 'establishmentextended', 'typeformats', 'activitylog',
+                'email', 'typepublication', 'filepublication', 'typeformats', 'activitylog',
                 'userestablishmentextended', 'attachment', 'columnfile', 'templatefile', 'numeral', 'establishmentnumeral',
                 'role'
 
@@ -69,7 +69,7 @@ class PermissionRepositoryImpl(PermissionRepository):
             'contenttype', 'logentry', 'permission', 'session', 'basemodel', 'accesstoinformation',
             'resetpasswordtoken', 'userestablishmentextended', 'lawenforcement', 'accesstoinformation',
             'formfields', 'tutorialvideo', 'normativedocument', 'frequentlyaskedquestions', 'userestablishment',
-            'email', 'typepublication', 'filepublication', 'establishmentextended', 'typeformats', 'activitylog',
+            'email', 'typepublication', 'filepublication', 'typeformats', 'activitylog',
             'userestablishmentextended', 'attachment', 'columnfile', 'templatefile', 'numeral', 'establishmentnumeral',
             'role'
 

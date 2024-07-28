@@ -36,7 +36,7 @@ def create_custom_permissions():
     )
 
     permission = Permission.objects.get_or_create(
-        codename='view_users_internal',
-        name='Puede ver usuarios internos',
+        codename='view_user_establishment',
+        name='Puede ver usuarios de Entidad',
         content_type=content_type,
     )

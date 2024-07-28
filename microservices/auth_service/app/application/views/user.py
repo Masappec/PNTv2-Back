@@ -68,8 +68,16 @@ class UserListAPI(ListAPIView):
         if search is not None:
             queryset = queryset.filter(
                 Q(username__icontains=search) | Q(email__icontains=search))
-        
-        
+            
+            queryset = queryset.prefetch_related(
+                'groups').prefetch_related('person')
+            
+            for user in queryset:
+                group = [group for group in user.groups.all()]
+                # join list to string
+                user.group = group
+                
+            print("ENTRO",queryset.values('groups') )
         
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -93,7 +101,7 @@ class UserCreateAPI(APIView):
     """
     serializer_class = UserCreateAdminSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'add_user,view_users_internal'
+    permission_required = 'add_user,add_user_establishment'
     output_serializer_class = UserCreateResponseSerializer
 
     def __init__(self):
@@ -219,7 +227,7 @@ class UserUpdate(APIView):
     """
     serializer_class = UserCreateAdminSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'change_user,view_users_internal'
+    permission_required = 'change_user,update_user_establishment'
     output_serializer_class = UserCreateResponseSerializer
 
     def __init__(self):
@@ -330,7 +338,7 @@ class UserDetail(APIView):
     """
     serializer_class = UserCreateResponseSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'view_user,view_users_internal'
+    permission_required = 'view_user,view_user_establishment'
 
     def __init__(self):
         """
@@ -407,7 +415,7 @@ class UserDeactivate(APIView):
     """
     permission_classes = [IsAuthenticated]
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'delete_user,view_users_internal'
+    permission_required = 'delete_user,delete_user_establishment'
 
     def __init__(self):
         """

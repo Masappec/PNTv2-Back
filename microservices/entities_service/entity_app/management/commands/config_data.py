@@ -20,6 +20,9 @@ class Command(BaseCommand):
 
         parser.add_argument(
             '-generate_file', help='Generar archivo', action='store_true')
+        
+        parser.add_argument(
+            '-generate_permissions', help='Generar permisos', action='store_true')
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
@@ -35,3 +38,7 @@ class Command(BaseCommand):
         generate_file = options.get('generate_file', False)
         if generate_file:
             print(self.config_service.generate_file())
+            
+        generate_permissions = options.get('generate_permissions', False)
+        if generate_permissions:
+            print(self.config_service.generate_permissions())

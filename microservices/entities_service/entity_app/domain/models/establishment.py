@@ -3,54 +3,87 @@ from datetime import datetime
 from entity_app.domain.models.base_model import BaseModel
 from entity_app.domain.models.transparency_active import EstablishmentNumeral, TransparencyActive
 from entity_app.domain.models.solicity import Status,TimeLineSolicity
+from django.utils import timezone
+from django.db import connection
+
+
 class EstablishmentManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
 
 
+    
+    def SQL_STATS_ACTIVE(self):
+        return '''WITH EstablishmentExtended AS (
+                    SELECT id FROM app_admin_establishment
+                ), 
+                TransparencyActiveSubidas AS (
+                    SELECT * 
+                    FROM entity_app_transparencyactive
+                    WHERE establishment_id IN (SELECT id FROM EstablishmentExtended)
+                    AND year = EXTRACT(YEAR FROM CURRENT_DATE)
+                    AND published = TRUE
+                    AND published_at <= CURRENT_TIMESTAMP
+                ), 
+                EstablishmentNumeralCount AS (
+                    SELECT establishment_id, COUNT(*) as count
+                    FROM entity_app_establishmentnumeral
+                    GROUP BY establishment_id
+                ), 
+                TransparenciasEntidadCount AS (
+                    SELECT establishment_id, COUNT(*) as count
+                    FROM entity_app_transparencyactive
+                    WHERE year = EXTRACT(YEAR FROM CURRENT_DATE)
+                    AND published = TRUE
+                    AND EXTRACT(MONTH FROM published_at) = EXTRACT(MONTH FROM CURRENT_DATE)
+                    GROUP BY establishment_id
+                )
+                SELECT 
+                    COUNT(*) as total,
+                    SUM(
+                        CASE 
+                            WHEN EstablishmentNumeralCount.count = TransparenciasEntidadCount.count 
+                            THEN 1 ELSE 0 
+                        END
+                    ) as updated,
+                    SUM(
+                        CASE 
+                            WHEN EstablishmentNumeralCount.count = TransparenciasEntidadCount.count 
+                            THEN 0 ELSE 1 
+                        END
+                    ) as not_updated
+                FROM 
+                    EstablishmentExtended
+                LEFT JOIN 
+                    EstablishmentNumeralCount 
+                ON 
+                    EstablishmentExtended.id = EstablishmentNumeralCount.establishment_id
+                LEFT JOIN 
+                    TransparenciasEntidadCount 
+                ON 
+                    EstablishmentExtended.id = TransparenciasEntidadCount.establishment_id LIMIT 100'''
     def active_transparency_stats(self):
-        current_month = datetime.now().month
-        current_year = datetime.now().year
-
-        establishments = EstablishmentExtended.objects.all()
-
-        total_establishments = establishments.count()
-        updated_count = EstablishmentNumeral.objects.all()
         
-
-        transparencias_subidas = TransparencyActive.objects.filter(
-            establishment_id__in=establishments,
-            year=current_year,
-            published=True,
-            published_at__lte=datetime.now()
-        )
-        
+        total_establishments = 0
         total_updated = 0
         total_no_updated = 0
-        for establishment in establishments:
-            
-            establishment_numeral = updated_count.filter(
-                establishment_id=establishment.id).count()
-            transparencias_entidad = transparencias_subidas.filter(
-                establishment_id=establishment, year=current_year, published=True,month=current_month).count()
-            
-            if establishment_numeral>0:
-                if establishment_numeral == transparencias_entidad:
-                    total_updated += 1
-                else:
-                    total_no_updated += 1
-            else:
-                total_no_updated += 1
-        
-        
-        
-        
+
+        # Execute the raw SQL query using Django's database connection
+        with connection.cursor() as cursor:
+            cursor.execute(self.SQL_STATS_ACTIVE())
+            row = cursor.fetchone()
+
+            if row:
+                total_establishments = row[0]
+                total_updated = row[1]
+                total_no_updated = row[2]
 
         return {
             'total': total_establishments,
             'updated': total_updated,
             'not_updated': total_no_updated
         }
+
 class EstablishmentExtended(models.Model):
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=255, null=True, blank=True, unique=True)
@@ -75,66 +108,93 @@ class EstablishmentExtended(models.Model):
         verbose_name_plural = 'Instituciones'
 
     def calculate_publishing_score(self, year):
-        current_year = year
-        score = 0
+        query = '''
+            WITH PublishedDays AS (
+                SELECT
+                    EXTRACT(DAY FROM published_at) AS published_day
+                FROM
+                    entity_app_transparencyactive
+                WHERE
+                    establishment_id = %s
+                    AND year = EXTRACT(YEAR FROM CURRENT_DATE)
+                    AND published = TRUE
+                    AND published_at <= CURRENT_TIMESTAMP
+            )
+            SELECT
+                COALESCE(SUM(CASE
+                    WHEN published_day BETWEEN 1 AND 4 THEN 5 - published_day
+                    ELSE 0
+                END), 0) AS score
+            FROM
+                PublishedDays;
+        '''
 
-        publications = TransparencyActive.objects.filter(
-            establishment_id=self.pk,
-            year=current_year,
-            published=True,
-            published_at__lte=datetime.now()
-        )
+        # Execute the raw SQL query using Django's database connection
+        with connection.cursor() as cursor:
+            cursor.execute(query, [self.pk])
+            row = cursor.fetchone()
 
-        for publication in publications:
-            published_day = publication.published_at.day
-            if 1 <= published_day <= 4:
-                score += 5 - published_day  # Más cerca al día 1, más puntaje
+            if row:
+                score = row[0]
+            else:
+                score = 0
 
         return score
 
     def calculate_saip_score(self, year):
-        recibidas_list = []
-        atentidas_list = []
+        # Define the SQL query
+        query = '''
+        WITH RequestCounts AS (
+            SELECT
+                EXTRACT(MONTH FROM created_at) AS month,
+                COUNT(CASE WHEN status = 'SEND' THEN 1 END) AS recibidas,
+                COUNT(CASE WHEN status IN ('RESPONSED', 'INSISTENCY_RESPONSED') THEN 1 END) AS atendidas
+            FROM
+                entity_app_timelinesolicity
+            WHERE
+                solicity_id IN (
+                    SELECT id FROM entity_app_solicity
+                    WHERE establishment_id = %s
+                )
+                AND (%s IS NULL OR EXTRACT(YEAR FROM created_at) = %s)
+            GROUP BY
+                EXTRACT(MONTH FROM created_at)
+        )
+        SELECT
+            COALESCE(SUM(recibidas), 0) AS total_recibidas,
+            COALESCE(SUM(atendidas), 0) AS total_atendidas,
+            CASE 
+                WHEN COALESCE(SUM(recibidas), 0) = 0 THEN 0
+                ELSE ROUND(
+                    (COALESCE(SUM(atendidas), 0)::NUMERIC / COALESCE(SUM(recibidas), 0)::NUMERIC) * 100,
+                    2
+                )
+            END AS score_saip
+        FROM
+            RequestCounts;
+        '''
 
-        timeline = TimeLineSolicity.objects.all()
-        for i in range(1, 13):
+        # Execute the raw SQL query using Django's database connection
+        with connection.cursor() as cursor:
+            # Parameters for the query
+            params = [self.pk]
             if year:
-                recibidas = timeline.filter(
-                    status=Status.SEND,
-                    created_at__month=i,
-                    created_at__year=year,
-                    solicity__establishment_id=self.pk
-                ).count()
-                atendidas = timeline.filter(
-                    created_at__month=i,
-                    created_at__year=year,
-                    status__in=[Status.RESPONSED, Status.INSISTENCY_RESPONSED],
-                    solicity__establishment_id=self.pk
-                ).count()
+                params.append(year)
+                params.append(year)
             else:
-                recibidas = timeline.filter(
-                    status=Status.SEND,
-                    created_at__month=i,
-                    solicity__establishment_id=self.pk
-                ).count()
-                atendidas = timeline.filter(
-                    created_at__month=i,
-                    status__in=[Status.RESPONSED, Status.INSISTENCY_RESPONSED],
-                    solicity__establishment_id=self.pk
-                ).count()
+                params.append(None)
 
-            recibidas_list.append(recibidas)
-            atentidas_list.append(atendidas)
+            cursor.execute(query, params)
+            row = cursor.fetchone()
 
-        total_recibidas = sum(recibidas_list)
-        total_atendidas = sum(atentidas_list)
-
-        if total_recibidas == 0:
-            score_saip = 0
-        else:
-            score_saip = total_atendidas / total_recibidas
-            score_saip = score_saip * 100
-            score_saip = round(score_saip, 2)
+            if row:
+                total_recibidas = row[0]
+                total_atendidas = row[1]
+                score_saip = row[2]
+            else:
+                total_recibidas = 0
+                total_atendidas = 0
+                score_saip = 0
 
         return score_saip
 

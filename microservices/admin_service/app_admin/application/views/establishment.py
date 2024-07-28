@@ -598,7 +598,7 @@ class UserEstablishmentListAPI(ListAPIView):
     pagination_class = StandardResultsSetPagination
     serializer_class = UserListSerializer
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'view_users_internal'
+    permission_required = 'view_user_establishment'
 
     def __init__(self):
         """

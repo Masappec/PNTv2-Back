@@ -77,4 +77,11 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
         response = TransparencyFocal.objects.filter(
             establishment_id=establishment_id, year=year).values('month').distinct()
 
+        return response 
+    
+    
+    def get_all_year_month(self, year: int, month: int):
+        response = TransparencyFocal.objects.filter(
+            year=year, month=month)
+
         return response

@@ -45,3 +45,11 @@ class TransparencyActiveImpl(TransparencyActiveRepository):
             year=year,
             establishment_id=establishment_id
         ).values('month').distinct()
+        
+    def get_all_year_month(self,year:int,mont:int):
+        return TransparencyActive.objects.filter(
+            year=year,
+            month=mont
+        ).order_by('numeral__name')
+        
+    

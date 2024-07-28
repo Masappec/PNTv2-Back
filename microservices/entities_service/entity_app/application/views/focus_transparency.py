@@ -233,7 +233,7 @@ class TransparecyFocusPublicView(APIView):
             month = request.query_params.get('month', None)
             establishment_id = request.query_params.get(
                 'establishment_id', None)
-
+            sorts = request.query_params.get('sort[]', None)
             if establishment_id is None:
                 raise ValueError('Debe seleccionar un establecimiento')
 
@@ -244,10 +244,15 @@ class TransparecyFocusPublicView(APIView):
                 month = datetime.now().month
 
             queryset = None
+            if establishment_id == "0":
+                queryset = self.service.get_all_year_month(year, month)
+            else:
+                queryset = self.service.get_by_year_month(
+                    year, month, establishment_id)
 
-            queryset = self.service.get_by_year_month(
-                year, month, establishment_id)
-
+            if sorts is not None:
+                queryset = queryset.order_by(sorts)
+            
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
 

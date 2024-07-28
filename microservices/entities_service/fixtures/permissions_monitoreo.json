@@ -1,0 +1,58 @@
+[
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Ver Transparencias de Todas las entidades",
+            "content_type": ["entity_app","transparencyactive"],
+            "codename": "view_all_transparencyactive"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Ver Transparencias de Todas las entidades",
+           
+                        "content_type": [
+                            "entity_app",
+                            "transparencyfocal"
+                        ],
+            "codename": "view_all_transparencyfocal"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Ver Transparencias de Todas las entidades",
+           
+            "content_type": [
+                "entity_app",
+                "transparencycollab"
+            ],
+            "codename": "view_all_transparencycollab"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Ver Solicitudes de Todas las entidades",
+           
+            "content_type": [
+                "entity_app",
+                "solicity"
+            ],
+            "codename": "view_all_solicities"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "fields": {
+            "name": "Ver Estado de cumplimiento de Todas las entidades",
+            
+            "content_type": [
+                "app_admin",
+                "establishment"
+            ],
+            "codename": "view_all_compliancestatus"
+        }
+    }
+]

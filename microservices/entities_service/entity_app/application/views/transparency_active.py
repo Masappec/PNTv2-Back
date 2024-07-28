@@ -32,7 +32,7 @@ class TransparencyActivePublicListView(APIView):
             month = request.query_params.get('month', None)
             establishment_id = request.query_params.get(
                 'establishment_id', None)
-
+            order_by = request.query_params.get('sort[]', None)
             if establishment_id is None:
                 raise ValueError('Debe seleccionar un establecimiento')
 
@@ -43,10 +43,13 @@ class TransparencyActivePublicListView(APIView):
                 month = datetime.now().month
 
             queryset = None
-
-            queryset = self.service.get_by_year_month(
-                year, month, establishment_id)
-
+            if establishment_id=="0":
+                queryset = self.service.get_all_year_month(year, month)
+            else:
+                queryset = self.service.get_by_year_month(
+                    year, month, establishment_id)
+            if order_by is not None:
+                queryset = queryset.order_by(order_by)
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
 

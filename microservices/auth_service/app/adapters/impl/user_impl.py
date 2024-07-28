@@ -69,8 +69,7 @@ class UserRepositoryImpl(UserRepository):
         Returns:
             User: The user object.
         """
-        users = User.objects.prefetch_related(
-            'groups').prefetch_related('person')
+        users = User.objects.prefetch_related('groups').prefetch_related('person')
 
         # return user with groups name
         for user in users:
