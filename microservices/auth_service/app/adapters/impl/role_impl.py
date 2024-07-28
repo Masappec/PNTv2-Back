@@ -124,7 +124,8 @@ class RoleRepositoryImpl(RoleRepository):
     def is_valid_role_and_establishment(self, role_id: int, establishment_id: int):
         
         role = Role.objects.get(pk=role_id)
-        if role.name == 'Ciudadano' and establishment_id == 0 or role.name == 'Superadministradora PNT DPE' and establishment_id == 0:
+        if role.name == 'Ciudadano' \
+                and establishment_id == 0 or role.name == 'Superadministradora PNT DPE' or role.name == 'Monitoreo DPE' and establishment_id == 0:
             return True
         
         
