@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Any
+from entity_app.domain.models.activity import ActivityLog
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from entity_app.adapters.serializers import NumeralResponseSerializer, NumeralDetailSerializer, TransparecyActiveCreate, TransparencyCreateResponseSerializer
@@ -285,6 +286,17 @@ class PublishNumeral(APIView):
                     'json': result.data
                 }
             )
+            ActivityLog.objects.create(
+                user_id=request.user.id,
+                activity='Publicación de Numeral',
+                description='Ha Publicado un numeral' +
+                str(transparency.numeral.name) +
+                ' en la entidad ' + str(transparency.establishment.name) +
+                ' para el mes de ' + str(transparency.month) +
+                ' del año ' + str(transparency.year),
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user_agent=request.META.get('HTTP_USER_AGENT')
+            )
             res.is_valid(raise_exception=True)
 
             return Response(res.data, status=200)
@@ -375,7 +387,16 @@ class NumeralEditPublish(APIView):
                     'json': result.data
                 }
             )
-
+            ActivityLog.objects.create(
+                user_id=request.user.id,
+                activity='Actualización de Publicación de Numeral',
+                description='Ha Actualizado una publicación de numeral' +
+                str(transparency.numeral.name) + ' de ' +
+                str(transparency.establishment.name) + ' para el mes de ' +
+                str(transparency.month) + ' del año ' + str(transparency.year),
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user_agent=request.META.get('HTTP_USER_AGENT')
+            )
             res.is_valid(raise_exception=True)
             return Response(res.data, status=200)
 

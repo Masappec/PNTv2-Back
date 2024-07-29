@@ -4,6 +4,7 @@ from entity_app.domain.services.transparency_focus_service import TransparencyFo
 from datetime import datetime, timedelta
 
 from entity_app.utils.permissions import HasPermission
+from entity_app.domain.models.activity import ActivityLog
 from rest_framework.permissions import IsAuthenticated
 from entity_app.utils.pagination import StandardResultsSetPagination
 
@@ -61,6 +62,13 @@ class CreateTransparencyFocalizada(APIView):
                         'status': 400,
                         'json': {}
                     }
+                )
+                ActivityLog.objects.create(
+                    user_id=request.user.id,
+                    activity='Publicación de transparencia Focalizada',
+                    description='Ha Creado una publicación de transparencia Focalizada',
+                    ip_address=request.META.get('REMOTE_ADDR'),
+                    user_agent=request.META.get('HTTP_USER_AGENT')
                 )
                 res.is_valid(raise_exception=True)
                 return Response(res.data, status=400)
@@ -193,6 +201,13 @@ class TransparencyFocusUpdate(APIView):
                     'json': TransparencyFocusSerializer(response).data
                 }
             )
+            ActivityLog.objects.create(
+                user_id=request.user.id,
+                activity='Publicación de transparencia Focalizada',
+                description='Ha Actualizado una publicación de transparencia Focalizada',
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user_agent=request.META.get('HTTP_USER_AGENT')
+            )
 
             res.is_valid(raise_exception=True)
             return Response(res.data, status=200)
@@ -252,7 +267,7 @@ class TransparecyFocusPublicView(APIView):
 
             if sorts is not None:
                 queryset = queryset.order_by(sorts)
-            
+
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
 

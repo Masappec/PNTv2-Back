@@ -4,6 +4,7 @@ from entity_app.domain.services.transparency_colaborative_service import Transpa
 from datetime import datetime, timedelta
 
 from entity_app.utils.permissions import HasPermission
+from entity_app.domain.models.activity import ActivityLog
 from rest_framework.permissions import IsAuthenticated
 from entity_app.utils.pagination import StandardResultsSetPagination
 
@@ -59,7 +60,13 @@ class CreateTransparencyColaboraty(APIView):
                     'json': self.output_serializer_class(transparency_colaborative).data
                 }
             )
-
+            ActivityLog.objects.create(
+                user_id=request.user.id,
+                activity='Publicación de transparencia colaborativa',
+                description='Ha creado una publicación de transparencia colaborativa',
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user_agent=request.META.get('HTTP_USER_AGENT')
+            )
             res.is_valid(raise_exception=True)
             return Response(res.data, status=201)
         except Exception as e:
@@ -161,6 +168,13 @@ class TransparencyCollabUpdate(APIView):
                     'json': ListTransparencyColaborative(response).data
                 }
             )
+            ActivityLog.objects.create(
+                user_id=request.user.id,
+                activity='Publicación de transparencia colaborativa',
+                description='Ha Actualizado una publicación de transparencia colaborativa',
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user_agent=request.META.get('HTTP_USER_AGENT')
+            )
             res.is_valid(raise_exception=True)
             return Response(res.data, status=200)
         except Exception as e:
@@ -211,8 +225,8 @@ class TransparecyCollabPublicView(APIView):
             if month is None:
                 month = datetime.now().month
 
-            queryset = None 
-            if establishment_id=="0":
+            queryset = None
+            if establishment_id == "0":
                 queryset = self.service.get_all_year_month(year, month)
             else:
                 queryset = self.service.get_by_year_month(

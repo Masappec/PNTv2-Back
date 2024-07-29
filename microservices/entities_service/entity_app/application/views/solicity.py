@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Any
 from rest_framework.views import APIView
 
-from entity_app.adapters.serializers import CreateExtensionSerializer, SolicityResponseSerializer, SolicityManualSerializer 
+from entity_app.adapters.serializers import CreateExtensionSerializer, SolicityResponseSerializer, SolicityManualSerializer
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
 from rest_framework.response import Response
 from rest_framework import status
@@ -308,12 +308,11 @@ class SolicityView(ListAPIView):
             if search is not None:
                 queryset = queryset.filter(
                     Q(number_saip__icontains=search) | Q(establishment__name__icontains=search))
-            if range_start !="" and range_end !="":
-                
+            if range_start != "" and range_end != "":
+
                 queryset = queryset.filter(
                     created_at__range=[range_start, range_end
-                                        ])
-                
+                                       ])
 
             page = self.paginate_queryset(queryset)
             if page is not None:
@@ -424,7 +423,7 @@ class SolicityWithoutDraftView(APIView):
             }, status=201)
         except Exception as e:
             print("Error: ", e)
-            
+
             res.is_valid(raise_exception=True)
             return Response({
                 'message': str(e),
@@ -520,17 +519,17 @@ class SolicitySendView(APIView):
             )
 
             return Response({
-                    'message': 'Publicacion creada correctamente',
-                    'status': 201,
-                    'json': self.output_serializer_class(solicity).data
-                }, status=201)
+                'message': 'Publicacion creada correctamente',
+                'status': 201,
+                'json': self.output_serializer_class(solicity).data
+            }, status=201)
         except Exception as e:
-            
+
             return Response(data={
-                    'message': str(e),
-                    'status': 400,
-                    'json': {}
-                }, status=400)
+                'message': str(e),
+                'status': 400,
+                'json': {}
+            }, status=400)
 
 
 class SolicityResponseView(ListAPIView):
@@ -548,8 +547,6 @@ class SolicityResponseView(ListAPIView):
     def get_queryset(self, use_id):
         """Get queryset."""
 
-        
-        
         return self.service.get_entity_user_solicities(use_id).order_by('-created_at')
 
     def get(self, request, *args, **kwargs):
@@ -575,11 +572,10 @@ class SolicityResponseView(ListAPIView):
             # ['number_saip', 'first_name', 'last_name', 'status', 'expiry_date', 'motive']
             order_by = request.query_params.get('sort[]', None)
             establishment_id = request.query_params.get('establishment_id', 0)
-            
-            
+
             if establishment_id != 0:
                 queryset = queryset.filter(establishment_id=establishment_id)
-            
+
             if order_by is not None:
                 queryset = queryset.order_by(order_by)
 
@@ -587,14 +583,13 @@ class SolicityResponseView(ListAPIView):
             if search is not None:
                 queryset = queryset.filter(
                     Q(number_saip__icontains=search) |
-                    Q(first_name__icontains=search) | 
+                    Q(first_name__icontains=search) |
                     Q(last_name__icontains=search))
 
-            
             status = request.query_params.get('status', "")
-            
-            if status !="":
-                status_array =  status.split(',')
+
+            if status != "":
+                status_array = status.split(',')
                 print(status_array)
                 queryset = queryset.filter(status__in=status_array)
             page = self.paginate_queryset(queryset)
@@ -668,29 +663,28 @@ class SolicityCreateResponseView(APIView):
             }, status=400)
 
 
-
 class SolicityChangeStatus(APIView):
-    
+
     permission_classes = [IsAuthenticated,
                           HasPermission]
     output_serializer_class = SolicitySerializer
     permission_required = 'view_solicity,view_solicityresponse'
-    
+
     def __init__(self):
         self.service = SolicityService(SolicityImpl())
 
-    
-    def post(self,request):
+    def post(self, request):
         try:
             data = request.data
-            
+
             solicity_id = data.get('solicity_id')
             text = data.get('text')
             user_id = request.user.id
-            
+
             if solicity_id:
-                solicity = self.service.change_status_by_id(solicity_id, user_id, text)
-                
+                solicity = self.service.change_status_by_id(
+                    solicity_id, user_id, text)
+
                 return Response({
                     'message': 'Solicity respondida correctamente',
                     'status': 200,
@@ -705,7 +699,7 @@ class SolicityChangeStatus(APIView):
                 'status': 400,
                 'json': {}
             }, status=400)
-            
+
         except Exception as e:
 
             return Response({
@@ -713,5 +707,3 @@ class SolicityChangeStatus(APIView):
                 'status': 500,
                 'json': {}
             }, status=400)
-            
-            
