@@ -534,3 +534,5 @@ Sun Jul 28 14:37:14 2024 - Iniciando suscripción al canal user
 Sun Jul 28 14:37:14 2024 - Iniciando suscripción al canal solicity
 Sun Jul 28 19:40:26 2024 - Iniciando suscripción al canal user
 Sun Jul 28 19:40:26 2024 - Iniciando suscripción al canal solicity
+Sun Jul 28 22:03:40 2024 - Iniciando suscripción al canal user
+Sun Jul 28 22:03:40 2024 - Iniciando suscripción al canal solicity

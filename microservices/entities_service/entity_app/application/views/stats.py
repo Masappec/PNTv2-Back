@@ -85,6 +85,8 @@ class EstablishmentStats(ListAPIView):
                  'no_respuestas': no_respuestas}
                 for est, score, recibidas, atendidas, prorrogas, insistencias, no_respuestas in top_20_establishments]
 
+
+        
         # Serializar los datos
         serializer = EstablishmentScoreSerializer(data, many=True)
 
