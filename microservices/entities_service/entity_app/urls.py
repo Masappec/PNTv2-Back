@@ -2,7 +2,7 @@ from django.urls import path, include
 from entity_app.application.views.public import PublicationPublicView, PublicationDetail
 from entity_app.application.views.publication import PublicationCreateAPI, PublicationUpdateAPI, \
     PublicationsView, PublicatioDetail, PublicationUpdateState
-from entity_app.application.views.stats import StatsCitizen, IndicatorsEstablishmentView, CountFilesView
+from entity_app.application.views.stats import StatsCitizen, IndicatorsEstablishmentView, CountFilesView, EstablishmentStats
 from entity_app.application.views.file_publication import FilePublicationCreateView, GetFileFromUri, FilePublicationListEstablishemtSession, FilePublicationDelete
 from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
@@ -130,6 +130,8 @@ urlpatterns = [
      
     path('transparency/months', MonthForTransparency.as_view(), name='transparency-months'),
      
+     
+    path('establishment/table-stats', EstablishmentStats.as_view(), name='establishment-table-stats'),
     path('reports/view/archivos-subidos', ArchivosSubidos.as_view(), name='reports-view-archivos-subidos'),
     
     

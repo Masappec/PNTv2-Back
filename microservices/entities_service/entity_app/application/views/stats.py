@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from entity_app.adapters.serializers import EstablishmentSerializer, EstablishmentScoreSerializer
-
+from entity_app.utils.pagination import StandardResultsSetPaginationDicts
+from rest_framework.generics import ListAPIView 
 class StatsCitizen(APIView):
     
     permission_classes = []
@@ -20,12 +21,13 @@ class StatsCitizen(APIView):
         ]
     )
     def get(self, request):
-        
-        establishments = EstablishmentExtended.objects.active_transparency_stats()
+
+        year = request.query_params.get('year', datetime.now().year)
+        month = request.query_params.get('month', datetime.now().month)
+        establishments = EstablishmentExtended.objects.active_transparency_stats(year, month)
         
         atentidas_list = []
         recibidas_list = []
-        year = request.query_params.get('year', None)
         timeline = TimeLineSolicity.objects.all()
         for i in range(1, 13):
             if year:
@@ -44,14 +46,9 @@ class StatsCitizen(APIView):
 
             atentidas_list.append(atendidas)
             
-        top_20_establishments = EstablishmentExtended.get_top_20_best(year)
         top_20_most_visited = EstablishmentExtended.get_top_20_most_visited()
 
-        print(top_20_establishments )
-        
-        data = [{'establishment': est, 'score': score}
-                for est, score in top_20_establishments]
-        serializer = EstablishmentScoreSerializer(data, many=True)
+        #    
         
         response = {
             'entites_total': establishments,
@@ -59,7 +56,6 @@ class StatsCitizen(APIView):
                 'recibidas':recibidas_list,
                 'atendidas':atentidas_list
             },
-            'top_20': serializer.data,
             'top_20_most_visited': EstablishmentSerializer(top_20_most_visited,many=True).data
             
             
@@ -70,9 +66,34 @@ class StatsCitizen(APIView):
         return Response(response,200)
         
         
-            
-            
-        
+
+
+class EstablishmentStats(ListAPIView):
+    permission_classes = []
+    pagination_class = StandardResultsSetPaginationDicts
+
+    def get(self, request, *args, **kwargs):
+        year = request.query_params.get('year', datetime.now().year)
+        month = request.query_params.get('month', datetime.now().month)
+        top_20_establishments = EstablishmentExtended.get_top_20_best(year)
+
+        data = [{'establishment': est, 'score': score,
+                 'recibidas': recibidas,
+                 'atendidas': atendidas,
+                 'prorrogas': prorrogas,
+                 'insistencias': insistencias,
+                 'no_respuestas': no_respuestas}
+                for est, score, recibidas, atendidas, prorrogas, insistencias, no_respuestas in top_20_establishments]
+
+        # Serializar los datos
+        serializer = EstablishmentScoreSerializer(data, many=True)
+
+        # Obtener el paginador y paginar los datos
+        paginator = self.pagination_class()
+        paginated_data = paginator.paginate_queryset(serializer.data, request)
+
+        return paginator.get_paginated_response(paginated_data)
+
         
 
 

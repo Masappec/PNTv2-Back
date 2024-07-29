@@ -382,6 +382,12 @@ class EstablishmentSerializer(serializers.ModelSerializer):
 class EstablishmentScoreSerializer(serializers.Serializer):
     establishment = EstablishmentSerializer()
     score = serializers.FloatField()
+    recibidas = serializers.IntegerField()
+    atendidas = serializers.IntegerField()
+    prorrogas = serializers.IntegerField()
+    insistencias = serializers.IntegerField()
+    no_respuestas = serializers.IntegerField()
+    
     
     
 class TransparencyCreateResponseSerializer(serializers.ModelSerializer):

@@ -15,15 +15,16 @@ class EstablishmentManager(models.Manager):
     
     def SQL_STATS_ACTIVE(self):
         return '''WITH EstablishmentExtended AS (
-                    SELECT id FROM app_admin_establishment
+                    SELECT id 
+                    FROM app_admin_establishment
                 ), 
                 TransparencyActiveSubidas AS (
                     SELECT * 
                     FROM entity_app_transparencyactive
                     WHERE establishment_id IN (SELECT id FROM EstablishmentExtended)
-                    AND year = EXTRACT(YEAR FROM CURRENT_DATE)
+                    AND year = %s
+                    AND month = %s
                     AND published = TRUE
-                    AND published_at <= CURRENT_TIMESTAMP
                 ), 
                 EstablishmentNumeralCount AS (
                     SELECT establishment_id, COUNT(*) as count
@@ -33,25 +34,33 @@ class EstablishmentManager(models.Manager):
                 TransparenciasEntidadCount AS (
                     SELECT establishment_id, COUNT(*) as count
                     FROM entity_app_transparencyactive
-                    WHERE year = EXTRACT(YEAR FROM CURRENT_DATE)
+                    WHERE year = %s
+                    AND month = %s
                     AND published = TRUE
-                    AND EXTRACT(MONTH FROM published_at) = EXTRACT(MONTH FROM CURRENT_DATE)
                     GROUP BY establishment_id
+                ),
+                TotalEntitiesWithUploads AS (
+                    SELECT COUNT(DISTINCT establishment_id) as total_with_uploads
+                    FROM TransparencyActiveSubidas
                 )
+
                 SELECT 
                     COUNT(*) as total,
                     SUM(
                         CASE 
-                            WHEN EstablishmentNumeralCount.count = TransparenciasEntidadCount.count 
+                            WHEN COALESCE(EstablishmentNumeralCount.count, 0) = COALESCE(TransparenciasEntidadCount.count, 0) 
+                            AND COALESCE(TransparenciasEntidadCount.count, 0) > 0
                             THEN 1 ELSE 0 
                         END
                     ) as updated,
                     SUM(
                         CASE 
-                            WHEN EstablishmentNumeralCount.count = TransparenciasEntidadCount.count 
-                            THEN 0 ELSE 1 
+                            WHEN TransparenciasEntidadCount.count IS NULL 
+                            OR TransparenciasEntidadCount.count = 0
+                            THEN 1 ELSE 0 
                         END
-                    ) as not_updated
+                    ) as not_updated,
+                    (SELECT total_with_uploads FROM TotalEntitiesWithUploads) as nearly_updated
                 FROM 
                     EstablishmentExtended
                 LEFT JOIN 
@@ -61,8 +70,8 @@ class EstablishmentManager(models.Manager):
                 LEFT JOIN 
                     TransparenciasEntidadCount 
                 ON 
-                    EstablishmentExtended.id = TransparenciasEntidadCount.establishment_id LIMIT 100'''
-    def active_transparency_stats(self):
+                    EstablishmentExtended.id = TransparenciasEntidadCount.establishment_id'''
+    def active_transparency_stats(self, year, month):
         
         total_establishments = 0
         total_updated = 0
@@ -70,18 +79,20 @@ class EstablishmentManager(models.Manager):
 
         # Execute the raw SQL query using Django's database connection
         with connection.cursor() as cursor:
-            cursor.execute(self.SQL_STATS_ACTIVE())
+            cursor.execute(self.SQL_STATS_ACTIVE(), [year, month, year, month])
             row = cursor.fetchone()
 
             if row:
                 total_establishments = row[0]
                 total_updated = row[1]
                 total_no_updated = row[2]
+                tota_near_updated = row[3]
 
         return {
             'total': total_establishments,
             'updated': total_updated,
-            'not_updated': total_no_updated
+            'not_updated': total_no_updated,
+            'nearly_updated': tota_near_updated
         }
 
 class EstablishmentExtended(models.Model):
@@ -109,37 +120,84 @@ class EstablishmentExtended(models.Model):
 
     def calculate_publishing_score(self, year):
         query = '''
-            WITH PublishedDays AS (
+           WITH RequestCounts AS (
                 SELECT
-                    EXTRACT(DAY FROM published_at) AS published_day
+                    EXTRACT(MONTH FROM created_at) AS month,
+                    COUNT(CASE WHEN status IN ('RESPONSED', 'INSISTENCY_RESPONSED') THEN 1 END) AS atendidas,
+                    COUNT(CASE WHEN status = 'PRORROGA' THEN 1 END) AS prorroga,
+                    COUNT(CASE WHEN status IN ('INSISTENCY_PERIOD', 'INSISTENCY_SEND','PERIOD_INFORMAL_MANAGEMENT','INFORMAL_MANAGMENT_SEND') THEN 1 END) AS insistencia,
+                    COUNT(CASE WHEN status IN ('NO_RESPONSED','INSISTENCY_NO_RESPONSED','INFORMAL_MANAGMENT_NO_RESPONSED','FINISHED_WITHOUT_RESPONSE') THEN 1 END) AS no_respuesta
                 FROM
-                    entity_app_transparencyactive
+                    entity_app_solicity
                 WHERE
                     establishment_id = %s
-                    AND year = EXTRACT(YEAR FROM CURRENT_DATE)
-                    AND published = TRUE
-                    AND published_at <= CURRENT_TIMESTAMP
+                    AND (1 IS NULL OR EXTRACT(YEAR FROM created_at) = %s)
+                GROUP BY
+                    EXTRACT(MONTH FROM created_at)
+            ),
+            Recibidas AS (
+                SELECT
+                    EXTRACT(MONTH FROM created_at) AS month,
+                    COUNT(CASE WHEN status = 'SEND' THEN 1 END) AS recibidas
+                FROM
+                    entity_app_timelinesolicity
+                WHERE
+                    solicity_id IN (SELECT id from entity_app_solicity WHERE establishment_id=%s)
+                    AND (1 IS NULL OR EXTRACT(YEAR FROM created_at) = %s)
+                GROUP BY
+                    EXTRACT(MONTH FROM created_at)
             )
             SELECT
-                COALESCE(SUM(CASE
-                    WHEN published_day BETWEEN 1 AND 4 THEN 5 - published_day
-                    ELSE 0
-                END), 0) AS score
+                COALESCE(SUM(Recibidas.recibidas), 0) AS total_recibidas,
+                COALESCE(SUM(RequestCounts.atendidas), 0) AS total_atendidas,
+                COALESCE(SUM(RequestCounts.prorroga), 0) AS total_prorroga,
+                COALESCE(SUM(RequestCounts.insistencia), 0) AS total_insistencia,
+                COALESCE(SUM(RequestCounts.no_respuesta), 0) AS total_no_respuesta,
+                CASE 
+                    WHEN COALESCE(SUM(Recibidas.recibidas), 0) = 0 THEN 0
+                    ELSE ROUND(
+                        (COALESCE(SUM(RequestCounts.atendidas), 0)::NUMERIC / COALESCE(SUM(Recibidas.recibidas), 0)::NUMERIC) * 100,
+                        2
+                    )
+                END AS score_saip
             FROM
-                PublishedDays;
+                RequestCounts
+            LEFT JOIN
+                Recibidas
+            ON
+                RequestCounts.month = Recibidas.month;
         '''
 
         # Execute the raw SQL query using Django's database connection
         with connection.cursor() as cursor:
-            cursor.execute(query, [self.pk])
+            cursor.execute(query, [self.pk, year, self.pk, year])
             row = cursor.fetchone()
 
             if row:
-                score = row[0]
+                total_recibidas = row[0]
+                total_atendidas = row[1]
+                total_prorroga = row[2]
+                total_insistencia = row[3]
+                total_no_respuesta = row[4]
+                score = row[5]
+                
             else:
                 score = 0
+                total_recibidas = 0
+                total_atendidas = 0
+                total_prorroga = 0
+                total_insistencia = 0
+                total_no_respuesta = 0
+                
 
-        return score
+        return {
+            'total_recibidas': total_recibidas,
+            'total_atendidas': total_atendidas,
+            'total_prorroga': total_prorroga,
+            'total_insistencia': total_insistencia,
+            'total_no_respuesta': total_no_respuesta,
+            'score_saip': score
+        }
 
     def calculate_saip_score(self, year):
         # Define the SQL query
@@ -199,16 +257,27 @@ class EstablishmentExtended(models.Model):
         return score_saip
 
     def calculate_total_score(self, year):
-        score = self.calculate_publishing_score(year)
+        data = self.calculate_publishing_score(year)
         score_saip = self.calculate_saip_score(year)
 
+            
+        score = data.get('score_saip', 0)
         total_score = score + score_saip
         if score_saip != 0 and score != 0:
             total_score = total_score / 2
         else:
             total_score = score_saip if score_saip != 0 else score
 
-        return total_score
+        return {
+            'total_recibidas': data.get('total_recibidas', 0),
+            'total_atendidas': data.get('total_atendidas', 0),
+            'total_prorroga': data.get('total_prorroga', 0),
+            'total_insistencia': data.get('total_insistencia', 0),
+            'total_no_respuesta': data.get('total_no_respuesta', 0),
+            'score_activa': score,
+            'score_saip': score_saip,
+            'total_score': total_score
+        }
     
     @classmethod
     def get_top_20_most_visited(cls):
@@ -217,13 +286,14 @@ class EstablishmentExtended(models.Model):
     def get_top_20_best(cls, year):
         establishments = cls.objects.all()
 
+        
         establishment_scores = []
         for establishment in establishments:
             total_score = establishment.calculate_total_score(year)
-            establishment_scores.append((establishment, total_score))
+            establishment_scores.append((establishment, total_score['total_score'], total_score['total_recibidas'], total_score['total_atendidas'], total_score['total_prorroga'], total_score['total_insistencia'], total_score['total_no_respuesta']))
 
         # Ordena las entidades por su puntaje en orden descendente y obtiene las primeras 20
-        top_20_establishments = sorted(establishment_scores, key=lambda x: x[1], reverse=True)[:20]
+        top_20_establishments = sorted(establishment_scores, key=lambda x: x[1], reverse=True)
 
         return top_20_establishments
 
