@@ -2,7 +2,7 @@ version: "3"
 
 services:
   redis_db:
-    image: redis:latest
+    image: redis:7.4
     restart: always
 
     ports:
@@ -97,7 +97,8 @@ services:
       - REDIS_HOST = redis_db
       - REDIS_PORT = 6379
       - REDIS_DB = 0
-  public_micorservice:
+      
+  public_microservice:
     build:
       context: ./microservices/public_api_service
       dockerfile: Dockerfile
@@ -131,7 +132,7 @@ services:
       - pnt_network
 
   db_auth:
-    image: postgres:latest
+    image: postgres:16.4
     restart: always
 
     environment:
@@ -143,7 +144,7 @@ services:
       - pnt_network
 
   mongo_db:
-    image: mongo:latest
+    image: mongo:7.0
     networks:
       - pnt_network
     restart: always
@@ -160,7 +161,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
 
   api_gateway:
-    image: nginx:latest
+    image: nginx:1.27-alpine
     restart: always
 
     ports:
@@ -177,7 +178,7 @@ services:
 volumes:
   auth_microservice:
   admin_microservice:
-  public_micorservice:
+  public_microservice:
   shared_media:
     driver: local
 networks:
