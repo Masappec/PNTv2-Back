@@ -139,6 +139,8 @@ services:
       POSTGRES_DB: auth_database
       POSTGRES_USER: auth_user
       POSTGRES_PASSWORD: auth_password
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
 
     networks:
       - pnt_network
@@ -179,6 +181,7 @@ volumes:
   auth_microservice:
   admin_microservice:
   public_microservice:
+  db_auth:
   shared_media:
     driver: local
 networks:
