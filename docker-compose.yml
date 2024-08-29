@@ -4,13 +4,12 @@ services:
   redis_db:
     image: redis:7.4
     restart: always
-
     ports:
       - "6379:6379"
     networks:
       - pnt_network
     volumes:
-      - ./redis_data:/data
+      - ./data/redis_data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
 
   admin_microservice:
@@ -25,9 +24,6 @@ services:
       - auth_microservice
     volumes:
       - ./microservices/admin_service:/code
-
-    #que se levante con el servicio de la base de datos
-
     restart: always
     environment:
       - DB_HOST=db_auth
@@ -38,12 +34,12 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/3
       - FRONTEND_PASSWORD_CONFIRMATION_URL=https://transparencia.ec/auth/reset-password/:token
       - FRONTEND_ACTIVATE_ACCOUNT_URL=https://transparencia.ec/auth/activate-account/:uidb64/:token
-      - REDIS_HOST = redis_db
-      - REDIS_PORT = 6379
-      - REDIS_DB = 0
-
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
     networks:
       - pnt_network
+
   auth_microservice:
     build:
       context: ./microservices/auth_service
@@ -56,7 +52,6 @@ services:
     volumes:
       - ./microservices/auth_service:/code
     restart: always
-
     environment:
       - DB_HOST=db_auth
       - DB_NAME=auth_database
@@ -64,10 +59,9 @@ services:
       - DB_PASSWORD=auth_password
       - CELERY_BROKER_URL=redis://redis_db:6379/4
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/4
-      - REDIS_HOST = redis_db
-      - REDIS_PORT = 6379
-      - REDIS_DB = 0
-
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
     networks:
       - pnt_network
 
@@ -81,10 +75,9 @@ services:
       - db_auth
       - redis_db
     restart: always
-
     volumes:
       - ./microservices/entities_service:/code
-      - shared_media:/code/media
+      - ./data/shared_media:/code/media
     networks:
       - pnt_network
     environment:
@@ -94,10 +87,10 @@ services:
       - DB_PASSWORD=auth_password
       - CELERY_BROKER_URL=redis://redis_db:6379/1
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/1
-      - REDIS_HOST = redis_db
-      - REDIS_PORT = 6379
-      - REDIS_DB = 0
-      
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+
   public_microservice:
     build:
       context: ./microservices/public_api_service
@@ -108,10 +101,9 @@ services:
       - mongo_db
       - redis_db
     restart: always
-
     volumes:
       - ./microservices/public_api_service:/code
-      - shared_media:/code/media
+      - ./data/shared_media:/code/media
     environment:
       - CELERY_BROKER_URL=redis://redis_db:6379/2
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/2
@@ -127,21 +119,18 @@ services:
       - DB_NAME=auth_database
       - DB_USER=auth_user
       - DB_PASSWORD=auth_password
-
     networks:
       - pnt_network
 
   db_auth:
     image: postgres:16.4
     restart: always
-
     environment:
       POSTGRES_DB: auth_database
       POSTGRES_USER: auth_user
       POSTGRES_PASSWORD: auth_password
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
-
+      - ./data/postgres_data:/var/lib/postgresql/data
     networks:
       - pnt_network
 
@@ -150,13 +139,11 @@ services:
     networks:
       - pnt_network
     restart: always
-
     ports:
       - "27017:27017"
     volumes:
-      - ./mongo_data:/data/db
-      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js¨
-
+      - ./data/mongo_data:/data/db
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     environment:
       MONGO_INITDB_ROOT_DATABASE: public_api_service
       MONGO_INITDB_ROOT_USERNAME: root
@@ -165,7 +152,6 @@ services:
   api_gateway:
     image: nginx:1.27
     restart: always
-
     ports:
       - "8082:80"
     volumes:
@@ -177,13 +163,6 @@ services:
     networks:
       - pnt_network
 
-volumes:
-  auth_microservice:
-  admin_microservice:
-  public_microservice:
-  db_auth:
-  shared_media:
-    driver: local
 networks:
   pnt_network:
     driver: bridge
