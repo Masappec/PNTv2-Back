@@ -2,11 +2,12 @@ import datetime
 from rest_framework import serializers
 from entity_app.domain.models.publication import Attachment, Publication, Tag, FilePublication
 from entity_app.domain.models.type_formats import TypeFormats
-from entity_app.domain.models.solicity import Solicity, SolicityResponse, TimeLineSolicity, Extension, Insistency
-from entity_app.domain.models.transparency_active import Numeral, TemplateFile, ColumnFile, TransparencyActive
+from entity_app.domain.models.solicity import Solicity, SolicityResponse, Status, TimeLineSolicity, Extension, Insistency
+from entity_app.domain.models.transparency_active import EstablishmentNumeral, Numeral, TemplateFile, ColumnFile, TransparencyActive
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
 from entity_app.domain.models.transparecy_colab import TransparencyColab
+from django.db.models import Q
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -157,6 +158,7 @@ class SolicityCreateDraftSerializer(serializers.ModelSerializer):
                    'have_extension', 'is_manual', 'expiry_date', 'user_created', 'user_updated', 'user_deleted',
                    'created_at', 'updated_at', 'deleted_at', 'deleted')
 
+
 class SolicityManualSerializer(serializers.ModelSerializer):
     """Solicity create serializer"""
 
@@ -166,6 +168,7 @@ class SolicityManualSerializer(serializers.ModelSerializer):
                    'address',
                    'have_extension', 'is_manual', 'expiry_date', 'user_created', 'user_updated', 'user_deleted',
                    'created_at', 'updated_at', 'deleted_at', 'deleted')
+
 
 class SolicityCreateWithDraftSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
@@ -280,8 +283,6 @@ class CreateInsistencySerializer(serializers.Serializer):
     solicity = SolicitySerializer()
 
 
-
-
 class CreateManualSolicitySerializer(serializers.Serializer):
     title = serializers.CharField()
     text = serializers.CharField()
@@ -387,9 +388,59 @@ class EstablishmentScoreSerializer(serializers.Serializer):
     prorrogas = serializers.IntegerField()
     insistencias = serializers.IntegerField()
     no_respuestas = serializers.IntegerField()
-    
-    
-    
+
+
+class EstablishmentcomplianceSerializer(serializers.ModelSerializer):
+    total_published_ta = serializers.SerializerMethodField(
+        method_name='get_total_numeral_ta')
+    total_numeral_ta = serializers.SerializerMethodField(
+        method_name='get_total_numeral_ta')
+    total_solicities_res = serializers.SerializerMethodField(
+        method_name='get_total_solicities_res')
+    total_solicities_rec = serializers.SerializerMethodField(
+        method_name='get_total_solicities_rec')
+    total_tf = serializers.SerializerMethodField(
+        method_name='get_total_tf')
+    total_tc = serializers.SerializerMethodField(
+        method_name='get_total_tc')
+
+    class Meta:
+        model = EstablishmentExtended
+        fields = '__all__'
+
+    def get_total_published_ta(self, obj):
+        return TransparencyActive.objects.filter(
+            establishment_id=obj.id,
+            year=self.context['year'],
+            month=self.context['month']
+        ).count()
+
+    def get_total_numeral_ta(self, obj):
+        return EstablishmentNumeral.objects.filter(establishment_id=obj.id)
+
+    def get_total_solicities_rec(self, obj):
+        return Solicity.objects.filter(establishment_id=obj.id,
+                                       created_at__year=self.context['year'],
+                                       created_at__month=self.context['month'])
+
+    def get_total_solicities_res(self, obj):
+        return Solicity.objects.filter(establishment_id=obj.id,
+                                       created_at__year=self.context['year'],
+                                       created_at__month=self.context['month']).filter(Q(status=Status.RESPONSED)
+                                                                                       | Q(status=Status.INSISTENCY_RESPONSED)
+                                                                                       | Q(status=Status.INFORMAL_MANAGMENT_RESPONSED))
+
+    def get_total_tf(self, obj):
+        return TransparencyFocal.objects.filter(establishment_id=obj.id,
+                                                created_at__year=self.context['year'],
+                                                created_at__month=self.context['month']).count()
+
+    def get_total_tc(self, obj):
+        return TransparencyColab.objects.filter(establishment_id=obj.id,
+                                                created_at__year=self.context['year'],
+                                                created_at__month=self.context['month']).count()
+
+
 class TransparencyCreateResponseSerializer(serializers.ModelSerializer):
     """Numeral response serializer."""
     files = FilePublicationSerializer(many=True)
@@ -420,7 +471,7 @@ class NumeralDetailSerializer(serializers.ModelSerializer):
 class TransparencyActiveListSerializer(serializers.ModelSerializer):
     numeral = serializers.SerializerMethodField(method_name='get_numeral')
     files = FilePublicationSerializer(many=True)
-    establishment =EstablishmentSerializer()
+    establishment = EstablishmentSerializer()
 
     class Meta:
         model = TransparencyActive
@@ -462,6 +513,7 @@ class ListTransparencyFocus(serializers.ModelSerializer):
     numeral = serializers.SerializerMethodField(method_name='get_numeral')
     files = FilePublicationSerializer(many=True)
     establishment = EstablishmentSerializer()
+
     class Meta:
         model = TransparencyFocal
         fields = '__all__'
@@ -479,6 +531,7 @@ class ListTransparencyColaborative(serializers.ModelSerializer):
     numeral = serializers.SerializerMethodField(method_name='get_numeral')
     files = FilePublicationSerializer(many=True)
     establishment = EstablishmentSerializer()
+
     class Meta:
         model = TransparencyColab
         fields = '__all__'

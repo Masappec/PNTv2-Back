@@ -2,12 +2,12 @@ from django.urls import path, include
 from entity_app.application.views.public import PublicationPublicView, PublicationDetail
 from entity_app.application.views.publication import PublicationCreateAPI, PublicationUpdateAPI, \
     PublicationsView, PublicatioDetail, PublicationUpdateState
-from entity_app.application.views.stats import StatsCitizen, IndicatorsEstablishmentView, CountFilesView, EstablishmentStats
+from entity_app.application.views.stats import EstablishmentCompliance, StatsCitizen, IndicatorsEstablishmentView, CountFilesView, EstablishmentStats
 from entity_app.application.views.file_publication import FilePublicationCreateView, GetFileFromUri, FilePublicationListEstablishemtSession, FilePublicationDelete
 from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
 from entity_app.application.views.solicity import SolicityView, SolicityCreateDraftView, \
-    SolicityResponseView, SolicityCreateResponseView, SolicityWithoutDraftView, CreateExtensionSolicityView,SolicityGetLastDraftView, \
+    SolicityResponseView, SolicityCreateResponseView, SolicityWithoutDraftView, CreateExtensionSolicityView, SolicityGetLastDraftView, \
     SolicitySendView, SolicityDetailView, UpdateSolicityView, SolicityChangeStatus, SolicityDetailEstablishmentView, CreateManualSolicity
 
 from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail, ListNumeral, ListNumeralAllow, PublishNumeral, NumeralEditPublish
@@ -20,13 +20,14 @@ from entity_app.application.views.focus_transparency import CreateTransparencyFo
 from entity_app.application.views.template_file import TemplateFileValidate
 from entity_app.application.views.transparency_active import TransparencyActivePublicListView
 
-from entity_app.application.views.reports import ArchivosSubidos,ReporteArchivos,ReporteRespuestas,ReporteNoRespuestas,ReporteSolicitudes
+from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivos, ReporteRespuestas, ReporteNoRespuestas, ReporteSolicitudes
 from entity_app.application.views.public import MonthForTransparency
 
-urlpatterns = [     
-               
-     path('stats/citizen', StatsCitizen.as_view(), name='stats-citizen'),
-    path("stats/establishment", IndicatorsEstablishmentView.as_view(), name="stats-establishment"),
+urlpatterns = [
+
+    path('stats/citizen', StatsCitizen.as_view(), name='stats-citizen'),
+    path("stats/establishment", IndicatorsEstablishmentView.as_view(),
+         name="stats-establishment"),
     path('public/transparency/active/list',
          PublicationPublicView.as_view(), name='publication-list'),
     path('public/transparency/active/detail/<slug>',
@@ -66,8 +67,10 @@ urlpatterns = [
 
     path('solicity/create/draft', SolicityCreateDraftView.as_view(),
          name='solicity-create'),
-    path('solicity/comment', CreateExtensionSolicityView.as_view(),name='solicity-comment'),
-    path('solicity/change-status', SolicityChangeStatus.as_view(),name='change-status'),
+    path('solicity/comment', CreateExtensionSolicityView.as_view(),
+         name='solicity-comment'),
+    path('solicity/change-status',
+         SolicityChangeStatus.as_view(), name='change-status'),
     path('solicity/get_last_draft', SolicityGetLastDraftView.as_view(),
          name='solicity-get-last-draft'),
 
@@ -126,22 +129,36 @@ urlpatterns = [
     path('transparency/focus/delete/<pk>',
          TransparencyFocusDelete.as_view(), name='delete-transparency-focus'),
     path('count-files', CountFilesView.as_view(), name='count-files'),
-     
-     
-    path('transparency/months', MonthForTransparency.as_view(), name='transparency-months'),
-     
-     
-    path('establishment/table-stats', EstablishmentStats.as_view(), name='establishment-table-stats'),
-    path('reports/view/archivos-subidos', ArchivosSubidos.as_view(), name='reports-view-archivos-subidos'),
-    
-    
+
+
+    path('transparency/months', MonthForTransparency.as_view(),
+         name='transparency-months'),
+
+
+    path('establishment/table-stats', EstablishmentStats.as_view(),
+         name='establishment-table-stats'),
+
+
+
+
+    path("reports/establishments/compliance",
+         EstablishmentCompliance.as_view(), name="establishment-compliance"),
+
+
+    path('reports/view/archivos-subidos', ArchivosSubidos.as_view(),
+         name='reports-view-archivos-subidos'),
+
+
     path('reports/download/archivos-subidos', ReporteArchivos.as_view(),
          name='reports-view-archivos-subidos'),
     # ReporteRespuestas
-    path ('reports/download/reporte-respuestas', ReporteRespuestas.as_view(), name='reports-view-reporte-respuestas'),
-    
+    path('reports/download/reporte-respuestas',
+         ReporteRespuestas.as_view(), name='reports-view-reporte-respuestas'),
+
     # ReporteNoRespuestas
-     path ('reports/download/reporte-no-respuestas', ReporteNoRespuestas.as_view(), name='reports-view-reporte-no-respuestas'),
-     #ReporteSolicitudes
-     path ('reports/download/reporte-solicitudes', ReporteSolicitudes.as_view(), name='reports-view-reporte-solicitudes'),
+    path('reports/download/reporte-no-respuestas',
+         ReporteNoRespuestas.as_view(), name='reports-view-reporte-no-respuestas'),
+    # ReporteSolicitudes
+    path('reports/download/reporte-solicitudes',
+         ReporteSolicitudes.as_view(), name='reports-view-reporte-solicitudes'),
 ]
