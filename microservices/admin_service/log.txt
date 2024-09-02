@@ -536,3 +536,27 @@ Sun Jul 28 19:40:26 2024 - Iniciando suscripción al canal user
 Sun Jul 28 19:40:26 2024 - Iniciando suscripción al canal solicity
 Sun Jul 28 22:03:40 2024 - Iniciando suscripción al canal user
 Sun Jul 28 22:03:40 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 08:35:09 2024 - Iniciando suscripción al canal user
+Mon Sep  2 08:35:09 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 08:51:37 2024 - Iniciando suscripción al canal user
+Mon Sep  2 08:51:37 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 11:14:52 2024 - Iniciando suscripción al canal user
+Mon Sep  2 11:14:52 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 11:15:59 2024 - Iniciando suscripción al canal user
+Mon Sep  2 11:15:59 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 11:19:14 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_register", "payload": {"uidb64": "Mw", "username": "anderson_ciudadano", "email": "afullink@gmail.com", "token": "ccq4rs-434e69090c3cf676de7b57fc356d34ef"}, "id": "6b304c07-0977-4389-b01f-67503cd24249"}'}
+Mon Sep  2 11:26:54 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_register", "payload": {"uidb64": "NA", "username": "ciudadano_test", "email": "fidelizacion@torresytorres.com", "token": "ccq54k-aef1bd20d7ea439d0beb53ade6dfd9dd"}, "id": "fa00f241-89b2-4d84-a802-a7ed2e171af0"}'}
+Mon Sep  2 14:02:33 2024 - Iniciando suscripción al canal user
+Mon Sep  2 14:02:33 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 14:03:16 2024 - Iniciando suscripción al canal user
+Mon Sep  2 14:03:16 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 14:03:40 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 1, "establishment_id": 287, "user_id": 3, "number_saip": "SAIP-2024-0000000001", "email": ["andersonsinaluisa@gmail.com"]}, "id": "3b732b5d-929e-46dc-b7dc-8eb0d8ab795d"}'}
+Mon Sep  2 14:04:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000001", "date": "2024-09-02", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 287, "status": "SEND", "user_id": 3, "solicity_id": 1, "email": ["andersonsinaluisa@gmail.com"]}, "id": "8686336b-8a76-43c8-8ed8-1ffe09e823ef"}'}
+Mon Sep  2 16:44:59 2024 - Iniciando suscripción al canal user
+Mon Sep  2 16:44:59 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 16:45:55 2024 - Iniciando suscripción al canal user
+Mon Sep  2 16:45:55 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 16:58:46 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 2, "establishment_id": 287, "user_id": 3, "number_saip": "SAIP-2024-0000000002", "email": ["andersonsinaluisa@gmail.com"]}, "id": "efcfe4ea-fe22-4d34-823c-239e6e3d5b6c"}'}
+Mon Sep  2 16:59:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000001", "date": "2024-09-02", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 287, "status": "INSISTENCY_SEND", "user_id": 3, "solicity_id": 1, "email": ["andersonsinaluisa@gmail.com"]}, "id": "ce9ef4d0-9c33-424b-b907-ba426e8044f6"}'}
+Mon Sep  2 16:59:22 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000002", "date": "2024-09-02", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 287, "status": "SEND", "user_id": 3, "solicity_id": 2, "email": ["andersonsinaluisa@gmail.com"]}, "id": "65bba5df-f0c9-4f52-8edf-d3bcf40bb392"}'}
+Mon Sep  2 17:01:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000001", "date": "2024-09-02", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 287, "status": "INFORMAL_MANAGMENT_SEND", "user_id": 3, "solicity_id": 1, "email": ["andersonsinaluisa@gmail.com"]}, "id": "48747723-1114-46c0-96bb-4b1a330d077a"}'}

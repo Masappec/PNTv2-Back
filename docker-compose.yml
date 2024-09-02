@@ -131,7 +131,7 @@ services:
       - pnt_network
 
   db_auth:
-    image: postgres:latest
+    image: postgres:16.4
     restart: always
 
     environment:
@@ -145,7 +145,7 @@ services:
       - ./postgres_data:/var/lib/postgresql/data
 
   mongo_db:
-    image: mongo:latest
+    image: mongo:7.0
     networks:
       - pnt_network
     restart: always
@@ -162,7 +162,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
 
   api_gateway:
-    image: nginx:latest
+    image: nginx:1.27
     restart: always
 
     ports:

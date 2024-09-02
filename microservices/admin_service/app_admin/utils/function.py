@@ -19,7 +19,14 @@ def unique_slug_generator(instance, new_slug=None):
     if new_slug is not None:
         slug = new_slug
     else:
-        slug = slugify(instance.name)
+        count = instance.name.split()
+        slug = ''
+        if len(count) > 5:
+            for i in instance.name.split():
+                slug += i[0]
+        else:
+            slug = slugify(instance.name)
+
     Klass = instance.__class__
     max_length = Klass._meta.get_field('slug').max_length
     slug = slug[:max_length]

@@ -4,7 +4,6 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from .base_model import BaseModel
 
 
-
 class FormFields(BaseModel):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
@@ -35,6 +34,7 @@ class FormFields(BaseModel):
         ContentType, on_delete=models.CASCADE, null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = GenericForeignKey('content_type', 'object_id')
+    helptext = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Campo de Formulario'

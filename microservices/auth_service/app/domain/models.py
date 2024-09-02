@@ -49,7 +49,7 @@ class User(AbstractUser, BaseModel):
                     phone,
                     city,
                     race,
-                    disability ,
+                    disability,
                     age_range,
                     province,
                     gender,
@@ -58,7 +58,7 @@ class User(AbstractUser, BaseModel):
                 ])
 
                 row = cursor.fetchone()
-                
+
                 return row[0]
         except Exception as e:
             print(e)
@@ -80,7 +80,7 @@ class Person(models.Model):
     country = models.CharField(
         max_length=255, null=True, blank=True, default='Ecuador')
     province = models.CharField(max_length=255, null=True, blank=True)
-
+    group_priority = models.CharField(max_length=255, null=True, blank=True)
     job = models.CharField(max_length=255, null=True, blank=True)
     gender = models.CharField(max_length=255, null=True, blank=True, choices=(
         ('masculino', 'Masculino'),
