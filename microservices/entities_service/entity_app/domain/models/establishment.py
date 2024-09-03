@@ -2,9 +2,12 @@ from django.db import models
 from datetime import datetime
 from entity_app.domain.models.base_model import BaseModel
 from entity_app.domain.models.transparency_active import EstablishmentNumeral, TransparencyActive
-from entity_app.domain.models.solicity import Status,TimeLineSolicity
+from entity_app.domain.models.solicity import Solicity, Status,TimeLineSolicity
 from django.utils import timezone
 from django.db import connection
+
+from entity_app.domain.models.transparecy_foc import TransparencyFocal
+from entity_app.domain.models.transparecy_colab import TransparencyColab
 
 
 class EstablishmentManager(models.Manager):
@@ -119,77 +122,68 @@ class EstablishmentExtended(models.Model):
         verbose_name_plural = 'Instituciones'
 
     def calculate_publishing_score(self, year):
-        query = '''
-           WITH RequestCounts AS (
-                SELECT
-                    EXTRACT(MONTH FROM created_at) AS month,
-                    COUNT(CASE WHEN status IN ('RESPONSED', 'INSISTENCY_RESPONSED') THEN 1 END) AS atendidas,
-                    COUNT(CASE WHEN status = 'PRORROGA' THEN 1 END) AS prorroga,
-                    COUNT(CASE WHEN status IN ('INSISTENCY_PERIOD', 'INSISTENCY_SEND','PERIOD_INFORMAL_MANAGEMENT','INFORMAL_MANAGMENT_SEND') THEN 1 END) AS insistencia,
-                    COUNT(CASE WHEN status IN ('NO_RESPONSED','INSISTENCY_NO_RESPONSED','INFORMAL_MANAGMENT_NO_RESPONSED','FINISHED_WITHOUT_RESPONSE') THEN 1 END) AS no_respuesta
-                FROM
-                    entity_app_solicity
-                WHERE
-                    establishment_id = %s
-                    AND (1 IS NULL OR EXTRACT(YEAR FROM created_at) = %s)
-                GROUP BY
-                    EXTRACT(MONTH FROM created_at)
-            ),
-            Recibidas AS (
-                SELECT
-                    EXTRACT(MONTH FROM created_at) AS month,
-                    COUNT(CASE WHEN status = 'SEND' THEN 1 END) AS recibidas
-                FROM
-                    entity_app_timelinesolicity
-                WHERE
-                    solicity_id IN (SELECT id from entity_app_solicity WHERE establishment_id=%s)
-                    AND (1 IS NULL OR EXTRACT(YEAR FROM created_at) = %s)
-                GROUP BY
-                    EXTRACT(MONTH FROM created_at)
-            )
-            SELECT
-                COALESCE(SUM(Recibidas.recibidas), 0) AS total_recibidas,
-                COALESCE(SUM(RequestCounts.atendidas), 0) AS total_atendidas,
-                COALESCE(SUM(RequestCounts.prorroga), 0) AS total_prorroga,
-                COALESCE(SUM(RequestCounts.insistencia), 0) AS total_insistencia,
-                COALESCE(SUM(RequestCounts.no_respuesta), 0) AS total_no_respuesta,
-                CASE 
-                    WHEN COALESCE(SUM(Recibidas.recibidas), 0) = 0 THEN 0
-                    ELSE ROUND(
-                        (COALESCE(SUM(RequestCounts.atendidas), 0)::NUMERIC / COALESCE(SUM(Recibidas.recibidas), 0)::NUMERIC) * 100,
-                        2
-                    )
-                END AS score_saip
-            FROM
-                RequestCounts
-            LEFT JOIN
-                Recibidas
-            ON
-                RequestCounts.month = Recibidas.month;
-        '''
+       
+        total_TA = EstablishmentNumeral.objects.filter(establishment_id=self.pk).count()
+        total_TP = TransparencyActive.objects.filter(establishment_id=self.pk,
+                                                     year=datetime.now().year,
+                                                     month=datetime.now().month,
+                                                     published_at__day__lte=5
+                                                     )
+        
+        total_TS = Solicity.objects.filter(establishment_id=self.pk,
+                                           date__year=datetime.now().year,
+                                           date__month=datetime.now().month,
+                                            ).exclude(
+                                                status=Status.DRAFT
+                                            )
 
-        # Execute the raw SQL query using Django's database connection
-        with connection.cursor() as cursor:
-            cursor.execute(query, [self.pk, year, self.pk, year])
-            row = cursor.fetchone()
+        total_TR = TimeLineSolicity.objects.filter(
+            solicity_id__in=[pk.id for pk in total_TS],
+            status=Status.RESPONSED
+        )
+        total_TSP = TimeLineSolicity.objects.filter(
+            solicity_id__in=[pk.id for pk in total_TS],
+            status=Status.PRORROGA
+        )
+        total_TSI = TimeLineSolicity.objects.filter(
+            solicity_id__in=[pk.id for pk in total_TS],
+            status=Status.INSISTENCY_SEND
+        )
+        total_TSN = TimeLineSolicity.objects.filter(
+            solicity_id__in=[pk.id for pk in total_TS],
+            status=Status.NO_RESPONSED
+        )
+        
+        total_TF = TransparencyFocal.objects.filter(
+            month = datetime.now().month,
+            year = datetime.now().year,
+            published_at__day__lte=5
+        )
+        
+        total_TC = TransparencyColab.objects.filter(
+            month=datetime.now().month,
+            year=datetime.now().year,
+            published_at__day__lte=5
+        )
 
-            if row:
-                total_recibidas = row[0]
-                total_atendidas = row[1]
-                total_prorroga = row[2]
-                total_insistencia = row[3]
-                total_no_respuesta = row[4]
-                score = row[5]
-                
-            else:
-                score = 0
-                total_recibidas = 0
-                total_atendidas = 0
-                total_prorroga = 0
-                total_insistencia = 0
-                total_no_respuesta = 0
-                
+        
+        # Safeguard against division by zero
+        if total_TA != 0 and total_TS.count() != 0:
+            score = ((total_TP.count() * 100) / total_TA) * 50 + \
+                ((total_TR.count() * 100) / total_TS.count()) * 50
+        else:
+            score = 0  #
 
+        if  total_TC.count()>0:
+            score = score * 1.05
+        if total_TF.count()>0:
+            score = score * 1.05
+
+        total_recibidas = total_TS.count()
+        total_atendidas = total_TR.count()
+        total_prorroga = total_TSP.count()
+        total_insistencia = total_TSI.count()
+        total_no_respuesta = total_TSN.count()
         return {
             'total_recibidas': total_recibidas,
             'total_atendidas': total_atendidas,
@@ -258,16 +252,10 @@ class EstablishmentExtended(models.Model):
 
     def calculate_total_score(self, year):
         data = self.calculate_publishing_score(year)
-        score_saip = self.calculate_saip_score(year)
 
             
         score = data.get('score_saip', 0)
-        total_score = score + score_saip
-        if score_saip != 0 and score != 0:
-            total_score = total_score / 2
-        else:
-            total_score = score_saip if score_saip != 0 else score
-
+       
         return {
             'total_recibidas': data.get('total_recibidas', 0),
             'total_atendidas': data.get('total_atendidas', 0),
@@ -275,8 +263,8 @@ class EstablishmentExtended(models.Model):
             'total_insistencia': data.get('total_insistencia', 0),
             'total_no_respuesta': data.get('total_no_respuesta', 0),
             'score_activa': score,
-            'score_saip': score_saip,
-            'total_score': total_score
+            'score_saip': score,
+            'total_score': score
         }
     
     @classmethod

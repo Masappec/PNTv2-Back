@@ -26,9 +26,7 @@ services:
     volumes:
       - ./microservices/admin_service:/app
 
-    #que se levante con el servicio de la base de datos
 
-    restart: always
     environment:
       - DB_HOST=db_auth
       - DB_NAME=auth_database
@@ -56,7 +54,6 @@ services:
       - redis_db
     volumes:
       - ./microservices/auth_service:/app
-    restart: always
 
     environment:
       - DB_HOST=db_auth
@@ -82,7 +79,6 @@ services:
     depends_on:
       - db_auth
       - redis_db
-    restart: always
 
     volumes:
       - ./microservices/entities_service:/code
@@ -153,7 +149,6 @@ services:
     image: mongo:7.0
     networks:
       - pnt_network
-    restart: always
 
     ports:
       - "27017:27017"
@@ -168,7 +163,6 @@ services:
 
   api_gateway:
     image: nginx:1.27
-    restart: always
 
     ports:
       - "8082:80"
