@@ -173,6 +173,8 @@ services:
     depends_on:
       - auth_microservice
       - admin_microservice
+      - entity_microservice
+      - public_micorservice
     networks:
       - pnt_network
 
