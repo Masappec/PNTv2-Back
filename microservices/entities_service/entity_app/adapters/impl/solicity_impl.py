@@ -8,36 +8,33 @@ from django.db.models import QuerySet
 from entity_app.domain.models.solicity import Solicity, TimeLineSolicity, TypeStages
 from entity_app.utils.functions import get_time_prorroga, get_timedelta_for_expired
 from django.utils import timezone
+
+
 class SolicityImpl(SolicityRepository):
 
-    def change_status_by_id(self, solicity_id,text,user_id)->Solicity:
+    def change_status_by_id(self, solicity_id, text, user_id) -> Solicity:
         solicity = Solicity.objects.get(id=solicity_id)
-        
-        
+
         if timezone.now() > solicity.expiry_date:
             newstatus = ''
-            
-            
+
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 newstatus = Status.INSISTENCY_SEND
 
-                
-            if solicity.status == Status.INSISTENCY_RESPONSED or solicity.status == Status.INSISTENCY_NO_RESPONSED:    
+            if solicity.status == Status.INSISTENCY_RESPONSED or solicity.status == Status.INSISTENCY_NO_RESPONSED:
                 newstatus = Status.INFORMAL_MANAGMENT_SEND
 
-            if newstatus=='':
+            if newstatus == '':
                 raise ValueError('Esta solicitud aun está vigente')
-            
-            
-            solicity.status = newstatus
-            solicity.expiry_date = solicity.expiry_date +get_timedelta_for_expired()
 
+            solicity.status = newstatus
+            solicity.expiry_date = solicity.expiry_date + get_timedelta_for_expired()
 
             Insistency.objects.create(solicity_id=solicity_id,
-                                            user_id=user_id,  motive=text,
-                                            user_created_id=user_id,
-                                            user_updated_id=user_id,
-                                            status=Status.SEND)
+                                      user_id=user_id,  motive=text,
+                                      user_created_id=user_id,
+                                      user_updated_id=user_id,
+                                      status=Status.SEND)
             solicity.save()
             self.save_timeline(
                 solicity_id, solicity.user_created_id, newstatus)
@@ -47,32 +44,33 @@ class SolicityImpl(SolicityRepository):
             if solicity.status == Status.SEND:
                 newstatus = Status.PRORROGA
                 solicity.status = newstatus
-                
+
                 solicity.expiry_date = datetime.now()+get_time_prorroga()
                 solicity.save()
                 self.save_timeline(
                     solicity_id, solicity.user_created_id, newstatus)
-                
+
                 comment = Extension.objects.create(solicity_id=solicity_id,
-                                            user_id=user_id,  motive=text,
-                                            user_created_id=user_id,
-                                            user_updated_id=user_id,
-                                            status=Status.PRORROGA)
+                                                   user_id=user_id,  motive=text,
+                                                   user_created_id=user_id,
+                                                   user_updated_id=user_id,
+                                                   status=Status.PRORROGA)
                 return solicity
             if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
                 solicity.status = Status.INSISTENCY_SEND
-                solicity.expiry_date = solicity.expiry_date +get_time_prorroga()
+                solicity.expiry_date = solicity.expiry_date + get_time_prorroga()
                 solicity.save()
-                
+
                 Insistency.objects.create(solicity_id=solicity_id,
-                                            user_id=user_id,  motive=text,
-                                            user_created_id=user_id,
-                                            user_updated_id=user_id,
+                                          user_id=user_id,  motive=text,
+                                          user_created_id=user_id,
+                                          user_updated_id=user_id,
                                           status=Status.INSISTENCY_SEND)
                 self.save_timeline(
                     solicity_id, solicity.user_created_id, Status.INSISTENCY_PERIOD)
                 return solicity
             raise ValueError('Esta solicitud aun está vigente')
+
     def create_solicity_draft(self,
                               number_saip: str,
                               establishment_id: int,
@@ -96,9 +94,6 @@ class SolicityImpl(SolicityRepository):
         """
         user = User.objects.get(id=user_id)
 
-        
-
-
         solicity = Solicity.objects.create(
             number_saip=number_saip,
             establishment_id=establishment_id.pk,
@@ -117,7 +112,6 @@ class SolicityImpl(SolicityRepository):
             user_updated=user,
             status=Status.DRAFT)
 
-   
         solicity.number_saip = f'{solicity.id}/{solicity.date.year}'
         solicity.save()
         return solicity
@@ -157,7 +151,9 @@ class SolicityImpl(SolicityRepository):
         solicity.user_updated = user
         solicity.status = Status.SEND
         solicity.save()
-        solicity.number_saip = f'SAIP-{solicity.date.year}-{solicity.id}'
+        number = str(solicity.id).zfill(10)
+
+        solicity.number_saip = f'SAIP-{solicity.date.year}-{number}'
         solicity.save()
         return solicity
 
@@ -195,7 +191,9 @@ class SolicityImpl(SolicityRepository):
             user_created=user,
             user_updated=user,
             status=Status.SEND)
-        solicity.number_saip = f'SAIP-{solicity.date.year}-{solicity.id}'
+        number = str(solicity.id).zfill(10)
+
+        solicity.number_saip = f'SAIP-{solicity.date.year}-{number}'
         solicity.save()
         TimeLineSolicity.objects.create(
             solicity_id=solicity.id, status=Status.SEND)
@@ -238,7 +236,7 @@ class SolicityImpl(SolicityRepository):
                                          status=Status.SEND)
 
     def create_comment_solicity(self, solicity_id, user_id, text):
-        
+
         solicity = Solicity.objects.get(id=solicity_id)
         return Extension.objects.create(solicity_id=solicity_id,
                                         user_id=user_id,  motive=text,
@@ -261,7 +259,7 @@ class SolicityImpl(SolicityRepository):
                                format_send: str,
                                expiry_date: datetime,
                                user_id: int,
-                            date: datetime,
+                               date: datetime,
                                ) -> Solicity:
         user = User.objects.get(id=user_id)
 
@@ -284,7 +282,7 @@ class SolicityImpl(SolicityRepository):
             status=Status.SEND,
             date=date,
             is_manual=True)
-        
+
         solicity.number_saip = f'SAIP-{solicity.date.year}-{solicity.id}'
         solicity.save()
         TimeLineSolicity.objects.create(
@@ -341,9 +339,9 @@ class SolicityImpl(SolicityRepository):
         establishment = UserEstablishmentExtended.objects.filter(
             user_id=user_id, is_active=True).first()
         if establishment is None:
-            
-            return Solicity.objects.all().filter(is_active=True).exclude(status=Status.DRAFT) 
-            
+
+            return Solicity.objects.all().filter(is_active=True).exclude(status=Status.DRAFT)
+
         return Solicity.objects.filter(establishment_id=establishment.establishment_id,
                                        is_active=True
                                        ).exclude(status=Status.DRAFT)

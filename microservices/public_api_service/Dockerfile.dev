@@ -14,4 +14,4 @@ COPY . .
 EXPOSE 8000
 # python -m celery -A public_api_service beat -l info &
 #python -m celery -A auth_service worker -l info"
-CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:8000 & python -m celery -A public_api_service worker -l info"]
+CMD ["sh", "-c", "sleep 10 & python manage.py runserver 0.0.0.0:8000 & python -m celery -A public_api_service worker -l info"]

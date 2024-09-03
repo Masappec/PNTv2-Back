@@ -13,5 +13,6 @@ COPY . .
 
 
 EXPOSE 8001
+#esperar 10 segundos
 
-CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:8001 & python -m celery -A admin_service worker -l info"]
+CMD ["sh", "-c", "sleep 10 & python manage.py runserver 0.0.0.0:8001 & python -m celery -A admin_service worker -l info"]

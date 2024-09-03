@@ -25,13 +25,14 @@ class ConfigureService:
         self.type_organization = TypeOrganizationImpl()
         self.type_institution = TypeInstitutionImpl()
         self.function_service = FunctionOrganizationImpl()
+
     def create_establishment_quantity(self, quantity: int):
         print("CREANDO INSTITUCIONES..")
         list_type_org = self.type_institution.get_all()
         list_type_inst = self.type_organization.get_all()
         list_func = self.function_service.get_all()
         slice = data[:quantity]
-        for x, establishment in range(slice):
+        for x, establishment in enumerate(slice):
             print(progress_bar(x, quantity), end='\r', flush=True)
             print(progress_bar(x, len(data)), end='\r', flush=True)
             establishment_ = self.establishment_service.create_establishment({
@@ -55,7 +56,7 @@ class ConfigureService:
             })
             self.access_info.assign_establishment_to_access_information(
                 access.id, establishment_)
-    
+
     def create_establishment(self):
         print("CREANDO INSTITUCIONES..")
         list_type_org = self.type_institution.get_all()

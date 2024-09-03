@@ -150,7 +150,7 @@ class PersonalRemuneraciones(APIView):
                     # contains
                     removed_accents_name = remove_accents(name.lower())
                     removed_accents_nombre = remove_accents(nombre.lower())
-                    if name.lower() in nombre.lower():
+                    if removed_accents_name.lower() in removed_accents_nombre.lower():
 
                         numeral_21_data.append({
                             "puesto": puesto,
@@ -160,17 +160,7 @@ class PersonalRemuneraciones(APIView):
                             "nombre": nombre,
                             "regimen": ""
                         })
-                    elif nombre.lower() in name.lower():
-
-                        numeral_21_data.append({
-                            "puesto": puesto,
-                            "unidad": unidad,
-                            "remuneracion": "",
-                            "grado": "",
-                            "nombre": nombre,
-                            "regimen": ""
-                        })
-                    elif similarity_percentage(removed_accents_name, removed_accents_nombre) > 40:
+                    elif removed_accents_nombre.lower() in removed_accents_name.lower():
 
                         numeral_21_data.append({
                             "puesto": puesto,

@@ -230,7 +230,7 @@ class UpdateSolicityView(APIView):
     """Solicity view."""
 
     permission_classes = [IsAuthenticated, HasPermission]
-    permission_required = 'change_solicity'
+    permission_required = 'change_solicity,add_solicity'
     serializer_class = SolicityCreateWithDraftSerializer
     output_serializer_class = SolicitySerializer
 
