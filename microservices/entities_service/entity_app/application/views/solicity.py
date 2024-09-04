@@ -99,6 +99,29 @@ class CreateManualSolicity(APIView):
             }, status=400)
 
 
+
+class DeleteSolicityView(APIView):
+    
+    def __init__(self, **kwargs: Any):
+        self.service = SolicityService(solicity_repository=SolicityImpl())
+        
+        
+    def delete(self, request, solicity_id):
+        try:
+            response = self.service.delete_draft(
+                solicity_id=solicity_id,
+                user_id=request.user.id
+            )
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            data = {
+                'message': str(e),
+                'status': status.HTTP_400_BAD_REQUEST,
+                'json': {}
+            }
+
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
 class DeleteSolicityResponse(APIView):
 
     permission_classes = [IsAuthenticated,
@@ -308,11 +331,16 @@ class SolicityView(ListAPIView):
             if search is not None:
                 queryset = queryset.filter(
                     Q(number_saip__icontains=search) | Q(establishment__name__icontains=search))
-            if range_start != "" and range_end != "":
-
+                
+                
+            if range_start != "":
                 queryset = queryset.filter(
-                    created_at__range=[range_start, range_end
-                                       ])
+                    created_at__gte=range_start
+                )
+            if range_end != "":
+                queryset = queryset.filter(
+                    created_at__lte=range_end
+                )
 
             page = self.paginate_queryset(queryset)
             if page is not None:

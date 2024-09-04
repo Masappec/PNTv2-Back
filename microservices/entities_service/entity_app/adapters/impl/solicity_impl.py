@@ -12,6 +12,10 @@ from django.utils import timezone
 
 class SolicityImpl(SolicityRepository):
 
+    
+    
+    def delete_draft(self, solicity_id):
+        return Solicity.objects.filter(id=solicity_id).delete()
     def change_status_by_id(self, solicity_id, text, user_id) -> Solicity:
         solicity = Solicity.objects.get(id=solicity_id)
 

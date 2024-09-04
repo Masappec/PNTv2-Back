@@ -23,6 +23,10 @@ class SolicityRepository(ABC):
                               expiry_date: datetime,
                               user_id: int) -> Solicity:
         pass
+    
+    @abstractmethod
+    def delete_draft(self, solicity_id):
+        pass
 
     @abstractmethod
     def send_solicity_from_draft(self,
@@ -201,3 +205,5 @@ class SolicityRepository(ABC):
     @abstractmethod
     def change_status_by_id(self,solicity_id,text,user_id)->Solicity:
         pass
+    
+   

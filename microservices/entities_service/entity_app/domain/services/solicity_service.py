@@ -14,6 +14,29 @@ class SolicityService:
     def __init__(self, solicity_repository: SolicityRepository):
         self.solicity_repository = solicity_repository
         self.publisher = Publisher(CHANNEL_SOLICIY)
+        
+    def delete_draft(self, solicity_id, user_id):
+        """
+        Elimina un borrador de solicitud
+
+        Args:
+            solicity_id (int): id de la solicitud
+            user_id (int): id del usuario
+
+        Raises:
+            ValueError: No se puede eliminar la solicitud
+            ValueError: No
+
+        Returns:
+            _type_: _description_
+        """
+        
+        solicity = self.solicity_repository.get_solicity_by_id(solicity_id)
+        if solicity.user_created_id != user_id:
+            raise ValueError("No se puede eliminar la solicitud")
+        if solicity.status != Status.DRAFT:
+            raise ValueError("No se puede eliminar la solicitud")
+        return self.solicity_repository.delete_draft(solicity_id)
 
     def create_solicity_draft(self,
                               number_saip: str,
@@ -424,11 +447,16 @@ class SolicityService:
                         format_receipt: str,
                         format_send: str,
                         expiry_date: datetime,
+                        is_send: bool,
                         user_id: int) -> Solicity:
-
-        return self.send_solicity_from_draft(
-            id, number_saip, establishment, city, first_name, last_name, email, phone,
-            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
+        if is_send:
+            return self.send_solicity_from_draft(
+                id, number_saip, establishment, city, first_name, last_name, email, phone,
+                gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
+        else:
+            return self.send_solicity_from_draft(
+                id, number_saip, establishment, city, first_name, last_name, email, phone,
+                gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
 
     def update_solicity_response(self, solicity_response_id, text, category_id, files, attachments):
         """

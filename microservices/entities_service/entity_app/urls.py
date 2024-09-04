@@ -8,7 +8,8 @@ from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
 from entity_app.application.views.solicity import SolicityView, SolicityCreateDraftView, \
     SolicityResponseView, SolicityCreateResponseView, SolicityWithoutDraftView, CreateExtensionSolicityView, SolicityGetLastDraftView, \
-    SolicitySendView, SolicityDetailView, UpdateSolicityView, SolicityChangeStatus, SolicityDetailEstablishmentView, CreateManualSolicity
+    SolicitySendView, SolicityDetailView, UpdateSolicityView, SolicityChangeStatus, SolicityDetailEstablishmentView,\
+    CreateManualSolicity, DeleteSolicityView
 
 from entity_app.application.views.numeral import NumeralsByEstablishment, NumeralDetail, ListNumeral, ListNumeralAllow, PublishNumeral, NumeralEditPublish
 
@@ -81,7 +82,7 @@ urlpatterns = [
 
     path('solicity/draft/send', SolicitySendView.as_view(),
          name='solicity-send'),
-
+    path("solicity/draft/delete/<solicity_id>", DeleteSolicityView.as_view(), name="solicity-delete"),
     path('solicity_response/list', SolicityResponseView.as_view(),
          name='solicity-response-all'),
     path('solicity_response/detail/<solicity_id>', SolicityDetailEstablishmentView.as_view(),
