@@ -99,13 +99,11 @@ class CreateManualSolicity(APIView):
             }, status=400)
 
 
-
 class DeleteSolicityView(APIView):
-    
+
     def __init__(self, **kwargs: Any):
         self.service = SolicityService(solicity_repository=SolicityImpl())
-        
-        
+
     def delete(self, request, solicity_id):
         try:
             response = self.service.delete_draft(
@@ -121,6 +119,7 @@ class DeleteSolicityView(APIView):
             }
 
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class DeleteSolicityResponse(APIView):
 
@@ -331,8 +330,7 @@ class SolicityView(ListAPIView):
             if search is not None:
                 queryset = queryset.filter(
                     Q(number_saip__icontains=search) | Q(establishment__name__icontains=search))
-                
-                
+
             if range_start != "":
                 queryset = queryset.filter(
                     created_at__gte=range_start
@@ -575,7 +573,7 @@ class SolicityResponseView(ListAPIView):
     def get_queryset(self, use_id):
         """Get queryset."""
 
-        return self.service.get_entity_user_solicities(use_id).order_by('-created_at')
+        return self.service.get_entity_user_solicities(use_id)
 
     def get(self, request, *args, **kwargs):
         """

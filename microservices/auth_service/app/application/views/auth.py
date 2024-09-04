@@ -23,6 +23,7 @@ from app.adapters.messaging.publish import Publisher
 from app.adapters.messaging.events import USER_REGISTER
 from app.adapters.messaging.channels import CHANNEL_USER
 import json
+from rest_framework import status
 
 
 class LoginApiView(TokenObtainPairView):
@@ -58,6 +59,7 @@ class LoginApiView(TokenObtainPairView):
 
             return response
         return Response({'message': 'Usuario no encontrado'}, status=404)
+
     def get_user_data(self, request):
         # Aquí deberías implementar la lógica para obtener los datos adicionales del usuario
         # Puedes usar el servicio User o el UserRepository según tu arquitectura
@@ -118,19 +120,19 @@ class RegisterApiView(CreateAPIView):
         user_obj = None
         try:
 
-            
-            find_user = self.user_service.get_user_by_email(data.validated_data['email'])
+            find_user = self.user_service.get_user_by_email(
+                data.validated_data['email'])
             if find_user:
                 raise ValueError('Este correo ya está en uso')
-            
+
             find_user = self.user_service.get_user_by_username(
                 data.validated_data['username'])
             if find_user:
                 raise ValueError('Este nombre de usuario ya está en uso')
-            
+
             user = self.user_service.register_cityzen_user(data.validated_data)
-            
-            if user is not None: 
+
+            if user is not None:
                 data = UserCreateResponseSerializer(data=user)
                 user_obj = self.user_service.get_user_object(user['id'])
                 uidb64 = urlsafe_base64_encode(force_bytes(user_obj.id))
@@ -184,3 +186,29 @@ class ActivateAccountApiView(APIView):
                 return Response({'message': 'El usuario no existe'}, status=400)
         except Exception as e:
             return Response({'message': e.__str__()}, status=400)
+
+
+class ChangePasswordView(APIView):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.user_service = UserService(user_repository=UserRepositoryImpl())
+
+    def post(self, request):
+        user = request.user  # Obtener el usuario en sesión
+        current_password = request.data.get("current_password")
+        new_password = request.data.get("new_password")
+
+        # Validar que las contraseñas no estén vacías
+        if not current_password or not new_password:
+            return Response({"error": "Las contraseñas no pueden estar vacías"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validar la contraseña actual
+        if not user.check_password(current_password):
+            return Response({"error": "La contraseña actual no es correcta"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Cambiar la contraseña
+        user.set_password(new_password)
+        user.save()
+
+        return Response({"message": "La contraseña ha sido cambiada con éxito"}, status=status.HTTP_200_OK)

@@ -124,9 +124,12 @@ class PersonalRemuneraciones(APIView):
 
         for doc in documents:
             numeral = doc.metadata.numeral
+            institucion = doc.metadata.establishment_name
             columns = doc.metadata.columns
             columns = [column.strip() for column in columns]
             columns = [slugify(remove_accents(column)) for column in columns]
+            mes = doc.metadata.month
+            anio = doc.metadata.year
             data = doc.data
 
             for row in data:
@@ -158,7 +161,10 @@ class PersonalRemuneraciones(APIView):
                             "remuneracion": "",
                             "grado": "",
                             "nombre": nombre,
-                            "regimen": ""
+                            "regimen": "",
+                            "institucion": institucion,
+                            "mes": mes,
+                            "anio": anio
                         })
                     elif removed_accents_nombre.lower() in removed_accents_name.lower():
 
@@ -168,7 +174,10 @@ class PersonalRemuneraciones(APIView):
                             "remuneracion": "",
                             "grado": "",
                             "nombre": nombre,
-                            "regimen": ""
+                            "regimen": "",
+                            "institucion": institucion,
+                            "mes": mes,
+                            "anio": anio
                         })
 
                 elif numeral == "Numeral 3":
