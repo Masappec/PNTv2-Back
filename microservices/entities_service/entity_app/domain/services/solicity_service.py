@@ -447,7 +447,7 @@ class SolicityService:
                 gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
         else:
             return self.update_draft(
-                id, number_saip, establishment, city, first_name, last_name, email, phone,
+                id, number_saip, establishment.id, city, first_name, last_name, email, phone,
                 gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
 
     def update_draft(

@@ -37,7 +37,7 @@ class SolicityImpl(SolicityRepository):
                                       user_id=user_id,  motive=text,
                                       user_created_id=user_id,
                                       user_updated_id=user_id,
-                                      status=Status.SEND)
+                                      status=newstatus)
             solicity.save()
             self.save_timeline(
                 solicity_id, solicity.user_created_id, newstatus)
