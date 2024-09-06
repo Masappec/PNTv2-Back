@@ -12,10 +12,9 @@ from django.utils import timezone
 
 class SolicityImpl(SolicityRepository):
 
-    
-    
     def delete_draft(self, solicity_id):
         return Solicity.objects.filter(id=solicity_id).delete()
+
     def change_status_by_id(self, solicity_id, text, user_id) -> Solicity:
         solicity = Solicity.objects.get(id=solicity_id)
 
@@ -360,3 +359,37 @@ class SolicityImpl(SolicityRepository):
 
     def get_solicity_by_id(self, solicity_id):
         return Solicity.objects.get(id=solicity_id)
+
+    def update_draft(self, id: int,
+                     number_saip: str,
+                     establishment: int,
+                     city: str,
+                     first_name: str,
+                     last_name: str,
+                     email: str,
+                     phone: str,
+                     gender: str,
+                     race_identification: str,
+                     text: str,
+                     format_receipt: str,
+                     format_send: str,
+                     expiry_date: datetime,
+                     user_id: int):
+
+        solicity = Solicity.objects.get(id=id)
+        solicity.number_saip = number_saip
+        solicity.establishment_id = establishment
+        solicity.city = city
+        solicity.first_name = first_name
+        solicity.last_name = last_name
+        solicity.email = email
+        solicity.phone = phone
+        solicity.gender = gender
+        solicity.race_identification = race_identification
+        solicity.text = text
+        solicity.format_receipt = format_receipt
+        solicity.format_send = format_send
+        solicity.expiry_date = expiry_date
+        solicity.user_updated_id = user_id
+        solicity.save()
+        return solicity

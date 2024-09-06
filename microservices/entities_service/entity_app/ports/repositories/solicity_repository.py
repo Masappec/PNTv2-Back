@@ -23,7 +23,7 @@ class SolicityRepository(ABC):
                               expiry_date: datetime,
                               user_id: int) -> Solicity:
         pass
-    
+
     @abstractmethod
     def delete_draft(self, solicity_id):
         pass
@@ -74,7 +74,7 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
-    def create_comment_solicity(self, solicity_id, user_id, text,status):
+    def create_comment_solicity(self, solicity_id, user_id, text, status):
         pass
 
     @abstractmethod
@@ -200,10 +200,24 @@ class SolicityRepository(ABC):
     def get_solicity_by_id(self, solicity_id) -> Solicity:
         pass
 
-
+    @abstractmethod
+    def change_status_by_id(self, solicity_id, text, user_id) -> Solicity:
+        pass
 
     @abstractmethod
-    def change_status_by_id(self,solicity_id,text,user_id)->Solicity:
+    def update_draft(self, id: int,
+                     number_saip: str,
+                     establishment: int,
+                     city: str,
+                     first_name: str,
+                     last_name: str,
+                     email: str,
+                     phone: str,
+                     gender: str,
+                     race_identification: str,
+                     text: str,
+                     format_receipt: str,
+                     format_send: str,
+                     expiry_date: datetime,
+                     user_id: int):
         pass
-    
-   

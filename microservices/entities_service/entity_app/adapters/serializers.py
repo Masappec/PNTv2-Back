@@ -172,6 +172,7 @@ class SolicityManualSerializer(serializers.ModelSerializer):
 
 class SolicityCreateWithDraftSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
+    is_send = serializers.BooleanField()
 
     class Meta:
         model = Solicity

@@ -14,7 +14,7 @@ class SolicityService:
     def __init__(self, solicity_repository: SolicityRepository):
         self.solicity_repository = solicity_repository
         self.publisher = Publisher(CHANNEL_SOLICIY)
-        
+
     def delete_draft(self, solicity_id, user_id):
         """
         Elimina un borrador de solicitud
@@ -30,7 +30,7 @@ class SolicityService:
         Returns:
             _type_: _description_
         """
-        
+
         solicity = self.solicity_repository.get_solicity_by_id(solicity_id)
         if solicity.user_created_id != user_id:
             raise ValueError("No se puede eliminar la solicitud")
@@ -87,8 +87,7 @@ class SolicityService:
 
         es = UserEstablishmentExtended.objects.filter(
             establishment_id=solicity.establishment_id).distinct().all()
-        
-        
+
         self.save_timeline(solicity.id, user_id, Status.SEND)
         self.publisher.publish({
             'type': SOLICITY_CITIZEN_CREATED,
@@ -114,8 +113,9 @@ class SolicityService:
         """
         return self.solicity_repository.create_comment_solicity(solicity_id, user_id, text)
 
-    def change_status_by_id(self,solicity_id,user_id,text):
-        return self.solicity_repository.change_status_by_id(solicity_id,text,user_id)
+    def change_status_by_id(self, solicity_id, user_id, text):
+        return self.solicity_repository.change_status_by_id(solicity_id, text, user_id)
+
     def send_solicity_without_draft(self,
                                     number_saip: str,
                                     establishment: int,
@@ -173,7 +173,7 @@ class SolicityService:
                                format_send: str,
                                expiry_date: datetime,
                                user_id: int,
-                                date: datetime
+                               date: datetime
                                ) -> Solicity:
         """
         Crea una solicitud de manual
@@ -181,13 +181,11 @@ class SolicityService:
         Args:
             solicity (dict): Diccionario con los datos de la solicitud de manual
         """
-        
-        solicity =  self.solicity_repository.create_manual_solicity(
+
+        solicity = self.solicity_repository.create_manual_solicity(
             number_saip, establishment, city, first_name, last_name, email, phone,
-            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id,date)
-        
-        
-        
+            gender, race_identification, text, format_receipt, format_send, expiry_date, user_id, date)
+
         es = UserEstablishmentExtended.objects.filter(
             establishment_id=solicity.establishment_id).distinct('user_id').all()
         self.publisher.publish({
@@ -201,8 +199,9 @@ class SolicityService:
 
             }
         })
-        
+
         return solicity
+
     def create_insistency_solicity(self, solicity_id, user_id, text):
         """
         Crea una solicitud de insitencia
@@ -263,12 +262,10 @@ class SolicityService:
                     }
                 })
 
-            
-
             return solicity
-        
+
         if solicity.status == Status.PRORROGA:
-            if not is_citizen  or solicity.is_manual:
+            if not is_citizen or solicity.is_manual:
                 self.solicity_repository.create_comment_solicity(
                     solicity_id=solicity_id,
                     text=text,
@@ -373,11 +370,8 @@ class SolicityService:
 
             return solicity
 
-        
-
         if solicity.status == Status.PERIOD_INFORMAL_MANAGEMENT:
             if is_citizen or solicity.is_manual:
-                
 
                 self.solicity_repository.create_insistency_solicity(
                     solicity_id, user_id, text)
@@ -428,8 +422,6 @@ class SolicityService:
 
                 return solicity
 
-        
-
         return solicity
 
     def update_solicity(self,
@@ -454,9 +446,17 @@ class SolicityService:
                 id, number_saip, establishment, city, first_name, last_name, email, phone,
                 gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
         else:
-            return self.send_solicity_from_draft(
+            return self.update_draft(
                 id, number_saip, establishment, city, first_name, last_name, email, phone,
                 gender, race_identification, text, format_receipt, format_send, expiry_date, user_id)
+
+    def update_draft(
+        self, id, number_saip, establishment, city, first_name, last_name, email, phone,
+        gender, race_identification, text, format_receipt, format_send, expiry_date, user_id
+    ):
+        return self.solicity_repository.update_draft(id, number_saip, establishment, city, first_name, last_name, email, phone,
+                                                     gender, race_identification, text, format_receipt, format_send, expiry_date, user_id
+                                                     )
 
     def update_solicity_response(self, solicity_response_id, text, category_id, files, attachments):
         """
