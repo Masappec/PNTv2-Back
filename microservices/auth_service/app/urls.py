@@ -29,7 +29,7 @@ urlpatterns = [
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path(r'password_reset/', include('django_rest_passwordreset.urls',
          namespace='password_reset')),
-    path('new-password/', ChangePasswordView.as_view(), name='new-password'),
+    path("password-new/", ChangePasswordView.as_view(), name="password-new"),
     path('activate/<uidb64>/<token>/',
          ActivateAccountApiView.as_view(), name='activate'),
 
