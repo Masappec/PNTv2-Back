@@ -300,6 +300,7 @@ class EstablishmentDetailUserSession(APIView):
             serializer = self.serializer_class(data={
                 'id': establishment.id,
                 'name': establishment.name,
+                'alias':establishment.alias,
                 'abbreviation': establishment.abbreviation,
                 'logo': establishment.logo.url if establishment.logo else None,
                 'highest_authority': establishment.highest_authority,

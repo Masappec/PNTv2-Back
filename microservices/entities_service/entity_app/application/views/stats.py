@@ -236,11 +236,14 @@ class EstablishmentCompliance(ListAPIView):
 
         month = request.query_params.get('month', datetime.now().month)
         year = request.query_params.get('year', datetime.now().year)
-
+        search = request.query_params.get('search', None)
         establishments = self.get_queryset()
 
+        if search:
+            establishments = establishments.filter(name__icontains=search)
         data = EstablishmentcomplianceSerializer(establishments, context={
             'month': month, 'year': year},many=True)
+        
 
         paginator = self.pagination_class()
         paginated_data = paginator.paginate_queryset(data.data, request)

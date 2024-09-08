@@ -55,7 +55,7 @@ class EstablishmentCreateSerializer(Serializer):
 
 class EstablishmentCreateResponseSerializer(Serializer):
     id = IntegerField()
-    alias = CharField(max_length=255)
+    alias = CharField(max_length=255, allow_null=True, allow_blank=True)
 
     name = CharField(max_length=255)
     abbreviation = CharField(max_length=255)

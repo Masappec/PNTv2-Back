@@ -30,7 +30,7 @@ def send_email_citizen_create_solicity(
             'last_name': user.last_name,
             'saip': number_saip,
             'establishment': establishment.name,
-            'url': FRONTEND_ACTIVATE_ACCOUNT_URL + f'/admin/establishment/solicity/'
+            'url': FRONTEND_ACTIVATE_ACCOUNT_URL + f'/admin/reports/'
         }
 
         for _email in email:
@@ -108,7 +108,7 @@ def send_mail_citizen_response(
             'last_name': user.last_name,
             'saip': number_saip,
             'establishment': establishment.name,
-            'url': FRONTEND_ACTIVATE_ACCOUNT_URL + f'/admin/establishment/solicity/'
+            'url': FRONTEND_ACTIVATE_ACCOUNT_URL + f'/admin/reports/'
         }
 
         for _email in email:
@@ -190,7 +190,7 @@ def send_email_for_expired_establishment(
             'last_name': user.last_name,
             'saip': number_saip,
             'establishment': establishment.name,
-            'url': FRONTEND_ACTIVATE_ACCOUNT_URL + f'/admin/establishment/solicity/'
+            'url': FRONTEND_ACTIVATE_ACCOUNT_URL + f'/admin/reports/'
         }
 
         for _email in email:
