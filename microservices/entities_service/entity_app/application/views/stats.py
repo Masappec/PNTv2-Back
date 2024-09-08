@@ -150,7 +150,8 @@ class IndicatorsEstablishmentView(APIView):
         score = self._calculate_publishing_score(establishment, year)
         published_transparency = TransparencyActive.objects.filter(
             published=True,                         # Solo considerar los registros publicados
-            published_at__year=year                 # Filtrar por el año 2024
+            published_at__year=year,
+            establishment_id=establishment# Filtrar por el año 2024
         )
 
 
@@ -159,7 +160,9 @@ class IndicatorsEstablishmentView(APIView):
        # Agrupar por el día del mes y contar las publicaciones
         most_frequent_day = TransparencyActive.objects.filter(
             published=True,  # Solo considerar los registros publicados
-            published_at__isnull=False  # Asegurarse de que la fecha de publicación exista
+            published_at__isnull=False, # Asegurarse de que la fecha de publicación exista
+            establishment_id=establishment  # Filtrar por el año 2024
+
         ).annotate(
             # Extraer el día del campo published_at
             day_of_publication=ExtractDay('published_at')
@@ -231,13 +234,13 @@ class EstablishmentCompliance(ListAPIView):
 
     def get(self, request):
 
-        month = request.query_params.get('month', 0)
-        year = request.query_params.get('year', 0)
+        month = request.query_params.get('month', datetime.now().month)
+        year = request.query_params.get('year', datetime.now().year)
 
         establishments = self.get_queryset()
 
         data = EstablishmentcomplianceSerializer(establishments, context={
-            'month': month, 'year': year})
+            'month': month, 'year': year},many=True)
 
         paginator = self.pagination_class()
         paginated_data = paginator.paginate_queryset(data.data, request)

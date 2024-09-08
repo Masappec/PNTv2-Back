@@ -50,12 +50,18 @@ class NumeralsByEstablishment(APIView):
                     'status': status.HTTP_400_BAD_REQUEST,
                     'json': {}
                 }, status=status.HTTP_400_BAD_REQUEST)
+                
+            year = request.query_params.get('year',datetime.now().year)
+            month = request.query_params.get('month',datetime.now().month)
 
             numerals = self.service.get_by_entity(
                 request.query_params.get('establishtment_id'))
 
             serializer = self.serializer_class(numerals, many=True, context={
-                                               'establishment_id': request.query_params.get('establishtment_id')})
+                                               'establishment_id': request.query_params.get('establishtment_id'),
+                                               'year':year,
+                                               'month':month
+                                               })
 
             return Response(serializer.data)
 
@@ -259,8 +265,8 @@ class PublishNumeral(APIView):
 
         data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
-        month = datetime.now().month
-        year = datetime.now().year
+        month = data.validated_data['month']
+        year = data.validated_data['year']
         fecha_actual = datetime.now()
         transparency = self.service.get_transparency_by_numeral(
             data.validated_data['numeral_id'], month, year,
@@ -341,8 +347,9 @@ class NumeralEditPublish(APIView):
         try:
             data = self.serializer_class(data=request.data)
             data.is_valid(raise_exception=True)
-            month = datetime.now().month
-            year = datetime.now().year
+            
+            month = data.validated_data['month']
+            year = data.validated_data['year']
             fecha_actual = datetime.now()
             transparency = self.service.get_transparency_by_numeral(
                 data.validated_data['numeral_id'], month, year,

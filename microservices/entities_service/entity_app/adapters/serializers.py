@@ -354,7 +354,7 @@ class NumeralResponseSerializer(serializers.ModelSerializer):
 
         transparency = TransparencyActive.objects.filter(numeral=obj, published=True,
                                                          establishment_id=self.context['establishment_id'],
-                                                         month=datetime.datetime.now().month, year=datetime.datetime.now().year)
+                                                         month=self.context['month'], year=self.context['year'])
 
         if transparency.count() > 0:
             return True
@@ -365,7 +365,7 @@ class NumeralResponseSerializer(serializers.ModelSerializer):
 
         transparency = TransparencyActive.objects.filter(numeral=obj, published=True,
                                                          establishment_id=self.context['establishment_id'],
-                                                         month=datetime.datetime.now().month, year=datetime.datetime.now().year).first()
+                                                         month=self.context['month'], year=self.context['year']).first()
 
         if transparency:
             return TransparencyActiveListSerializer(transparency).data
@@ -394,7 +394,7 @@ class EstablishmentScoreSerializer(serializers.Serializer):
 
 class EstablishmentcomplianceSerializer(serializers.ModelSerializer):
     total_published_ta = serializers.SerializerMethodField(
-        method_name='get_total_numeral_ta')
+        method_name='get_total_published_ta')
     total_numeral_ta = serializers.SerializerMethodField(
         method_name='get_total_numeral_ta')
     total_solicities_res = serializers.SerializerMethodField(
@@ -411,36 +411,49 @@ class EstablishmentcomplianceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_total_published_ta(self, obj):
+        print(obj )
+        year, month = self.get_year_and_month()
         return TransparencyActive.objects.filter(
-            establishment_id=obj.id,
-            year=self.context['year'],
-            month=self.context['month']
+            establishment_id=obj,
+            year=year,
+            month=month
         ).count()
 
     def get_total_numeral_ta(self, obj):
-        return EstablishmentNumeral.objects.filter(establishment_id=obj.id)
+        return EstablishmentNumeral.objects.filter(establishment_id=obj).count()
 
     def get_total_solicities_rec(self, obj):
-        return Solicity.objects.filter(establishment_id=obj.id,
-                                       created_at__year=self.context['year'],
-                                       created_at__month=self.context['month'])
+        year, month = self.get_year_and_month()
+        return Solicity.objects.filter(establishment_id=obj,
+                                       created_at__year=year,
+                                       created_at__month=month).count()
 
     def get_total_solicities_res(self, obj):
-        return Solicity.objects.filter(establishment_id=obj.id,
-                                       created_at__year=self.context['year'],
-                                       created_at__month=self.context['month']).filter(Q(status=Status.RESPONSED)
-                                                                                       | Q(status=Status.INSISTENCY_RESPONSED)
-                                                                                       | Q(status=Status.INFORMAL_MANAGMENT_RESPONSED))
+        year, month = self.get_year_and_month()
+        return Solicity.objects.filter(establishment_id=obj,
+                                       created_at__year=year,
+                                       created_at__month=month).filter(
+            Q(status=Status.RESPONSED) |
+            Q(status=Status.INSISTENCY_RESPONSED) |
+            Q(status=Status.INFORMAL_MANAGMENT_RESPONSED)
+        ).count()
 
     def get_total_tf(self, obj):
-        return TransparencyFocal.objects.filter(establishment_id=obj.id,
-                                                created_at__year=self.context['year'],
-                                                created_at__month=self.context['month']).count()
+        year, month = self.get_year_and_month()
+        return TransparencyFocal.objects.filter(establishment_id=obj,
+                                                created_at__year=year,
+                                                created_at__month=month).count()
 
     def get_total_tc(self, obj):
-        return TransparencyColab.objects.filter(establishment_id=obj.id,
-                                                created_at__year=self.context['year'],
-                                                created_at__month=self.context['month']).count()
+        year, month = self.get_year_and_month()
+        return TransparencyColab.objects.filter(establishment_id=obj,
+                                                created_at__year=year,
+                                                created_at__month=month).count()
+
+    def get_year_and_month(self):
+        year = self.context.get('year', datetime.datetime.now().year)
+        month = self.context.get('month', datetime.datetime.now().month)
+        return year, month
 
 
 class TransparencyCreateResponseSerializer(serializers.ModelSerializer):
@@ -492,8 +505,8 @@ class TransparecyActiveCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
     numeral_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
-
-
+    month = serializers.IntegerField()
+    year = serializers.IntegerField()
 class TransparencyColaboratyCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())
