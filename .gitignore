@@ -31,6 +31,4 @@ microservices/auth_service/.idea/inspectionProfiles/Project_Default.xml
 
 
 **/media/
-mongo_data/
-redis_data/
-postgres_data/
+data/

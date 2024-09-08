@@ -1,16 +1,13 @@
-version: "3"
-
 services:
   redis_db:
-    image: redis:latest
+    image: redis:7.4
     restart: always
-
     ports:
       - "6379:6379"
     networks:
       - pnt_network
     volumes:
-      - ./redis_data:/data
+      - ./data/redis_data:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
 
   admin_microservice:
@@ -20,30 +17,27 @@ services:
     ports:
       - "8001"
     depends_on:
-      - db_auth
+      - postgres_db
       - redis_db
       - auth_microservice
     volumes:
       - ./microservices/admin_service:/code
-
-    #que se levante con el servicio de la base de datos
-
     restart: always
     environment:
-      - DB_HOST=db_auth
-      - DB_NAME=auth_database
-      - DB_USER=auth_user
-      - DB_PASSWORD=auth_password
+      - DB_HOST=postgres_db
+      - DB_NAME=pnt_db
+      - DB_USER=${POSTGRES_DB_USER}
+      - DB_PASSWORD=${POSTGRES_DB_PASSWORD}
       - CELERY_BROKER_URL=redis://redis_db:6379/3
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/3
-      - FRONTEND_PASSWORD_CONFIRMATION_URL=https://transparencia.ec/auth/reset-password/:token
-      - FRONTEND_ACTIVATE_ACCOUNT_URL=https://transparencia.ec/auth/activate-account/:uidb64/:token
-      - REDIS_HOST = redis_db
-      - REDIS_PORT = 6379
-      - REDIS_DB = 0
-
+      - FRONTEND_PASSWORD_CONFIRMATION_URL=${FRONTEND_PASSWORD_CONFIRMATION_URL}
+      - FRONTEND_ACTIVATE_ACCOUNT_URL=${FRONTEND_ACTIVATE_ACCOUNT_URL}
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
     networks:
       - pnt_network
+
   auth_microservice:
     build:
       context: ./microservices/auth_service
@@ -51,23 +45,21 @@ services:
     ports:
       - "8000"
     depends_on:
-      - db_auth
+      - postgres_db
       - redis_db
     volumes:
       - ./microservices/auth_service:/code
     restart: always
-
     environment:
-      - DB_HOST=db_auth
-      - DB_NAME=auth_database
-      - DB_USER=auth_user
-      - DB_PASSWORD=auth_password
+      - DB_HOST=postgres_db
+      - DB_NAME=pnt_db
+      - DB_USER=${POSTGRES_DB_USER}
+      - DB_PASSWORD=${POSTGRES_DB_PASSWORD}
       - CELERY_BROKER_URL=redis://redis_db:6379/4
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/4
-      - REDIS_HOST = redis_db
-      - REDIS_PORT = 6379
-      - REDIS_DB = 0
-
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
     networks:
       - pnt_network
 
@@ -78,26 +70,26 @@ services:
     ports:
       - "8000"
     depends_on:
-      - db_auth
+      - postgres_db
       - redis_db
     restart: always
-
     volumes:
       - ./microservices/entities_service:/code
-      - shared_media:/code/media
+      - ./data/shared_media:/code/media
     networks:
       - pnt_network
     environment:
-      - DB_HOST=db_auth
-      - DB_NAME=auth_database
-      - DB_USER=auth_user
-      - DB_PASSWORD=auth_password
+      - DB_HOST=postgres_db
+      - DB_NAME=pnt_db
+      - DB_USER=${POSTGRES_DB_USER}
+      - DB_PASSWORD=${POSTGRES_DB_PASSWORD}
       - CELERY_BROKER_URL=redis://redis_db:6379/1
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/1
-      - REDIS_HOST = redis_db
-      - REDIS_PORT = 6379
-      - REDIS_DB = 0
-  public_micorservice:
+      - REDIS_HOST=redis_db
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+
+  public_microservice:
     build:
       context: ./microservices/public_api_service
       dockerfile: Dockerfile
@@ -107,10 +99,9 @@ services:
       - mongo_db
       - redis_db
     restart: always
-
     volumes:
       - ./microservices/public_api_service:/code
-      - shared_media:/code/media
+      - ./data/shared_media:/code/media
     environment:
       - CELERY_BROKER_URL=redis://redis_db:6379/2
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/2
@@ -119,52 +110,46 @@ services:
       - REDIS_DB=0
       - MONGO_DB_HOST=mongo_db
       - MONGO_DB_PORT=27017
-      - MONGO_DB_USERNAME=root
-      - MONGO_DB_PASSWORD=rootpassword
+      - MONGO_DB_USERNAME=${MONGO_DB_USERNAME}
+      - MONGO_DB_PASSWORD=${MONGO_DB_PASSWORD}
       - MONGO_DB_NAME=public_api_service
-      - DB_HOST=db_auth
-      - DB_NAME=auth_database
-      - DB_USER=auth_user
-      - DB_PASSWORD=auth_password
-
+      - DB_HOST=postgres_db
+      - DB_NAME=pnt_db
+      - DB_USER=${POSTGRES_DB_USER}
+      - DB_PASSWORD=${POSTGRES_DB_PASSWORD}
     networks:
       - pnt_network
 
-  db_auth:
+  postgres_db:
     image: postgres:16.4
     restart: always
-
     environment:
-      POSTGRES_DB: auth_database
-      POSTGRES_USER: auth_user
-      POSTGRES_PASSWORD: auth_password
-
+      POSTGRES_DB: pnt_db
+      POSTGRES_USER: ${POSTGRES_DB_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+    volumes:
+      - ./data/postgres_data:/var/lib/postgresql/data
     networks:
       - pnt_network
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
 
   mongo_db:
     image: mongo:7.0
     networks:
       - pnt_network
     restart: always
-
     ports:
       - "27017:27017"
     volumes:
-      - ./mongo_data:/data/db
-      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js¨
-
+      - ./data/mongo_data:/data/db
+      - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     environment:
       MONGO_INITDB_ROOT_DATABASE: public_api_service
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
 
   api_gateway:
     image: nginx:1.27
     restart: always
-
     ports:
       - "8082:80"
     volumes:
@@ -178,13 +163,6 @@ services:
     networks:
       - pnt_network
 
-volumes:
-  auth_microservice:
-  admin_microservice:
-  public_micorservice:
-  db_auth:
-  shared_media:
-    driver: local
 networks:
   pnt_network:
     driver: bridge
