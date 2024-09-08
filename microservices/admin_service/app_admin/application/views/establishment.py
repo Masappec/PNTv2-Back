@@ -26,7 +26,7 @@ class EstablishmentListAPI(ListAPIView):
 
     pagination_class = StandardResultsSetPagination
     serializer_class = EstablishmentListSerializer
-
+    permission_classes = []
     def __init__(self):
         """
         The constructor for the UserListAPI class.
@@ -56,14 +56,17 @@ class EstablishmentListAPI(ListAPIView):
         Returns:
             object: The response object.
         """
-        queryset = self.get_queryset()
+        queryset = self.get_queryset().order_by('name')
         search = request.query_params.get('search', None)
         function = request.query_params.get('funcion', None)
+        sorts = request.query_params.get('sort[]',None)
         if search is not None:
             queryset = queryset.filter(
                 Q(name__icontains=search) | Q(abbreviation__icontains=search))
         if function is not None:
             queryset = queryset.filter(function_organization__name=function)
+        if sorts:
+            queryset = queryset.order_by(sorts)
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -195,7 +198,7 @@ class EstablishmentDetail(APIView):
         Args:
             request (object): The request object.
             *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
+            **kwargs: Arbitrary keyword arguments. 
 
         Returns:
             object: The response object.
@@ -210,6 +213,7 @@ class EstablishmentDetail(APIView):
                 pk)
             serializer = self.serializer_class(data={
                 'id': establishment.id,
+                'alias':establishment.alias,
                 'name': establishment.name,
                 'abbreviation': establishment.abbreviation,
                 'logo': establishment.logo.url if establishment.logo else None,

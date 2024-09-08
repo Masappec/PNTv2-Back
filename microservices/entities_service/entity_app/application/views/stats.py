@@ -10,8 +10,11 @@ from entity_app.adapters.serializers import EstablishmentSerializer, Establishme
 from entity_app.utils.pagination import StandardResultsSetPaginationDicts
 from rest_framework.generics import ListAPIView
 from django.db.models import Q
-
-
+from django.db.models import Count
+from django.db.models.functions import ExtractDay
+from django.db.models import F, Avg, ExpressionWrapper, DurationField
+from django.utils.timezone import now
+from django.db.models.functions import Round
 class StatsCitizen(APIView):
 
     permission_classes = []
@@ -50,7 +53,6 @@ class StatsCitizen(APIView):
 
             atentidas_list.append(atendidas)
 
-        top_20_most_visited = EstablishmentExtended.get_top_20_most_visited()
 
         #
 
@@ -60,7 +62,6 @@ class StatsCitizen(APIView):
                 'recibidas': recibidas_list,
                 'atendidas': atentidas_list
             },
-            'top_20_most_visited': EstablishmentSerializer(top_20_most_visited, many=True).data
 
 
         }
@@ -73,19 +74,21 @@ class EstablishmentStats(ListAPIView):
     pagination_class = StandardResultsSetPaginationDicts
 
     def get(self, request, *args, **kwargs):
-        year = request.query_params.get('year', datetime.now().year)
-        month = request.query_params.get('month', datetime.now().month)
-        top_20_establishments = EstablishmentExtended.get_top_20_best(year)
+        search = request.query_params.get('search',None)
+        sort = request.query_params.get('sort[]',None)
+        query_set = EstablishmentExtended.objects.filter(is_active=True)
 
-        data = [{'establishment': est, 'score': score,
-                 'recibidas': recibidas,
-                 'atendidas': atendidas,
-                 'prorrogas': prorrogas,
-                 'insistencias': insistencias,
-                 'no_respuestas': no_respuestas}
-                for est, score, recibidas, atendidas, prorrogas, insistencias, no_respuestas in top_20_establishments]
+       
 
+        if search:
+            query_set = query_set.filter(name__icontains=search)
+        if sort:
+            query_set = query_set.order_by(sort)
+            
         # Serializar los datos
+        data = [{'establishment': est, **est.calculate_total_score(datetime.now().year)}
+                for est in query_set]
+       
         serializer = EstablishmentScoreSerializer(data, many=True)
 
         # Obtener el paginador y paginar los datos
@@ -108,23 +111,9 @@ class IndicatorsEstablishmentView(APIView):
         ).dates('published_at', 'month', order='ASC').distinct().count()
         return published_months
 
-    def calculate_publishing_score(self, establishment_id, year):
-        current_year = year
-        score = 0
+    def _calculate_publishing_score(self, establishment_id, year):
 
-        publications = TransparencyActive.objects.filter(
-            establishment_id=establishment_id,
-            year=current_year,
-            published=True,
-            published_at__lte=datetime.now()
-        )
-
-        for publication in publications:
-            published_day = publication.published_at.day
-            if 1 <= published_day <= 4:
-                score += 5 - published_day  # Más cerca al día 1, más puntaje
-
-        return score
+        return EstablishmentExtended.objects.get(id=establishment_id).calculate_publishing_score(year)
 
     @swagger_auto_schema(
         manual_parameters=[
@@ -158,32 +147,64 @@ class IndicatorsEstablishmentView(APIView):
 
             atentidas_list.append(atendidas)
 
-        score = self.calculate_publishing_score(establishment, year)
-        score_saip = 0
-        total_recibidas = sum(recibidas_list)
-        total_atendidas = sum(atentidas_list)
-        if total_recibidas == 0:
-            score_saip = 0
-        else:
-            score_saip = total_atendidas / total_recibidas
-            score_saip = score_saip * 100
-            score_saip = round(score_saip, 2)
+        score = self._calculate_publishing_score(establishment, year)
+        published_transparency = TransparencyActive.objects.filter(
+            published=True,                         # Solo considerar los registros publicados
+            published_at__year=year                 # Filtrar por el año 2024
+        )
 
-        total_score = score + score_saip
-        if score_saip != 0 and score != 0:
-            total_score = total_score / 2
-        else:
-            total_score = score_saip if score_saip != 0 else score
 
-        total_score = round(total_score, 2)
+        # Contar la cantidad total de archivos (files) asociados a esos registros
+        total_files = sum(t.files.count() for t in published_transparency)
+       # Agrupar por el día del mes y contar las publicaciones
+        most_frequent_day = TransparencyActive.objects.filter(
+            published=True,  # Solo considerar los registros publicados
+            published_at__isnull=False  # Asegurarse de que la fecha de publicación exista
+        ).annotate(
+            # Extraer el día del campo published_at
+            day_of_publication=ExtractDay('published_at')
+        ).values(
+            'day_of_publication'  # Agrupar por día
+        ).annotate(
+            # Contar la frecuencia de cada día
+            day_count=Count('day_of_publication')
+        ).order_by('-day_count')  # Ordenar por la frecuencia, descendente
+        
+
+        # Filtrar los registros con el estado requerido y calcular la diferencia de tiempo
+        time_deltas = TimeLineSolicity.objects.filter(
+            # Ajusta según los nombres en tu sistema
+            status__in=[Status.SEND, Status.RESPONSED]
+        ).annotate(
+            time_diff=ExpressionWrapper(
+                # Diferencia entre la fecha de respuesta y la de recepción
+                F('updated_at') - F('created_at'),
+                output_field=DurationField()  # Resultado en duración
+            )
+        )
+
+        # Calcular el promedio de la duración en segundos
+        average_response_time = time_deltas.aggregate(average=Avg('time_diff'))
+
+        # Obtener el promedio en segundos
+        average_seconds = average_response_time['average'].total_seconds(
+        ) if average_response_time['average'] else 0
+        average_days = round(average_seconds / (60 * 60 * 24), 2)  # Convertir a días y redondear a 2 decimales
+       
+        FilePublication.objects.filter()
+        
         data = {
             "recibidas": recibidas_list,
             "atendidas": atentidas_list,
             "total_recibidas": sum(recibidas_list),
             "total_atendidas": sum(atentidas_list),
-            "score_activa": score,
-            "score_saip": score_saip,
-            "total_score": total_score,
+            "score_activa": score['score_saip'],
+            "score_saip": score['score_saip'],
+            "total_score": score['score_saip'],
+            "ta_published": total_files,
+            "day_frencuency_response": average_days,
+            "day_frencuency_publish": most_frequent_day[0]['day_of_publication'] if most_frequent_day.__len__() > 0 else 0
+            
         }
 
         return Response(data, status=200)

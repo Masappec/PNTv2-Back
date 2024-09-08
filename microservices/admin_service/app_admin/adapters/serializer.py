@@ -28,6 +28,7 @@ class EstablishmentListSerializer(ModelSerializer):
 
 class EstablishmentCreateSerializer(Serializer):
     name = CharField(max_length=255)
+    alias = CharField(max_length=255)
     abbreviation = CharField(max_length=255)
     logo = ImageField(upload_to='establishment')
     highest_authority = CharField(max_length=255)
@@ -54,6 +55,8 @@ class EstablishmentCreateSerializer(Serializer):
 
 class EstablishmentCreateResponseSerializer(Serializer):
     id = IntegerField()
+    alias = CharField(max_length=255)
+
     name = CharField(max_length=255)
     abbreviation = CharField(max_length=255)
     logo = CharField(max_length=255, allow_null=True)

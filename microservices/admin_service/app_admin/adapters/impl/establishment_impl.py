@@ -39,6 +39,7 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         code = Establishment.objects.all().count() + 1
         return Establishment.objects.create(
             name=establishment['name'],
+            alias = establishment['alias'],
             abbreviation=establishment['abbreviation'],
             identification=establishment['identification'],
             deleted=False,
