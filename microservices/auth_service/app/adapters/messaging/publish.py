@@ -21,5 +21,5 @@ class Publisher:
         message['id'] = str(uuid.uuid4())
 
         message = json.dumps(message)
-        print(f"Publishing message: {message}")
+        #print(f"Publishing message: {message}")
         self.redis_client.publish(self.channel, message)
