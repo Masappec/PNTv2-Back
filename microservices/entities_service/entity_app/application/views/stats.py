@@ -88,23 +88,42 @@ class EstablishmentStats(ListAPIView):
 
         # Anotaciones para calcular totales y puntuaciones
         query_set = query_set.annotate(
-            total_TA=Count('numerals'),
-            total_TP=Count('transparency_active', filter=Q(transparency_active__year=year,
-                           transparency_active__month=month, transparency_active__published_at__day__lte=5)),
-            total_TS=Count('solicity', filter=Q(solicity__date__year=year,
-                           solicity__date__month=month) & ~Q(solicity__status=Status.DRAFT)),
-            total_TR=Count('solicity__timelinesolicity', filter=Q(
-                solicity__timelinesolicity__status=Status.RESPONSED)),
-            total_TSP=Count('solicity__timelinesolicity', filter=Q(
-                solicity__timelinesolicity__status=Status.PRORROGA)),
-            total_TSI=Count('solicity__timelinesolicity', filter=Q(
-                solicity__timelinesolicity__status=Status.INSISTENCY_SEND)),
-            total_TSN=Count('solicity__timelinesolicity', filter=Q(
-                solicity__timelinesolicity__status=Status.NO_RESPONSED)),
-            total_TF=Count('transparency_focal', filter=Q(transparency_focal__year=year,
-                           transparency_focal__month=month, transparency_focal__published_at__day__lte=5)),
-            total_TC=Count('transparency_colab', filter=Q(transparency_colab__year=year,
-                           transparency_colab__month=month, transparency_colab__published_at__day__lte=5))
+            total_TA=Count('numerals', filter=Q(
+                numerals__establishment_id=F('id')
+                )),
+            total_TP=Count('transparency_active',  distinct=True, filter=Q(transparency_active__year=year,
+                           transparency_active__month=month, transparency_active__published_at__day__lte=5,
+                            transparency_active__establishment_id=F('id'))),
+            total_TS=Count('solicity', distinct=True, filter=Q(solicity__date__year=year,
+                           solicity__date__month=month) & ~Q(solicity__status=Status.DRAFT)
+                            & Q(solicity__establishment_id=F('id'))
+                            ),
+            total_TR=Count('solicity__timelinesolicity',  distinct=True, filter=Q(
+                solicity__timelinesolicity__created_at__year=year,
+                solicity__timelinesolicity__created_at__month=month,
+                solicity__timelinesolicity__status=Status.RESPONSED),
+                solicity__establishment_id=F('id')),
+            total_TSP=Count('solicity__timelinesolicity', distinct=True,  filter=Q(
+                solicity__timelinesolicity__created_at__year=year,
+                solicity__timelinesolicity__created_at__month=month,
+                solicity__timelinesolicity__status=Status.PRORROGA,
+                solicity__establishment_id=F('id'))),
+            total_TSI=Count('solicity__timelinesolicity', distinct=True,  filter=Q(
+                solicity__timelinesolicity__created_at__year=year,
+                solicity__timelinesolicity__created_at__month=month,
+                solicity__timelinesolicity__status=Status.INSISTENCY_SEND,
+                solicity__establishment_id=F('id'))),
+            total_TSN=Count('solicity__timelinesolicity',  distinct=True, filter=Q(
+                solicity__timelinesolicity__created_at__year=year,
+                solicity__timelinesolicity__created_at__month=month,
+                solicity__timelinesolicity__status=Status.NO_RESPONSED),
+                solicity__establishment_id=F('id')),
+            total_TF=Count('transparency_focal', distinct=True,  filter=Q(transparency_focal__year=year,
+                           transparency_focal__month=month, transparency_focal__published_at__day__lte=5,
+                            transparency_focal__establishment_id=F('id'))),
+            total_TC=Count('transparency_colab', distinct=True,  filter=Q(transparency_colab__year=year,
+                           transparency_colab__month=month, transparency_colab__published_at__day__lte=5,
+                            transparency_colab__establishment_id=F('id'))),
         )
 
         # Calcular el puntaje para cada establecimiento
@@ -136,11 +155,13 @@ class EstablishmentStats(ListAPIView):
                     ((est.total_TR * 100) / est.total_TS) * 50
         else:
             score = 0
-
+        print(score )
         if est.total_TC > 0:
             score *= 1.05
         if est.total_TF > 0:
             score *= 1.05
+        if score > 100:
+            score = 100
 
         return score
 
@@ -284,18 +305,29 @@ class EstablishmentCompliance(ListAPIView):
         # Anotaciones para total_published_ta, total_solicities_res, etc.
         queryset = queryset.annotate(
             total_published_ta=Count('transparency_active', filter=Q(
-                transparency_active__year=year, transparency_active__month=month)),
-            total_numeral_ta=Count('numerals'),
+                transparency_active__year=year, transparency_active__month=month,
+                transparency_active__establishment_id=F('id')
+                )),
+            total_numeral_ta=Count('numerals', filter=Q(
+                numerals__establishment_id=F('id')
+                )),
+            
             total_solicities_res=Count('solicity', filter=Q(solicity__created_at__year=year, solicity__created_at__month=month) &
                                        (Q(solicity__status=Status.RESPONSED) |
                                         Q(solicity__status=Status.INSISTENCY_RESPONSED) |
-                                        Q(solicity__status=Status.INFORMAL_MANAGMENT_RESPONSED))),
-            total_solicities_rec=Count('solicity', filter=Q(
-                solicity__created_at__year=year, solicity__created_at__month=month)),
+                                        Q(solicity__status=Status.INFORMAL_MANAGMENT_RESPONSED)),
+                                       solicity__establishment_id=F('id')),
+            total_solicities_rec=Count('solicity', filter=Q(solicity__date__year=year,
+                           solicity__date__month=month) & ~Q(solicity__status=Status.DRAFT),
+                            solicity__establishment_id=F('id')),
             total_tf=Count('transparency_focal', filter=Q(
-                transparency_focal__created_at__year=year, transparency_focal__created_at__month=month)),
+                transparency_focal__created_at__year=year, transparency_focal__created_at__month=month,
+                transparency_focal__establishment_id=F('id')
+                )), 
             total_tc=Count('transparency_colab', filter=Q(
-                transparency_colab__created_at__year=year, transparency_colab__created_at__month=month)),
+                transparency_colab__created_at__year=year, transparency_colab__created_at__month=month,
+                transparency_colab__establishment_id=F('id')
+                )),
         )
         return queryset
 

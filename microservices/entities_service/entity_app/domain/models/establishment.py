@@ -169,8 +169,14 @@ class EstablishmentExtended(models.Model):
         
         # Safeguard against division by zero
         if total_TA != 0 and total_TS.count() != 0:
-            score = ((total_TP.count() * 100) / total_TA) * 50 + \
-                ((total_TR.count() * 100) / total_TS.count()) * 50
+            sub_1 = total_TP.count() * 100
+            sub_2 = total_TR.count() * 100
+            
+            div_1 = sub_1 / total_TA * 50
+            div_2 = sub_2 / total_TS.count() * 50
+            print(sub_1, sub_2, div_1, div_2 )
+            
+            score = div_1 + div_2
         else:
             score = 0  #
 
@@ -178,6 +184,9 @@ class EstablishmentExtended(models.Model):
             score = score * 1.05
         if total_TF.count()>0:
             score = score * 1.05
+            
+        if score > 100:
+            score = 100
 
         total_recibidas = total_TS.count()
         total_atendidas = total_TR.count()
