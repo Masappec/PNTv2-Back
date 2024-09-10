@@ -391,69 +391,17 @@ class EstablishmentScoreSerializer(serializers.Serializer):
     total_no_respuesta = serializers.IntegerField()
 
 
-
 class EstablishmentcomplianceSerializer(serializers.ModelSerializer):
-    total_published_ta = serializers.SerializerMethodField(
-        method_name='get_total_published_ta')
-    total_numeral_ta = serializers.SerializerMethodField(
-        method_name='get_total_numeral_ta')
-    total_solicities_res = serializers.SerializerMethodField(
-        method_name='get_total_solicities_res')
-    total_solicities_rec = serializers.SerializerMethodField(
-        method_name='get_total_solicities_rec')
-    total_tf = serializers.SerializerMethodField(
-        method_name='get_total_tf')
-    total_tc = serializers.SerializerMethodField(
-        method_name='get_total_tc')
+    total_published_ta = serializers.IntegerField(read_only=True)
+    total_numeral_ta = serializers.IntegerField(read_only=True)
+    total_solicities_res = serializers.IntegerField(read_only=True)
+    total_solicities_rec = serializers.IntegerField(read_only=True)
+    total_tf = serializers.IntegerField(read_only=True)
+    total_tc = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = EstablishmentExtended
         fields = '__all__'
-
-    def get_total_published_ta(self, obj):
-        print(obj )
-        year, month = self.get_year_and_month()
-        return TransparencyActive.objects.filter(
-            establishment_id=obj,
-            year=year,
-            month=month
-        ).count()
-
-    def get_total_numeral_ta(self, obj):
-        return EstablishmentNumeral.objects.filter(establishment_id=obj).count()
-
-    def get_total_solicities_rec(self, obj):
-        year, month = self.get_year_and_month()
-        return Solicity.objects.filter(establishment_id=obj,
-                                       created_at__year=year,
-                                       created_at__month=month).count()
-
-    def get_total_solicities_res(self, obj):
-        year, month = self.get_year_and_month()
-        return Solicity.objects.filter(establishment_id=obj,
-                                       created_at__year=year,
-                                       created_at__month=month).filter(
-            Q(status=Status.RESPONSED) |
-            Q(status=Status.INSISTENCY_RESPONSED) |
-            Q(status=Status.INFORMAL_MANAGMENT_RESPONSED)
-        ).count()
-
-    def get_total_tf(self, obj):
-        year, month = self.get_year_and_month()
-        return TransparencyFocal.objects.filter(establishment_id=obj,
-                                                created_at__year=year,
-                                                created_at__month=month).count()
-
-    def get_total_tc(self, obj):
-        year, month = self.get_year_and_month()
-        return TransparencyColab.objects.filter(establishment_id=obj,
-                                                created_at__year=year,
-                                                created_at__month=month).count()
-
-    def get_year_and_month(self):
-        year = self.context.get('year', datetime.datetime.now().year)
-        month = self.context.get('month', datetime.datetime.now().month)
-        return year, month
 
 
 class TransparencyCreateResponseSerializer(serializers.ModelSerializer):

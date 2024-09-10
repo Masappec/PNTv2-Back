@@ -560,3 +560,37 @@ Mon Sep  2 16:58:46 2024 - Mensaje recibido: {'type': 'message', 'pattern': None
 Mon Sep  2 16:59:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000001", "date": "2024-09-02", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 287, "status": "INSISTENCY_SEND", "user_id": 3, "solicity_id": 1, "email": ["andersonsinaluisa@gmail.com"]}, "id": "ce9ef4d0-9c33-424b-b907-ba426e8044f6"}'}
 Mon Sep  2 16:59:22 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000002", "date": "2024-09-02", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 287, "status": "SEND", "user_id": 3, "solicity_id": 2, "email": ["andersonsinaluisa@gmail.com"]}, "id": "65bba5df-f0c9-4f52-8edf-d3bcf40bb392"}'}
 Mon Sep  2 17:01:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000001", "date": "2024-09-02", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 287, "status": "INFORMAL_MANAGMENT_SEND", "user_id": 3, "solicity_id": 1, "email": ["andersonsinaluisa@gmail.com"]}, "id": "48747723-1114-46c0-96bb-4b1a330d077a"}'}
+Mon Sep  2 21:16:19 2024 - Iniciando suscripción al canal user
+Mon Sep  2 21:16:19 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 21:17:06 2024 - Iniciando suscripción al canal user
+Mon Sep  2 21:17:06 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 21:18:29 2024 - Iniciando suscripción al canal user
+Mon Sep  2 21:18:29 2024 - Iniciando suscripción al canal solicity
+Mon Sep  2 21:35:41 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'user', 'data': b'{"type": "user_register", "payload": {"uidb64": "Mg", "username": "anderson_ciudadano", "email": "andersonsinaluisa@gmail.com", "token": "ccqxb7-a4f1ca3f67bff0a5ce9ccfbbef1c6fa0"}, "id": "06f3b526-99f8-407a-82a7-ae664a289bfd"}'}
+Mon Sep  2 21:38:52 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 1, "establishment_id": 2, "user_id": 2, "number_saip": "SAIP-2024-0000000001", "email": []}, "id": "ace4e64c-711b-4436-9f95-23cc24427bfb"}'}
+Mon Sep  2 21:39:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000001", "date": "2024-09-03", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 2, "status": "SEND", "user_id": 2, "solicity_id": 1, "email": []}, "id": "7cee1241-6b2f-428b-8ea6-1d0e9590ac73"}'}
+Tue Sep  3 21:09:28 2024 - Iniciando suscripción al canal user
+Tue Sep  3 21:09:28 2024 - Iniciando suscripción al canal solicity
+Tue Sep  3 21:21:15 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 2, "establishment_id": 2, "user_id": 2, "number_saip": "SAIP-2024-0000000002", "email": []}, "id": "c39b3852-011e-4e11-b6ad-8217b18cc69a"}'}
+Tue Sep  3 21:21:30 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 3, "establishment_id": 2, "user_id": 2, "number_saip": "SAIP-2024-0000000003", "email": []}, "id": "7dd440ae-4635-4258-9f79-d85e52640e7f"}'}
+Tue Sep  3 21:22:10 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000002", "date": "2024-09-04", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 2, "status": "SEND", "user_id": 2, "solicity_id": 2, "email": []}, "id": "474313ae-861f-481e-8240-dd93177ffd78"}'}
+Tue Sep  3 21:22:20 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-0000000003", "date": "2024-09-04", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 2, "status": "SEND", "user_id": 2, "solicity_id": 3, "email": []}, "id": "f8e1e849-ae4f-4c94-a3d5-2e973e59af74"}'}
+Sun Sep  8 08:06:16 2024 - Iniciando suscripción al canal user
+Sun Sep  8 08:06:16 2024 - Iniciando suscripción al canal solicity
+Sun Sep  8 08:07:22 2024 - Iniciando suscripción al canal user
+Sun Sep  8 08:07:22 2024 - Iniciando suscripción al canal solicity
+Sun Sep  8 09:34:55 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_citizen_created", "payload": {"solicity_id": 5, "establishment_id": 2, "user_id": 3, "number_saip": "SAIP-2024-5", "email": ["afullink@gmail.com"]}, "id": "a9a0580f-943f-440e-b366-a7814d8a1e85"}'}
+Sun Sep  8 09:35:12 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_for_expired", "payload": {"number_saip": "SAIP-2024-5", "date": "2024-09-08", "first_name": "Anderson", "last_name": "Sinaluisa", "establishment_id": 2, "status": "SEND", "user_id": 3, "solicity_id": 5, "email": ["afullink@gmail.com"]}, "id": "376a9b53-6768-4d85-8059-a03a0f722f78"}'}
+Sun Sep  8 09:35:42 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'solicity', 'data': b'{"type": "solicity_response_establishment", "payload": {"solicity_id": 5, "user_id": 3, "number_saip": "SAIP-2024-5", "establishment_id": 2, "email": ["afullink@gmail.com"]}, "id": "58413b09-4177-4b7a-844a-7a4d2f245763"}'}
+Sun Sep  8 20:10:06 2024 - Iniciando suscripción al canal user
+Sun Sep  8 20:10:06 2024 - Iniciando suscripción al canal solicity
+Mon Sep  9 21:18:13 2024 - Iniciando suscripción al canal user
+Mon Sep  9 21:18:13 2024 - Iniciando suscripción al canal solicity
+Mon Sep  9 21:20:15 2024 - Iniciando suscripción al canal user
+Mon Sep  9 21:20:15 2024 - Iniciando suscripción al canal solicity
+Mon Sep  9 21:20:55 2024 - Iniciando suscripción al canal user
+Mon Sep  9 21:20:55 2024 - Iniciando suscripción al canal solicity
+Mon Sep  9 21:31:04 2024 - Iniciando suscripción al canal user
+Mon Sep  9 21:31:04 2024 - Iniciando suscripción al canal solicity
+Mon Sep  9 21:32:13 2024 - Iniciando suscripción al canal user
+Mon Sep  9 21:32:13 2024 - Iniciando suscripción al canal solicity

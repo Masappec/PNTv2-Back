@@ -96,7 +96,7 @@ services:
       - REDIS_HOST = redis_db
       - REDIS_PORT = 6379
       - REDIS_DB = 0
-  public_micorservice:
+  public_microservice:
     build:
       context: ./microservices/public_api_service
       dockerfile: Dockerfile.dev
@@ -178,7 +178,7 @@ services:
 volumes:
   auth_microservice:
   admin_microservice:
-  public_micorservice:
+  public_microservice:
   db_auth:
   shared_media:
     driver: local

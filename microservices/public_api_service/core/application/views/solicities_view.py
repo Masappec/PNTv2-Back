@@ -10,15 +10,15 @@ from hermetrics.levenshtein import Levenshtein
 
 class SolicitiesView(APIView):
 
-    class InputSerializerAudience(serializers.Serializer):
+    class InputSerializerSolicities(serializers.Serializer):
         ruc = serializers.CharField()
 
     @swagger_auto_schema(
-        request_body=InputSerializerAudience,
+        request_body=InputSerializerSolicities,
     )
     def post(self, request):
 
-        serializer = self.InputSerializerAudience(data=request.data)
+        serializer = self.InputSerializerSolicities(data=request.data)
         serializer.is_valid(raise_exception=True)
         ruc = serializer.validated_data['ruc']
         res = CSVData.objects(

@@ -74,21 +74,53 @@ class EstablishmentStats(ListAPIView):
     pagination_class = StandardResultsSetPaginationDicts
 
     def get(self, request, *args, **kwargs):
-        search = request.query_params.get('search',None)
-        sort = request.query_params.get('sort[]',None)
-        query_set = EstablishmentExtended.objects.filter(is_active=True)
+        search = request.query_params.get('search', None)
+        sort = request.query_params.get('sort[]', None)
+        year = datetime.now().year
+        month = datetime.now().month
 
-       
+        query_set = EstablishmentExtended.objects.filter(is_active=True)
 
         if search:
             query_set = query_set.filter(name__icontains=search)
         if sort:
             query_set = query_set.order_by(sort)
-            
-        # Serializar los datos
-        data = [{'establishment': est, **est.calculate_total_score(datetime.now().year)}
-                for est in query_set]
-       
+
+        # Anotaciones para calcular totales y puntuaciones
+        query_set = query_set.annotate(
+            total_TA=Count('numerals'),
+            total_TP=Count('transparency_active', filter=Q(transparency_active__year=year,
+                           transparency_active__month=month, transparency_active__published_at__day__lte=5)),
+            total_TS=Count('solicity', filter=Q(solicity__date__year=year,
+                           solicity__date__month=month) & ~Q(solicity__status=Status.DRAFT)),
+            total_TR=Count('solicity__timelinesolicity', filter=Q(
+                solicity__timelinesolicity__status=Status.RESPONSED)),
+            total_TSP=Count('solicity__timelinesolicity', filter=Q(
+                solicity__timelinesolicity__status=Status.PRORROGA)),
+            total_TSI=Count('solicity__timelinesolicity', filter=Q(
+                solicity__timelinesolicity__status=Status.INSISTENCY_SEND)),
+            total_TSN=Count('solicity__timelinesolicity', filter=Q(
+                solicity__timelinesolicity__status=Status.NO_RESPONSED)),
+            total_TF=Count('transparency_focal', filter=Q(transparency_focal__year=year,
+                           transparency_focal__month=month, transparency_focal__published_at__day__lte=5)),
+            total_TC=Count('transparency_colab', filter=Q(transparency_colab__year=year,
+                           transparency_colab__month=month, transparency_colab__published_at__day__lte=5))
+        )
+
+        # Calcular el puntaje para cada establecimiento
+        data = [
+            {
+                'establishment': est,
+                'total_recibidas': est.total_TS,
+                'total_atendidas': est.total_TR,
+                'total_prorroga': est.total_TSP,
+                'total_insistencia': est.total_TSI,
+                'total_no_respuesta': est.total_TSN,
+                'score_saip': self.calculate_score(est)
+            }
+            for est in query_set
+        ]
+
         serializer = EstablishmentScoreSerializer(data, many=True)
 
         # Obtener el paginador y paginar los datos
@@ -97,6 +129,20 @@ class EstablishmentStats(ListAPIView):
 
         return paginator.get_paginated_response(paginated_data)
 
+    def calculate_score(self, est):
+        # Safeguard against division by zero
+        if est.total_TA != 0 and est.total_TS != 0:
+            score = ((est.total_TP * 100) / est.total_TA) * 50 + \
+                    ((est.total_TR * 100) / est.total_TS) * 50
+        else:
+            score = 0
+
+        if est.total_TC > 0:
+            score *= 1.05
+        if est.total_TF > 0:
+            score *= 1.05
+
+        return score
 
 class IndicatorsEstablishmentView(APIView):
     permission_classes = []
@@ -230,10 +276,30 @@ class EstablishmentCompliance(ListAPIView):
     pagination_class = StandardResultsSetPaginationDicts
 
     def get_queryset(self):
-        return EstablishmentExtended.objects.all()
+        month = self.request.query_params.get('month', datetime.now().month)
+        year = self.request.query_params.get('year', datetime.now().year)
+
+        queryset = EstablishmentExtended.objects.all()
+
+        # Anotaciones para total_published_ta, total_solicities_res, etc.
+        queryset = queryset.annotate(
+            total_published_ta=Count('transparency_active', filter=Q(
+                transparency_active__year=year, transparency_active__month=month)),
+            total_numeral_ta=Count('numerals'),
+            total_solicities_res=Count('solicity', filter=Q(solicity__created_at__year=year, solicity__created_at__month=month) &
+                                       (Q(solicity__status=Status.RESPONSED) |
+                                        Q(solicity__status=Status.INSISTENCY_RESPONSED) |
+                                        Q(solicity__status=Status.INFORMAL_MANAGMENT_RESPONSED))),
+            total_solicities_rec=Count('solicity', filter=Q(
+                solicity__created_at__year=year, solicity__created_at__month=month)),
+            total_tf=Count('transparency_focal', filter=Q(
+                transparency_focal__created_at__year=year, transparency_focal__created_at__month=month)),
+            total_tc=Count('transparency_colab', filter=Q(
+                transparency_colab__created_at__year=year, transparency_colab__created_at__month=month)),
+        )
+        return queryset
 
     def get(self, request):
-
         month = request.query_params.get('month', datetime.now().month)
         year = request.query_params.get('year', datetime.now().year)
         search = request.query_params.get('search', None)
@@ -241,11 +307,10 @@ class EstablishmentCompliance(ListAPIView):
 
         if search:
             establishments = establishments.filter(name__icontains=search)
-        data = EstablishmentcomplianceSerializer(establishments, context={
-            'month': month, 'year': year},many=True)
-        
 
         paginator = self.pagination_class()
-        paginated_data = paginator.paginate_queryset(data.data, request)
+        paginated_data = paginator.paginate_queryset(establishments, request)
 
-        return paginator.get_paginated_response(paginated_data)
+        serializer = EstablishmentcomplianceSerializer(
+            paginated_data, context={'month': month, 'year': year}, many=True)
+        return paginator.get_paginated_response(serializer.data)

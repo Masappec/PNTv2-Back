@@ -192,3 +192,27 @@ Mon Sep  2 14:02:31 2024 - Iniciando suscripción al canal establishment_numeral
 Mon Sep  2 14:03:09 2024 - Iniciando suscripción al canal establishment_numeral
 Mon Sep  2 16:45:00 2024 - Iniciando suscripción al canal establishment_numeral
 Mon Sep  2 16:45:57 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  2 21:16:15 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  2 21:17:14 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  2 21:18:20 2024 - Iniciando suscripción al canal establishment_numeral
+Tue Sep  3 21:01:21 2024 - Iniciando suscripción al canal establishment_numeral
+Tue Sep  3 21:09:22 2024 - Iniciando suscripción al canal establishment_numeral
+Thu Sep  5 22:09:07 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep  7 13:33:22 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep  7 13:44:40 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep  7 13:45:54 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep  7 15:23:04 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": [], "date": "2024-09-07", "month": 9, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.1", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Estructura org\\u00e1nica"}, "id": "f04e195d-bd04-4ef0-a8fe-9a8a00f9e422"}'}
+Sat Sep  7 15:26:21 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": ["/code/media/transparencia/1760000580001/Numeral 1.2/2024/9/Conjunto de datos.csv"], "date": "2024-09-07", "month": 9, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.2", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Base Legal-regulaciones-procedimientos internos"}, "id": "d28e5928-4a14-47da-8f88-0038fae5a6d4"}'}
+Sat Sep  7 19:39:52 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep  7 19:40:27 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep  7 22:57:50 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": [], "date": "2024-09-07", "month": 7, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.1", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Estructura org\\u00e1nica"}, "id": "d0d2452d-6019-47fa-8795-5356c7785e69"}'}
+Sat Sep  7 23:12:56 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_update", "payload": {"filepaths": [], "date": "2024-09-07", "month": 7, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.1", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Estructura org\\u00e1nica"}, "id": "057479f6-5cf2-4081-8d27-3ebcbde850a8"}'}
+Sun Sep  8 08:03:21 2024 - Iniciando suscripción al canal establishment_numeral
+Sun Sep  8 08:06:06 2024 - Iniciando suscripción al canal establishment_numeral
+Sun Sep  8 08:06:54 2024 - Iniciando suscripción al canal establishment_numeral
+Sun Sep  8 20:08:39 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  9 21:20:14 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  9 21:20:59 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  9 21:30:56 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  9 21:32:17 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  9 21:33:23 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": [], "date": "2024-09-09", "month": 9, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.1", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Estructura org\\u00e1nica"}, "id": "c94fbfca-51a8-4106-829b-65c5916b0e57"}'}
