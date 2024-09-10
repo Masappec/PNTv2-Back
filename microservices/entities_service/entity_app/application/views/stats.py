@@ -312,19 +312,19 @@ class EstablishmentCompliance(ListAPIView):
                 numerals__establishment_id=F('id')
                 )),
             
-            total_solicities_res=Count('solicity', filter=Q(solicity__created_at__year=year, solicity__created_at__month=month) &
+            total_solicities_res=Count('solicity', distinct=True,  filter=Q(solicity__created_at__year=year, solicity__created_at__month=month) &
                                        (Q(solicity__status=Status.RESPONSED) |
                                         Q(solicity__status=Status.INSISTENCY_RESPONSED) |
                                         Q(solicity__status=Status.INFORMAL_MANAGMENT_RESPONSED)),
                                        solicity__establishment_id=F('id')),
-            total_solicities_rec=Count('solicity', filter=Q(solicity__date__year=year,
+            total_solicities_rec=Count('solicity', distinct=True,  filter=Q(solicity__date__year=year,
                            solicity__date__month=month) & ~Q(solicity__status=Status.DRAFT),
                             solicity__establishment_id=F('id')),
-            total_tf=Count('transparency_focal', filter=Q(
+            total_tf=Count('transparency_focal', distinct=True,  filter=Q(
                 transparency_focal__created_at__year=year, transparency_focal__created_at__month=month,
                 transparency_focal__establishment_id=F('id')
                 )), 
-            total_tc=Count('transparency_colab', filter=Q(
+            total_tc=Count('transparency_colab', distinct=True,  filter=Q(
                 transparency_colab__created_at__year=year, transparency_colab__created_at__month=month,
                 transparency_colab__establishment_id=F('id')
                 )),
