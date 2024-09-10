@@ -54,6 +54,6 @@ jobs:
           projectBaseDir: .
           # Additional arguments for the SonarScanner CLI
           args: >
-            -Dsonar.projectKey="Masappec_PNTv2-Back"
-            -Dsonar.organization="masappec"
-            -Dsonar.verbose=true     
+            -Dsonar.projectKey=Masappec_PNTv2-Back
+            -Dsonar.organization=masappec
+            -Dsonar.verbose=true
