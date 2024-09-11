@@ -304,7 +304,7 @@ class EstablishmentCompliance(ListAPIView):
 
         # Anotaciones para total_published_ta, total_solicities_res, etc.
         queryset = queryset.annotate(
-            total_published_ta=Count('transparency_active', filter=Q(
+            total_published_ta=Count('transparency_active', distinct=True, filter=Q(
                 transparency_active__year=year, transparency_active__month=month,
                 transparency_active__establishment_id=F('id')
                 )),
