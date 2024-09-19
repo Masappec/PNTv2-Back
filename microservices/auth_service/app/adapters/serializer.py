@@ -93,7 +93,8 @@ class UserCreateAdminSerializer(Serializer):
 
     email = EmailField(max_length=255, error_messages={
         'required': 'El correo electrónico es requerido',
-        'blank': 'El correo electrónico no puede estar en blanco'})
+        'blank': 'El correo electrónico no puede estar en blanco',
+        'invalid': 'El correo electrónico no es válido'})
 
     password = CharField(max_length=255, allow_null=True, allow_blank=True)
     identification = CharField(max_length=255, error_messages={
