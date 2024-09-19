@@ -17,25 +17,26 @@ class FilePublicationSerializer(serializers.ModelSerializer):
             'url_download',
         )
 
+
 class PresupuestoView(APIView):
-    
-    
+
     class InputSerializerPresupuesto(serializers.Serializer):
-        ruc = serializers.CharField()
+        ruc = serializers.CharField(allow_blank=True, allow_null=True)
         year = serializers.IntegerField()
         month = serializers.IntegerField()
+
     class OutputSerializerPresupuesto(serializers.ModelSerializer):
         files = FilePublicationSerializer(many=True)
         establishment_name = serializers.SerializerMethodField(
             method_name='get_establishment_name')
+
         class Meta:
             model = TransparencyActive
             fields = '__all__'
-            
+
         def get_establishment_name(self, obj):
             return obj.establishment.name
-            
-            
+
     @swagger_auto_schema(
         request_body=InputSerializerPresupuesto,
         responses={200: OutputSerializerPresupuesto}
@@ -60,9 +61,6 @@ class PresupuestoView(APIView):
             month = serializer.validated_data['month']
             ruc = serializer.validated_data['ruc']
 
-            if ruc is None:
-                raise ValueError('Debe seleccionar un establecimiento')
-
             if year is None:
                 year = datetime.now().year
 
@@ -70,13 +68,19 @@ class PresupuestoView(APIView):
                 month = datetime.now().month
 
             queryset = None
-
-            queryset = TransparencyActive.objects.filter(
-                year=year,
-                month=month,
-                establishment__identification=ruc,
-                numeral__name='Numeral 6'
-            )
+            if ruc is None:
+                queryset = TransparencyActive.objects.filter(
+                    year=year,
+                    month=month,
+                    numeral__name='Numeral 6'
+                )
+            else:
+                queryset = TransparencyActive.objects.filter(
+                    year=year,
+                    month=month,
+                    establishment__identification=ruc,
+                    numeral__name='Numeral 6'
+                )
 
             serializer = self.OutputSerializerPresupuesto(queryset, many=True)
             return Response(serializer.data)

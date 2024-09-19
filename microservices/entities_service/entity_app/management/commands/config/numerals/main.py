@@ -11,6 +11,7 @@ from entity_app.models import TemplateFile, Numeral, ColumnFile
 from django.contrib.auth.models import Permission, ContentType
 from entity_app.domain.models import TransparencyActive, TransparencyFocal, TransparencyColab, Solicity, EstablishmentExtended
 
+
 class NumeralServiceData:
 
     def __init__(self) -> None:
@@ -141,7 +142,8 @@ class NumeralServiceData:
                 if description == 'Transparencia focalizada':
                     type = 'F'
 
-                numero = re.search(r'\d+', name)
+                numero = re.search(r'\d+(\.\d+)?(-\d+)?', name)
+
                 nombre = ''
                 if name.startswith('Art'):
                     nombre = name
@@ -174,6 +176,73 @@ class NumeralServiceData:
                         )
                         template_object.columns.add(column_object)
 
+    def update_data_numeral(self):
+
+        dir = os.path.dirname(__file__)
+        dir = os.path.join(dir, 'test.json')
+        ColumnFile.objects.all().delete()
+        TemplateFile.objects.all().delete()
+        Numeral.objects.filter(name__startswith='Art').delete()
+        with open(dir, encoding='utf-8') as file:
+            data = json.load(file)
+            for numeral in data:
+                description = numeral['name']
+                name = numeral['name']
+                is_default = numeral['default'] if 'default' in numeral else True
+                description = re.sub(r'[0-9]', '', description)
+
+                description = description.replace('. ', '')
+                description = description.replace('.', '')
+                type = 'A'
+                if description == 'Transparencia colaborativa':
+                    type = 'C'
+                if description == 'Transparencia focalizada':
+                    type = 'F'
+
+                numero = re.search(r'\d+(\.\d+)?(-\d+)?', name)
+
+                nombre = ''
+                if name.startswith('Art'):
+                    nombre = name
+                    description = "obligación específica"
+                else:
+                    nombre = 'Numeral ' + numero.group() if numero else name
+                numeral_object = Numeral.objects.filter(
+                    name=nombre,
+                ).first()
+
+                if not numeral_object:
+                    numeral_object = Numeral.objects.create(
+                        name=nombre,
+                        description=description,
+                        type_transparency=type,
+                        is_default=is_default
+                    )
+                else:
+                    numeral_object.description = description
+                    numeral_object.type_transparency = type
+                    numeral_object.is_default = is_default
+                    numeral_object.save()
+
+                for template in numeral['templates']:
+                    template_object = TemplateFile.objects.create(
+                        name=template['name'],
+                        description=template['description'],
+                        vertical_template=template['vertical_template'],
+                        max_inserts=template['max_insert'],
+
+                    )
+
+                    numeral_object.templates.add(template_object)
+
+                    for column in template['columns']:
+                        column_object = ColumnFile.objects.create(
+                            name=column['name'],
+                            type=column['type'],
+                            format=column['format'],
+                            regex=column['regex'],
+                        )
+                        template_object.columns.add(column_object)
 
     def generate_permissions(self):
         permissions = [
@@ -223,54 +292,53 @@ class NumeralServiceData:
         contentTypeTF = ContentType.objects.get_for_model(TransparencyFocal)
         contentTypeTC = ContentType.objects.get_for_model(TransparencyColab)
         contentTypeSolicity = ContentType.objects.get_for_model(Solicity)
-        contentTypeEstablishment = ContentType.objects.get_for_model(EstablishmentExtended)
-        
+        contentTypeEstablishment = ContentType.objects.get_for_model(
+            EstablishmentExtended)
+
         Permission.objects.get_or_create(
             name="Ver Transparencias de Todas las entidades",
             content_type=contentTypeTA,
             codename="view_all_transparencyactive"
         )
-        
+
         Permission.objects.get_or_create(
             name="Ver Transparencias de Todas las entidades",
             content_type=contentTypeTF,
             codename="view_all_transparencyfocal"
         )
-        
+
         Permission.objects.get_or_create(
             name="Ver Transparencias de Todas las entidades",
             content_type=contentTypeTC,
             codename="view_all_transparencycollab"
         )
-        
+
         Permission.objects.get_or_create(
             name="Ver Solicitudes de Todas las entidades",
             content_type=contentTypeSolicity,
             codename="view_all_solicities"
         )
-        
-        
+
         Permission.objects.get_or_create(
             name="Ver Estado de cumplimiento de Todas las entidades",
             content_type=contentTypeEstablishment,
             codename="view_all_compliancestatus"
         )
-        
+
         Permission.objects.get_or_create(
             name="Indicadores Generales Ciudadano",
             content_type=contentTypeEstablishment,
             codename="view_general_indicators"
         )
-        
+
         Permission.objects.get_or_create(
             name="Indicadores de Entidad",
             content_type=contentTypeEstablishment,
             codename="view_entity_indicators"
         )
-        
+
         Permission.objects.get_or_create(
             name="Indicadores de Monitoreo",
             content_type=contentTypeEstablishment,
             codename="view_monitoring_indicators"
         )
-        
