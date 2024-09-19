@@ -35,3 +35,4 @@ mongo_data/
 redis_data/
 postgres_data/
 data/
+.gittoken
