@@ -1,9 +1,10 @@
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, \
     BooleanField, IntegerField, JSONField, ListField, PrimaryKeyRelatedField, EmailField, SerializerMethodField
-        
+
 from app.domain.models import User, Permission, Role, Person
-#import contenttype
+# import contenttype
 from django.contrib.contenttypes.models import ContentType
+
 
 class GroupSerializer(ModelSerializer):
 
@@ -78,12 +79,26 @@ class RegisterSerializer(Serializer):
 class UserCreateAdminSerializer(Serializer):
     groups = ListField(child=PrimaryKeyRelatedField(
         queryset=Role.objects.all()))
-    first_name = CharField(max_length=255)
-    last_name = CharField(max_length=255)
-    username = CharField(max_length=255)
-    email = EmailField(max_length=255)
+    first_name = CharField(max_length=255,
+                           error_messages={
+                               'required': 'El nombre es requerido',
+                               'blank': 'El nombre no puede estar en blanco'})
+    last_name = CharField(max_length=255,
+                          error_messages={
+                              'required': 'El apellido es requerido',
+                              'blank': 'El apellido no puede estar en blanco'})
+    username = CharField(max_length=255, error_messages={
+        'required': 'El nombre de usuario es requerido',
+        'blank': 'El nombre de usuario no puede estar en blanco'})
+
+    email = EmailField(max_length=255, error_messages={
+        'required': 'El correo electrónico es requerido',
+        'blank': 'El correo electrónico no puede estar en blanco'})
+
     password = CharField(max_length=255, allow_null=True, allow_blank=True)
-    identification = CharField(max_length=255)
+    identification = CharField(max_length=255, error_messages={
+        'required': 'La identificación es requerida',
+        'blank': 'La identificación no puede estar en blanco'})
     phone = CharField(max_length=255, allow_null=True, allow_blank=True)
     city = CharField(max_length=255, allow_null=True, allow_blank=True)
     province = CharField(max_length=255, allow_null=True, allow_blank=True)
@@ -108,10 +123,10 @@ class UserLoginSerializer(Serializer):
 
 class PermissionSerializer(ModelSerializer):
     content_type = CharField(source='content_type.name')
+
     class Meta:
         model = Permission
         fields = ('id', 'name', 'codename', 'content_type')
-
 
 
 class PermissionListSerializer(ModelSerializer):
