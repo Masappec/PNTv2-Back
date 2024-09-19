@@ -68,17 +68,17 @@ class UserListAPI(ListAPIView):
         if search is not None:
             queryset = queryset.filter(
                 Q(username__icontains=search) | Q(email__icontains=search))
-            
+
             queryset = queryset.prefetch_related(
                 'groups').prefetch_related('person')
-            
+
             for user in queryset:
                 group = [group for group in user.groups.all()]
                 # join list to string
                 user.group = group
-                
-            print("ENTRO",queryset.values('groups') )
-        
+
+            print("ENTRO", queryset.values('groups'))
+
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -164,7 +164,7 @@ class UserCreateAPI(APIView):
             ).id if user.groups.all().first() is not None else 0
 
             # verifica si el rol y el establecimiento son validos
-            if data.validated_data['establishment_id'] !=0:
+            if data.validated_data['establishment_id'] != 0:
                 self.role_service.is_valid_role_and_establishment(
                     group_first, data.validated_data['establishment_id'])
 
@@ -202,6 +202,14 @@ class UserCreateAPI(APIView):
             if user is not None:
 
                 self.user_service.delete_permanent_user(user.id)
+
+            # {'username': [ErrorDetail(string='This field is required.', code='required')]}
+            # que muestre en un solo mensaje
+            error = ""
+
+            for key, value in data.errors.items():
+                error += value[0] + "\n"
+
             res = MessageTransactional(
                 data={
                     'message': str(e),
