@@ -212,7 +212,7 @@ class UserCreateAPI(APIView):
 
             res = MessageTransactional(
                 data={
-                    'message': str(e),
+                    'message': error,
                     'status': 400,
                     'json': {}
                 }
