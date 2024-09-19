@@ -11,6 +11,7 @@ from entity_app.models import TemplateFile, Numeral, ColumnFile
 from django.contrib.auth.models import Permission, ContentType
 from entity_app.domain.models import TransparencyActive, TransparencyFocal, TransparencyColab, Solicity, EstablishmentExtended
 
+
 class NumeralServiceData:
 
     def __init__(self) -> None:
@@ -181,6 +182,7 @@ class NumeralServiceData:
         dir = os.path.join(dir, 'test.json')
         ColumnFile.objects.all().delete()
         TemplateFile.objects.all().delete()
+        Numeral.objects.filter(name__startswith='Art').delete()
         with open(dir, encoding='utf-8') as file:
             data = json.load(file)
             for numeral in data:
@@ -208,7 +210,7 @@ class NumeralServiceData:
                 numeral_object = Numeral.objects.filter(
                     name=nombre,
                 ).first()
-                
+
                 if not numeral_object:
                     numeral_object = Numeral.objects.create(
                         name=nombre,
@@ -290,54 +292,53 @@ class NumeralServiceData:
         contentTypeTF = ContentType.objects.get_for_model(TransparencyFocal)
         contentTypeTC = ContentType.objects.get_for_model(TransparencyColab)
         contentTypeSolicity = ContentType.objects.get_for_model(Solicity)
-        contentTypeEstablishment = ContentType.objects.get_for_model(EstablishmentExtended)
-        
+        contentTypeEstablishment = ContentType.objects.get_for_model(
+            EstablishmentExtended)
+
         Permission.objects.get_or_create(
             name="Ver Transparencias de Todas las entidades",
             content_type=contentTypeTA,
             codename="view_all_transparencyactive"
         )
-        
+
         Permission.objects.get_or_create(
             name="Ver Transparencias de Todas las entidades",
             content_type=contentTypeTF,
             codename="view_all_transparencyfocal"
         )
-        
+
         Permission.objects.get_or_create(
             name="Ver Transparencias de Todas las entidades",
             content_type=contentTypeTC,
             codename="view_all_transparencycollab"
         )
-        
+
         Permission.objects.get_or_create(
             name="Ver Solicitudes de Todas las entidades",
             content_type=contentTypeSolicity,
             codename="view_all_solicities"
         )
-        
-        
+
         Permission.objects.get_or_create(
             name="Ver Estado de cumplimiento de Todas las entidades",
             content_type=contentTypeEstablishment,
             codename="view_all_compliancestatus"
         )
-        
+
         Permission.objects.get_or_create(
             name="Indicadores Generales Ciudadano",
             content_type=contentTypeEstablishment,
             codename="view_general_indicators"
         )
-        
+
         Permission.objects.get_or_create(
             name="Indicadores de Entidad",
             content_type=contentTypeEstablishment,
             codename="view_entity_indicators"
         )
-        
+
         Permission.objects.get_or_create(
             name="Indicadores de Monitoreo",
             content_type=contentTypeEstablishment,
             codename="view_monitoring_indicators"
         )
-        
