@@ -216,3 +216,20 @@ Mon Sep  9 21:20:59 2024 - Iniciando suscripción al canal establishment_numeral
 Mon Sep  9 21:30:56 2024 - Iniciando suscripción al canal establishment_numeral
 Mon Sep  9 21:32:17 2024 - Iniciando suscripción al canal establishment_numeral
 Mon Sep  9 21:33:23 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_upload", "payload": {"filepaths": [], "date": "2024-09-09", "month": 9, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.1", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Estructura org\\u00e1nica"}, "id": "c94fbfca-51a8-4106-829b-65c5916b0e57"}'}
+Mon Sep  9 21:55:37 2024 - Iniciando suscripción al canal establishment_numeral
+Mon Sep  9 21:58:07 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 15:15:23 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 16:48:28 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 16:49:51 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 16:55:19 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 17:06:54 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 17:08:29 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 17:09:17 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 17:12:20 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_update", "payload": {"filepaths": [], "date": "2024-09-14", "month": 9, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.1", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Estructura org\\u00e1nica"}, "id": "2d6e3eff-0979-4ec8-a2ee-e92f899ccc0c"}'}
+Sat Sep 14 17:16:47 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_update", "payload": {"filepaths": [], "date": "2024-09-14", "month": 9, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.1", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Estructura org\\u00e1nica"}, "id": "07bd057a-bf27-4f34-90de-1eb02d959f02"}'}
+Sat Sep 14 17:17:26 2024 - Mensaje recibido: {'type': 'message', 'pattern': None, 'channel': b'establishment_numeral', 'data': b'{"type": "transparency_active_update", "payload": {"filepaths": [], "date": "2024-09-14", "month": 9, "year": 2024, "user": 2, "establishment_identification": "1760000580001", "numeral": "Numeral 1.1", "establishment_name": "Vicepresidencia De La Rep\\u00fablica Del Ecuador", "numeral_description": "Estructura org\\u00e1nica"}, "id": "376d3197-2236-4fe5-98d3-696552d92b6b"}'}
+Sat Sep 14 17:18:39 2024 - Iniciando suscripción al canal establishment_numeral
+Sat Sep 14 17:19:12 2024 - Iniciando suscripción al canal establishment_numeral
+Sun Sep 15 15:14:59 2024 - Iniciando suscripción al canal establishment_numeral
+Tue Sep 17 11:20:47 2024 - Iniciando suscripción al canal establishment_numeral
+Wed Sep 18 21:23:06 2024 - Iniciando suscripción al canal establishment_numeral

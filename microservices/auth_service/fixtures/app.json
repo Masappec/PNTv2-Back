@@ -1,4 +1,5 @@
 [
+    
     {
         "model": "auth.permission",
         "fields": {
@@ -29,6 +30,29 @@
                 "model": "user"
             },
             "codename": "user"
+        }
+    },
+    {
+        "model": "app.user",
+        "fields": {
+            "password": "pbkdf2_sha256$600000$SMwY6jDvWaZS43UjJ4ENe0$TsIHmk7ieyOgwPBM2TUnhc+n93alh+VlUchv2NduaGg=",
+            "last_login": "2024-01-02T17:41:54.625Z",
+            "is_superuser": true,
+            "username": "configuracion@pnt.com",
+            "first_name": "Super",
+            "last_name": "Administrador",
+            "email": "configuracion@pnt.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2023-12-21T16:25:03.247Z",
+            "created_at": "2023-12-21T16:25:04.733Z",
+            "updated_at": "2023-12-21T16:25:04.733Z",
+            "deleted": false,
+            "deleted_at": null,
+            "groups": [
+                5
+            ],
+            "user_permissions": []
         }
     },
     {

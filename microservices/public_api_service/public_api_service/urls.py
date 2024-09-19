@@ -28,7 +28,7 @@ schema_view = get_schema_view(
         license=openapi.License(name="BSD License"),
     ),
     public=True,
-    #url='https://transparencia/backend/v1/public/',
+    #url='https://transparencia.ec/backend/v1/public/',
     
 )
 

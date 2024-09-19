@@ -21,7 +21,7 @@ class PresupuestoView(APIView):
     
     
     class InputSerializerPresupuesto(serializers.Serializer):
-        ruc = serializers.CharField()
+        ruc = serializers.CharField(allow_blank=True, allow_null=True)
         year = serializers.IntegerField()
         month = serializers.IntegerField()
     class OutputSerializerPresupuesto(serializers.ModelSerializer):
@@ -60,9 +60,6 @@ class PresupuestoView(APIView):
             month = serializer.validated_data['month']
             ruc = serializer.validated_data['ruc']
 
-            if ruc is None:
-                raise ValueError('Debe seleccionar un establecimiento')
-
             if year is None:
                 year = datetime.now().year
 
@@ -70,13 +67,19 @@ class PresupuestoView(APIView):
                 month = datetime.now().month
 
             queryset = None
-
-            queryset = TransparencyActive.objects.filter(
-                year=year,
-                month=month,
-                establishment__identification=ruc,
-                numeral__name='Numeral 6'
-            )
+            if ruc is None:
+                queryset = TransparencyActive.objects.filter(
+                    year=year,
+                    month=month,
+                    numeral__name='Numeral 6'
+                )
+            else:
+                queryset = TransparencyActive.objects.filter(
+                    year=year,
+                    month=month,
+                    establishment__identification=ruc,
+                    numeral__name='Numeral 6'
+                )
 
             serializer = self.OutputSerializerPresupuesto(queryset, many=True)
             return Response(serializer.data)

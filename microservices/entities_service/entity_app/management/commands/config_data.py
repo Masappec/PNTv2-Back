@@ -23,6 +23,10 @@ class Command(BaseCommand):
         
         parser.add_argument(
             '-generate_permissions', help='Generar permisos', action='store_true')
+        
+        parser.add_argument(
+            '-update_data_numeral', help='Actualizar datos de numeral', action='store_true')
+        
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
@@ -42,3 +46,7 @@ class Command(BaseCommand):
         generate_permissions = options.get('generate_permissions', False)
         if generate_permissions:
             print(self.config_service.generate_permissions())
+            
+        update_data_numeral = options.get('update_data_numeral', False)
+        if update_data_numeral:
+            print(self.config_service.update_data_numeral())

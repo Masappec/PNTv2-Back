@@ -18,3 +18,6 @@ class ConfigDataService:
     
     def generate_permissions(self):
         self.numeral_service.generate_permissions()
+        
+    def update_data_numeral(self):
+        self.numeral_service.update_data_numeral()

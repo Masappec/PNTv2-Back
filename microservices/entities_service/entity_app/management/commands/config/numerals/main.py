@@ -141,7 +141,8 @@ class NumeralServiceData:
                 if description == 'Transparencia focalizada':
                     type = 'F'
 
-                numero = re.search(r'\d+', name)
+                numero = re.search(r'\d+(\.\d+)?(-\d+)?', name)
+
                 nombre = ''
                 if name.startswith('Art'):
                     nombre = name
@@ -174,6 +175,72 @@ class NumeralServiceData:
                         )
                         template_object.columns.add(column_object)
 
+    def update_data_numeral(self):
+
+        dir = os.path.dirname(__file__)
+        dir = os.path.join(dir, 'test.json')
+        ColumnFile.objects.all().delete()
+        TemplateFile.objects.all().delete()
+        with open(dir, encoding='utf-8') as file:
+            data = json.load(file)
+            for numeral in data:
+                description = numeral['name']
+                name = numeral['name']
+                is_default = numeral['default'] if 'default' in numeral else True
+                description = re.sub(r'[0-9]', '', description)
+
+                description = description.replace('. ', '')
+                description = description.replace('.', '')
+                type = 'A'
+                if description == 'Transparencia colaborativa':
+                    type = 'C'
+                if description == 'Transparencia focalizada':
+                    type = 'F'
+
+                numero = re.search(r'\d+(\.\d+)?(-\d+)?', name)
+
+                nombre = ''
+                if name.startswith('Art'):
+                    nombre = name
+                    description = "obligación específica"
+                else:
+                    nombre = 'Numeral ' + numero.group() if numero else name
+                numeral_object = Numeral.objects.filter(
+                    name=nombre,
+                ).first()
+                
+                if not numeral_object:
+                    numeral_object = Numeral.objects.create(
+                        name=nombre,
+                        description=description,
+                        type_transparency=type,
+                        is_default=is_default
+                    )
+                else:
+                    numeral_object.description = description
+                    numeral_object.type_transparency = type
+                    numeral_object.is_default = is_default
+                    numeral_object.save()
+
+                for template in numeral['templates']:
+                    template_object = TemplateFile.objects.create(
+                        name=template['name'],
+                        description=template['description'],
+                        vertical_template=template['vertical_template'],
+                        max_inserts=template['max_insert'],
+
+                    )
+
+                    numeral_object.templates.add(template_object)
+
+                    for column in template['columns']:
+                        column_object = ColumnFile.objects.create(
+                            name=column['name'],
+                            type=column['type'],
+                            format=column['format'],
+                            regex=column['regex'],
+                        )
+                        template_object.columns.add(column_object)
 
     def generate_permissions(self):
         permissions = [
