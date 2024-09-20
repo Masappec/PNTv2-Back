@@ -5333,6 +5333,12 @@
                         "regex": null
                     },
                     {
+                        "name": "Subcuenta",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
                         "name": "Fecha Comprobante de Venta",
                         "type": "str",
                         "format": null,
@@ -6037,12 +6043,6 @@
                         "regex": null
                     },
                     {
-                        "name": "ID CUENTA",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
                         "name": "SUBGRUPO",
                         "type": "str",
                         "format": null,
@@ -6155,12 +6155,6 @@
                         "regex": null
                     },
                     {
-                        "name": "ID CUENTA",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
                         "name": "SUBGRUPO",
                         "type": "str",
                         "format": null,
@@ -6187,7 +6181,7 @@
         "name": "Art. 21 Ministerio de Energia y Minas",
         "templates": [
             {
-                "name": "Conjunto de datos",
+                "name": "1. 2. 4. 5. Conjunto de datos  (Extracción)",
                 "description": "Art. 21 Ministerio de Energia y Minas",
                 "vertical_template": false,
                 "max_insert": null,
@@ -6285,7 +6279,7 @@
                 ]
             },
             {
-                "name": "1. 2. 4. 5. Metadatos (Extracci",
+                "name": "1. 2. 4. 5. Metadatos (Extracción)",
                 "description": "Art. 21 Ministerio de Energia y Minas",
                 "vertical_template": true,
                 "max_insert": 1,
@@ -6335,7 +6329,7 @@
                 ]
             },
             {
-                "name": "1. 2. 4. 5. Diccionario (Extrac",
+                "name": "1. 2. 4. 5. Diccionario (Extracción)",
                 "description": "Art. 21 Ministerio de Energia y Minas",
                 "vertical_template": true,
                 "max_insert": 1,
@@ -6919,13 +6913,13 @@
         "name": "Art. 27 Consejo Nacional Electoral",
         "templates": [
             {
-                "name": "1. Conjunto de datos (Ingresos ",
+                "name": "1. Conjunto de datos (Ingresos)",
                 "description": "Art. 27 Consejo Nacional Electoral",
                 "vertical_template": false,
                 "max_insert": null,
                 "columns": [
                     {
-                        "name": "Organización política, candidato/a",
+                        "name": "Organización política o persona candidata",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -6943,7 +6937,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Monto recibido",
+                        "name": "Monto máximo del Limite del Gasto Electoral",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -6957,7 +6951,7 @@
                 ]
             },
             {
-                "name": "1. Metadatos (Ingresos y Gastos",
+                "name": "1. Metadatos (Ingresos)",
                 "description": "Art. 27 Consejo Nacional Electoral",
                 "vertical_template": true,
                 "max_insert": 1,
@@ -7025,7 +7019,7 @@
                 ]
             },
             {
-                "name": "1. Diccionario (Ingresos y Gast",
+                "name": "1. Diccionario (Ingresos)",
                 "description": "Art. 27 Consejo Nacional Electoral",
                 "vertical_template": true,
                 "max_insert": 1,
@@ -7049,7 +7043,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Organización política, candidato/a",
+                        "name": "Organización política o persona candidata",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7067,7 +7061,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Monto recibido",
+                        "name": "Monto máximo del Limite del Gasto Electoral",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7099,109 +7093,31 @@
                         "regex": null
                     },
                     {
-                        "name": "Mes",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
                         "name": "Dignidad",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Provincia",
+                        "name": "Territorio",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Circunscripción",
+                        "name": "Total Ingresos",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Cantón",
+                        "name": "Gastos Imputables",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Parroquia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Código Cuenta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Cuenta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Código Subcuenta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Subcuenta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Fecha Comprobante de Venta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Nro. Comprobante de Venta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Nro. RUC del Proveedor",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Nombre del Proveedor",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Descripción del Gasto",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Subtotal",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "IVA",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Total",
+                        "name": "Gastos No Imputables - IVA",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7313,109 +7229,31 @@
                         "regex": null
                     },
                     {
-                        "name": "Mes",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
                         "name": "Dignidad",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Provincia",
+                        "name": "Territorio",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Circunscripción",
+                        "name": "Total Ingresos",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Cantón",
+                        "name": "Gastos Imputables",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Parroquia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Código Cuenta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Cuenta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Código Subcuenta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Subcuenta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Fecha Comprobante de Venta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Nro. Comprobante de Venta",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Nro. RUC del Proveedor",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Nombre del Proveedor",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Descripción del Gasto",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Subtotal",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "IVA",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Total",
+                        "name": "Gastos No Imputables - IVA",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7429,7 +7267,7 @@
                 "max_insert": null,
                 "columns": [
                     {
-                        "name": "Proceso Electoral",
+                        "name": "FECHA",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7447,25 +7285,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Circunscripción",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
                         "name": "Parroquia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Zona",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Junta",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7477,7 +7297,13 @@
                         "regex": null
                     },
                     {
-                        "name": "Enlace al Acta",
+                        "name": "Version",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Enlace a Acta Certificadas",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7577,7 +7403,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Proceso Electoral",
+                        "name": "FECHA",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7595,25 +7421,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Circunscripción",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
                         "name": "Parroquia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Zona",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Junta",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7625,7 +7433,13 @@
                         "regex": null
                     },
                     {
-                        "name": "Enlace al Acta",
+                        "name": "Version",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Enlace a Acta Certificadas",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7651,7 +7465,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Candidato, Candidata o Partido",
+                        "name": "candidato o candidata",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7775,7 +7589,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Candidato, Candidata o Partido",
+                        "name": "candidato o candidata",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7795,7 +7609,7 @@
                 ]
             },
             {
-                "name": "5. Conjunto de datos (Resultado",
+                "name": "5. Conjunto de datos (Resultados)",
                 "description": "Art. 27 Consejo Nacional Electoral",
                 "vertical_template": false,
                 "max_insert": null,
@@ -7843,25 +7657,55 @@
                         "regex": null
                     },
                     {
+                        "name": "Género",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Electores",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Sufragantes",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
                         "name": "Dignidad",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Candidato, Candidata, Organización Política o Alianza, Votos Nulos o Blancos",
+                        "name": "Candidato, Candidata, Organización Política o Alianza",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Organización Política o Alianza, Votos Nulos o Blancos",
+                        "name": "Organización Política o Alianza",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
                         "name": "Votos",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Votos Nulos",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Votos Blancos",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -8003,25 +7847,55 @@
                         "regex": null
                     },
                     {
+                        "name": "Género",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Electores",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Sufragantes",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
                         "name": "Dignidad",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Candidato, Candidata, Organización Política o Alianza, Votos Nulos o Blancos",
+                        "name": "Candidato, Candidata, Organización Política o Alianza",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Organización Política o Alianza, Votos Nulos o Blancos",
+                        "name": "Organización Política o Alianza",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
                         "name": "Votos",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Votos Nulos",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Votos Blancos",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -8032,7 +7906,7 @@
         "default": false
     },
     {
-        "name": "Art. 23 Funcion_de_Transparencia_y_Control_Social",
+        "name": "Art. 23 Funcion de Transparencia y Control Social (DPE)",
         "templates": [
             {
                 "name": "1. Conjunto de datos (DPE)",
@@ -8177,7 +8051,14 @@
                         "regex": null
                     }
                 ]
-            },
+            }
+        ],
+        "default": false
+    },
+    {
+        "name": "Art. 23 Funcion de Transparencia y Control Social (CPCCS)",
+        "default": false,
+        "templates": [
             {
                 "name": "2. Conjunto de datos (CPCCS)",
                 "description": "Art. 23 Funcion_de_Transparencia_y_Control_Social",
@@ -8321,7 +8202,13 @@
                         "regex": null
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "name": "Art. 23 Funcion de Transparencia y Control Social (CGE)",
+        "default": false,
+        "templates": [
             {
                 "name": "3. Conjunto de datos (CGE)",
                 "description": "Art. 23 Funcion_de_Transparencia_y_Control_Social",
@@ -8465,7 +8352,13 @@
                         "regex": null
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "name": "Art. 23 Funcion de Transparencia y Control Social (SCVS)",
+        "default": false,
+        "templates": [
             {
                 "name": "4. Conjunto de datos (SCVS)",
                 "description": "Art. 23 Funcion_de_Transparencia_y_Control_Social",
@@ -8609,7 +8502,13 @@
                         "regex": null
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "name": "Art. 23 Funcion de Transparencia y Control Social (SB)",
+        "default": false,
+        "templates": [
             {
                 "name": "5. Conjunto de datos (SB)",
                 "description": "Art. 23 Funcion_de_Transparencia_y_Control_Social",
@@ -8753,7 +8652,13 @@
                         "regex": null
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "name": "Art. 23 Funcion de Transparencia y Control Social (SCPM)",
+        "default": false,
+        "templates": [
             {
                 "name": "6. Conjunto de datos (SCPM)",
                 "description": "Art. 23 Funcion_de_Transparencia_y_Control_Social",
@@ -8897,7 +8802,13 @@
                         "regex": null
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "name": "Art. 23 Funcion de Transparencia y Control Social (SEPS)",
+        "default": false,
+        "templates": [
             {
                 "name": "7. Conjunto de datos (SEPS)",
                 "description": "Art. 23 Funcion_de_Transparencia_y_Control_Social",
@@ -9041,7 +8952,13 @@
                         "regex": null
                     }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        "name": "Art. 23 Funcion de Transparencia y Control Social (SOT)",
+        "default": false,
+        "templates": [
             {
                 "name": "8. Conjunto de datos (SOT)",
                 "description": "Art. 23 Funcion_de_Transparencia_y_Control_Social",
@@ -9049,7 +8966,7 @@
                 "max_insert": null,
                 "columns": [
                     {
-                        "name": "Nombre de Entidad ",
+                        "name": "Nombre de Entidad",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -9186,80 +9103,25 @@
                     }
                 ]
             }
-        ],
-        "default": false
+        ]
     },
     {
         "name": "Art. 22 Consejo de la Judicatura",
         "templates": [
             {
-                "name": "1. Conjunto de datos (Judicatur",
+                "name": "1. Conjunto de datos (Judicatura)",
                 "description": "Art. 22 Consejo de la Judicatura",
                 "vertical_template": false,
                 "max_insert": null,
                 "columns": [
                     {
-                        "name": "Número de Proceso",
+                        "name": "Período de acceso al enlace",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Fecha de ingreso",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Materia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Delito o Asunto",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Tipo de acción",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Provincia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Cantón",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Dependencia Jurisdiccional",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Estado",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Resumen de Sentencia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Enlace al Texto Íntegro del Proceso y Sentencia",
+                        "name": "Enlace al módulo de consultas de procesos judiciales electrónicos del E-SATJE",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -9347,67 +9209,13 @@
                         "regex": null
                     },
                     {
-                        "name": "Número de Proceso",
+                        "name": "Período de acceso al enlace",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Fecha de ingreso",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Materia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Delito o Asunto",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Tipo de acción",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Provincia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Cantón",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Dependencia Jurisdiccional",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Estado",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Resumen de Sentencia",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Enlace al Texto Íntegro del Proceso y Sentencia",
+                        "name": "Enlace al módulo de consultas de procesos judiciales electrónicos del E-SATJE",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -9421,7 +9229,7 @@
         "name": "Art. 26 Asamblea Nacional",
         "templates": [
             {
-                "name": "1.2.6. Conjunto de Datos (Pro",
+                "name": "1.2.6. Conjunto de Datos  (1.2.6 Proyectos de ley)",
                 "description": "Art. 26 Asamblea Nacional",
                 "vertical_template": false,
                 "max_insert": null,
@@ -9439,7 +9247,13 @@
                         "regex": null
                     },
                     {
-                        "name": "Tipo ",
+                        "name": "Fecha de calificación en el CAL",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Tipo",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -9477,7 +9291,7 @@
                 ]
             },
             {
-                "name": "1.2.6. Metadatos (Proyectos d",
+                "name": "1.2.6. Metadatos (1.2.6 Proyectos de ley)",
                 "description": "Art. 26 Asamblea Nacional",
                 "vertical_template": true,
                 "max_insert": 1,
@@ -9527,7 +9341,7 @@
                 ]
             },
             {
-                "name": "1.2.6. Diccionario (Proyectos",
+                "name": "1.2.6. Diccionario (1.2.6 Proyectos de ley)",
                 "description": "Art. 26 Asamblea Nacional",
                 "vertical_template": true,
                 "max_insert": 1,
@@ -9558,6 +9372,12 @@
                     },
                     {
                         "name": "Fecha de Presentación",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Fecha de calificación en el CAL",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -9601,7 +9421,7 @@
                 ]
             },
             {
-                "name": "3. Conjunto de Datos (Socializa",
+                "name": "3. Conjunto de Datos (Socialización)",
                 "description": "Art. 26 Asamblea Nacional",
                 "vertical_template": false,
                 "max_insert": null,
@@ -9761,7 +9581,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Comisión",
+                        "name": "Comisión Especializada Permanente u Ocasional",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -9965,6 +9785,12 @@
                         "regex": null
                     },
                     {
+                        "name": "Asambleísta",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
                         "name": "Asistencia",
                         "type": "str",
                         "format": null,
@@ -9979,7 +9805,7 @@
                 ]
             },
             {
-                "name": "5. Conjunto de Datos (Votacione",
+                "name": "5. Conjunto de Datos (Votaciones)",
                 "description": "Art. 26 Asamblea Nacional",
                 "vertical_template": false,
                 "max_insert": null,
@@ -10351,7 +10177,7 @@
                 ]
             },
             {
-                "name": "8. Conjunto de Datos (Juicios P",
+                "name": "8. Conjunto de Datos (Solicitudes de juicios políticos)",
                 "description": "Art. 26 Asamblea Nacional",
                 "vertical_template": false,
                 "max_insert": null,
@@ -10413,7 +10239,7 @@
                 ]
             },
             {
-                "name": "8. Metadatos (Juicios Políticos",
+                "name": "8. Metadatos (Solicitudes de juicios políticos)",
                 "description": "Art. 26 Asamblea Nacional",
                 "vertical_template": true,
                 "max_insert": 1,
@@ -10463,7 +10289,7 @@
                 ]
             },
             {
-                "name": "8. Diccionario (Juicios Polític",
+                "name": "8. Diccionario (Solicitudes de juicios políticos)",
                 "description": "Art. 26 Asamblea Nacional",
                 "vertical_template": true,
                 "max_insert": 1,
@@ -10487,7 +10313,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Código del trámite",
+                        "name": "Código",
                         "type": "str",
                         "format": null,
                         "regex": null
