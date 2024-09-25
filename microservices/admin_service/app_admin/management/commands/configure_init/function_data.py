@@ -1,12 +1,9 @@
 data_func = [
     {
-        "funcion": "FUNCIÓN EJECUTIVA"
+        "funcion": "FUNCION EJECUTIVA"
     },
     {
-        "funcion": "OTRAS INSTITUCIONES PÚBLICAS"
-    },
-    {
-        "funcion": "FUNCIÓN LEGISLATIVA"
+        "funcion": "FUNCION LEGISLATIVA"
     },
     {
         "funcion": "FUNCION JUDICIAL"
@@ -18,9 +15,18 @@ data_func = [
         "funcion": "FUNCION DE TRANSPARENCIA Y CONTROL SOCIAL"
     },
     {
-        "funcion": "GOBIERNOS AUTÓNOMOS DESCENTRALIZADOS"
+        "funcion": "GADS PROVINCIALES"
+    },
+    {
+        "funcion": "GADS MUNICIPALES"
+    },
+    {
+        "funcion": "GADS PARROQUIALES"
     },
     {
         "funcion": "ENTIDADES PRIVADAS"
+    },
+    {
+        "funcion": "OTRAS INSTITUCIONES PUBLICAS"
     }
 ]
