@@ -40,3 +40,7 @@ class NumeralRepository(ABC):
 
     def update_transparency(self, establishment_id, numeral_id, files, month, year, fecha_actual, status="ingress"):
         pass
+
+    def aprove_transparency(self, id):
+
+        pass

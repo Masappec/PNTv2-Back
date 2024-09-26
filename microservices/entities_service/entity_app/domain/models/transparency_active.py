@@ -86,6 +86,12 @@ class ColumnFile(BaseModel):
         return str(self.name)
 
 
+class StatusNumeral(models.TextChoices):
+    APROVED = 'aproved', 'Aprobado'
+    REJECTED = 'rejected', 'Rechazado'
+    INGRESS = 'ingress', 'Ingresado'
+
+
 class TransparencyActive(BaseModel):
     establishment = models.ForeignKey(
         'EstablishmentExtended', on_delete=models.CASCADE, related_name='transparency_active')
@@ -98,8 +104,7 @@ class TransparencyActive(BaseModel):
     month = models.IntegerField()
     year = models.IntegerField()
     status = models.CharField(max_length=255,
-                              choices=(('pending', 'Pendiente'),
-                                       ('ingress', 'Ingresado'),), default='pending')
+                              choices=(('aproved', 'Aprobado'), ('rejected', 'Rechazado'), ('ingress', 'Ingresado')), default=StatusNumeral.INGRESS)
 
     published = models.BooleanField(default=False)
     published_at = models.DateTimeField(null=True, blank=True)
@@ -107,7 +112,6 @@ class TransparencyActive(BaseModel):
 
     objects = models.Manager()
 
-    
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = str(self.month) + '-' + str(self.year) + '-' + \
@@ -122,7 +126,3 @@ class TransparencyActive(BaseModel):
         verbose_name_plural = 'Transparencias Activas'
 
         unique_together = ('establishment', 'numeral', 'month', 'year')
-
-
-
-

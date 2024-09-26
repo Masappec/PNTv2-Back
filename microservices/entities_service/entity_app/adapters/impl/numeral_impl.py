@@ -4,7 +4,7 @@ from typing import List
 
 from django.db.models.query import QuerySet
 from entity_app.ports.repositories.numeral_repository import NumeralRepository
-from entity_app.domain.models.transparency_active import Numeral, EstablishmentNumeral, TransparencyActive
+from entity_app.domain.models.transparency_active import Numeral, EstablishmentNumeral, StatusNumeral, TransparencyActive
 from entity_app.domain.models.publication import FilePublication
 from django.db.models import Value, IntegerField
 from django.db.models.functions import Cast
@@ -12,6 +12,9 @@ from django.db.models.functions import Cast
 from entity_app.adapters.messaging.publish import Publisher
 from entity_app.adapters.messaging.channels import CHANNEL_ESTABLISHMENT_NUMERAL
 from entity_app.adapters.messaging.events import TRANSPARENCY_ACTIVE_UPLOAD
+from datetime import datetime
+
+from entity_app.utils.functions import get_day_for_publish
 
 
 class NumeralImpl(NumeralRepository):
@@ -44,17 +47,9 @@ class NumeralImpl(NumeralRepository):
 
     def asign_numeral_to_establishment(self, ids_numeral: List[Numeral], establishment_id: int):
         numerals = self.get_by_entity(establishment_id)
-        #eliminar ls que no estan en la lista
-        '''for numeral in numerals:
-            if not ids_numeral.filter(id=numeral.id).exists():
-                EstablishmentNumeral.objects.filter(
-                    establishment_id=establishment_id,
-                    numeral=numeral,
-                    numeral__is_default=False
-                ).delete()'''
-        
+
         for numeral in ids_numeral:
-            
+
             if not numerals.filter(id=numeral.id).exists():
 
                 EstablishmentNumeral.objects.create(
@@ -75,9 +70,13 @@ class NumeralImpl(NumeralRepository):
             numeral_id=numeral_id,
             month=month,
             year=year,
-            status=status,
-            published=status == "ingress",
-            published_at=fecha_actual if status == "ingress" else None
+            status=StatusNumeral.INGRESS,
+            published=False,
+            published_at=None,
+            max_date_to_publish=datetime(
+                year=year, month=month, day=get_day_for_publish()),
+            created_at=fecha_actual
+
 
         )
         obj.files.set(files)
@@ -110,6 +109,15 @@ class NumeralImpl(NumeralRepository):
             }
         })
 
+        return obj
+
+    def aprove_transparency(self, id):
+        obj = TransparencyActive.objects.get(id=id)
+        obj.status = StatusNumeral.APPROVED
+        obj.published = True
+        obj.published_at = datetime.now()
+        obj.updated_at = datetime.now()
+        obj.save()
         return obj
 
     def get_numeral_focalized_or_collab(self, type: str):

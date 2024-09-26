@@ -415,6 +415,12 @@ class TransparencyCreateResponseSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TransparencyApproveSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    establishment_id = serializers.IntegerField()
+    type = serializers.CharField()
+
+
 class NumeralDetailSerializer(serializers.ModelSerializer):
     """Numeral detail serializer."""
 
@@ -455,6 +461,8 @@ class TransparecyActiveCreate(serializers.Serializer):
     files = serializers.ListField(child=serializers.IntegerField())
     month = serializers.IntegerField()
     year = serializers.IntegerField()
+
+
 class TransparencyColaboratyCreate(serializers.Serializer):
     establishment_id = serializers.IntegerField()
     files = serializers.ListField(child=serializers.IntegerField())

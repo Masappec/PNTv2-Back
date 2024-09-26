@@ -3,7 +3,7 @@ from typing import Any
 from entity_app.domain.models.activity import ActivityLog
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
-from entity_app.adapters.serializers import NumeralResponseSerializer, NumeralDetailSerializer, TransparecyActiveCreate, TransparencyCreateResponseSerializer
+from entity_app.adapters.serializers import NumeralResponseSerializer, NumeralDetailSerializer, TransparecyActiveCreate, TransparencyApproveSerializer, TransparencyCreateResponseSerializer
 from entity_app.domain.services.numeral_service import NumeralService
 from entity_app.adapters.impl.numeral_impl import NumeralImpl
 from entity_app.utils.permissions import BelongsToEstablishment, NumeralIsOwner, HasPermission
@@ -50,17 +50,17 @@ class NumeralsByEstablishment(APIView):
                     'status': status.HTTP_400_BAD_REQUEST,
                     'json': {}
                 }, status=status.HTTP_400_BAD_REQUEST)
-                
-            year = request.query_params.get('year',datetime.now().year)
-            month = request.query_params.get('month',datetime.now().month)
+
+            year = request.query_params.get('year', datetime.now().year)
+            month = request.query_params.get('month', datetime.now().month)
 
             numerals = self.service.get_by_entity(
                 request.query_params.get('establishtment_id'))
 
             serializer = self.serializer_class(numerals, many=True, context={
                                                'establishment_id': request.query_params.get('establishtment_id'),
-                                               'year':year,
-                                               'month':month
+                                               'year': year,
+                                               'month': month
                                                })
 
             return Response(serializer.data)
@@ -239,6 +239,63 @@ class ListNumeral(ListAPIView):
             return Response(error.data, status=400)
 
 
+class NumeralApprove(APIView):
+
+    permission_classes = [IsAuthenticated,
+                          HasPermission]
+    serializer_class = TransparencyApproveSerializer
+
+    permission_required = 'approve_numeral_ta,approve_numeral_tf,approve_numeral_tc'
+
+    def __init__(self):
+        self.service = NumeralService(
+            numeral_repository=NumeralImpl()
+        )
+
+    @swagger_auto_schema(
+        operation_description="Approve numeral",
+        request_body=TransparecyActiveCreate,
+        responses={200: TransparencyCreateResponseSerializer}
+    )
+    def post(self, request, *args, **kwargs):
+        """
+        Approve Numeral
+        """
+        try:
+            data = self.serializer_class(data=request.data)
+
+            type = data.validated_data['type']
+
+            if type == 'TA':
+
+                transparency = self.service.aprove_transparency(
+                    data.validated_data['numeral_id']
+                )
+                ActivityLog.objects.create(
+                    user_id=request.user.id,
+                    activity='Publicación de Numeral',
+                    description='Ha aprobado el numeral' +
+                    str(transparency.numeral.name) +
+                    ' en la entidad ' + str(transparency.establishment.name) +
+                    ' para el mes de ' + str(transparency.month) +
+                    ' del año ' + str(transparency.year),
+                    ip_address=request.META.get('REMOTE_ADDR'),
+                    user_agent=request.META.get('HTTP_USER_AGENT')
+                )
+
+            return Response({
+                'message': 'Publicación aprobada correctamente',
+                'status': 200,
+                'json': {}
+            }, status=200)
+        except Exception as e:
+            return Response({
+                'message': 'No se pudo aprobar el numeral',
+                'status': 400,
+                'json': {}
+            }, status=400)
+
+
 class PublishNumeral(APIView):
 
     permission_classes = [IsAuthenticated,
@@ -295,7 +352,7 @@ class PublishNumeral(APIView):
             ActivityLog.objects.create(
                 user_id=request.user.id,
                 activity='Publicación de Numeral',
-                description='Ha Publicado un numeral' +
+                description='Ha Subido un numeral' +
                 str(transparency.numeral.name) +
                 ' en la entidad ' + str(transparency.establishment.name) +
                 ' para el mes de ' + str(transparency.month) +
@@ -347,7 +404,7 @@ class NumeralEditPublish(APIView):
         try:
             data = self.serializer_class(data=request.data)
             data.is_valid(raise_exception=True)
-            
+
             month = data.validated_data['month']
             year = data.validated_data['year']
             fecha_actual = datetime.now()
@@ -396,8 +453,8 @@ class NumeralEditPublish(APIView):
             )
             ActivityLog.objects.create(
                 user_id=request.user.id,
-                activity='Actualización de Publicación de Numeral',
-                description='Ha Actualizado una publicación de numeral' +
+                activity='Actualización de datos de Numeral',
+                description='Ha Actualizado los datos de numeral' +
                 str(transparency.numeral.name) + ' de ' +
                 str(transparency.establishment.name) + ' para el mes de ' +
                 str(transparency.month) + ' del año ' + str(transparency.year),

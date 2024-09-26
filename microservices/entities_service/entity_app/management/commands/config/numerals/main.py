@@ -342,3 +342,20 @@ class NumeralServiceData:
             content_type=contentTypeEstablishment,
             codename="view_monitoring_indicators"
         )
+
+        Permission.objects.get_or_create(
+            name="Aprobar publicaciones de T.A",
+            content_type=contentTypeTA,
+            codename="approve_numeral_ta"
+        )
+
+        Permission.objects.get_or_create(
+            name="Aprobar publicaciones de T.F",
+            content_type=contentTypeTF,
+            codename="approve_numeral_tf"
+        )
+        Permission.objectsget_or_create(
+            name="Aprobar publicaciones de T.C",
+            content_type=contentTypeTC,
+            codename="approve_numeral_tc"
+        )

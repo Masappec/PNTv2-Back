@@ -3,6 +3,7 @@ from entity_app.ports.repositories.numeral_repository import NumeralRepository
 from entity_app.domain.models.transparency_active import Numeral
 from django.db.models.query import QuerySet
 
+
 class NumeralService:
 
     def __init__(self, numeral_repository: NumeralRepository):
@@ -37,3 +38,6 @@ class NumeralService:
 
     def get_numeral_focalized_or_collab(self, type: str):
         return self.numeral_repository.get_numeral_focalized_or_collab(type)
+
+    def aprove_transparency(self, id):
+        return self.numeral_repository.aprove_transparency(id)

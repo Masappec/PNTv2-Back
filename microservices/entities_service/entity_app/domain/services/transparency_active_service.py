@@ -2,6 +2,8 @@
 from entity_app.ports.repositories.transparency_active import TransparencyActiveRepository
 from django.db.models.query import QuerySet
 from entity_app.models import TransparencyActive
+
+
 class TransparencyActiveService:
 
     def __init__(self, respository: TransparencyActiveRepository):
@@ -22,10 +24,8 @@ class TransparencyActiveService:
     def get_by_id(self, id: int):
         return self.repository.get_by_id(id)
 
-    
     def get_months_by_year(self, year: int, establishment_id: int):
         return self.repository.get_months_by_year(year, establishment_id)
-    
-    
-    def get_all_year_month(self,year:int,mont:int):
-        return self.repository.get_all_year_month(year,mont)
+
+    def get_all_year_month(self, year: int, mont: int):
+        return self.repository.get_all_year_month(year, mont)
