@@ -15,7 +15,7 @@ class ConfigDataService:
 
     def generate_file(self):
         return self.numeral_service.generate_file_json()
-    
+
     def generate_permissions(self):
         self.numeral_service.generate_permissions()
         
