@@ -209,17 +209,20 @@ class UserCreateAPI(APIView):
 
             for key, value in data.errors.items():
                 error += value[0] + "\n"
-
-            res = MessageTransactional(
-                data={
+            if error != "":
+                data = {
                     'message': error,
                     'status': 400,
                     'json': {}
                 }
-            )
-            res.is_valid(raise_exception=True)
+            else:
+                data = {
+                    'message': e,
+                    'status': 400,
+                    'json': {}
+                }
 
-            return Response(res.data, status=400)
+            return Response(data, status=400)
 
 
 class UserUpdate(APIView):
