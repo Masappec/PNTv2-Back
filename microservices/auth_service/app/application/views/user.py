@@ -217,9 +217,9 @@ class UserCreateAPI(APIView):
                 }
             else:
                 data = {
-                    'message': e,
+                    'message': str(e),
                     'status': 400,
-                    'json': {}
+                    'json':{}
                 }
 
             return Response(data, status=400)
