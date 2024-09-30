@@ -421,12 +421,6 @@ class NumeralEditPublish(APIView):
             transparency.save()
             list_files = FilePublication.objects.filter(
                 id__in=data.validated_data['files'])
-            for file in list_files:
-                root = 'transparencia/' + \
-                    str(transparency.establishment.identification) + '/' + \
-                    str(transparency.numeral.name) + '/' + \
-                    str(transparency.year) + '/' + str(transparency.month)
-                FilePublication.move_file(file, root)
 
             result = self.output_serializer_class(transparency)
             self.publisher.publish({
