@@ -19,7 +19,7 @@ from entity_app.application.views.focus_transparency import CreateTransparencyFo
     TransparencyFocusDelete, TransparencyFocusUpdate, TransparecyFocusPublicView
 
 from entity_app.application.views.template_file import TemplateFileValidate
-from entity_app.application.views.transparency_active import TransparencyActivePublicListView
+from entity_app.application.views.transparency_active import TransparencyActivePublicListView, TransparencyActiveToApproveListView
 
 from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivos, ReporteRespuestas, ReporteNoRespuestas, ReporteSolicitudes
 from entity_app.application.views.public import MonthForTransparency
@@ -109,6 +109,8 @@ urlpatterns = [
          NumeralEditPublish.as_view(), name="numeral-edit-publish"),
     path("transparency/active/public",
          TransparencyActivePublicListView.as_view(), name="transparency-active-public"),
+    path("transparency/active/all",
+         TransparencyActiveToApproveListView.as_view(), name="transparency-active-all"),
 
     path('transparency/colaborative/create', CreateTransparencyColaboraty.as_view(),
          name='create-transparency-colaborative'),
