@@ -95,3 +95,8 @@ class EstablishmentRepository(ABC):
     @abstractmethod
     def get_users_by_establishment(self, establishment_id: int):
         pass
+
+        
+    @abstractmethod
+    def get_by_identification(self,ruc:str):
+        pass

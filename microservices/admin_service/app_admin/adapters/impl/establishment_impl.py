@@ -170,3 +170,8 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
             # join list to string
             user.group = group
         return users
+
+    def get_by_identification(self,ruc:str):
+        establishment = Establishment.objects.filter(identification=ruc)
+
+        return establishment.first()

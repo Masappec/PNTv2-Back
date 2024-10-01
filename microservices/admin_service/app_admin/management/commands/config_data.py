@@ -5,9 +5,9 @@ from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.service = ConfigureService()
-
+        super(Command, self).__init__(*args, **kwargs)
     help = '''Generate fake data for the establishment model.
     Usage: python manage.py config_data --establishment --quantity 10'''
 
@@ -25,6 +25,11 @@ class Command(BaseCommand):
 
         parser.add_argument(
             '--type', help='Type of data to generate', action='store_true')
+        
+        parser.add_argument(
+            '--auto_create_establishment',
+            help='Generate Users and Establishment',action='store_true'
+        )
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
@@ -46,3 +51,6 @@ class Command(BaseCommand):
 
         if options.get('type', False):
             self.service.create_type_organization()
+
+        if options.get('auto_create_establishment', False):
+            self.service.create_establishment_user()

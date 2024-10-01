@@ -159,3 +159,6 @@ class EstablishmentService:
 
     def get_users_by_establishment(self, establishment_id: int):
         return self.establishment_repository.get_users_by_establishment(establishment_id)
+
+    def get_by_identification(self,ruc):
+        return self.establishment_repository.get_by_identification(ruc)

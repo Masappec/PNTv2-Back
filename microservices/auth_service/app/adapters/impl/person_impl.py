@@ -36,7 +36,12 @@ class PersonRepositoryImpl(PersonRepository):
     
     def update_person_by_user_id(self, user_id: int, person: dict):
         person_result = Person.objects.filter(user_id=user_id)
-        person_result.update(**person)
+        if person_result.count()>0:
+            
+            person_result.update(**person)
+        else:
+            person_result = Person.objects.create(user_id=user_id,**person)
+            return person_result
         return person_result.first()
         
         
