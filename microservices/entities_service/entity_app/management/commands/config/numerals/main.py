@@ -354,7 +354,7 @@ class NumeralServiceData:
             content_type=contentTypeTF,
             codename="approve_numeral_tf"
         )
-        Permission.objectsget_or_create(
+        Permission.objects.get_or_create(
             name="Aprobar publicaciones de T.C",
             content_type=contentTypeTC,
             codename="approve_numeral_tc"
