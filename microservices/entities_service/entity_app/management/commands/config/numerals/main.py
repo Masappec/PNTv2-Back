@@ -183,6 +183,7 @@ class NumeralServiceData:
         ColumnFile.objects.all().delete()
         TemplateFile.objects.all().delete()
         Numeral.objects.filter(name__startswith='Art').delete()
+        Numeral.objects.filter(name__startswith='Numeral 5').delete()
         with open(dir, encoding='utf-8') as file:
             data = json.load(file)
             for numeral in data:
