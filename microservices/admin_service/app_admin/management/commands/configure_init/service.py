@@ -111,16 +111,23 @@ class ConfigureService:
                     'email': str(_data['usuario']) + '@correo.com',
                     'password': make_password(str(_data['clave'])),
                     'first_name': "Usuario",
-                    'last_name': _data['name'],
+                    'last_name': "Supervisor",
                     'created_at': datetime.now()
                     
                 }
                 
-                userdeleted = User.objects.filter(username=data_user['username']).delete()
 
                 
                 try:
+                    
+                    
+                    
                     with connection.cursor() as cursor:
+                        
+                        cursor.execute('''DELETE FROM auth_person WHERE user_id = (SELECT id FROM auth_user WHERE username = %s);''',[data_user['username']])
+                        userdeleted = User.objects.filter(
+                            username=data_user['username']).delete()
+
                         cursor.execute('''INSERT INTO auth_user(username, email, 
                                             password, first_name, last_name, is_superuser,
                                             is_staff,is_active,date_joined,created_at,updated_at,deleted)
@@ -182,8 +189,8 @@ class ConfigureService:
                                             %s
                                         );''',
                                         [
-                                            _data['name'],
-                                            _data['name'],
+                                            "Usuario",
+                                            "Supervisor",
                                             _data['ruc'],
                                             "NO",
                                             "NO",
@@ -201,8 +208,8 @@ class ConfigureService:
                     
                     
                 except Exception as e:
-                    print(e)
-                    return None
+                    print(e,_data)
+                    continue
                 finally:
                     cursor.close()
 
