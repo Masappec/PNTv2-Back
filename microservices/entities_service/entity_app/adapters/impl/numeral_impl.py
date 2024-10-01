@@ -113,7 +113,7 @@ class NumeralImpl(NumeralRepository):
 
     def aprove_transparency(self, id):
         obj = TransparencyActive.objects.get(id=id)
-        obj.status = StatusNumeral.APPROVED
+        obj.status = StatusNumeral.APROVED
         obj.published = True
         obj.published_at = datetime.now()
         obj.updated_at = datetime.now()
