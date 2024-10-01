@@ -263,7 +263,7 @@ class NumeralApprove(APIView):
         """
         try:
             data = self.serializer_class(data=request.data)
-
+            data.is_valid(raise_exception=True)
             type = data.validated_data['type']
 
             if type == 'TA':
