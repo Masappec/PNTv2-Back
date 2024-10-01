@@ -269,7 +269,7 @@ class NumeralApprove(APIView):
             if type == 'TA':
 
                 transparency = self.service.aprove_transparency(
-                    data.validated_data['numeral_id']
+                    data.validated_data['id']
                 )
                 ActivityLog.objects.create(
                     user_id=request.user.id,
@@ -289,6 +289,7 @@ class NumeralApprove(APIView):
                 'json': {}
             }, status=200)
         except Exception as e:
+            print(e)
             return Response({
                 'message': 'No se pudo aprobar el numeral',
                 'status': 400,
