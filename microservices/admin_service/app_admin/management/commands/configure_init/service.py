@@ -220,9 +220,9 @@ class ConfigureService:
             username_length=12, username__endswith='001')
         
 
-        for user in users:
+        for x, user in enumerate(users):
             # Agregar el '0' al inicio del nombre de usuario
-            print(progress_bar(users.index(user), users.count()), end='\r', flush=True)
+            print (progress_bar(x, users.count()), end='\r', flush=True)
             user.username = '0' + user.username
             # Establecer la contraseña igual al username
             user.set_password(user.username)
