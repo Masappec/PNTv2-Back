@@ -219,7 +219,6 @@ class ConfigureService:
         users = User.objects.annotate(username_length=Length('username')).filter(
             username_length=12, username__endswith='001')
         
-        users.update(username=F('username').concat('0', F('username')))
 
         for user in users:
             # Agregar el '0' al inicio del nombre de usuario
