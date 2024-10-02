@@ -23,7 +23,8 @@ from django.contrib.auth.models import AbstractUser, Permission
 from django.db import connection, models
 from django.contrib.auth.hashers import make_password
 
-
+from django.db.models import F
+from django.db.models.functions import Length
 
 
 class ConfigureService:
@@ -213,6 +214,22 @@ class ConfigureService:
                 finally:
                     cursor.close()
 
+    
+    def correct_users(self):
+        users = User.objects.annotate(username_length=Length('username')).filter(
+            username_length=12, username__endswith='001')
+        
+        users.update(username=F('username').concat('0', F('username')))
+
+        for user in users:
+            # Agregar el '0' al inicio del nombre de usuario
+            user.username = '0' + user.username
+            # Establecer la contraseña igual al username
+            user.set_password(user.username)
+            user.save()
+
+
+    
     def create_establishment(self):
         print("CREANDO INSTITUCIONES..")
         list_type_org = self.type_institution.get_all()

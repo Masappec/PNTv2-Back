@@ -31,6 +31,11 @@ class Command(BaseCommand):
             help='Generate Users and Establishment',action='store_true'
         )
 
+        parser.add_argument(
+            '--update_users',
+            help='Generate Users and Establishment',action='store_true'
+        )
+        
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         all = options.get('all', False)
@@ -53,4 +58,6 @@ class Command(BaseCommand):
             self.service.create_type_organization()
 
         if options.get('auto_create_establishment', False):
-            self.service.create_establishment_user()
+            self.service.create_establishment_user()    
+        if options.get('update_users', False):
+            self.service.correct_users()
