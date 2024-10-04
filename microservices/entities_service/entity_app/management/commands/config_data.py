@@ -27,6 +27,8 @@ class Command(BaseCommand):
         parser.add_argument(
             '-update_data_numeral', help='Actualizar datos de numeral', action='store_true')
         
+        parser.add_argument(
+            '-an-especific', help = 'Generar datos de transparencia activa de un establecimiento', action='store_true')
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
@@ -50,3 +52,6 @@ class Command(BaseCommand):
         update_data_numeral = options.get('update_data_numeral', False)
         if update_data_numeral:
             print(self.config_service.update_data_numeral())
+        if options.get('an-especific', False):
+            print('Asignando numerals a los establecimientos')
+            self.config_service.asign_numeral_especific()
