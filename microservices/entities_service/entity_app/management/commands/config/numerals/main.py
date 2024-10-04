@@ -10,6 +10,7 @@ import json
 from entity_app.models import TemplateFile, Numeral, ColumnFile
 from django.contrib.auth.models import Permission, ContentType
 from entity_app.domain.models import TransparencyActive, TransparencyFocal, TransparencyColab, Solicity, EstablishmentExtended
+from entity_app.domain.models.transparency_active import EstablishmentNumeral
 
 
 class NumeralServiceData:
@@ -244,7 +245,35 @@ class NumeralServiceData:
                             regex=column['regex'],
                         )
                         template_object.columns.add(column_object)
-
+                        
+                        
+    def asign_numeral_especific(self):
+        
+        dir = os.path.dirname(__file__)
+        dir = os.path.join(dir, 'especific.json')
+        with open(dir, encoding='utf-8') as file:
+            data = json.load(file)
+            instituciones = EstablishmentExtended.objects.all()
+            for x,dataArt in enumerate(data):
+                print(progress_bar(x, len(data)), end='\r', flush=True)
+                institucion = instituciones.filter(name=dataArt['name']).first()
+                if institucion:
+                    if institucion.identification.__len__()==12 and institucion.identification.endswith('001'):
+                        institucion.identification = "0" +institucion.identification
+                        institucion.save()
+                
+                    numeralEspecifico = Numeral.objects.filter(name__icontains='Art. '+dataArt['numeral'], is_default=False).first()
+                    numeralExistente =EstablishmentNumeral.objects.filter(establishment_id=institucion.id,
+                                                        numeral_id=numeralEspecifico.pk).first()
+                    
+                    if not numeralExistente:
+                        EstablishmentNumeral.objects.create(
+                            establishment_id=institucion.id,
+                            numeral_id=numeralEspecifico.id
+                        )
+                    
+                
+        
     def generate_permissions(self):
         permissions = [
             {
