@@ -249,29 +249,33 @@ class NumeralServiceData:
                         
     def asign_numeral_especific(self):
         
-        dir = os.path.dirname(__file__)
-        dir = os.path.join(dir, 'especific.json')
-        with open(dir, encoding='utf-8') as file:
-            data = json.load(file)
-            instituciones = EstablishmentExtended.objects.all()
-            for x,dataArt in enumerate(data):
-                print(progress_bar(x, len(data)), end='\r', flush=True)
-                institucion = instituciones.filter(name=dataArt['name']).first()
-                if institucion:
-                    if institucion.identification.__len__()==12 and institucion.identification.endswith('001'):
-                        institucion.identification = "0" +institucion.identification
-                        institucion.save()
-                
-                    numeralEspecifico = Numeral.objects.filter(name__icontains='Art. '+dataArt['numeral'], is_default=False).first()
-                    numeralExistente =EstablishmentNumeral.objects.filter(establishment_id=institucion.id,
-                                                        numeral_id=numeralEspecifico.pk).first()
-                    
-                    if not numeralExistente:
-                        EstablishmentNumeral.objects.create(
-                            establishment_id=institucion.id,
-                            numeral_id=numeralEspecifico.id
-                        )
-                    
+        try:
+            dir = os.path.dirname(__file__)
+            dir = os.path.join(dir, 'especific.json')
+            with open(dir, encoding='utf-8') as file:
+                data = json.load(file)
+                instituciones = EstablishmentExtended.objects.all()
+                for x,dataArt in enumerate(data):
+                    print(progress_bar(x, len(data)), end='\r', flush=True)
+                    institucion = instituciones.filter(
+                        identification=dataArt['ruc']).first()
+                    if institucion:
+                        for n in dataArt['numerales']:
+                            
+                            numeralEspecifico = Numeral.objects.filter(
+                                name__icontains='Art. '+n, is_default=False).first()
+                            if numeralEspecifico:
+                                numeralExistente =EstablishmentNumeral.objects.filter(establishment_id=institucion.id,
+                                                                    numeral_id=numeralEspecifico.pk).first()
+                                if not numeralExistente:
+                                    EstablishmentNumeral.objects.create(
+                                        establishment_id=institucion.id,
+                                        numeral_id=numeralEspecifico.id
+                                    )
+        except Exception as e:
+            print(e)
+            print('Error al asignar los numerals a los establecimientos')
+            return False
                 
         
     def generate_permissions(self):
