@@ -74,7 +74,7 @@ class NumeralImpl(NumeralRepository):
             published=False,
             published_at=None,
             max_date_to_publish=datetime(
-                year=year, month=month, day=get_day_for_publish()),
+            year=year, month=month, day=get_day_for_publish()),
             created_at=fecha_actual
 
 

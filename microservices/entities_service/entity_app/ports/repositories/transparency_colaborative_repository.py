@@ -35,3 +35,7 @@ class TransparencyColaborativeRepository(ABC):
     @abstractmethod
     def get_all_year_month(self, year: int, month: int):
         pass
+    
+    @abstractmethod
+    def approve_transparency_colaborative(self, id):
+        pass

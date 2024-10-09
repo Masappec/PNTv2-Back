@@ -1,6 +1,10 @@
 from datetime import datetime
 from typing import Any
 from entity_app.domain.models.activity import ActivityLog
+from entity_app.domain.services.transparency_colaborative_service import TransparencyColaborativeService
+from entity_app.adapters.impl.transparency_colaborative_impl import TransparencyColaborativeImpl
+from entity_app.adapters.impl.transparency_focus_impl import TransparencyFocalImpl
+from entity_app.domain.services.transparency_focus_service import TransparencyFocusService
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from entity_app.adapters.serializers import NumeralResponseSerializer, NumeralDetailSerializer, TransparecyActiveCreate, TransparencyApproveSerializer, TransparencyCreateResponseSerializer
@@ -251,6 +255,14 @@ class NumeralApprove(APIView):
         self.service = NumeralService(
             numeral_repository=NumeralImpl()
         )
+        
+        self.tc = TransparencyColaborativeService(
+            transparency_colaborative_repository=TransparencyColaborativeImpl()
+        )
+        
+        self.tf = TransparencyFocusService(
+            transparency_focus_repository=TransparencyFocalImpl()
+        )
 
     @swagger_auto_schema(
         operation_description="Approve numeral",
@@ -282,7 +294,31 @@ class NumeralApprove(APIView):
                     ip_address=request.META.get('REMOTE_ADDR'),
                     user_agent=request.META.get('HTTP_USER_AGENT')
                 )
-
+            if type == 'TC':
+                transparency = self.tc.approve_transparency_colaborative(data.validated_data['id'])
+                ActivityLog.objects.create(
+                    user_id=request.user.id,
+                    activity='Publicación de Numeral',
+                    description='Ha aprobado una publicación de Transparencia Colaborativa' +
+                    ' en la entidad ' + str(transparency.establishment.name) +
+                    ' para el mes de ' + str(transparency.month) +
+                    ' del año ' + str(transparency.year),
+                    ip_address=request.META.get('REMOTE_ADDR'),
+                    user_agent=request.META.get('HTTP_USER_AGENT')
+                )
+            if type == 'TF':
+                transparency = self.tf.approve_transparency_focus(
+                    data.validated_data['id'])
+                ActivityLog.objects.create(
+                    user_id=request.user.id,
+                    activity='Publicación de Numeral',
+                    description='Ha aprobado una publicación de Transparencia Focalizada' +
+                    ' en la entidad ' + str(transparency.establishment.name) +
+                    ' para el mes de ' + str(transparency.month) +
+                    ' del año ' + str(transparency.year),
+                    ip_address=request.META.get('REMOTE_ADDR'),
+                    user_agent=request.META.get('HTTP_USER_AGENT')
+                )
             return Response({
                 'message': 'Publicación aprobada correctamente',
                 'status': 200,

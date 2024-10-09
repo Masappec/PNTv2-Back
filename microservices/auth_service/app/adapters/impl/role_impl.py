@@ -93,7 +93,7 @@ class RoleRepositoryImpl(RoleRepository):
             'add_user_carga_pnt':'Carga PNT',
             'add_user_supervisora_pnt':'Supervisora PNT',
             'add_user_monitoreo_dpe':'Monitoreo DPE',
-            'add_user_monitoreo_pnt_dpe':'Superadministradora PNT DPE'
+            'add_user_monitoreo_pnt_dpe':'Superadministradora PNT DPE',
         }
         
         user = User.objects.get(pk=user_id)

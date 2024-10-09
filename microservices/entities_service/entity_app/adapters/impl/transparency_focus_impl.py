@@ -1,8 +1,10 @@
+from datetime import datetime
 from entity_app.domain.models.publication import FilePublication
 from entity_app.ports.repositories.transparency_focus_repository import TransparencyFocusRepository
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
 
 from entity_app.domain.models.establishment import UserEstablishmentExtended
+from entity_app.domain.models.transparency_active import StatusNumeral
 
 
 class TransparencyFocalImpl(TransparencyFocusRepository):
@@ -14,10 +16,10 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
                                                     numeral_id=numeral_id,
                                                     month=month,
                                                     year=year,
-                                                    status=status,
-                                                    published=True,
+                                                    status=StatusNumeral.INGRESS,
+                                                    published=False,
                                                     max_date_to_publish=max_fecha,
-                                                    published_at=fecha_actual if status == "ingress" else None)
+                                                    published_at=None)
 
         response.files.set(file_instances)
 
@@ -60,14 +62,16 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
 
     def get_by_year_month(self, year: int, month: int, establishment_id: int):
         response = TransparencyFocal.objects.filter(
-            establishment_id=establishment_id, year=year, month=month)
+            establishment_id=establishment_id, year=year, month=month,            
+            status=StatusNumeral.APROVED
+        )
 
         return response
 
 
     def get_by_year(self, year: int, establishment_id: int):
         response = TransparencyFocal.objects.filter(
-            establishment_id=establishment_id, year=year)
+            establishment_id=establishment_id, year=year, status=StatusNumeral.APROVED)
 
         return response
     
@@ -75,7 +79,7 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
     
     def get_months_by_year(self, year: int, establishment_id: int):
         response = TransparencyFocal.objects.filter(
-            establishment_id=establishment_id, year=year).values('month').distinct()
+            establishment_id=establishment_id, year=year, status=StatusNumeral.APROVED).values('month').distinct()
 
         return response 
     
@@ -85,3 +89,12 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
             year=year, month=month)
 
         return response
+    
+    def approve_transparency_focus(self, id):
+        obj = TransparencyFocal.objects.get(id=id)
+        obj.status = StatusNumeral.APROVED
+        obj.published = True
+        obj.published_at = datetime.now()
+        obj.updated_at = datetime.now()
+        obj.save()
+        return obj
