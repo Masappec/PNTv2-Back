@@ -17,6 +17,7 @@ from django.contrib.auth.models import Group, User
 
 from app_admin.utils.function import progress_bar
 from app_admin.domain.models.base_model import BaseModel
+from app_admin.domain.models.establishment_model import Establishment
 from shared.tasks.user_task import send_user_created_event
 from datetime import datetime
 from django.contrib.auth.models import AbstractUser, Permission
@@ -68,8 +69,8 @@ class ConfigureService:
             })
             self.access_info.assign_establishment_to_access_information(
                 access.id, establishment_)
-            
-            
+
+
     def create_establishment_user(self):
         dir = os.path.dirname(__file__)
         dir = os.path.join(dir, 'user.json')
@@ -227,7 +228,23 @@ class ConfigureService:
             # Establecer la contraseña igual al username
             user.set_password(user.username)
             user.save()
+            
+    
+    def correct_establishment(self):
+        all = Establishment.objects.annotate(identification_length=Length('identification')).filter(
+            identification_length=12, identification__endswith='001')
 
+        for x, i in enumerate(all):
+            new_identification = '0'+i.identification
+            found = Establishment.objects.filter(identification=new_identification)
+            if found.count()==0:
+                i.identification = '0'+i.identification
+                i.save()
+            else:
+                for f in found:
+                    i.identification = '00'+i.identification
+                    f.save()
+            print(progress_bar(x, all.count()), end='\r', flush=True)
 
     
     def create_establishment(self):
