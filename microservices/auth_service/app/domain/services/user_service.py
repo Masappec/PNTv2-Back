@@ -8,7 +8,8 @@ from django.contrib.auth.hashers import make_password
 from app.adapters.messaging.events import USER_CREATED, USER_UPDATED
 from app.adapters.messaging.channels import CHANNEL_USER
 from app.adapters.messaging.publish import Publisher
-
+from datetime import datetime
+from django.db import connection
 
 class UserService:
     """
@@ -139,15 +140,34 @@ class UserService:
             'last_name': user.validated_data['last_name'],
         }
         user_ = self.user_repository.create_user(data)
-        self.publisher.publish({
-            'type': USER_CREATED,
-            'payload': {
-                'user_id': user_.id,
-                'establishment_id': user.validated_data['establishment_id']
-            }
-        })
+        self.assign_establishment(
+            user_.id, user.validated_data['establishment_id'])
+
         return user_
 
+    def assign_establishment(self, user_id: int, establishment_id: int):
+        with connection.cursor() as cursor:
+            
+            cursor.execute(
+                '''DELETE FROM app_admin_userestablishment WHERE user_id = %s;''',
+                [
+                    user_id
+                ])
+            
+            cursor.execute(
+                '''INSERT INTO app_admin_userestablishment(
+                    created_at, updated_at, deleted, deleted_at, is_active, establishment_id, user_id, user_created_id, user_deleted_id, user_updated_id, ip)
+                    VALUES ( %s, %s, %s,%s, %s,%s, %s, %s, %s, %s, %s);''',
+                [
+                    datetime.now(), datetime.now(), False, None, True,
+                    establishment_id,
+                    user_id, user_id, None, user_id,
+                    ''
+                ])
+            
+            
+            return True
+    
     def update_user(self, user_id: int, user: UserCreateAdminSerializer):
         """
         The function updates a user object using the provided dictionary of user data.
@@ -171,14 +191,8 @@ class UserService:
         }
         if user.validated_data['password']:
             data['password'] = make_password(user.validated_data['password'])
-
-        self.publisher.publish({
-            'type': USER_UPDATED,
-            'payload': {
-                'user_id': user_id,
-                'establishment_id': user.validated_data['establishment_id']
-            }
-        })
+        
+        self.assign_establishment(user_id, user.validated_data['establishment_id'])
 
         return self.user_repository.update_user(user_id, data)
 

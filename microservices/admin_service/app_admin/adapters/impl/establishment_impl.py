@@ -102,6 +102,7 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         establishment_selected.name = establishment['name']
         establishment_selected.abbreviation = establishment['abbreviation']
         establishment_selected.slug = slug
+        establishment_selected.address = establishment['address']
         establishment_selected.updated_at = datetime.now()
         establishment_selected.highest_authority = establishment['highest_authority']
         establishment_selected.first_name_authority = establishment['first_name_authority']
