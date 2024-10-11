@@ -146,6 +146,11 @@ class UserService:
         return user_
 
     def assign_establishment(self, user_id: int, establishment_id: int):
+        
+        
+        if establishment_id==0:
+            return None
+        
         with connection.cursor() as cursor:
             
             cursor.execute(
