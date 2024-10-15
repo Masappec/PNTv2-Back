@@ -11,6 +11,8 @@ class TransparencyActiveService:
 
     def get_by_year_month(self, year: int, month: int, establishment_id: int):
         return self.repository.get_by_year_month(year, month, establishment_id)
+    
+    
 
     def get_by_numeral(self, numeral_id: int, month: int, year: int, establishment_id: int):
         return self.repository.get_by_numeral(numeral_id, month, year, establishment_id)

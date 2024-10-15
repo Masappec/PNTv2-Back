@@ -36,6 +36,11 @@ class Command(BaseCommand):
             help='Generate Users and Establishment',action='store_true'
         )
         
+        parser.add_argument(
+            '--ce',
+            help='Corregir identificaciones de las entidades', action='store_true'
+        )
+        
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         all = options.get('all', False)
@@ -61,3 +66,5 @@ class Command(BaseCommand):
             self.service.create_establishment_user()    
         if options.get('update_users', False):
             self.service.correct_users()
+        if options.get('ce',False):
+            self.service.correct_establishment()

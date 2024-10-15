@@ -30,5 +30,5 @@ class TransparencyActiveRepository(ABC):
     @abstractmethod
     def get_all_year_month(self,year:int,mont:int):
         pass
-    
+
     

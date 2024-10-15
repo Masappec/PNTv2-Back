@@ -115,7 +115,9 @@ class SolicityImpl(SolicityRepository):
             user_updated=user,
             status=Status.DRAFT)
 
-        solicity.number_saip = f'{solicity.id}/{solicity.date.year}'
+        number = str(solicity.id).zfill(10)
+
+        solicity.number_saip = f'SAIP-{solicity.date.year}-{number}'
         solicity.save()
         return solicity
 
@@ -157,6 +159,7 @@ class SolicityImpl(SolicityRepository):
         number = str(solicity.id).zfill(10)
 
         solicity.number_saip = f'SAIP-{solicity.date.year}-{number}'
+        
         solicity.save()
         return solicity
 
@@ -286,7 +289,9 @@ class SolicityImpl(SolicityRepository):
             date=date,
             is_manual=True)
 
-        solicity.number_saip = f'SAIP-{solicity.date.year}-{solicity.id}'
+        number = str(solicity.id).zfill(10)
+
+        solicity.number_saip = f'SAIP-{solicity.date.year}-{number}'
         solicity.save()
         TimeLineSolicity.objects.create(
             solicity_id=solicity.id, status=Status.SEND)

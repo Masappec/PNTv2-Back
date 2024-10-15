@@ -34,4 +34,5 @@ class TransparencyFocusService:
     def get_all_year_month(self, year: int, month: int):
         return self.transparency_focus_repository.get_all_year_month(year, month)
     
-    
+    def approve_transparency_focus(self, id):
+        return self.transparency_focus_repository.approve_transparency_focus(id)

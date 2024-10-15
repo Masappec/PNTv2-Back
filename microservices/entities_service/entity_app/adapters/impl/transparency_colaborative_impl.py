@@ -1,8 +1,10 @@
+from datetime import datetime
 from entity_app.ports.repositories.transparency_colaborative_repository import TransparencyColaborativeRepository
 from entity_app.domain.models.transparecy_colab import TransparencyColab
 from entity_app.domain.models.publication import FilePublication
 
 from entity_app.domain.models.establishment import UserEstablishmentExtended
+from entity_app.domain.models.transparency_active import StatusNumeral
 
 
 class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
@@ -14,10 +16,10 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
                                                     numeral_id=numeral_id,
                                                     month=month,
                                                     year=year,
-                                                    status=status,
-                                                    published=True,
+                                                    status=StatusNumeral.INGRESS,
+                                                    published=False,
                                                     max_date_to_publish=max_fecha,
-                                                    published_at=fecha_actual if status == "ingress" else None)
+                                                    published_at=None)
 
         response.files.set(file_instances)
 
@@ -55,15 +57,24 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
         return response
 
     def get_by_year_month(self, year: int, month: int, establishment_id: int):
-        return TransparencyColab.objects.filter(year=year, month=month, establishment_id=establishment_id)
+        return TransparencyColab.objects.filter(year=year, month=month, establishment_id=establishment_id, status=StatusNumeral.APROVED)
 
     
     def get_by_year(self, year: int, establishment_id: int):
-        return TransparencyColab.objects.filter(year=year, establishment_id=establishment_id)
+        return TransparencyColab.objects.filter(year=year, establishment_id=establishment_id, status=StatusNumeral.APROVED)
     
     
     def get_months_by_year(self, year: int, establishment_id: int):
-        return TransparencyColab.objects.filter(year=year, establishment_id=establishment_id).values('month').distinct()
+        return TransparencyColab.objects.filter(year=year, establishment_id=establishment_id, status=StatusNumeral.APROVED).values('month').distinct()
     
     def get_all_year_month(self,year: int, month: int):
-        return TransparencyColab.objects.filter(year=year, month=month)
+        return TransparencyColab.objects.filter(year=year, month=month) 
+    
+    def approve_transparency_colaborative(self, id):
+        obj = TransparencyColab.objects.get(id=id)
+        obj.status = StatusNumeral.APROVED
+        obj.published = True
+        obj.published_at = datetime.now()
+        obj.updated_at = datetime.now()
+        obj.save()
+        return obj

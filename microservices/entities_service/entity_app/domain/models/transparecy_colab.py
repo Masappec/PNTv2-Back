@@ -27,7 +27,9 @@ class TransparencyColab(BaseModel):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = str(self.month) + '-' + str(self.year) + '-' + \
-                unique_slug_generator(self.establishment)
+                self.establishment.name
+            self.slug = unique_slug_generator(self,self.slug)
+            
         super(TransparencyColab, self).save(*args, **kwargs)
 
     class Meta:
