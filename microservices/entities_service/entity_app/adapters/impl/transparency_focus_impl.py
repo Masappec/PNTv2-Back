@@ -52,7 +52,7 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
             user_id=user_id).first()
         if not user_es:
             raise ValueError("El usuario no tiene establecimiento")
-        response = TransparencyFocal.objects.get(id=pk)
+        response = TransparencyFocal.objects.get(pk=pk)
 
         file_instances = FilePublication.objects.filter(id__in=newfiles)
 
@@ -62,34 +62,30 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
 
     def get_by_year_month(self, year: int, month: int, establishment_id: int):
         response = TransparencyFocal.objects.filter(
-            establishment_id=establishment_id, year=year, month=month,            
+            establishment_id=establishment_id, year=year, month=month,
             status=StatusNumeral.APROVED
         )
 
         return response
-
 
     def get_by_year(self, year: int, establishment_id: int):
         response = TransparencyFocal.objects.filter(
             establishment_id=establishment_id, year=year, status=StatusNumeral.APROVED)
 
         return response
-    
-    
-    
+
     def get_months_by_year(self, year: int, establishment_id: int):
         response = TransparencyFocal.objects.filter(
             establishment_id=establishment_id, year=year, status=StatusNumeral.APROVED).values('month').distinct()
 
-        return response 
-    
-    
+        return response
+
     def get_all_year_month(self, year: int, month: int):
         response = TransparencyFocal.objects.filter(
             year=year, month=month)
 
         return response
-    
+
     def approve_transparency_focus(self, id):
         obj = TransparencyFocal.objects.get(id=id)
         obj.status = StatusNumeral.APROVED

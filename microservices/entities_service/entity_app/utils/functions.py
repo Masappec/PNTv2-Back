@@ -18,7 +18,7 @@ def get_time_prorroga():
 
 
 def get_day_for_publish():
-    return 10
+    return 15
 
 
 def random_string_generator(size=10, chars=string.ascii_lowercase + string.digits):
