@@ -987,38 +987,33 @@
             "type_field": "select",
             "options": [
                 {
-                    "id": "Afroecuatoriano/a",
-                    "name": "Afroecuatoriano/a",
+                    "id": "Mestiza",
+                    "name": "Mestiza",
                     "color": "#00B8D9"
                 },
                 {
-                    "id": "Blanco/a",
-                    "name": "Blanco/a",
+                    "id": "Pueblo Montubio",
+                    "name": "Pueblo Montubio",
                     "color": "#00B8D9"
                 },
                 {
-                    "id": "Indígena",
-                    "name": "Indígena",
+                    "id": "Pueblo o Nacionalidad Indígena",
+                    "name": "Pueblo o Nacionalidad Indígena",
                     "color": "#00B8D9"
                 },
                 {
-                    "id": "Montubio/a",
-                    "name": "Montubio/a",
+                    "id": "Pueblo Afrodescendiente",
+                    "name": "Pueblo Afrodescendiente",
                     "color": "#00B8D9"
                 },
                 {
-                    "id": "Mestizo/a",
-                    "name": "Mestizo/a",
+                    "id": "Blanca",
+                    "name": "Blanca",
                     "color": "#00B8D9"
                 },
                 {
-                    "id": "Negro/a",
-                    "name": "Negro/a",
-                    "color": "#00B8D9"
-                },
-                {
-                    "id": "Otro/a",
-                    "name": "Otro/a",
+                    "id": "Otro",
+                    "name": "Otro",
                     "color": "#00B8D9"
                 }
             ],
