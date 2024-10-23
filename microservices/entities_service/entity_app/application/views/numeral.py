@@ -453,6 +453,7 @@ class NumeralEditPublish(APIView):
             if transparency is None:
                 raise Exception("No existe una publicacion para este numeral")
 
+            transparency.published_at = fecha_actual
             transparency.files.clear()
             transparency.files.set(data.validated_data['files'])
             transparency.save()

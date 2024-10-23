@@ -70,7 +70,7 @@ class ColumnFile(BaseModel):
         'date', 'Date'), ('file', 'File'), ('decimal', 'Decimal')), default='string')
     format = models.CharField(max_length=255, null=True, blank=True)
     regex = models.CharField(max_length=255, null=True, blank=True)
-
+    value = models.TextField(default='')
     objects = models.Manager()
 
     def save(self, *args, **kwargs):

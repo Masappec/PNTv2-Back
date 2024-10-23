@@ -88,7 +88,7 @@ class EstablishmentStats(ListAPIView):
 
         # Anotaciones para calcular totales y puntuaciones
         query_set = query_set.annotate(
-            total_TA=Count('numerals', filter=Q(
+            total_TA=Count('numerals', distinct=True, filter=Q(
                 numerals__establishment_id=F('id')
                 )),
             total_TP=Count('transparency_active',  distinct=True, filter=Q(transparency_active__year=year,
@@ -308,8 +308,8 @@ class EstablishmentCompliance(ListAPIView):
                 transparency_active__year=year, transparency_active__month=month,
                 transparency_active__establishment_id=F('id')
                 )),
-            total_numeral_ta=Count('numerals', filter=Q(
-                numerals__establishment_id=F('id')
+            total_numeral_ta=Count('numerals', distinct=True, filter=Q(
+                numerals__establishment_id=F('id'),
                 )),
             
             total_solicities_res=Count('solicity', distinct=True,  filter=Q(solicity__created_at__year=year, solicity__created_at__month=month) &
