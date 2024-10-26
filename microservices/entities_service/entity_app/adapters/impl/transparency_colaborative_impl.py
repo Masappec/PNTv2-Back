@@ -47,8 +47,10 @@ class TransparencyColaborativeImpl(TransparencyColaborativeRepository):
 
         user_es = UserEstablishmentExtended.objects.get(user_id=user_id)
 
-        response = TransparencyColab.objects.get(
-            establishment_id=user_es.establishment.id, id=pk)
+        response = TransparencyColab.objects.filter(
+            id=pk).first()
+        if not response:
+            raise ValueError("No se encontro la publicacion de transparencia colaborativa")
 
         file_instances = FilePublication.objects.filter(id__in=newfiles)
 

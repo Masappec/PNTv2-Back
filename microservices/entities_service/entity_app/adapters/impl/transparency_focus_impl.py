@@ -52,7 +52,10 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
             user_id=user_id).first()
         if not user_es:
             raise ValueError("El usuario no tiene establecimiento")
-        response = TransparencyFocal.objects.get(pk=pk)
+        response = TransparencyFocal.objects.filter(
+            id =pk).first()
+        if not response:
+            raise ValueError("No se encontro la publicacion de transparencia focalizada")
 
         file_instances = FilePublication.objects.filter(id__in=newfiles)
 

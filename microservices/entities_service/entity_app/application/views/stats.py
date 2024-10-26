@@ -228,7 +228,8 @@ class IndicatorsEstablishmentView(APIView):
         most_frequent_day = TransparencyActive.objects.filter(
             published=True,  # Solo considerar los registros publicados
             published_at__isnull=False, # Asegurarse de que la fecha de publicación exista
-            establishment_id=establishment  # Filtrar por el año 2024
+            establishment_id=establishment,  # Filtrar por el año 2024
+            published_at__year=year
 
         ).annotate(
             # Extraer el día del campo published_at
@@ -261,7 +262,6 @@ class IndicatorsEstablishmentView(APIView):
         ) if average_response_time['average'] else 0
         average_days = round(average_seconds / (60 * 60 * 24), 2)  # Convertir a días y redondear a 2 decimales
        
-        FilePublication.objects.filter()
         
         data = {
             "recibidas": recibidas_list,
