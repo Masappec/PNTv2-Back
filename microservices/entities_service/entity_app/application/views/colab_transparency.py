@@ -153,7 +153,7 @@ class TransparencyCollabUpdate(APIView):
         self.sevice = TransparencyColaborativeService(
             TransparencyColaborativeImpl())
 
-    def put(self, request, pk, *args, **kwargs):
+    def put(self, request, pk):
         data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
 
