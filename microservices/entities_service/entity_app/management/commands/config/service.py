@@ -24,3 +24,6 @@ class ConfigDataService:
         
     def asign_numeral_especific(self):
         self.numeral_service.asign_numeral_especific()
+        
+    def update_columns_numeral(self):
+        self.numeral_service.update_columns_numeral()

@@ -47,7 +47,7 @@ class TransparencyFocalImpl(TransparencyFocusRepository):
         return response
 
     def update_transparency_focus(self, pk, user_id, newfiles):
-
+        print('pk  ', pk)
         user_es = UserEstablishmentExtended.objects.filter(
             user_id=user_id).first()
         if not user_es:

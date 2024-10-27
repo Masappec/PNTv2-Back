@@ -51,7 +51,7 @@ class Command(BaseCommand):
             
         update_data_numeral = options.get('update_data_numeral', False)
         if update_data_numeral:
-            print(self.config_service.update_data_numeral())
+            print(self.config_service.update_columns_numeral())
         an_especific = options.get('an_especific', False)
         if an_especific:
             print('Asignando numerals a los establecimientos')

@@ -5401,43 +5401,104 @@
                 "max_insert": null,
                 "columns": [
                     {
-                        "name": "EJERCICIO",
+                        "name": "Ejercicio",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "ID_SECTORIAL",
+                        "name": "Mes",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "SECTORIAL",
+                        "name": "Sector",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "ID_GRUPO",
+                        "name": "Nombre_sector",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "GRUPO",
+                        "name": "Codigo_UDAF",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "CODIFICADO",
+                        "name": "Nombre_UDAF",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "PROFORMA",
+                        "name": "Codigo_EOD",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre_EOD",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    
+                    {
+                        "name": "Grupo_ingreso",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre_grupo",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Item",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre_item",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Inicial",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Codificado",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Comprometido",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Devengado",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Recaudado",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -5525,47 +5586,108 @@
                         "regex": null
                     },
                     {
-                        "name": "EJERCICIO",
+                        "name": "Ejercicio",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "ID_SECTORIAL",
+                        "name": "Mes",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "SECTORIAL",
+                        "name": "Sector",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "ID_GRUPO",
+                        "name": "Nombre_sector",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "GRUPO",
+                        "name": "Codigo_UDAF",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "CODIFICADO",
+                        "name": "Nombre_UDAF",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "PROFORMA",
+                        "name": "Codigo_EOD",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre_EOD",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Grupo_ingreso",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre_grupo",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Item",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nombre_item",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Inicial",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Codificado",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Comprometido",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Devengado",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Recaudado",
                         "type": "str",
                         "format": null,
                         "regex": null
                     }
+                   
                 ]
             },
             {
@@ -5575,109 +5697,109 @@
                 "max_insert": null,
                 "columns": [
                     {
-                        "name": "EJERCICIO",
+                        "name": "Ejercicio",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "MES",
+                        "name": "Mes",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "SECTOR",
+                        "name": "Sector",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "NOMBRE SECTOR",
+                        "name": "Nombre_sector",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "CODIGO UDAF",
+                        "name": "Codigo_UDAF",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "NOMBRE ENTIDAD",
+                        "name": "Nombre_UDAF",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "CODIGO EOD",
+                        "name": "Codigo_EOD",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "NOMBRE EOD",
+                        "name": "Nombre_EOD",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "GRUPO GASTO",
+                        "name": "Grupo_gasto",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "NOMBRE GRUPO",
+                        "name": "Nombre_grupo",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "TIPO PRESUPUESTO",
+                        "name": "Tipo_presupuesto",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "ITEM",
+                        "name": "Item",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "NOMBRE ITEM",
+                        "name": "Nombre_item",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "INICIAL",
+                        "name": "Inicial",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "CODIFICADO",
+                        "name": "Codificado",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "COMPROMETIDO",
+                        "name": "Comprometido",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "DEVENGADO",
+                        "name": "Devengado",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "PAGADO",
+                        "name": "Pagado",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -5783,49 +5905,49 @@
                         "regex": null
                     },
                     {
-                        "name": "Nombre Sector",
+                        "name": "Nombre_sector",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Código UDAF",
+                        "name": "Codigo_UDAF",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Nombre Entidad",
+                        "name": "Nombre_UDAF",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Código EOD",
+                        "name": "Codigo_EOD",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Nombre EOD",
+                        "name": "Nombre_EOD",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Grupo Gasto",
+                        "name": "Grupo_gasto",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Nombre Grupo",
+                        "name": "Nombre_grupo",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Tipo Presupuesto",
+                        "name": "Tipo_presupuesto",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -5837,7 +5959,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Nombre Item",
+                        "name": "Nombre_item",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7614,26 +7736,22 @@
                 "vertical_template": false,
                 "max_insert": null,
                 "columns": [
-                    {
-                        "name": "Proceso Electoral",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
+                    
                     {
                         "name": "Provincia",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
+                    
                     {
-                        "name": "Cantón",
+                        "name": "Circunscripción",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Circunscripción",
+                        "name": "Cantón",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7657,7 +7775,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Género",
+                        "name": "Genero",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7675,37 +7793,36 @@
                         "regex": null
                     },
                     {
+                        "name": "Blancos",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nulos",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Estado",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
                         "name": "Dignidad",
                         "type": "str",
                         "format": null,
                         "regex": null
-                    },
-                    {
-                        "name": "Candidato, Candidata, Organización Política o Alianza",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Organización Política o Alianza",
+                    },{
+                        "name": "Listado de la Organizaciones Politicas",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
                         "name": "Votos",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Votos Nulos",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Votos Blancos",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7759,24 +7876,6 @@
                         "type": "str",
                         "format": null,
                         "regex": null
-                    },
-                    {
-                        "name": "Enlace para direccionar a los planes de trabajo de las candidatas y candidatos a las distintas elecciones",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Enlace para direccionar a los resultados de los procesos electorales",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Enlace para direccionar a las actas de cada junta y recinto electoral ",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
                     }
                 ]
             },
@@ -7805,25 +7904,19 @@
                         "regex": null
                     },
                     {
-                        "name": "Proceso Electoral",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
                         "name": "Provincia",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Cantón",
+                        "name": "Circunscripción",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Circunscripción",
+                        "name": "Cantón",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7847,7 +7940,7 @@
                         "regex": null
                     },
                     {
-                        "name": "Género",
+                        "name": "Genero",
                         "type": "str",
                         "format": null,
                         "regex": null
@@ -7865,37 +7958,37 @@
                         "regex": null
                     },
                     {
+                        "name": "Blancos",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Nulos",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
+                        "name": "Estado",
+                        "type": "str",
+                        "format": null,
+                        "regex": null
+                    },
+                    {
                         "name": "Dignidad",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
-                        "name": "Candidato, Candidata, Organización Política o Alianza",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Organización Política o Alianza",
+                        "name": "Listado de la Organizaciones Politicas",
                         "type": "str",
                         "format": null,
                         "regex": null
                     },
                     {
                         "name": "Votos",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Votos Nulos",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
-                        "name": "Votos Blancos",
                         "type": "str",
                         "format": null,
                         "regex": null

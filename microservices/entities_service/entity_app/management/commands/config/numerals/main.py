@@ -393,3 +393,60 @@ class NumeralServiceData:
             content_type=contentTypeTC,
             codename="approve_numeral_tc"
         )
+
+    
+    def update_columns_numeral(self):
+        dir = os.path.dirname(__file__)
+        dir = os.path.join(dir, 'test.json')
+        with open(dir, encoding='utf-8') as file:
+            data = json.load(file)
+            ColumnFile.objects.all().delete()
+
+            for numeral in data:
+                description = numeral['name']
+                name = numeral['name']
+                is_default = numeral['default'] if 'default' in numeral else True
+                description = re.sub(r'[0-9]', '', description)
+
+                description = description.replace('. ', '')
+                description = description.replace('.', '')
+                type = 'A'
+                if description == 'Transparencia colaborativa':
+                    type = 'C'
+                if description == 'Transparencia focalizada':
+                    type = 'F'
+
+                numero = re.search(r'\d+(\.\d+)?(-\d+)?', name)
+
+                nombre = ''
+                if name.startswith('Art'):
+                    nombre = name
+                    description = "obligación específica"
+                else:
+                    nombre = 'Numeral ' + numero.group() if numero else name
+                numeral_object = Numeral.objects.filter(
+                    name=nombre,
+                ).first()
+                
+                
+                if numeral_object:
+                    numeral_object.templates.all().delete()
+                    for template in numeral['templates']:
+                        template_object = TemplateFile.objects.create(
+                            name=template['name'],
+                            description=template['description'],
+                            vertical_template=template['vertical_template'],
+                            max_inserts=template['max_insert'],
+
+                        )
+
+                        numeral_object.templates.add(template_object)
+                        for column in template['columns']:
+                            column_object = ColumnFile.objects.create(
+                                name=column['name'],
+                                type=column['type'],
+                                format=column['format'],
+                                regex=column['regex'],
+                            )
+                            template_object.columns.add(column_object)
+ 
