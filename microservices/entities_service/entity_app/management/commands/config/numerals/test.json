@@ -5486,12 +5486,6 @@
                         "regex": null
                     },
                     {
-                        "name": "Comprometido",
-                        "type": "str",
-                        "format": null,
-                        "regex": null
-                    },
-                    {
                         "name": "Devengado",
                         "type": "str",
                         "format": null,
