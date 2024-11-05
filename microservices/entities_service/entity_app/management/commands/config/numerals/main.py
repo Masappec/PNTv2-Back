@@ -449,4 +449,20 @@ class NumeralServiceData:
                                 regex=column['regex'],
                             )
                             template_object.columns.add(column_object)
- 
+    
+    
+    def update_month_transparency_active(self):
+        transparency_activities = TransparencyActive.objects.filter(month__in=[10])
+        for activity in transparency_activities:
+            activity.month -= 1
+            activity.save()
+            
+        transparency_collab = TransparencyColab.objects.filter(month__in=[10])
+        for activity in transparency_collab:
+            activity.month -= 1
+            activity.save()
+            
+        transparency_focal = TransparencyFocal.objects.filter(month__in=[10])
+        for activity in transparency_focal:
+            activity.month -= 1
+            activity.save()

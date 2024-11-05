@@ -42,8 +42,15 @@ class CreateTransparencyColaboraty(APIView):
         data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
 
-        month = datetime.now().month
+       
+        
+        month = datetime.now().month-1
         year = datetime.now().year
+
+        if month == 0:
+            month = 12
+            year = year - 1
+        
         today = datetime.now()
         maxDatePublish = datetime.now() + timedelta(days=15)
 

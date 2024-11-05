@@ -46,9 +46,12 @@ class CreateTransparencyFocalizada(APIView):
         data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
 
-        month = datetime.now().month
+        month = datetime.now().month-1
         year = datetime.now().year
         today = datetime.now()
+        if month == 0:
+            month = 12
+            year = year - 1
         maxDatePublish = datetime.now() + timedelta(days=15)
 
         try:

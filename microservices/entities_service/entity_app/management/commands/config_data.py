@@ -30,6 +30,11 @@ class Command(BaseCommand):
         parser.add_argument(
             '-an_especific', help='Generar datos de transparencia activa de un establecimiento', action='store_true')
 
+        parser.add_argument(
+            '-update_month_publications', help='Toda la información cargada en las 3 transparencias en el mes en curso debe aparece como el mes anterior ',
+            action='store_true'
+        )
+        
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         ta = options.get('an', False)
@@ -56,3 +61,7 @@ class Command(BaseCommand):
         if an_especific:
             print('Asignando numerals a los establecimientos')
             print(self.config_service.asign_numeral_especific())
+            
+        update_month_publications = options.get('update_month_publications')
+        if update_month_publications:
+            self.config_service.update_month_transparency_active()
