@@ -442,11 +442,15 @@ class NumeralServiceData:
 
                         numeral_object.templates.add(template_object)
                         for column in template['columns']:
+                            value= ''
+                            if 'value' in column:
+                                value = column['value']
                             column_object = ColumnFile.objects.create(
                                 name=column['name'],
                                 type=column['type'],
                                 format=column['format'],
                                 regex=column['regex'],
+                                value=value
                             )
                             template_object.columns.add(column_object)
     

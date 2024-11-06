@@ -303,6 +303,7 @@ class ColumnFileSerializer(serializers.ModelSerializer):
             'type',
             'format',
             'regex',
+            'value'
 
         )
 
