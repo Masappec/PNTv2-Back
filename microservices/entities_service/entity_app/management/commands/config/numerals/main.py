@@ -456,17 +456,21 @@ class NumeralServiceData:
     
     
     def update_month_transparency_active(self):
-        transparency_activities = TransparencyActive.objects.all()
+        TransparencyActive.objects.filter(month__lt=10).delete()
+        transparency_activities = TransparencyActive.objects.filter(month=10)
         for activity in transparency_activities:
-            activity.month -= 1
+            new_month = activity.month - 1
+            activity.month = new_month
             activity.save()
-            
-        transparency_collab = TransparencyColab.objects.all()
+        
+        TransparencyColab.objects.filter(month__lt=10).delete()
+        transparency_collab = TransparencyColab.objects.filter(month=10)
         for activity in transparency_collab:
             activity.month -= 1
             activity.save()
-            
-        transparency_focal = TransparencyFocal.objects.all()
+        
+        TransparencyFocal.objects.filter(month__lt=10).delete()
+        transparency_focal = TransparencyFocal.objects.filter(month=10)
         for activity in transparency_focal:
             activity.month -= 1
             activity.save()
