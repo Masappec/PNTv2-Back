@@ -1,4 +1,5 @@
 
+from django.db import IntegrityError
 from entity_app.domain.models import EstablishmentExtended
 from entity_app.domain.services.numeral_service import NumeralService
 from entity_app.adapters.impl.numeral_impl import NumeralImpl
@@ -462,15 +463,36 @@ class NumeralServiceData:
             new_month = activity.month - 1
             activity.month = new_month
             activity.save()
-        
-        TransparencyColab.objects.filter(month__lt=10).delete()
-        transparency_collab = TransparencyColab.objects.filter(month=10)
-        for activity in transparency_collab:
-            activity.month -= 1
-            activity.save()
-        
-        TransparencyFocal.objects.filter(month__lt=10).delete()
-        transparency_focal = TransparencyFocal.objects.filter(month=10)
-        for activity in transparency_focal:
-            activity.month -= 1
-            activity.save()
+        november_activities = TransparencyActive.objects.filter(month=11)
+        for activity in november_activities:
+            activity.month = 10  # Cambiar noviembre a octubre
+            try:
+                activity.save()
+            except IntegrityError:
+                print(f"Registro duplicado para {activity.establishment}, {activity.numeral}, {activity.year}, octubre")
+                continue
+    
+
+            # Para TransparencyFocal
+            # Eliminar registros con mes anterior a octubre
+            TransparencyFocal.objects.filter(month__lt=10).delete()
+
+            # Cambiar registros de octubre a septiembre
+            october_focal = TransparencyFocal.objects.filter(month=10)
+            for activity in october_focal:
+                activity.month = 9  # Cambiar octubre a septiembre
+                try:
+                    activity.save()
+                except IntegrityError:
+                    print(f"Registro duplicado para TransparencyFocal - {activity.establishment}, {activity.numeral}, {activity.year}, septiembre")
+                    continue
+
+            # Cambiar registros de noviembre a octubre
+            november_focal = TransparencyFocal.objects.filter(month=11)
+            for activity in november_focal:
+                activity.month = 10  # Cambiar noviembre a octubre
+                try:
+                    activity.save()
+                except IntegrityError:
+                    print(f"Registro duplicado para TransparencyFocal - {activity.establishment}, {activity.numeral}, {activity.year}, octubre")
+                    continue
