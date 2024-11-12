@@ -14,7 +14,7 @@ def get_timedelta_for_expired():
 
 
 def get_time_prorroga():
-    return timedelta(days=5)
+    return timedelta(days=10)
 
 
 def get_day_for_publish():

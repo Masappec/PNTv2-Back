@@ -154,7 +154,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Contratos de credito externo o internos"
                     },
                     {
                         "name": "Nombre del campo",
@@ -388,7 +389,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Procesos de Contratación Pública"
                     },
                     {
                         "name": "Nombre del campo",
@@ -574,7 +576,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Políticas públicas o información de grupo no específico"
                     },
                     {
                         "name": "Nombre del campo",
@@ -724,7 +727,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Metas y Objetivos"
                     },
                     {
                         "name": "Nombre del campo",
@@ -874,7 +878,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Planes y Programas de la entidad"
                     },
                     {
                         "name": "Nombre del campo",
@@ -1006,7 +1011,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Información relevante  para el ejercicio del derecho de acceso a la información pública"
                     },
                     {
                         "name": "Nombre del campo",
@@ -1126,7 +1132,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Base legal, regulaciones y procedimientos internos aplicables"
                     },
                     {
                         "name": "Nombre del campo",
@@ -1300,7 +1307,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Detalle de Audiencias y reuniones"
                     },
                     {
                         "name": "Nombre del campo",
@@ -1486,7 +1494,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Mecanismos de rendición de cuentas"
                     },
                     {
                         "name": "Nombre del campo",
@@ -1684,7 +1693,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Presupuesto Institucional"
                     },
                     {
                         "name": "Nombre del campo",
@@ -1912,7 +1922,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Resultados definitivos de auditorías"
                     },
                     {
                         "name": "Nombre del campo",
@@ -2104,7 +2115,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Directorio y Distributivo"
                     },
                     {
                         "name": "Nombre del campo",
@@ -2290,7 +2302,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Servicios que se ofrecen y forma de acceder a ellos - Formato y formulario de solicitudes"
                     },
                     {
                         "name": "Nombre del Campo",
@@ -2452,7 +2465,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Detalle Licencia de servicio y comisión de servicio"
                     },
                     {
                         "name": "Nombre del Campo",
@@ -2614,7 +2628,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Convenios nacionales e internacionales"
                     },
                     {
                         "name": "Nombre del campo",
@@ -2764,7 +2779,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Estructura Orgánica Funcional"
                     },
                     {
                         "name": "Nombre del campo",
@@ -2896,7 +2912,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Registro de activos de información frecuente y complementaria"
                     },
                     {
                         "name": "Nombre del campo",
@@ -3076,7 +3093,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Responsables del acceso a la Información Pública"
                     },
                     {
                         "name": "Nombre del Campo",
@@ -3238,7 +3256,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Contratos colectivos"
                     },
                     {
                         "name": "Nombre del campo",
@@ -3412,7 +3431,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Viáticos Nacionales e Internacionales"
                     },
                     {
                         "name": "Nombre del campo",
@@ -3562,7 +3582,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Datos de las personas servidoras públicas incorporadas en cumplimiento de las acciones afirmativas de cuotas laborales en la legislación nacional"
                     },
                     {
                         "name": "Nombre del campo",
@@ -3694,7 +3715,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Donativos Oficiales"
                     },
                     {
                         "name": "Nombre del campo",
@@ -3856,7 +3878,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Información clasificada como reservada"
                     },
                     {
                         "name": "Nombre del campo",
@@ -4018,7 +4041,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Listado de las empresas y personas, jurídicas o naturales, que han incumplido contratos"
                     },
                     {
                         "name": "Nombre del campo",
@@ -4216,7 +4240,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Remuneraciones salariales e ingresos adicionales"
                     },
                     {
                         "name": "Nombre del Campo",
@@ -4402,7 +4427,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Transparencia focalizada"
                     },
                     {
                         "name": "Nombre del campo",
@@ -4551,7 +4577,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Transparencia colaborativa"
                     },
                     {
                         "name": "Nombre del campo",
@@ -4706,7 +4733,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene las resoluciones, ordenanzas o reglamentos emitidos desde el GAD."
                     },
                     {
                         "name": "Nombre del campo",
@@ -4850,7 +4878,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene las actas de las sesiones de concejo del GAD."
                     },
                     {
                         "name": "Nombre del campo",
@@ -5012,7 +5041,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre sentencias constitucionales."
                     },
                     {
                         "name": "Nombre del campo",
@@ -5258,7 +5288,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos de los informes acerca del uso detallado de los fondos públicos asignados a los partidos y organizaciones políticas"
                     },
                     {
                         "name": "Nombre del campo",
@@ -5571,7 +5602,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre el origen y distribución de los recursos que forman parte del Presupuesto General del Estado."
                     },
                     {
                         "name": "Nombre del campo",
@@ -5872,7 +5904,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre la ejecución del Presupuesto General del Estado."
                     },
                     {
                         "name": "Nombre del campo",
@@ -6100,7 +6133,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos del presupuesto histórico"
                     },
                     {
                         "name": "Nombre del campo",
@@ -6250,7 +6284,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre los activos, pasivos y patrimonio del Estado."
                     },
                     {
                         "name": "Nombre del campo",
@@ -6460,7 +6495,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre empresas a cargo de extracciones y explotaciones, y sus detalles."
                     },
                     {
                         "name": "Nombre del campo",
@@ -6682,7 +6718,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre pagos y regalías de contratos de explotación de recursos naturales."
                     },
                     {
                         "name": "Nombre del campo",
@@ -6844,7 +6881,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre costos referenciales de concesiones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -6988,7 +7026,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información financiera del Instituto Ecuatoriano de Seguridad Social."
                     },
                     {
                         "name": "Nombre del campo",
@@ -7150,7 +7189,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene el reporte de ingresos y gastos de campaña."
                     },
                     {
                         "name": "Nombre del campo",
@@ -7324,7 +7364,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene el reporte de gastos de campaña."
                     },
                     {
                         "name": "Nombre del campo",
@@ -7510,7 +7551,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene las actas de los procesos electorales."
                     },
                     {
                         "name": "Nombre del campo",
@@ -7684,7 +7726,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene los planes de trabajo de los candidatos a dignidades de elección popular."
                     },
                     {
                         "name": "Nombre del campo",
@@ -7889,7 +7932,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene los resultados de los procesos electorales."
                     },
                     {
                         "name": "Nombre del campo",
@@ -8099,7 +8143,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre texto íntegro de las resoluciones ejecutoriadas, así como sus informes producidos en todas sus jurisdicciones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -8250,7 +8295,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre texto íntegro de las resoluciones ejecutoriadas, así como sus informes producidos en todas sus jurisdicciones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -8400,7 +8446,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre texto íntegro de las resoluciones ejecutoriadas, así como sus informes producidos en todas sus jurisdicciones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -8550,7 +8597,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre texto íntegro de las resoluciones ejecutoriadas, así como sus informes producidos en todas sus jurisdicciones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -8700,7 +8748,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre texto íntegro de las resoluciones ejecutoriadas, así como sus informes producidos en todas sus jurisdicciones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -8850,7 +8899,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre texto íntegro de las resoluciones ejecutoriadas, así como sus informes producidos en todas sus jurisdicciones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -9000,7 +9050,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre texto íntegro de las resoluciones ejecutoriadas, así como sus informes producidos en todas sus jurisdicciones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -9150,7 +9201,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre texto íntegro de las resoluciones ejecutoriadas, así como sus informes producidos en todas sus jurisdicciones."
                     },
                     {
                         "name": "Nombre del campo",
@@ -9287,7 +9339,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre sentencias constitucionales."
                     },
                     {
                         "name": "Nombre del campo",
@@ -9443,7 +9496,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre proyectos de ley."
                     },
                     {
                         "name": "Nombre del campo",
@@ -9641,7 +9695,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene información sobre los procesos de socialización de proyectos de ley"
                     },
                     {
                         "name": "Nombre del campo",
@@ -9833,7 +9888,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos de actas de constatación de quórum de las y los asambleístas a las sesiones del Pleno y de las Comisiones Especializadas Permanentes u Ocasionales."
                     },
                     {
                         "name": "Nombre del campo",
@@ -10019,7 +10075,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos actas de votaciones en formatos abiertos de las sesiones del Pleno y de las Comisiones Especializadas Permanentes u Ocasionales"
                     },
                     {
                         "name": "Nombre del campo",
@@ -10205,7 +10262,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos de solicitudes de información realizadas por las y los asambleístas en el ejercicio de su facultad fiscalizadora y la información detallada de los procesos de fiscalización"
                     },
                     {
                         "name": "Nombre del campo",
@@ -10391,7 +10449,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos de solicitudes de juicios políticos y toda información que se integre a dicho procedimiento hasta su resolución por el Pleno de la Asamblea Nacional"
                     },
                     {
                         "name": "Nombre del campo",
@@ -10559,7 +10618,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos de información sobre la gestión del Consejo de Administración Legislativa, convocatorias a sesiones, registros de asistencia, actas de constatación de quórum, registro de votaciones, grabaciones, acuerdos, proyectos, actas de sesiones y resoluciones"
                     },
                     {
                         "name": "Nombre del campo",
@@ -10703,7 +10763,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos de declaraciones de interés de los legisladores principales y suplentes."
                     },
                     {
                         "name": "Nombre del campo",
@@ -10877,7 +10938,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos de texto íntegro de las sentencias ejecutoriadas"
                     },
                     {
                         "name": "Nombre del campo",
@@ -11039,7 +11101,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene informes generados por el Banco Central del Ecuador."
                     },
                     {
                         "name": "Nombre del campo",
@@ -11171,7 +11234,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene informes generados por Empresas Públicas."
                     },
                     {
                         "name": "Nombre del campo",
@@ -11309,7 +11373,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos que contiene las actas de sesiones de directorio de las empresas públicas."
                     },
                     {
                         "name": "Nombre del campo",
@@ -11477,7 +11542,8 @@
                         "name": "Descripción",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Conjunto de datos del estado o secuencia de los trámites o petitorios que hagan los usuarios o consumidores"
                     },
                     {
                         "name": "Nombre del campo",

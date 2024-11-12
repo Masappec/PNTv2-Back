@@ -27,3 +27,6 @@ class ConfigDataService:
         
     def update_columns_numeral(self):
         self.numeral_service.update_columns_numeral()
+
+    def update_month_transparency_active(self):
+        self.numeral_service.update_month_transparency_active()

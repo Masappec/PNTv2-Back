@@ -303,6 +303,7 @@ class ColumnFileSerializer(serializers.ModelSerializer):
             'type',
             'format',
             'regex',
+            'value'
 
         )
 
@@ -363,7 +364,7 @@ class NumeralResponseSerializer(serializers.ModelSerializer):
 
     def get_publication(self, obj):
 
-        transparency = TransparencyActive.objects.filter(numeral=obj, published=True,
+        transparency = TransparencyActive.objects.filter(numeral=obj,
                                                          establishment_id=self.context['establishment_id'],
                                                          month=self.context['month'], year=self.context['year']).first()
 
