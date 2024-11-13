@@ -198,7 +198,7 @@ class EstablishmentDetail(APIView):
         Args:
             request (object): The request object.
             *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments. 
+            **kwargs: Arbitrary keyword arguments.
 
         Returns:
             object: The response object.
@@ -413,7 +413,6 @@ class EstablismentUpdate(APIView):
                 'function_organization': establishment.function_organization.id if establishment.function_organization else None,
                 'identification': establishment.identification if establishment.identification else ''
 
-
             })
             serializer.is_valid(raise_exception=True)
             res = MessageTransactional(
@@ -594,7 +593,7 @@ class UserEstablishmentListAPI(ListAPIView):
     Endpoint para listar todos los usuarios.
 
     Args:
-       ListAPIView (_type_): The ListAPIView class is a generic view 
+       ListAPIView (_type_): The ListAPIView class is a generic view
        that provides a list of objects.
 
     Returns:

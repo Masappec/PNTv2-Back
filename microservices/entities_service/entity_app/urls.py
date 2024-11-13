@@ -24,6 +24,9 @@ from entity_app.application.views.transparency_active import TransparencyActiveP
 from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivos, ReporteRespuestas, ReporteNoRespuestas, ReporteSolicitudes
 from entity_app.application.views.public import MonthForTransparency
 
+from entity_app.application.views.total_archivos_transparencia_view import TotalArchivosTransparenciaView
+from entity_app.application.views.numeral_update import UpdateNumeralStateView
+
 urlpatterns = [
 
     path('stats/citizen', StatsCitizen.as_view(), name='stats-citizen'),
@@ -92,6 +95,8 @@ urlpatterns = [
 
     path('numerals/', NumeralsByEstablishment.as_view(),
          name='numerals-by-establishment'),
+    # Aqui va la ruta para numeral
+    path('numerals/<int:numeral_id>/update-state/', UpdateNumeralStateView.as_view(), name='update_numeral_state'),
     path("numerals/allow/", ListNumeralAllow.as_view(), name="numerals-allow"),
     path('numerals/detail/', NumeralDetail.as_view(), name='numeral-detail'),
     path('numerals/transparency', ListNumeral.as_view(),
@@ -167,4 +172,6 @@ urlpatterns = [
     # ReporteSolicitudes
     path('reports/download/reporte-solicitudes',
          ReporteSolicitudes.as_view(), name='reports-view-reporte-solicitudes'),
+
+    path('transparencia/total-archivos/', TotalArchivosTransparenciaView.as_view(), name='total_archivos_transparencia'),
 ]

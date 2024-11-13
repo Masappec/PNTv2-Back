@@ -22,8 +22,6 @@ class EstablishmentListSerializer(ModelSerializer):
         representation['type_organization'] = instance.type_organization.name if instance.type_organization else None
         representation['function_organization'] = instance.function_organization.name if instance.function_organization else None
         return representation
-    
-    
 
 
 class EstablishmentCreateSerializer(Serializer):

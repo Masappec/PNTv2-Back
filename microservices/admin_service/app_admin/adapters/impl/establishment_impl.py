@@ -39,7 +39,7 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         code = Establishment.objects.all().count() + 1
         return Establishment.objects.create(
             name=establishment['name'],
-            alias = establishment['alias'],
+            alias = establishment.get('alias', ''),
             abbreviation=establishment['abbreviation'],
             identification=establishment['identification'],
             deleted=False,
@@ -149,7 +149,7 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
         est =  Establishment.objects.get(slug=slug)
         est.visits = est.visits + 1
         est.save()
-        
+
         return est
 
     def get_establishment_by_user_id(self, user_id: int):
@@ -165,7 +165,7 @@ class EstablishmentRepositoryImpl(EstablishmentRepository):
 
         users = User.objects.filter(id__in=[user.user_id for user in users_]).prefetch_related(
             'groups')
-        
+
         for user in users:
             group = [group for group in user.groups.all()]
             # join list to string

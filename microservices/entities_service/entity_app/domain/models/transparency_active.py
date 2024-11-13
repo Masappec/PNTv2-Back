@@ -27,6 +27,7 @@ class Numeral(BaseModel):
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, related_name='children', null=True, blank=True)
     is_default = models.BooleanField(default=True)
+    is_selected = models.BooleanField(default=False)
     type_transparency = models.CharField(max_length=255, choices=(
         ('A', 'Activa'), ('P', 'Pasiva'), ('C', 'Colaborativa'), ('F', 'Focalizada')), default='A')
     objects = models.Manager()

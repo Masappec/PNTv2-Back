@@ -34,7 +34,6 @@ class NumeralImpl(NumeralRepository):
             establishment_id=entity_id,
             numeral__type_transparency='A'
         ).values('numeral')
-
         return Numeral.objects.filter(id__in=numerals_ids).annotate(
             numeral_id_int=Cast('id', IntegerField())
         ).order_by('name')
@@ -122,3 +121,15 @@ class NumeralImpl(NumeralRepository):
 
     def get_numeral_focalized_or_collab(self, type: str):
         return Numeral.objects.filter(type_transparency=type).first()
+
+    def get_by_id(self, numeral_id: int):
+            """
+            Obtener un numeral por su ID.
+            """
+            return Numeral.objects.filter(id=numeral_id).first()
+
+    def update(self, numeral: Numeral):
+        """
+        Actualizar un numeral en la base de datos.
+        """
+        numeral.save()

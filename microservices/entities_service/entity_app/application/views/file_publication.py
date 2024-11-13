@@ -208,8 +208,7 @@ class GetFileFromUri(APIView):
                 response = HttpResponse(
                     content, content_type='application/octet-stream')
                 # Establecer el encabezado Content-Disposition para sugerir al navegador que descargue el archivo
-                response['Content-Disposition'] = f'attachment; filename="{
-                    uri.split("/")[-1]}"'
+                response['Content-Disposition'] = f'attachment; filename="{uri.split("/")[-1]}"'
                 return response
             else:
                 res = {
