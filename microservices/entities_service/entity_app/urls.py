@@ -97,7 +97,7 @@ urlpatterns = [
     path('numerals/detail/', NumeralDetail.as_view(), name='numeral-detail'),
     path('numerals/transparency', ListNumeral.as_view(),
          name='numero-transparency'),
-    path('numerals/<int:numeral_id>/update-state/', UpdateNumeralStateView.as_view(), name='update_numeral_state'),
+    path('numerals/<int:numeral_id>/update-state/', UpdateNumeralStateView.as_view(), name='update_numeral_state'),#
     path('template_file/validate', TemplateFileValidate.as_view(),
          name='template-file-validate'),
 
