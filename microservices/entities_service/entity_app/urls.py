@@ -23,6 +23,7 @@ from entity_app.application.views.transparency_active import TransparencyActiveP
 
 from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivos, ReporteRespuestas, ReporteNoRespuestas, ReporteSolicitudes
 from entity_app.application.views.public import MonthForTransparency
+from entity_app.application.views.numeral_update import UpdateNumeralStateView
 
 urlpatterns = [
 
