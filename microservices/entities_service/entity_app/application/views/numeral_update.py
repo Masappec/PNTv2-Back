@@ -13,12 +13,20 @@ class UpdateNumeralStateView(APIView):
 
     def patch(self, request, numeral_id):
         """
-        Endpoint para actualizar el estado de un numeral (is_selected=True).
+        Endpoint para actualizar el estado de un numeral con is_selected dinámico.
         """
         try:
-            # Llamar al servicio para actualizar el estado
-            updated_numeral = self.service.update_numeral_state(numeral_id, is_default=True)
-            # Suponiendo que 'updated_numeral' contiene la información completa del numeral
+            # Obtener el valor de is_selected desde el cuerpo de la solicitud
+            is_selected = request.data.get("isSelected")
+            if is_selected is None:
+                return Response(
+                    {"error": "El campo 'isSelected' es requerido."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Llamar al servicio para actualizar el estado usando el valor dinámico
+            updated_numeral = self.service.update_numeral_state(numeral_id, is_selected=is_selected)
+
             return Response({
                 "message": "Numeral actualizado exitosamente.",
             }, status=status.HTTP_200_OK)

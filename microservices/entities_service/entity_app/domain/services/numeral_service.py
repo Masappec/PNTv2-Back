@@ -42,7 +42,7 @@ class NumeralService:
     def aprove_transparency(self, id):
         return self.numeral_repository.aprove_transparency(id)
 
-    def update_numeral_state(self, numeral_id: int, is_default: bool):
+    def update_numeral_state(self, numeral_id: int, is_selected: bool):
         """
         Actualiza el estado de un numeral en la base de datos.
         """
@@ -51,5 +51,5 @@ class NumeralService:
             raise ValueError(f"El numeral con ID {numeral_id} no existe.")
 
         # Actualizar el estado
-        numeral.is_default = is_default
+        numeral.is_selected = is_selected
         return self.numeral_repository.update(numeral)
