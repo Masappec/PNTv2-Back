@@ -1,3 +1,4 @@
+#
 from abc import ABC, abstractmethod
 from typing import List
 from entity_app.domain.models.transparency_active import Numeral
