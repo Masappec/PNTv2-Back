@@ -1,3 +1,4 @@
+##
 from typing import List
 from entity_app.ports.repositories.numeral_repository import NumeralRepository
 from entity_app.domain.models.transparency_active import Numeral
