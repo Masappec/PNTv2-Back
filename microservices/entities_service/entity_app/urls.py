@@ -1,4 +1,4 @@
-#
+##
 from django.urls import path, include
 from entity_app.application.views.public import PublicationPublicView, PublicationDetail
 from entity_app.application.views.publication import PublicationCreateAPI, PublicationUpdateAPI, \

@@ -1,4 +1,4 @@
-#
+##
 import datetime
 from entity_app.utils.functions import unique_slug_generator, unique_code_generator
 from .base_model import BaseModel
