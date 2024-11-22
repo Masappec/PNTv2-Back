@@ -118,8 +118,90 @@ class TransparencyActive(models.Model):
     max_date_to_publish = models.DateTimeField(null=True, blank=True)
 
     objects = models.Manager()
-
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    deleted = models.BooleanField(default=False, null=True, blank=True)
+    deleted_at = models.DateTimeField(null=True, blank=True, default=None)
+    user_created = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_created')
+    user_updated = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_updated')
+    user_deleted = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_deleted')
+    ip = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         managed = False
         db_table = 'entity_app_transparencyactive'
+        
+
+class TransparencyFocal(models.Model):
+    establishment = models.ForeignKey(
+        'EstablishmentExtended', on_delete=models.CASCADE, related_name='transparency_focal')
+    numeral = models.ForeignKey(
+        'Numeral', on_delete=models.CASCADE, related_name='transparency_focal')
+    files = models.ManyToManyField(
+        'FilePublication', related_name='transparency_focal', blank=True)
+    slug = models.SlugField(max_length=255, null=True,
+                            blank=True, unique=True, editable=False, db_index=True)
+    month = models.IntegerField()
+    year = models.IntegerField()
+    status = models.CharField(max_length=255,
+                              choices=(('pending', 'Pendiente'),
+                                       ('ingress', 'Ingresado'),), default='pending')
+
+    published = models.BooleanField(default=False)
+    published_at = models.DateTimeField(null=True, blank=True)
+    max_date_to_publish = models.DateTimeField(null=True, blank=True)
+
+    objects = models.Manager()
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    deleted = models.BooleanField(default=False, null=True, blank=True)
+    deleted_at = models.DateTimeField(null=True, blank=True, default=None)
+    user_created = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_created')
+    user_updated = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_updated')
+    user_deleted = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_deleted')
+    ip = models.CharField(max_length=255, null=True, blank=True)
+    class Meta:
+        managed = False
+        db_table = 'entity_app_transparencyfocal'
+        
+
+class TransparencyColab(models.Model):
+    establishment = models.ForeignKey(
+        'EstablishmentExtended', on_delete=models.CASCADE, related_name='transparency_colab')
+    numeral = models.ForeignKey(
+        'Numeral', on_delete=models.CASCADE, related_name='transparency_colab')
+    files = models.ManyToManyField(
+        'FilePublication', related_name='transparency_colab', blank=True)
+    slug = models.SlugField(max_length=255, null=True,
+                            blank=True, unique=True, editable=False, db_index=True)
+    month = models.IntegerField()
+    year = models.IntegerField()
+    status = models.CharField(max_length=255,
+                              choices=(('pending', 'Pendiente'),
+                                       ('ingress', 'Ingresado'),), default='pending')
+
+    published = models.BooleanField(default=False)
+    published_at = models.DateTimeField(null=True, blank=True)
+    max_date_to_publish = models.DateTimeField(null=True, blank=True)
+
+    objects = models.Manager()
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    deleted = models.BooleanField(default=False, null=True, blank=True)
+    deleted_at = models.DateTimeField(null=True, blank=True, default=None)
+    user_created = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_created')
+    user_updated = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_updated')
+    user_deleted = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, null=True, blank=True, related_name='%(class)s_user_deleted')
+    ip = models.CharField(max_length=255, null=True, blank=True)
+    class Meta:
+        managed = False
+        db_table = 'entity_app_transparencycolab'
