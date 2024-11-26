@@ -34,6 +34,9 @@ class Command(BaseCommand):
             '-update_month_publications', help='Toda la información cargada en las 3 transparencias en el mes en curso debe aparece como el mes anterior ',
             action='store_true'
         )
+        parser.add_argument(
+            '-fix_month', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
+        )
         
     def handle(self, *args: Any, **options: Any) -> str | None:
 
@@ -65,3 +68,6 @@ class Command(BaseCommand):
         update_month_publications = options.get('update_month_publications')
         if update_month_publications:
             self.config_service.update_month_transparency_active()
+            
+        if options.get('fix_month', False):
+            self.config_service.fix_month()

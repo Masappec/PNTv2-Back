@@ -1,12 +1,12 @@
 
 from entity_app.management.commands.config.numerals.main import NumeralServiceData
-
+from entity_app.management.commands.config.fix.script import ScriptService
 
 class ConfigDataService:
 
     def __init__(self) -> None:
         self.numeral_service = NumeralServiceData()
-
+        self.fix_script = ScriptService()
     def assign_numerals(self):
         self.numeral_service.asign_numeral_to_establishments()
 
@@ -30,3 +30,6 @@ class ConfigDataService:
 
     def update_month_transparency_active(self):
         self.numeral_service.update_month_transparency_active()
+        
+    def fix_month(self):
+        self.fix_script.fix_month()
