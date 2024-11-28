@@ -7,6 +7,7 @@ from entity_app.domain.models.transparency_active import EstablishmentNumeral, N
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
 from entity_app.domain.models.transparecy_colab import TransparencyColab
+from entity_app.domain.models.message import Message
 from django.db.models import Q
 
 
@@ -515,3 +516,9 @@ class ListTransparencyColaborative(serializers.ModelSerializer):
             'name': numeral.name,
             'description': numeral.description
         }
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ['id', 'title', 'content', 'is_read', 'created_at']
+        

@@ -5,6 +5,7 @@ from entity_app.application.views.publication import PublicationCreateAPI, Publi
     PublicationsView, PublicatioDetail, PublicationUpdateState
 from entity_app.application.views.stats import EstablishmentCompliance, StatsCitizen, IndicatorsEstablishmentView, CountFilesView, EstablishmentStats
 from entity_app.application.views.file_publication import FilePublicationCreateView, GetFileFromUri, FilePublicationListEstablishemtSession, FilePublicationDelete
+from entity_app.application.views.messages import MessageView
 from entity_app.application.views.tag import TagView, TagCreateView
 from entity_app.application.views.attachment import AttachmentCreateView
 from entity_app.application.views.solicity import SolicityView, SolicityCreateDraftView, \
@@ -169,4 +170,7 @@ urlpatterns = [
     # ReporteSolicitudes
     path('reports/download/reporte-solicitudes',
          ReporteSolicitudes.as_view(), name='reports-view-reporte-solicitudes'),
+
+     # Messages
+     path('messages/', MessageView.as_view(), name='messages'),
 ]
