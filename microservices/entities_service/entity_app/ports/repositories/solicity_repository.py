@@ -201,7 +201,7 @@ class SolicityRepository(ABC):
         pass
 
     @abstractmethod
-    def change_status_by_id(self, solicity_id, text, user_id) -> Solicity:
+    def change_status_by_id(self, solicity_id, text, files, user_id) -> Solicity:
         pass
 
     @abstractmethod
