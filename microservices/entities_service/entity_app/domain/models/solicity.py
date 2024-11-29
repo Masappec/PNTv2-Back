@@ -82,6 +82,7 @@ class Insistency(BaseModel):
         max_length=50, choices=Status.choices, default=Status.SEND)
     expiry_date = models.DateTimeField(null=True, blank=True)
     motive = models.TextField()
+    files = models.ManyToManyField('FilePublication', blank=True)
 
     objects = models.Manager()
 

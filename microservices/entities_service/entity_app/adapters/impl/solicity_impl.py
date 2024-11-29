@@ -8,70 +8,100 @@ from django.db.models import QuerySet
 from entity_app.domain.models.solicity import Solicity, TimeLineSolicity, TypeStages
 from entity_app.utils.functions import get_time_prorroga, get_timedelta_for_expired
 from django.utils import timezone
+import logging
 
+logger = logging.getLogger(__name__)
 
 class SolicityImpl(SolicityRepository):
 
     def delete_draft(self, solicity_id):
         return Solicity.objects.filter(id=solicity_id).delete()
 
-    def change_status_by_id(self, solicity_id, text, user_id) -> Solicity:
+    def change_status_by_id(self, solicity_id, text, files, user_id) -> Solicity:
         solicity = Solicity.objects.get(id=solicity_id)
+        file_instances = FilePublication.objects.filter(id__in=files)
 
         if timezone.now() > solicity.expiry_date:
             newstatus = ''
 
-            if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
+            if solicity.status in [Status.RESPONSED, Status.NO_RESPONSED]:
                 newstatus = Status.INSISTENCY_SEND
 
-            if solicity.status == Status.INSISTENCY_RESPONSED or solicity.status == Status.INSISTENCY_NO_RESPONSED:
+            if solicity.status in [Status.INSISTENCY_RESPONSED, Status.INSISTENCY_NO_RESPONSED]:
                 newstatus = Status.INFORMAL_MANAGMENT_SEND
 
-            if newstatus == '':
+            if not newstatus:
                 raise ValueError('Esta solicitud aun está vigente')
 
             solicity.status = newstatus
-            solicity.expiry_date = solicity.expiry_date + get_timedelta_for_expired()
-
-            Insistency.objects.create(solicity_id=solicity_id,
-                                      user_id=user_id,  motive=text,
-                                      user_created_id=user_id,
-                                      user_updated_id=user_id,
-                                      status=newstatus)
+            solicity.expiry_date += get_timedelta_for_expired()
             solicity.save()
-            self.save_timeline(
-                solicity_id, solicity.user_created_id, newstatus)
+
+            # Crear el objeto Insistency
+            response = Insistency.objects.create(
+                solicity_id=solicity_id,
+                user_id=user_id,
+                motive=text,
+                user_created_id=user_id,
+                user_updated_id=user_id,
+                status=newstatus
+            )
+    
+            response.files.set(file_instances)
+
+            self.save_timeline(solicity_id, solicity.user_created_id, newstatus)
 
             return solicity
+
         else:
             if solicity.status == Status.SEND:
                 newstatus = Status.PRORROGA
                 solicity.status = newstatus
-
-                solicity.expiry_date = datetime.now()+get_time_prorroga()
-                solicity.save()
-                self.save_timeline(
-                    solicity_id, solicity.user_created_id, newstatus)
-
-                comment = Extension.objects.create(solicity_id=solicity_id,
-                                                   user_id=user_id,  motive=text,
-                                                   user_created_id=user_id,
-                                                   user_updated_id=user_id,
-                                                   status=Status.PRORROGA)
-                return solicity
-            if solicity.status == Status.RESPONSED or solicity.status == Status.NO_RESPONSED:
-                solicity.status = Status.INSISTENCY_SEND
-                solicity.expiry_date = solicity.expiry_date + get_time_prorroga()
+                solicity.expiry_date = datetime.now() + get_time_prorroga()
                 solicity.save()
 
-                Insistency.objects.create(solicity_id=solicity_id,
-                                          user_id=user_id,  motive=text,
-                                          user_created_id=user_id,
-                                          user_updated_id=user_id,
-                                          status=Status.INSISTENCY_SEND)
-                self.save_timeline(
-                    solicity_id, solicity.user_created_id, Status.INSISTENCY_PERIOD)
+                self.save_timeline(solicity_id, solicity.user_created_id, newstatus)
+
+                # Crear el objeto Extension
+                res_extension = Extension.objects.create(
+                    solicity_id=solicity_id,
+                    user_id=user_id,
+                    motive=text,
+                    user_created_id=user_id,
+                    user_updated_id=user_id,
+                    status=Status.PRORROGA
+                )
+
+                file_instances = FilePublication.objects.filter(id__in=files)
+                res_extension.files.set(file_instances)
+
                 return solicity
+
+            if solicity.status in [Status.RESPONSED, Status.NO_RESPONSED]:
+                newstatus = Status.INSISTENCY_SEND
+                solicity.status = newstatus
+                solicity.expiry_date += get_time_prorroga()
+                solicity.save()
+
+                # Crear el objeto Insistency
+                response = Insistency.objects.create(
+                    solicity_id=solicity_id,
+                    user_id=user_id,
+                    motive=text,
+                    user_created_id=user_id,
+                    user_updated_id=user_id,
+                    status=newstatus
+                )
+
+                file_instances = FilePublication.objects.filter(id__in=files)
+                response.files.set(file_instances)
+
+                self.save_timeline(
+                    solicity_id, solicity.user_created_id, Status.INSISTENCY_PERIOD
+                )
+
+                return solicity
+
             raise ValueError('Esta solicitud aun está vigente')
 
     def create_solicity_draft(self,
