@@ -266,12 +266,12 @@ class SolicityService:
 
         if solicity.status == Status.PRORROGA:
             if not is_citizen or solicity.is_manual:
-                self.solicity_repository.create_comment_solicity(
-                    solicity_id=solicity_id,
-                    text=text,
-                    user_id=user_id
-                )
-                self.save_timeline(solicity_id, user_id, Status.PRORROGA)
+                
+                solicity.status = Status.RESPONSED
+                solicity.save()
+                self.save_timeline(solicity_id, user_id, Status.RESPONSED)
+                self.solicity_repository.create_solicity_response(
+                    solicity_id=solicity_id, user_id=user_id, text=text, files=files, attachments=attachments)
                 self.publisher.publish({
                     'type': SOLICITY_RESPONSE_ESTABLISHMENT,
                     'payload': {
