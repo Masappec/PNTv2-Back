@@ -30,8 +30,8 @@ services:
       - DB_PASSWORD=${POSTGRES_DB_PASSWORD}
       - CELERY_BROKER_URL=redis://redis_db:6379/3
       - CELERY_RESULT_BACKEND=redis://redis_db:6379/3
-      - FRONTEND_PASSWORD_CONFIRMATION_URL=https://transparencia.dpe.gob.ec/auth/reset-password/:token
-      - FRONTEND_ACTIVATE_ACCOUNT_URL=https://transparencia.dpe.gob.ec/auth/activate-account/:uidb64/:token
+      - FRONTEND_PASSWORD_CONFIRMATION_URL=${FRONTEND_PASSWORD_CONFIRMATION_URL}
+      - FRONTEND_ACTIVATE_ACCOUNT_URL=${FRONTEND_ACTIVATE_ACCOUNT_URL}
       - REDIS_HOST=redis_db
       - REDIS_PORT=6379
       - REDIS_DB=0
@@ -127,8 +127,6 @@ services:
       POSTGRES_DB: pnt_db
       POSTGRES_USER: ${POSTGRES_DB_USER}
       POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
-    ports:
-      - "5432:5432"
     volumes:
       - ./data/postgres_data:/var/lib/postgresql/data
     networks:

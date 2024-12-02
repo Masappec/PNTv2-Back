@@ -34,6 +34,9 @@ class Command(BaseCommand):
             '-update_month_publications', help='Toda la información cargada en las 3 transparencias en el mes en curso debe aparece como el mes anterior ',
             action='store_true'
         )
+        parser.add_argument(
+            '-fix_month', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
+        )
         
         parser.add_argument(
             '-fix_month_colab', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'

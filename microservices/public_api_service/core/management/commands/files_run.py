@@ -4,18 +4,18 @@ from core.models import TransparencyActive, CSVData, Metadata, FilePublication
 from core.tasks.ta_tasks import on_update_ta
 from pathlib import Path
 
-
 class Command(BaseCommand):
 
-    def add_arguments(self, parser):
 
+    def add_arguments(self, parser):
+        
         parser.add_argument(
             '-run_save_csv', help='Generar archivo csv', action='store_true')
-
+    
     def handle(self, *args, **options):
         if options.get('run_save_csv', False):
             self.run_generate_file()
-
+    
     def run_generate_file(self):
         all = TransparencyActive.objects.all()
         list_files = FilePublication.objects.all()

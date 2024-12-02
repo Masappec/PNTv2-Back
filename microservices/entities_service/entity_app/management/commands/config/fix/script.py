@@ -68,11 +68,11 @@ class ScriptService:
 
             for item in json_data:
                 metadata = item['metadata']
-                extractedMonth = item['extractedMonth']
                 numeral = metadata['numeral']
                 month = metadata['month']
                 year = metadata['year']
                 columnsDate = item['columnsDate']
+                extractedMonth = item['extractedMonth']
 
                 establishment_identification = metadata['establishment_identification']
                 establishment_name = metadata['establishment_name']
