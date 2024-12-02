@@ -30,3 +30,9 @@ class ConfigDataService:
 
     def update_month_transparency_active(self):
         self.numeral_service.update_month_transparency_active()
+        
+    def fix_month(self):
+        self.fix_script.fix_month()
+        
+    def fix_month_colab(self):
+        self.fix_script.fix_month_colab()
