@@ -157,11 +157,11 @@ class ScriptService:
                     'url_nueva': '',
                     'mensaje': ''
                 }
-                fecha = self.obtener_ultimo_dia_mes(year, month)
+                fecha = self.obtener_ultimo_dia_mes(int(year), int(month))
                 fecha_ = f"{year}-{month}-{fecha}"
                 if publications.exists():
                     publication = publications.first()
-
+                    files_publication = publication.files.filter(name=file_name).first()
                     csv_ant = ta.filter(
                                 numeral__name=numeral, 
                                 establishment__identification=establishment_identification,
@@ -169,23 +169,26 @@ class ScriptService:
                     if csv_ant:
                         for csv in csv_ant:
                             url_path = csv.files.filter(name=file_name).first()
-                            
-                            if url_path:
-                                csv_content = pd.read_csv(url_path.url_download.url, sep=';')
-                                csv_content.values[1] = fecha_
-                                new_file_pub = FilePublication.objects.create(
-                                    name=file_name,
-                                    description=file_name,
-                                    is_active=True,
-                                    is_colab=False
-                                )
-                                csv_content_new = ContentFile(csv_content.to_csv(index=False))
-                                new_file_pub.url_download.save(file_name+".csv", csv_content_new)
-                                object_['url_nueva'] = new_file_pub.url_download.url
-                                publication.files.remove(url_path)
-                                publication.files.add(new_file_pub)
-                                break
-                        object_['mensaje'] = 'Se ha actualizado la fecha'
+                            try:
+                                if url_path:
+                                    csv_content = pd.read_csv("/code"+url_path.url_download.url.replace('%20', ' '), sep=';')
+                                    csv_content.values[1] = fecha_
+                                    new_file_pub = FilePublication.objects.create(
+                                        name=file_name,
+                                        description=file_name,
+                                        is_active=True,
+                                        is_colab=False
+                                    )
+                                    csv_content_new = ContentFile(csv_content.to_csv(index=False,sep=';', header=False))
+                                    new_file_pub.url_download.save(file_name+".csv", csv_content_new)
+                                    object_['url_nueva'] = new_file_pub.url_download.url
+                                    publication.files.remove(files_publication)
+                                    publication.files.add(new_file_pub)
+                                    object_['mensaje'] = 'Se ha actualizado el metadato'
+                                    break
+                            except Exception as e:
+                                object_['mensaje'] = e.__str__()
+                                continue
 
                     else:
                         object_['mensaje'] = 'No hay archivos anteriores'
@@ -253,7 +256,7 @@ class ScriptService:
                                 is_colab=False
                             )
 
-                            csv_content_new = ContentFile(df.to_csv(index=True))
+                            csv_content_new = ContentFile(df.to_csv(index=True,sep=';', header=False))
                            
                             new_file_pub.url_download.save(file_name+".csv", csv_content_new)
                             publication.files.remove(url_path)
