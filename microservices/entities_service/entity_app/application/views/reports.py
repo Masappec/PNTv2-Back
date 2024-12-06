@@ -154,6 +154,36 @@ class ReporteSolicitudes(APIView):
         return response
 
 
+class ReporteTodasSolicitudes(APIView):
+    permission_classes = [IsAuthenticated, HasPermission]
+    permission_required = 'view_solicityresponse'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.solicity_service = SolicityService(SolicityImpl())
+        self.transparency_service = TransparencyActiveService(TransparencyActiveImpl())
+        self.numera_service = NumeralService(NumeralImpl())
+        self.transparency_collab = TransparencyColaborativeService(TransparencyColaborativeImpl())
+        self.transparency_focus = TransparencyFocusService(TransparencyFocalImpl())
+        
+        # Inicialización completa de ReportService
+        self.report_service = ReportService(
+            self.solicity_service,
+            self.transparency_service,
+            self.numera_service,
+            self.transparency_collab,
+            self.transparency_focus
+        )
+
+    def post(self, request):
+        year = request.data.get('year', datetime.now().year)
+        value = self.report_service.generate_all_solicities(request.user.id, year)
+
+        response = HttpResponse(value, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="TodasLasSolicitudes.xlsx"'
+        return response
+    
+
 class ReporteNoRespuestas(ListAPIView):
     permission_classes = [IsAuthenticated, HasPermission]
     serializer_class = SolicitySerializer
