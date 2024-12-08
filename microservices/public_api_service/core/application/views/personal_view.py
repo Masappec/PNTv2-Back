@@ -200,7 +200,7 @@ class PersonalRemuneraciones(APIView):
                     # buscar en la lista los elementos que tenga el puesto institucional
 
                     for item in numeral_21_data:
-                        if item["puesto"] == puesto:
+                        if item["puesto"] IN puesto:
                             item["remuneracion"] = row_dict.get(
                                 columna_remuneracion, "").strip()
                             item["grado"] = row_dict.get(
@@ -214,7 +214,8 @@ class PersonalRemuneraciones(APIView):
                                 puesto.lower())
                             removed_accents_puesto_item = remove_accents(
                                 item["puesto"].lower())
-                            if similarity_percentage(removed_accents_puesto, removed_accents_puesto_item) > 40:
+                            if removed_accents_puesto in removed_accents_puesto_item or \
+                                    removed_accents_puesto_item in removed_accents_puesto:
                                 item["remuneracion"] = row_dict.get(
                                     columna_remuneracion, "").strip()
                                 item["grado"] = row_dict.get(
