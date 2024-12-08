@@ -138,10 +138,12 @@ class UserCreateAPI(APIView):
         try:
             data = self.serializer_class(data=request.data)
             data.is_valid(raise_exception=True)
+            #### Requerimiento
+            ## Eliminar restriccion
             find_user = self.user_service.get_user_by_email(
                 data.validated_data['email'])
             if find_user:
-                raise ValueError('Este correo ya está en uso')
+                pass
 
             find_user = self.user_service.get_user_by_username(
                 data.validated_data['username'])
