@@ -200,7 +200,7 @@ class PersonalRemuneraciones(APIView):
                     # buscar en la lista los elementos que tenga el puesto institucional
 
                     for item in numeral_21_data:
-                        if item["puesto"] IN puesto:
+                        if item["puesto"] == puesto:
                             item["remuneracion"] = row_dict.get(
                                 columna_remuneracion, "").strip()
                             item["grado"] = row_dict.get(
