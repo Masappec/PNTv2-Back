@@ -179,7 +179,9 @@ class ScriptService:
                                         is_active=True,
                                         is_colab=False
                                     )
-                                    csv_content_new = ContentFile(csv_content.to_csv(index=False,sep=';', header=False))
+                                    csv_content.drop(
+                                        csv_content.columns[2], axis=1, inplace=True)
+                                    csv_content_new = ContentFile(csv_content.to_csv(index=False,sep=';', header=True))
                                     new_file_pub.url_download.save(file_name+".csv", csv_content_new)
                                     object_['url_nueva'] = new_file_pub.url_download.url
                                     publication.files.remove(files_publication)
@@ -211,7 +213,7 @@ class ScriptService:
 
         with open(dir, encoding='utf-8') as file:
             json_data = json.load(file)
-            for _json in json_data:
+            for _json in json_data[:10]:
                 metadata = _json['metadata']
                 numeral = metadata['numeral']
                 month = metadata['month']
