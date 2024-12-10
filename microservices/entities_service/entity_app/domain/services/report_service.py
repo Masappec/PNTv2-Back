@@ -82,7 +82,7 @@ class ReportService:
         ws.title = "Todas las Solicitudes"
 
         # Encabezados
-        headers = ['N°', 'No. SAIP', 'Fecha Envío', 'Días Transcurridos', 'Estado']
+        headers = ['N°', 'No. SAIP', 'Solicitante', 'Fecha Envío', 'Fecha Respuesta', 'Estado']
         for col_num, column_title in enumerate(headers, 1):
             column_letter = get_column_letter(col_num)
             ws[f'{column_letter}1'] = column_title
@@ -93,9 +93,10 @@ class ReportService:
             row_ = {
                 'index': row_num + 1,  # Índice inicia en 1
                 'no_saip': row_data.number_saip,
+                'applicant': row_data.first_name + ' ' + row_data.last_name,
                 'created_at': row_data.created_at.strftime('%Y-%m-%d'),
-                'days': (datetime.now().date() - row_data.created_at.date()).days,
-                'status': row_data.status,  # Incluye el estado de la solicitud
+                'updated_at': row_data.updated_at.strftime('%Y-%m-%d'),
+                'status': row_data.get_status_display(), # Estado en espanish
             }
             lista_solicity.append(row_)
 
