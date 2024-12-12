@@ -21,7 +21,8 @@ class Command(BaseCommand):
         list_files = FilePublication.objects.all()
         for x, item in enumerate(all):
             print(f'Procesando {x + 1} de {len(all)}', end='\r')
-            files = list_files.filter(transparency_active=item, name__icontains='Metadatos')
+            files = list_files.filter(
+                transparency_active=item, name__icontains='Metadatos')
             files_path = [f"/code/media{file.url_download.url.replace('%20', ' ')}"
                           for file in files]
             on_update_ta(
@@ -35,4 +36,3 @@ class Command(BaseCommand):
                 item.establishment.name,
                 item.numeral.description
             )
-        

@@ -38,6 +38,19 @@ class Command(BaseCommand):
             '-fix_month', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
         )
         
+        parser.add_argument(
+            '-fix_month_colab', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
+        )
+        
+
+        parser.add_argument(
+            '-fix_metadatos', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
+        )
+
+        parser.add_argument(
+            '-fix_diccionario', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
+        )
+
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         ta = options.get('an', False)
@@ -71,3 +84,11 @@ class Command(BaseCommand):
             
         if options.get('fix_month', False):
             self.config_service.fix_month()
+        if options.get('fix_month_colab', False):
+            self.config_service.fix_month_colab()
+
+        if options.get('fix_metadatos', False):
+            self.config_service.fix_metadatos()
+
+        if options.get('fix_diccionario', False):
+            self.config_service.fix_diccionario()

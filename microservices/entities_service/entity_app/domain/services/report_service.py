@@ -69,6 +69,51 @@ class ReportService:
         
         return response_stream
     
+    def generate_all_solicities(self, user_id: int, year: int):
+        output_serializer_class = SolicityResponseSerializer
+
+        # Obtener las solicitudes del usuario para el año específico
+        solicity = self.solicity_service.get_entity_user_solicities(user_id)
+        solicity = solicity.filter(created_at__year=year)  # Mantén el filtro por año si es necesario
+
+        # Crear un libro de Excel
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Todas las Solicitudes"
+
+        # Encabezados
+        headers = ['N°', 'No. SAIP', 'Solicitante', 'Fecha Envío', 'Fecha Respuesta', 'Estado']
+        for col_num, column_title in enumerate(headers, 1):
+            column_letter = get_column_letter(col_num)
+            ws[f'{column_letter}1'] = column_title
+
+        # Recopilar datos
+        lista_solicity = []
+        for row_num, row_data in enumerate(solicity):
+            row_ = {
+                'index': row_num + 1,  # Índice inicia en 1
+                'no_saip': row_data.number_saip,
+                'applicant': row_data.first_name + ' ' + row_data.last_name,
+                'created_at': row_data.created_at.strftime('%Y-%m-%d'),
+                'updated_at': row_data.updated_at.strftime('%Y-%m-%d'),
+                'status': row_data.get_status_display(), # Estado en espanish
+            }
+            lista_solicity.append(row_)
+
+        # Escribir datos en el Excel
+        for row_num, row_data in enumerate(lista_solicity, 2):  # Inicia en la fila 2
+            for col_num, (column_name, cell_value) in enumerate(row_data.items(), 1):
+                column_letter = get_column_letter(col_num)
+                ws[f'{column_letter}{row_num}'] = cell_value
+
+        # Guardar el archivo en un stream
+        from io import BytesIO
+        response_stream = BytesIO()
+        wb.save(response_stream)
+        response_stream.seek(0)
+
+        return response_stream
+    
     
     def generate_solicities_response(self,user_id:int,year:int):
         output_serializer_class = SolicityResponseSerializer

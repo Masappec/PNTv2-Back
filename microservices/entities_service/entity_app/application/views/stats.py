@@ -1,4 +1,4 @@
-from entity_app.domain.models import Solicity, Status, TimeLineSolicity, TransparencyActive, \
+from entity_app.domain.models import Solicity, Status, TimeLineSolicity, TransparencyActive, TransparencyFocal, TransparencyColab, \
     EstablishmentExtended, FilePublication
 from rest_framework.views import APIView
 from datetime import datetime
@@ -220,10 +220,25 @@ class IndicatorsEstablishmentView(APIView):
             published_at__year=year,
             establishment_id=establishment# Filtrar por el año 2024
         )
+        # Aqui modificamos
+        transparency_focal = TransparencyFocal.objects.filter(
+            published=True,                         # Solo considerar los registros publicados
+            published_at__year=year,
+            establishment_id=establishment# Filtrar por el año 2024
+        )
 
+        transparency_colab = TransparencyColab.objects.filter(
+            published=True,                         # Solo considerar los registros publicados
+            published_at__year=year,
+            establishment_id=establishment# Filtrar por el año 2024
+        )
 
         # Contar la cantidad total de archivos (files) asociados a esos registros
         total_files = sum(t.files.count() for t in published_transparency)
+        # Aqui nuestra modificacion
+        total_focal = sum(t.files.count() for t in transparency_focal)
+        total_colab = sum(t.files.count() for t in transparency_colab)
+
        # Agrupar por el día del mes y contar las publicaciones
         most_frequent_day = TransparencyActive.objects.filter(
             published=True,  # Solo considerar los registros publicados
@@ -272,6 +287,8 @@ class IndicatorsEstablishmentView(APIView):
             "score_saip": score['score_saip'],
             "total_score": score['score_saip'],
             "ta_published": total_files,
+            "tf_published": total_focal,
+            "tc_published": total_colab,
             "day_frencuency_response": average_days,
             "day_frencuency_publish": most_frequent_day[0]['day_of_publication'] if most_frequent_day.__len__() > 0 else 0
             

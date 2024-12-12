@@ -17,6 +17,9 @@ from entity_app.domain.services.solicity_service import SolicityService
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
 from drf_yasg.utils import swagger_auto_schema
 from entity_app.utils.functions import get_timedelta_for_expired
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class CreateExtensionSolicityView(APIView):
@@ -450,7 +453,7 @@ class SolicityWithoutDraftView(APIView):
         except Exception as e:
             print("Error: ", e)
 
-            res.is_valid(raise_exception=True)
+            data.is_valid(raise_exception=True)
             return Response({
                 'message': str(e),
                 'status': 400,
@@ -705,11 +708,12 @@ class SolicityChangeStatus(APIView):
 
             solicity_id = data.get('solicity_id')
             text = data.get('text')
+            files = data.get('files')
             user_id = request.user.id
-
+            
             if solicity_id:
                 solicity = self.service.change_status_by_id(
-                    solicity_id, user_id, text)
+                    solicity_id, user_id, text, files)
 
                 return Response({
                     'message': 'Solicity respondida correctamente',

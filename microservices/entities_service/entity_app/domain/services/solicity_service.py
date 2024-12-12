@@ -113,8 +113,8 @@ class SolicityService:
         """
         return self.solicity_repository.create_comment_solicity(solicity_id, user_id, text)
 
-    def change_status_by_id(self, solicity_id, user_id, text):
-        return self.solicity_repository.change_status_by_id(solicity_id, text, user_id)
+    def change_status_by_id(self, solicity_id, user_id, text, files):
+        return self.solicity_repository.change_status_by_id(solicity_id, text, files, user_id)
 
     def send_solicity_without_draft(self,
                                     number_saip: str,
@@ -266,12 +266,12 @@ class SolicityService:
 
         if solicity.status == Status.PRORROGA:
             if not is_citizen or solicity.is_manual:
-                self.solicity_repository.create_comment_solicity(
-                    solicity_id=solicity_id,
-                    text=text,
-                    user_id=user_id
-                )
-                self.save_timeline(solicity_id, user_id, Status.PRORROGA)
+                
+                solicity.status = Status.RESPONSED
+                solicity.save()
+                self.save_timeline(solicity_id, user_id, Status.RESPONSED)
+                self.solicity_repository.create_solicity_response(
+                    solicity_id=solicity_id, user_id=user_id, text=text, files=files, attachments=attachments)
                 self.publisher.publish({
                     'type': SOLICITY_RESPONSE_ESTABLISHMENT,
                     'payload': {

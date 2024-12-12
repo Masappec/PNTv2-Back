@@ -237,7 +237,8 @@ class SolicitySerializer(serializers.ModelSerializer):
 
 
 class ExtensionSerializer(serializers.ModelSerializer):
-
+    files = FilePublicationSerializer(many=True)
+    
     class Meta:
         model = Extension
         fields = '__all__'

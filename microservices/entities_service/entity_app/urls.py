@@ -1,3 +1,4 @@
+##
 from django.urls import path, include
 from entity_app.application.views.public import PublicationPublicView, PublicationDetail
 from entity_app.application.views.publication import PublicationCreateAPI, PublicationUpdateAPI, \
@@ -21,8 +22,9 @@ from entity_app.application.views.focus_transparency import CreateTransparencyFo
 from entity_app.application.views.template_file import TemplateFileValidate
 from entity_app.application.views.transparency_active import TransparencyActivePublicListView, TransparencyActiveToApproveListView
 
-from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivos, ReporteRespuestas, ReporteNoRespuestas, ReporteSolicitudes
+from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivos, ReporteRespuestas, ReporteNoRespuestas, ReporteSolicitudes, ReporteTodasSolicitudes
 from entity_app.application.views.public import MonthForTransparency
+from entity_app.application.views.numeral_update import UpdateNumeralStateView
 
 urlpatterns = [
 
@@ -96,7 +98,7 @@ urlpatterns = [
     path('numerals/detail/', NumeralDetail.as_view(), name='numeral-detail'),
     path('numerals/transparency', ListNumeral.as_view(),
          name='numero-transparency'),
-
+    path('numerals/<int:numeral_id>/update-state/', UpdateNumeralStateView.as_view(), name='update_numeral_state'),#
     path('template_file/validate', TemplateFileValidate.as_view(),
          name='template-file-validate'),
 
@@ -167,4 +169,9 @@ urlpatterns = [
     # ReporteSolicitudes
     path('reports/download/reporte-solicitudes',
          ReporteSolicitudes.as_view(), name='reports-view-reporte-solicitudes'),
+
+     # ReporteAllSolicitudes
+     path('reports/download/reporte-todas-solicitudes', 
+     ReporteTodasSolicitudes.as_view(), name='reports-view-reporte-todas-solicitudes'),
+
 ]

@@ -33,3 +33,12 @@ class ConfigDataService:
         
     def fix_month(self):
         self.fix_script.fix_month()
+        
+    def fix_month_colab(self):
+        self.fix_script.fix_month_colab()
+
+    def fix_metadatos(self):
+        self.fix_script.fix_metadatos()
+
+    def fix_diccionario(self):
+        self.fix_script.fix_diccionario()

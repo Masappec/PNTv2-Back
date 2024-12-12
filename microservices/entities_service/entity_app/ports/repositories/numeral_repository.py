@@ -1,3 +1,4 @@
+##
 from abc import ABC, abstractmethod
 from typing import List
 from entity_app.domain.models.transparency_active import Numeral
@@ -43,4 +44,16 @@ class NumeralRepository(ABC):
 
     def aprove_transparency(self, id):
 
+        pass
+
+    def get_by_id(self, numeral_id: int):
+        """
+        Obtener un numeral por su ID.
+        """
+        pass
+
+    def update(self, numeral: Numeral):
+        """
+        Actualizar un numeral en la base de datos.
+        """
         pass
