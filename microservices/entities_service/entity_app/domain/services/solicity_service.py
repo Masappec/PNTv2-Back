@@ -7,6 +7,7 @@ from entity_app.adapters.messaging.events import SOLICITY_CITIZEN_CREATED, SOLIC
     SOLICITY_RESPONSE_USER, SOLICITY_FOR_EXPIRED, SOLICITY_USER_EXPIRED
 from entity_app.domain.models.establishment import UserEstablishmentExtended
 from datetime import timedelta
+from django.contrib.auth.models import User
 
 
 class SolicityService:
@@ -237,13 +238,15 @@ class SolicityService:
             establishment_id=solicity.establishment_id).distinct('user_id').all()
 
         extensions = Extension.objects.filter(solicity=solicity).count()
-
-        is_citizen = solicity.user_created_id == user_id
+        # Validar si tiene el permiso
+        # Cambiar en solicity.is_manual
+        is_citizen = User.objects.get(id=user_id).groups.filter(
+            permissions__codename__in="view_solicityresponse").exists()
 
         # si el estado actual es enviado
         if solicity.status == Status.SEND:
             # si el usuario es no es el ciudadano
-            if not is_citizen or solicity.is_manual:
+            if not is_citizen:
                 # si el usuario es el establecimiento response
                 solicity.status = Status.RESPONSED
                 solicity.save()
@@ -265,7 +268,7 @@ class SolicityService:
             return solicity
 
         if solicity.status == Status.PRORROGA:
-            if not is_citizen or solicity.is_manual:
+            if not is_citizen:
                 
                 solicity.status = Status.RESPONSED
                 solicity.save()
@@ -289,7 +292,7 @@ class SolicityService:
         if solicity.status == Status.RESPONSED:
 
             # validar si ya expiro la solicitud
-            if is_citizen or solicity.is_manual:
+            if is_citizen:
                 self.solicity_repository.create_insistency_solicity(
                     solicity_id, user_id, text)
 
@@ -316,7 +319,7 @@ class SolicityService:
                     "No se pueden agregar mas comentarios a esta solicitud")
 
         if solicity.status == Status.INSISTENCY_PERIOD:
-            if is_citizen or solicity.is_manual:
+            if is_citizen:
                 self.solicity_repository.create_insistency_solicity(
                     solicity_id, user_id, text)
 
@@ -371,7 +374,7 @@ class SolicityService:
             return solicity
 
         if solicity.status == Status.PERIOD_INFORMAL_MANAGEMENT:
-            if is_citizen or solicity.is_manual:
+            if is_citizen:
 
                 self.solicity_repository.create_insistency_solicity(
                     solicity_id, user_id, text)
