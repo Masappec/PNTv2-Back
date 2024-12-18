@@ -19,6 +19,16 @@ from django.contrib import admin
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.urls import path,include
+from drf_yasg.generators import OpenAPISchemaGenerator
+
+
+class CustomSchemaGenerator(OpenAPISchemaGenerator):
+    def get_schema(self, request=None, public=False):
+        schema = super().get_schema(request, public)
+        schema.host = "transparencia.dpe.gob.ec/backend/v1/public"
+        schema.schemes = ["https", "http"]
+        return schema
+    
 schema_view = get_schema_view(
     openapi.Info(
         title="API Publica de Portal de Transparencia",
@@ -29,9 +39,8 @@ schema_view = get_schema_view(
         license=openapi.License(name="BSD License"),
     ),
     public=True,
-    url="https://transparencia.dpe.gob.ec/backend/v1/public/",  # Define la base de la URL para las peticiones
+    generator_class=CustomSchemaGenerator,
 
-    
 )
 
 urlpatterns = [
@@ -39,7 +48,7 @@ urlpatterns = [
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0),
          name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger',
-         cache_timeout=0), name='schema-swagger-ui'), 
+         cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
          cache_timeout=0), name='schema-redoc'),
 ]
