@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from asyncio import protocols
 from django.contrib import admin
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -28,7 +29,8 @@ schema_view = get_schema_view(
         license=openapi.License(name="BSD License"),
     ),
     public=True,
-    #url='https://transparencia.ec/backend/v1/public/',
+    url="https://transparencia.dpe.gob.ec/backend/v1/public/",  # Define la base de la URL para las peticiones
+
     
 )
 
