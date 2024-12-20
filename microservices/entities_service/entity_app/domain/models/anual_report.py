@@ -12,15 +12,16 @@ class AnualReport(BaseModel):
     have_public_records = models.BooleanField()
     norme_archive_utility = models.CharField(max_length=255)
     comment_aclaration = models.TextField()
-    have_annual_report = models.BooleanField()
 
     # ARTICULO 11
     # Ingrese el número de solicitudes de acceso a la información 
     # pública que su entidad recibió y gestionó en el período enero-diciembre
 
-    total = models.IntegerField()
+    total_saip = models.IntegerField()
     did_you_entity_receive = models.BooleanField()
-    desription = models.TextField()
+    total_saip_in_portal = models.IntegerField()
+    total_saip_no_portal = models.IntegerField()
+    description_rason_no_portal = models.TextField()
     
     # ¿Las solicitudes de acceso a la información pública que NO fueron registradas en el
     # Portal Nacional de Transparencia, fueron respondidas?
