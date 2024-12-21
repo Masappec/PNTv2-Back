@@ -9,6 +9,7 @@ from entity_app.domain.models.establishment import UserEstablishmentExtended
 from datetime import timedelta
 from django.contrib.auth.models import User
 
+from django.db.models import F, Q
 
 class SolicityService:
 
@@ -541,3 +542,49 @@ class SolicityService:
             return self.solicity_repository.get_solicity_by_id_and_user(solicity_id, user_id)
         except Exception as e:
             raise ValueError("No se encontro la solicitud")
+
+    
+    
+    
+    
+    def total_saip_in_year(self,year, establisment_id):
+        return Solicity.objects.filter(date__year=year, establishment_id=establisment_id).exclude(status=Status.DRAFT).count()
+    
+    
+    #Respondidas en hasta 10 días
+    def total_response_to_10_days(self,year,establishment_id):
+        return Solicity.objects.filter(
+            timelinesolicity__status=Status.RESPONSED,
+            timelinesolicity__created_at__lte=F('date') + timedelta(days=10),
+            date__year=year,
+            establishment_id=establishment_id
+        ).distinct().count()
+    
+    
+    def total_reponse_to_11_days(self, year, establishment_id):
+        return Solicity.objects.filter(
+            timelinesolicity__status=Status.RESPONSED,
+            timelinesolicity__created_at__gt=F(
+                'date') + timedelta(days=10),  # Más de 10 días
+            timelinesolicity__created_at__lte=F(
+                'date') + timedelta(days=15),  # Hasta 15 días
+            date__year=year,
+            establishment_id=establishment_id
+        ).distinct().count()
+        
+    def total_response_plus_15_days(self,year,establishment_id):
+        return Solicity.objects.filter(
+            timelinesolicity__status=Status.RESPONSED,
+            timelinesolicity__created_at__gt=F(
+                'date') + timedelta(days=15),  # Más de 15 días
+            date__year=year,
+            establishment_id = establishment_id
+        ).distinct().count()
+        
+    def total_no_responsed(self,year,establishment_id):
+        return Solicity.objects.filter(date__year=year, establishment_id=establishment_id,
+                                       status=Status.NO_RESPONSED).count()
+    
+    def calculate_percentage(self, part, total):
+        return round((part / total) * 100, 2) if total > 0 else 0
+    

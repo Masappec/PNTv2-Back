@@ -7,7 +7,7 @@ from entity_app.domain.models.transparency_active import EstablishmentNumeral, N
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
 from entity_app.domain.models.transparecy_colab import TransparencyColab
-from entity_app.domain.models.anual_report import AnualReport
+from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified
 from django.db.models import Q
 
 
@@ -519,8 +519,14 @@ class ListTransparencyColaborative(serializers.ModelSerializer):
         }
 
 
+class IndexInformationClassiferCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IndexInformationClassified
+        exclude = ('id', 'created_at', 'updated_at', 'deleted_at', 'deleted', 'anual_report')
+
 class AnualReportCreateSerializer(serializers.ModelSerializer):
 
+    information_classified = IndexInformationClassiferCreateSerializer(many=True)
     class Meta:
         model = AnualReport
         exclude = ('id', 'created_at', 'updated_at', 'deleted_at', 'deleted')

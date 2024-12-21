@@ -4,7 +4,8 @@ from entity_app.domain.models.base_model import BaseModel
 from django.db import models
 
 class AnualReport(BaseModel):
-    establishment_id = models.ForeignKey('Establishment', on_delete=models.CASCADE)
+    establishment_id = models.ForeignKey('EstablishmentExtended', on_delete=models.CASCADE,
+                                         related_name='anual_report_establishment')
     year = models.IntegerField()
     month = models.IntegerField()
 
@@ -109,3 +110,4 @@ class IndexInformationClassified(BaseModel):
     ampliation_date = models.DateField()
     ampliation_period_of_validity = models.CharField(max_length=255)
     anual_report = models.ForeignKey('AnualReport', on_delete=models.CASCADE)
+    objects = models.Manager()

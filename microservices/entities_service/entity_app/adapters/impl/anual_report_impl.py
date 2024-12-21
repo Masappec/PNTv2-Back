@@ -1,5 +1,6 @@
+from typing import List, Optional
 from entity_app.ports.repositories.anual_report_reposity import AnualReportReposity
-from entity_app.domain.models.anual_report import AnualReport
+from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified
 
 
 class AnualReportImpl(AnualReportReposity):
@@ -17,10 +18,11 @@ class AnualReportImpl(AnualReportReposity):
         have_public_records: bool,
         norme_archive_utility: str,
         comment_aclaration: str,
-        have_annual_report: bool,
-        total: int,
+        total_saip: int,
         did_you_entity_receive: bool,
-        desription: str,
+        total_saip_in_portal: int,
+        total_saip_no_portal: int,
+        description_rason_no_portal: str,
         total_no_registered: int,
         comment_aclaration_no_registered: str,
         reserve_information: bool,
@@ -28,6 +30,8 @@ class AnualReportImpl(AnualReportReposity):
         number_of_confidential: int,
         number_of_secret: int,
         number_of_secretism: int,
+        # IDs of IndexInformationClassified
+        information_classified,
         have_quality_problems: bool,
         total_quality_problems: int,
         description_quality_problems: str,
@@ -45,19 +49,21 @@ class AnualReportImpl(AnualReportReposity):
         description_programs: str,
         have_activities: bool,
         total_activities: int,
-        description_activities: str):
+        description_activities: str,
+    ):
         
-        return AnualReport.objects.create(
+        created = AnualReport.objects.create(
             establishment_id=establishment_id,
             year=year,
             month=month,
             have_public_records=have_public_records,
             norme_archive_utility=norme_archive_utility,
             comment_aclaration=comment_aclaration,
-            have_annual_report=have_annual_report,
-            total=total,
+            total_saip=total_saip,
             did_you_entity_receive=did_you_entity_receive,
-            desription=desription,
+            total_saip_in_portal=total_saip_in_portal,
+            total_saip_no_portal=total_saip_no_portal,
+            description_rason_no_portal=description_rason_no_portal,
             total_no_registered=total_no_registered,
             comment_aclaration_no_registered=comment_aclaration_no_registered,
             reserve_information=reserve_information,
@@ -84,6 +90,14 @@ class AnualReportImpl(AnualReportReposity):
             total_activities=total_activities,
             description_activities=description_activities
         )
+
+
+        # Relación ManyToMany para información clasificada
+        if information_classified:
+            for info in information_classified:
+                obj = IndexInformationClassified.objects.create(**info,anual_report_id=created.id)
+
+        return created
         
 
     def update(self, id:int, establishment_id: int,
@@ -93,7 +107,7 @@ class AnualReportImpl(AnualReportReposity):
                norme_archive_utility: str,
                comment_aclaration: str,
                have_annual_report: bool,
-               total: int,
+               total_saip: int,
                did_you_entity_receive: bool,
                desription: str,
                total_no_registered: int,
@@ -130,7 +144,7 @@ class AnualReportImpl(AnualReportReposity):
             norme_archive_utility=norme_archive_utility,
             comment_aclaration=comment_aclaration,
             have_annual_report=have_annual_report,
-            total=total,
+           total=total_saip,
             did_you_entity_receive=did_you_entity_receive,
             desription=desription,
             total_no_registered=total_no_registered,
