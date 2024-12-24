@@ -59,7 +59,12 @@ class NumeralImpl(NumeralRepository):
                 )
 
     def get_by_default(self, default: bool) -> QuerySet[Numeral]:
-        return Numeral.objects.filter(is_default=default, type_transparency='A').order_by('name')
+        queryset = Numeral.objects.filter(
+            is_default=default,
+            is_selected=False,  # Excluye numerales seleccionados
+            type_transparency='A' 
+        ).order_by('name')
+        return queryset
 
     def get_transparency_by_numeral(self, numeral, month, year, establishment_id):
         return TransparencyActive.objects.filter(numeral=numeral, month=month, year=year, establishment_id=establishment_id).first()
@@ -129,8 +134,15 @@ class NumeralImpl(NumeralRepository):
         """
         return Numeral.objects.filter(id=numeral_id).first()
 
+    
+    def get_by_id(self, numeral_id: int):
+        # Implementación para obtener un numeral por su ID
+        return Numeral.objects.get(id=numeral_id)  # Ejemplo: usando ORM de Django
+
     def update(self, numeral: Numeral):
         """
         Actualizar un numeral en la base de datos.
         """
         numeral.save()
+        return numeral
+
