@@ -61,7 +61,7 @@ class NumeralImpl(NumeralRepository):
     def get_by_default(self, default: bool) -> QuerySet[Numeral]:
         queryset = Numeral.objects.filter(
             is_default=default,
-            is_selected=False,  # Excluye numerales seleccionados
+            #is_selected=False,  # Excluye numerales seleccionados
             type_transparency='A' 
         ).order_by('name')
         return queryset
