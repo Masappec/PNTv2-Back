@@ -18,7 +18,9 @@ from entity_app.domain.services.transparency_focus_service import TransparencyFo
 from entity_app.utils.pagination import StandardResultsSetPagination
 from entity_app.adapters.impl.transparency_colaborative_impl import TransparencyColaborativeImpl
 from entity_app.domain.services.transparency_colaborative_service import TransparencyColaborativeService
-
+from shared.tasks.anual_report import generate_anual_report
+from rest_framework import status
+from entities_service.celery import app
 class AnualReportView(APIView):
     serializer_class = AnualReportCreateSerializer
     permission_classes = [IsAuthenticated, HasPermission]
@@ -193,3 +195,38 @@ class AnualReportTC(ListAPIView):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class AnualReportGenerate(APIView):
+    
+    permission_classes = []
+
+    def get(self,request):
+        year = request.query_params.get('year')
+        
+        if year is None:
+            year = datetime.now().year
+        task = generate_anual_report.delay(year)
+        context = {
+            'task_id': task.id,
+            'task_status': task.status,
+        }
+        return Response(
+            context,
+            status=200
+        )
+   
+    
+class TaskView(APIView):
+    permission_classes = []
+
+    def get(self, request, task_id):
+        task = app.AsyncResult(task_id)
+        response_data = {'task_status': task.status, 'task_id': task.id}
+
+        if task.status == 'SUCCESS':
+            response_data['results'] = task.get()
+            return Response({'data': response_data}, status=status.HTTP_200_OK, headers={'Access-Control-Allow-Origin': '*'})
+        elif task.status == 'FAILURE':
+            return Response({'data': response_data}, status=status.HTTP_400_BAD_REQUEST, headers={'Access-Control-Allow-Origin': '*'})
+        return Response({'data': response_data}, status=status.HTTP_202_ACCEPTED, headers={'Access-Control-Allow-Origin': '*'})
