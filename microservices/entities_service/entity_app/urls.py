@@ -25,7 +25,7 @@ from entity_app.application.views.transparency_active import TransparencyActiveP
 from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivos, ReporteRespuestas, ReporteNoRespuestas, ReporteSolicitudes, ReporteTodasSolicitudes
 from entity_app.application.views.public import MonthForTransparency
 from entity_app.application.views.numeral_update import UpdateNumeralStateView
-from entity_app.application.views.anual_report import AnualReportSolicityStats, AnualReportView, AnualReportTA, AnualReportTC, AnualReportTF
+from entity_app.application.views.anual_report import AnualReportSolicityStats, AnualReportGenerate, AnualReportView, AnualReportTA, AnualReportTC, AnualReportTF, TaskView
 
 urlpatterns = [
 
@@ -180,5 +180,9 @@ urlpatterns = [
      path('anual-report/solicity/stats', AnualReportSolicityStats.as_view(),name='anual-report-solicity-stats'),
      path("anual-report/ta/stats", AnualReportTA.as_view(), name="ta-stats"),
      path("anual-report/tf/stats", AnualReportTF.as_view(), name="tf-stats"),
-     path("anual-report/tc/stats", AnualReportTC.as_view(), name="tc-stats")
+     path("anual-report/tc/stats", AnualReportTC.as_view(), name="tc-stats"),
+     path('anual-report/generate', AnualReportGenerate.as_view(), name='anual-report-generate'),
+     
+     path('task/status/<task_id>', TaskView.as_view(), name='task-status'),
+
 ]
