@@ -40,7 +40,7 @@ class AnualReportService:
             Prefetch('transparency_active', queryset=TransparencyActive.objects.filter(
                 year=year), to_attr='ta')
             
-        ).order_by('name')[:100]
+        ).order_by('name')
 
         solicities = Solicity.objects.filter(deleted=False)
 
