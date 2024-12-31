@@ -222,7 +222,9 @@ class TaskView(APIView):
 
     def get(self, request, task_id):
         task = app.AsyncResult(task_id)
-        response_data = {'task_status': task.status, 'task_id': task.id}
+        print(task)
+        response_data = {'task_status': task.status, 'task_id': task.id,
+                         'meta':task.info}
 
         if task.status == 'SUCCESS':
             response_data['results'] = task.get()

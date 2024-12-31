@@ -79,7 +79,7 @@ class EstablishmentManager(models.Manager):
         total_establishments = 0
         total_updated = 0
         total_no_updated = 0
-
+        tota_near_updated = 0
         # Execute the raw SQL query using Django's database connection
         with connection.cursor() as cursor:
             cursor.execute(self.SQL_STATS_ACTIVE(), [year, month, year, month])
