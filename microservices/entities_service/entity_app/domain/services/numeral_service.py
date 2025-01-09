@@ -51,4 +51,3 @@ class NumeralService:
         numeral.is_selected = is_selected
         updated_numeral = self.numeral_repository.update(numeral)
         return updated_numeral
-
