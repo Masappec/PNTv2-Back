@@ -99,8 +99,8 @@ class EstablishmentManager(models.Manager):
         }
 
 class EstablishmentExtended(models.Model):
-    name = models.CharField(max_length=255)
-    code = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    name = models.CharField(max_length=255,db_index=True)
+    code = models.CharField(max_length=255, null=True, blank=True, unique=True,db_index=True)
     abbreviation = models.CharField(max_length=255)
     logo = models.ImageField(upload_to='establishment')
     highest_authority = models.CharField(max_length=255)
@@ -109,7 +109,7 @@ class EstablishmentExtended(models.Model):
     job_authority = models.CharField(max_length=255)
     email_authority = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
-    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True,db_index=True)
     identification = models.CharField(max_length=255, null=True, blank=True)
     objects = EstablishmentManager()
     visits = models.IntegerField(default=0)
