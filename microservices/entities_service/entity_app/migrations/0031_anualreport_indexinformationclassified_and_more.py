@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('entity_app', '0029_insistency_files'),
+        ('entity_app', '0030_alter_columnfile_code_alter_columnfile_name_and_more'),
     ]
 
     operations = [
