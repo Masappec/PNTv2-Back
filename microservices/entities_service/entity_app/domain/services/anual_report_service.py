@@ -92,7 +92,7 @@ class AnualReportService:
                 
                 for t in transparency:
                     if 1 <= t.month <= 12:
-                        list_transparency[months[t.month]] = True
+                        list_transparency[months[t.month-1]] = True
                 append_row(ws, [
                     function_type, "Pública", establishment.name, legal_text,
                     *['si' if list_transparency[month] else 'no' for month in months]
