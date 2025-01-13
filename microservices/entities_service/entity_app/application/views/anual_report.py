@@ -65,7 +65,9 @@ class AnualReportSolicityStats(APIView):
         if establisment_id==0:
             return Response({'message':'la institución es incorrecta'},400)
         year = datetime.now().year
-        
+        month = datetime.now().month
+        if month == 1:
+            year = year - 1
         total = self.service.total_saip_in_year(
             establisment_id=establisment_id,
             year=year
@@ -77,14 +79,12 @@ class AnualReportSolicityStats(APIView):
 
         )
         
-        percent_response_to_10_days = self.service.calculate_percentage(total_response_to_10_days,total)
         
         total_reponse_to_11_days = self.service.total_reponse_to_11_days(
             year,
             establisment_id,
         )
-        percent_reponse_to_11_days  = self.service.calculate_percentage(
-            total_reponse_to_11_days, total)
+
 
         
         total_response_plus_15_days = self.service.total_response_plus_15_days(
@@ -92,26 +92,52 @@ class AnualReportSolicityStats(APIView):
             establisment_id,
         )
         
-        percent_response_plus_15_days = self.service.calculate_percentage(
-            total_response_plus_15_days, total)
+  
 
         total_no_response = self.service.total_no_responsed(
             year, establisment_id)
 
-
-        percent_no_response = self.service.calculate_percentage(total_no_response,total)
-        return Response({
-            'total': total,
-            'total_response_to_10_days': total_response_to_10_days,
-            'percent_response_to_10_days':percent_response_to_10_days,
-            'total_reponse_to_11_days': total_reponse_to_11_days,
-            'percent_reponse_to_11_days': percent_reponse_to_11_days,
-            'total_response_plus_15_days': total_response_plus_15_days,
-            'percent_response_plus_15_days': percent_response_plus_15_days,
-            'total_no_response': total_no_response,
-            'percent_no_response': percent_no_response
-        })
-        
+        list_total = []
+        for i in range(1, 13):
+            month = i
+            object_ = {
+                'month': month,
+                'total': 0,
+                'total_response_to_10_days': 0,
+                'total_reponse_to_11_days': 0,
+                'total_response_plus_15_days': 0,
+                'total_no_response': 0,
+                'percent_response_to_10_days': 0,
+                'percent_reponse_to_11_days': 0,
+                'percent_response_plus_15_days': 0,
+                'percent_no_response': 0
+            }
+            
+            total_response_to_10_days_month = total_response_to_10_days.filter(
+                date__month=month).count()
+            total_reponse_to_11_days_month = total_reponse_to_11_days.filter(
+                date__month=month).count()
+            total_response_plus_15_days_month = total_response_plus_15_days.filter(
+                date__month=month).count()
+            total_no_response_month = total_no_response.filter(
+                date__month=month).count()
+            total_month = total.filter(date__month=month).count()
+            object_['total'] = total_month
+            object_['total_response_to_10_days'] = total_response_to_10_days_month
+            object_['total_reponse_to_11_days'] = total_reponse_to_11_days_month
+            object_['total_response_plus_15_days'] = total_response_plus_15_days_month
+            object_['total_no_response'] = total_no_response_month
+            object_['percent_response_to_10_days'] = self.service.calculate_percentage(total_response_to_10_days_month,total.count())
+            object_['percent_reponse_to_11_days'] = self.service.calculate_percentage(total_reponse_to_11_days_month,total.count())
+            object_['percent_response_plus_15_days'] = self.service.calculate_percentage(
+                total_response_plus_15_days_month, total.count())
+            object_['percent_no_response'] = self.service.calculate_percentage(
+                total_no_response_month, total.count())
+            list_total.append(object_)
+            
+            
+            
+        return Response(list_total)
         
 class AnualReportTA(ListAPIView):
     permission_classes = [IsAuthenticated, HasPermission]
@@ -128,6 +154,9 @@ class AnualReportTA(ListAPIView):
         establishment_id = request.query_params.get('establishment_id',0)
         is_default = request.query_params.get('is_default',1)
         year = datetime.now().year
+        month = datetime.now().month
+        if month == 1:
+            year = year - 1
         if establishment_id == 0:
             return Response({'message': 'la institución es incorrecta'}, 400)
         
@@ -157,6 +186,9 @@ class AnualReportTF(ListAPIView):
 
         establishment_id = request.query_params.get('establishment_id', 0)
         year = datetime.now().year
+        month = datetime.now().month
+        if month == 1:
+            year = year - 1
         if establishment_id == 0:
             return Response({'message': 'la institución es incorrecta'}, 400)
 
@@ -184,6 +216,9 @@ class AnualReportTC(ListAPIView):
 
         establishment_id = request.query_params.get('establishment_id', 0)
         year = datetime.now().year
+        month = datetime.now().month
+        if month==1:
+            year = year - 1
         if establishment_id == 0:
             return Response({'message': 'la institución es incorrecta'}, 400)
 
@@ -206,6 +241,10 @@ class AnualReportGenerate(APIView):
         
         if year is None:
             year = datetime.now().year
+            month = datetime.now().month
+            if month == 1:
+                year = year - 1
+        
         task = generate_anual_report.delay(year)
         context = {
             'task_id': task.id,

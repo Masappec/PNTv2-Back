@@ -31,7 +31,7 @@ class TransparencyActiveImpl(TransparencyActiveRepository):
             year=year,
             establishment_id=establishment_id,
             status=StatusNumeral.APROVED
-        ).order_by('numeral_id')
+        ).order_by('month','year','numeral__name')
 
     def get_by_year_all(self, year: int, establishment_id: int) -> QuerySet[TransparencyActive]:
         return TransparencyActive.objects.filter(

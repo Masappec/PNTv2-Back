@@ -98,6 +98,19 @@ class EstablishmentManager(models.Manager):
             'nearly_updated': tota_near_updated
         }
 
+
+class FunctionOrganizationExt(BaseModel):
+    name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
+
+    class Meta:
+        managed = False
+        db_table = 'app_admin_functionorganization'
+        verbose_name = 'Función de Organización'
+        verbose_name_plural = 'Funciones de Organización'
+
 class EstablishmentExtended(models.Model):
     name = models.CharField(max_length=255,db_index=True)
     code = models.CharField(max_length=255, null=True, blank=True, unique=True,db_index=True)
@@ -113,7 +126,8 @@ class EstablishmentExtended(models.Model):
     identification = models.CharField(max_length=255, null=True, blank=True)
     objects = EstablishmentManager()
     visits = models.IntegerField(default=0)
-
+    function_organization = models.ForeignKey(
+        'FunctionOrganizationExt', on_delete=models.CASCADE, null=True, blank=True)
     class Meta:
         managed = False
         db_table = 'app_admin_establishment'

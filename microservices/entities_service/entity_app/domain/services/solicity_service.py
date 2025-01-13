@@ -548,7 +548,7 @@ class SolicityService:
     
     
     def total_saip_in_year(self,year, establisment_id):
-        return Solicity.objects.filter(date__year=year, establishment_id=establisment_id).exclude(status=Status.DRAFT).count()
+        return Solicity.objects.filter(date__year=year, establishment_id=establisment_id).exclude(status=Status.DRAFT)
     
     
     #Respondidas en hasta 10 días
@@ -558,7 +558,7 @@ class SolicityService:
             timelinesolicity__created_at__lte=F('date') + timedelta(days=10),
             date__year=year,
             establishment_id=establishment_id
-        ).distinct().count()
+        ).distinct()
     
     
     def total_reponse_to_11_days(self, year, establishment_id):
@@ -570,7 +570,7 @@ class SolicityService:
                 'date') + timedelta(days=15),  # Hasta 15 días
             date__year=year,
             establishment_id=establishment_id
-        ).distinct().count()
+        ).distinct()
         
     def total_response_plus_15_days(self,year,establishment_id):
         return Solicity.objects.filter(
@@ -579,11 +579,11 @@ class SolicityService:
                 'date') + timedelta(days=15),  # Más de 15 días
             date__year=year,
             establishment_id = establishment_id
-        ).distinct().count()
+        ).distinct()
         
     def total_no_responsed(self,year,establishment_id):
         return Solicity.objects.filter(date__year=year, establishment_id=establishment_id,
-                                       status=Status.NO_RESPONSED).count()
+                                       status=Status.NO_RESPONSED)
     
     def calculate_percentage(self, part, total):
         return round((part / total) * 100, 2) if total > 0 else 0
