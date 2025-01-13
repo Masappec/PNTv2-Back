@@ -17,5 +17,4 @@ class CallbackObserver:
                 print(f"Recibido mensaje de tipo  {self.type}")
                 payload = dict_['payload']
 
-                print(payload)
                 self.callback(**payload)

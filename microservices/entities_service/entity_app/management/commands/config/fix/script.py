@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+import shutil
 from entity_app.domain.models import TransparencyActive, TransparencyColab, FilePublication
 import os
 import json
@@ -6,8 +7,9 @@ from django.db.models import Q
 import pandas as pd
 from django.core.files.base import ContentFile
 import calendar
-
+import re
 from entity_app.domain.models.transparency_active import Numeral
+from entity_app.utils.functions import get_day_for_publish
 
 class ScriptService:
 
@@ -282,3 +284,117 @@ class ScriptService:
         print(list_to_fix)
                     
                     
+    def move_september(self):
+        lista_creada = []
+ 
+        try:
+            dir = os.path.dirname(__file__)
+            dir = os.path.join(dir, 'public_api_service.c_s_v_data_12_01.json')
+            with open(dir, encoding='utf-8') as file:
+                data = json.load(file)
+                for item in data:
+                    metadata = item['metadata']
+
+                    if metadata:
+                        columns = metadata['columns']
+                        if len(columns) > 1:
+                            date = columns[1]
+                            #trim
+                            date = date.strip()
+                            # split / or -
+                            print(item['_id'])
+                            month = ''
+                            #yyyy/mm/dd
+                            if re.search(r'\d{4}/\d{2}/\d{2}', date):
+                                month = date.split('/')[1]
+                            #yyyy mm dd
+                            elif re.search(r'\d{4} \d{2} \d{2}', date):
+                                month = date.split(' ')[1]
+                            elif re.search(r'\d{4}-\d{2}-\d{2}', date):
+                                month = date.split('-')[1]
+                            #yyyy.mm.dd
+                            elif re.search(r'\d{4}.\d{2}.\d{2}', date):
+                                month = date.split('.')[1]
+                            else:
+                                continue
+                            
+
+                            month_int = int(month)
+                            month_metadata = metadata['month']
+                            month_metadata_int = int(month_metadata)
+                            if month_int == 10 and month_metadata_int == 10:
+                                object_save = {
+                                    'mes_metadata': month_metadata,
+                                    'institution': metadata['establishment_name'],
+                                    'numeral': metadata['numeral'],
+                                    'year': metadata['year'],
+                                    'mes': month,
+                                    'id': item['_id'],
+                                    'mensaje': '',
+                                    'tiene_publicacion_septiembre': 'Si'
+                                }
+                                
+                                object_find = TransparencyActive.objects.filter(
+                                    establishment__identification=metadata['establishment_identification'],
+                                    month=9,
+                                    numeral__name=metadata['numeral']
+                                ).first()
+                                if not object_find:
+                                    object_save['tiene_publicacion_septiembre'] = 'No'
+                                    copy = TransparencyActive.objects.filter(
+                                        establishment__identification=metadata['establishment_identification'],
+                                        month=10,
+                                        numeral__name=metadata['numeral']
+                                    ).first()
+                                    
+                                    if copy:
+                                        #crear un nuevo registro a partir de copy
+                                        obj = TransparencyActive.objects.create(
+                                            establishment_id=copy.establishment_id,
+                                            numeral_id=copy.numeral_id,
+                                            month=9,
+                                            year=copy.year,
+                                            status=copy.status,
+                                            published=copy.published,
+                                            published_at=copy.published_at,
+                                            max_date_to_publish=datetime(
+                                                year=copy.year, month=9, day=get_day_for_publish()),
+                                            created_at=datetime.now()
+                                        )
+                                        try:
+                                            for file in copy.files.all():
+                                                #abrir el archivo y copiarlo
+                                                root = 'transparencia/' + \
+                                                    str(copy.establishment.identification) + '/' + \
+                                                    str(copy.numeral.name) + '/' + \
+                                                    str(copy.year) + '/' + \
+                                                    str(9)
+                                                os.makedirs(root, exist_ok=True)
+
+                                                original_file_path = file.url_download.path
+                                                root = os.path.join(root, file.name+'.csv')
+                                                shutil.copy(original_file_path, root)
+                                                new_file_pub = FilePublication.objects.create(
+                                                    name=file.name,
+                                                    description=file.description,
+                                                    url_download=root,
+                                                    is_active=True,
+                                                    is_colab=False
+                                                )
+                                                
+                                                obj.files.add(new_file_pub)
+                                            lista_creada.append(object_save)
+                                        except Exception as e:
+                                            lista_creada.append(object_save)  
+
+                                            object_save['mensaje'] = e.__str__()
+
+                
+        except Exception as e:
+            print(e.__str__())
+        path = os.path.dirname(__file__)
+        path = os.path.join(path, 'casos_septiembre.json')
+
+        with open(path, 'w') as file:
+            json.dump(lista_creada, file, indent=4)
+
