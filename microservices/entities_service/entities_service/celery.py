@@ -13,8 +13,7 @@ app.conf.beat_schedule = {
 
     'change_status_solicity': {
         'task': 'shared.tasks.solicity_process.change_status_solicity',
-        #'schedule': crontab(minute='10', hour='0')
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute=0, hour='*/1'),
     },
 }
 app.conf.timezone = 'UTC'
