@@ -294,6 +294,7 @@ class ScriptService:
             with open(dir, encoding='utf-8') as file:
                 data = json.load(file)
                 data = data
+                data = [x for x in data if x['establishment_identification']== "160000860001"]
                 for x, item in enumerate(data):
                     second_column = item['second_column']
                     print("Procesando item {0} de {1}".format(x, len(data)), end='\r')
