@@ -21,7 +21,7 @@ class EstablishmentNumeral(BaseModel):
 
 
 class Numeral(BaseModel):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255,db_index=True)
     description = models.TextField()
     templates = models.ManyToManyField(
         'TemplateFile', related_name='numerals', blank=True)
@@ -43,7 +43,7 @@ class Numeral(BaseModel):
 
 class TemplateFile(BaseModel):
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255,db_index=True)
     code = models.CharField(max_length=255, null=True, blank=True, unique=True)
     description = models.TextField()
     is_active = models.BooleanField(default=True)
@@ -66,8 +66,8 @@ class TemplateFile(BaseModel):
 
 
 class ColumnFile(BaseModel):
-    name = models.CharField(max_length=255)
-    code = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    name = models.CharField(max_length=255,db_index=True)
+    code = models.CharField(max_length=255, null=True, blank=True, unique=True,db_index=True)
     type = models.CharField(max_length=255, choices=(('string', 'String'), ('number', 'Number'), (
         'date', 'Date'), ('file', 'File'), ('decimal', 'Decimal')), default='string')
     format = models.CharField(max_length=255, null=True, blank=True)
@@ -103,8 +103,8 @@ class TransparencyActive(BaseModel):
         'FilePublication', related_name='transparency_active', blank=True)
     slug = models.SlugField(max_length=255, null=True,
                             blank=True, unique=True, editable=False, db_index=True)
-    month = models.IntegerField()
-    year = models.IntegerField()
+    month = models.IntegerField(db_index=True)
+    year = models.IntegerField(db_index=True)
     status = models.CharField(max_length=255,
                               choices=(('aproved', 'Aprobado'), ('rejected', 'Rechazado'), ('ingress', 'Ingresado')), default=StatusNumeral.INGRESS)
 

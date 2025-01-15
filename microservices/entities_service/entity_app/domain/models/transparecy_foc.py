@@ -12,8 +12,8 @@ class TransparencyFocal(BaseModel):
         'FilePublication', related_name='transparency_focal', blank=True)
     slug = models.SlugField(max_length=255, null=True,
                             blank=True, unique=True, editable=False, db_index=True)
-    month = models.IntegerField()
-    year = models.IntegerField()
+    month = models.IntegerField(db_index=True)
+    year = models.IntegerField(db_index=True)
     status = models.CharField(max_length=255,
                               choices=(('pending', 'Pendiente'),
                                        ('ingress', 'Ingresado'),), default='pending')
