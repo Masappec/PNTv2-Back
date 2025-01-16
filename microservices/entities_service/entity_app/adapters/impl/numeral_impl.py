@@ -3,6 +3,7 @@
 from typing import List
 
 from django.db.models.query import QuerySet
+from django.db import connection
 from entity_app.ports.repositories.numeral_repository import NumeralRepository
 from entity_app.domain.models.transparency_active import Numeral, EstablishmentNumeral, StatusNumeral, TransparencyActive
 from entity_app.domain.models.publication import FilePublication
@@ -145,4 +146,20 @@ class NumeralImpl(NumeralRepository):
         """
         numeral.save()
         return numeral
-
+    
+    def exists(self, numeral_id, establishment_id):
+        # Verifica si un numeral existe para el establishment
+        return EstablishmentNumeral.objects.filter(
+            numeral_id=numeral_id,
+            establishment_id=establishment_id
+        ).exists()
+    
+    def delete_numeral(self, numeral_id, establishment_id):
+        # Eliminar el registro correspondiente en EstablishmentNumeral
+        try:
+            establishment_numeral = EstablishmentNumeral.objects.get(numeral_id=numeral_id, establishment_id=establishment_id)
+            establishment_numeral.delete()  # Esto elimina el objeto de la base de datos
+            return establishment_numeral  # Retorna el objeto eliminado, si es necesario
+        except EstablishmentNumeral.DoesNotExist:
+            raise ValueError("El numeral no existe en el establecimiento.")
+        

@@ -24,7 +24,7 @@ from entity_app.application.views.transparency_active import TransparencyActiveP
 
 from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivos, ReporteRespuestas, ReporteNoRespuestas, ReporteSolicitudes, ReporteTodasSolicitudes
 from entity_app.application.views.public import MonthForTransparency
-from entity_app.application.views.numeral_update import UpdateNumeralStateView
+from entity_app.application.views.numeral_update import DeleteNumeralView
 
 urlpatterns = [
 
@@ -98,7 +98,7 @@ urlpatterns = [
     path('numerals/detail/', NumeralDetail.as_view(), name='numeral-detail'),
     path('numerals/transparency', ListNumeral.as_view(),
          name='numero-transparency'),
-    path('numerals/<int:numeral_id>/update-state/', UpdateNumeralStateView.as_view(), name='update_numeral_state'),#
+    path('numerals/<int:numeral_id>/delete-state/<int:establishment_id>/', DeleteNumeralView.as_view(), name='delete_numeral_state'),
     path('template_file/validate', TemplateFileValidate.as_view(),
          name='template-file-validate'),
 

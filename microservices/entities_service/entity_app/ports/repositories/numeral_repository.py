@@ -57,3 +57,16 @@ class NumeralRepository(ABC):
         Actualizar un numeral en la base de datos.
         """
         pass
+
+    def exists(self, numeral_id, establishment_id):
+        """
+        Verifica si un numeral existe para el establishment
+        """
+        pass
+
+    def delete_numeral(self, numeral, establisment_id):
+        """
+        Eliminamos el numeral de la base de datos para actualizacion en el front
+        """
+        pass
+    
