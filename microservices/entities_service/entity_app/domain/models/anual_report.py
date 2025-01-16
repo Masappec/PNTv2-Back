@@ -26,6 +26,7 @@ class AnualReport(BaseModel):
     
     # ¿Las solicitudes de acceso a la información pública que NO fueron registradas en el
     # Portal Nacional de Transparencia, fueron respondidas?
+    have_responded_solicities_no_portal = models.BooleanField(default=False)
     total_no_registered = models.IntegerField()
     comment_aclaration_no_registered = models.TextField(blank= True)
     
@@ -127,4 +128,25 @@ class IndexInformationClassified(BaseModel):
     ampliation_date = models.DateField()
     ampliation_period_of_validity = models.CharField(max_length=255)
     anual_report = models.ForeignKey('AnualReport', on_delete=models.CASCADE)
+    objects = models.Manager()
+
+
+
+
+
+class GenerateAnualReport(BaseModel):
+    
+    establishment = models.ForeignKey(
+        'EstablishmentExtended', on_delete=models.CASCADE,
+        null=True, blank=True,
+        related_name='generate_anual_report_establishment')
+    
+    year = models.IntegerField()
+    
+    file = models.FileField(
+        upload_to='generate_anual_report/{}/'.format(year), null=True, blank=True,
+        max_length=255)
+    
+    is_global = models.BooleanField(default=False)
+    
     objects = models.Manager()

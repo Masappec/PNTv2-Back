@@ -18,7 +18,7 @@ from entity_app.domain.services.transparency_focus_service import TransparencyFo
 from entity_app.utils.pagination import StandardResultsSetPagination
 from entity_app.adapters.impl.transparency_colaborative_impl import TransparencyColaborativeImpl
 from entity_app.domain.services.transparency_colaborative_service import TransparencyColaborativeService
-from shared.tasks.anual_report import generate_anual_report
+from shared.tasks.anual_report import generate_anual_report, generate_unique_report
 from rest_framework import status
 from entities_service.celery import app
 class AnualReportView(APIView):
@@ -238,14 +238,18 @@ class AnualReportGenerate(APIView):
 
     def get(self,request):
         year = request.query_params.get('year')
-        
+        establishment_id = request.query_params.get('establishment_id')
         if year is None:
             year = datetime.now().year
             month = datetime.now().month
             if month == 1:
                 year = year - 1
         
-        task = generate_anual_report.delay(year)
+        if establishment_id is not None:
+            task = generate_unique_report.delay(year, establishment_id)
+        else:
+        
+            task = generate_anual_report.delay(year)
         context = {
             'task_id': task.id,
             'task_status': task.status,
@@ -255,6 +259,8 @@ class AnualReportGenerate(APIView):
             status=200
         )
    
+   
+   
     
 class TaskView(APIView):
     permission_classes = []
@@ -263,7 +269,7 @@ class TaskView(APIView):
         task = app.AsyncResult(task_id)
         print(task)
         response_data = {'task_status': task.status, 'task_id': task.id,
-                         'meta':task.info}
+                         'meta':task.info ,'task_name': task.name}
 
         if task.status == 'SUCCESS':
             response_data['results'] = task.get()

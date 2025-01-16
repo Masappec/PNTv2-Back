@@ -403,7 +403,11 @@ class ScriptService:
 
                                         object_save['mensaje'] = e.__str__()
                                         lista_creada.append(object_save)  
-
+                            else:
+                                if object_find.published:
+                                    estado = 'Publicado' if object_find.published else 'No publicado'
+                                    object_save['mensaje'] = 'Ya tiene publicación en septiembre, estado: {}'.format(estado)
+                                     
 
         except Exception as e:
             print(e)
