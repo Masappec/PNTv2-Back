@@ -294,10 +294,9 @@ class ScriptService:
             with open(dir, encoding='utf-8') as file:
                 data = json.load(file)
                 data = data
-                data = [x for x in data if x['establishment_identification']== "160000860001"]
                 for x, item in enumerate(data):
                     second_column = item['second_column']
-                    print("Procesando item {0} de {1}".format(x, len(data)), end='\r')
+                    print("Procesando: {} de {} entidad {}".format(x, len(data), item['establishment_identification']))
                     if second_column:
                         
                         date = second_column.strip()
@@ -329,7 +328,6 @@ class ScriptService:
                                 
                         else:
                             continue
-                        
                         if not month:
                             continue
 
@@ -402,9 +400,10 @@ class ScriptService:
                                         lista_creada.append(object_save)
                                     except Exception as e:
                                         print(e)
-                                        lista_creada.append(object_save)  
 
                                         object_save['mensaje'] = e.__str__()
+                                        lista_creada.append(object_save)  
+
 
         except Exception as e:
             print(e)
