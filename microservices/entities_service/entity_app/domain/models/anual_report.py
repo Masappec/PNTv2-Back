@@ -72,9 +72,9 @@ class AnualReport(BaseModel):
     
     have_sanctions = models.BooleanField()
     total_organic_law_public_service = models.IntegerField()
-    description_organic_law_public_service = models.TextField()
+    description_organic_law_public_service = models.TextField(blank=True)
     total_organic_law_contraloria = models.IntegerField()
-    description_organic_law_contraloria = models.TextField()
+    description_organic_law_contraloria = models.TextField(blank=True)
     total_organic_law_national_system = models.IntegerField()
     description_organic_law_national_system = models.TextField(blank= True)
     total_organic_law_citizen_participation = models.IntegerField()
