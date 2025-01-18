@@ -74,7 +74,7 @@ class ReportService:
 
         # Obtener las solicitudes del usuario para el año específico
         solicity = self.solicity_service.get_entity_user_solicities(user_id)
-        solicity = solicity.filter(created_at__year=year)  # Mantén el filtro por año si es necesario
+        #solicity = solicity.filter(created_at__year=year)  # Mantén el filtro por año si es necesario
 
         # Crear un libro de Excel
         wb = openpyxl.Workbook()
@@ -122,7 +122,7 @@ class ReportService:
 
         solicity = solicity.filter(status__in=[Status.RESPONSED])
       
-        solicity = solicity.filter(created_at__year=year)
+        #solicity = solicity.filter(created_at__year=year)
         # Create an Excel workbook and sheet
         wb = openpyxl.Workbook()
         ws = wb.active
@@ -168,7 +168,7 @@ class ReportService:
         solicity = solicity.filter(
             status__in=[Status.NO_RESPONSED, Status.INFORMAL_MANAGMENT_NO_RESPONSED, Status.INSISTENCY_NO_RESPONSED])
         
-        solicity = solicity.filter(created_at__year=year)
+        #solicity = solicity.filter(created_at__year=year)
         # Create an Excel workbook and sheet
         wb = openpyxl.Workbook()
         ws = wb.active
