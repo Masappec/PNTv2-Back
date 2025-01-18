@@ -5,8 +5,8 @@ from entity_app.domain.models.anual_report import AnualReport, IndexInformationC
 
 class AnualReportImpl(AnualReportReposity):
     
-    def get(self, establishment_id: int, year: int, month: int):
-        return AnualReport.objects.filter(establishment_id=establishment_id, year=year, month=month).first()
+    def get(self, establishment_id: int, year: int):
+        return AnualReport.objects.filter(establishment_id=establishment_id, year=year).first()
 
     def get_all(self):
         return AnualReport.objects.all()
@@ -50,7 +50,8 @@ class AnualReportImpl(AnualReportReposity):
         have_activities: bool,
         total_activities: int,
         description_activities: str,
-            solicity_infor_anual_report
+            solicity_infor_anual_report,
+            have_responded_solicities_no_portal
     ):
         
         created = AnualReport.objects.create(
@@ -89,7 +90,8 @@ class AnualReportImpl(AnualReportReposity):
             description_programs=description_programs,
             have_activities=have_activities,
             total_activities=total_activities,
-            description_activities=description_activities
+            description_activities=description_activities,
+            have_responded_solicities_no_portal=have_responded_solicities_no_portal
         )
 
 
@@ -137,7 +139,9 @@ class AnualReportImpl(AnualReportReposity):
                description_programs: str,
                have_activities: bool,
                total_activities: int,
-               description_activities: str):
+               description_activities: str,
+               have_responded_solicities_no_portal
+               ):
         
        return AnualReport.objects.filter(id=id).update(
             establishment_id=establishment_id,
@@ -174,7 +178,8 @@ class AnualReportImpl(AnualReportReposity):
             description_programs=description_programs,
             have_activities=have_activities,
             total_activities=total_activities,
-            description_activities=description_activities
+            description_activities=description_activities,
+            have_responded_solicities_no_portal=have_responded_solicities_no_portal
         )
 
 

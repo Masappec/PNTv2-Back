@@ -34,6 +34,10 @@ class AnualReportView(APIView):
     def post(self, request):
         data = self.serializer_class(data=request.data)
         data.is_valid(raise_exception=True)
+        year = data.validated_data['year']
+        existe = self.service.get(establishment_id=data.validated_data['establishment_id'],year=data.validated_data['year'])
+        if existe:
+            return Response({'message':'Ya existe un informe anual para el año '+str(year)},400)
         res = self.service.create(data.validated_data)
         return Response(AnualReportSerializer(res).data,status=201)
     

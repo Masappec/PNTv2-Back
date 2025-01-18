@@ -7,7 +7,6 @@ class AnualReportReposity(ABC):
     def get(self, 
             establishment_id: int,
             year: int,
-            month: int
             ) -> AnualReport:
         pass
 

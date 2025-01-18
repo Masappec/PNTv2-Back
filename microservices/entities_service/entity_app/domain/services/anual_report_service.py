@@ -19,8 +19,8 @@ class AnualReportService:
     def create(self, anual_report: dict):
         return self.anual_report_repository.add(**anual_report)
 
-    def get(self, establishment_id: int, year: int, month: int):
-        return self.anual_report_repository.get(establishment_id, year, month)
+    def get(self, establishment_id: int, year: int, ):
+        return self.anual_report_repository.get(establishment_id, year)
 
     def get_all(self):
         return self.anual_report_repository.get_all()
