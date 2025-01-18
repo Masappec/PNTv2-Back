@@ -8,6 +8,10 @@ from django.core.files.base import ContentFile
 import calendar
 
 from entity_app.domain.models.transparency_active import Numeral
+from entity_app.utils.functions import get_day_for_publish
+from django.utils import timezone
+#import settings
+from django.conf import settings
 
 class ScriptService:
 
@@ -280,5 +284,153 @@ class ScriptService:
             json.dump(list_to_fix, file, indent=4)
 
         print(list_to_fix)
+                    
+                    
+    def move_september(self):
+        lista_creada = []
+ 
+        try:
+            dir = os.path.dirname(__file__)
+            dir = os.path.join(dir, 'public_api_service.c_s_v_data_13_1_2024.json')
+            with open(dir, encoding='utf-8') as file:
+                data = json.load(file)
+                data = data
+                for x, item in enumerate(data):
+                    second_column = item['second_column']
+                    print("Procesando: {} de {} entidad {}".format(x, len(data), item['establishment_identification']))
+                    if second_column:
+                        
+                        date = second_column.strip()
+                        # split / or -
+                        month = ''
+                        #yyyy/mm/dd
+                        if re.search(r'\d{4}/\d{2}/\d{2}', date):
+                            month_search = re.search(r'\d{4}/\d{2}/\d{2}', date)
+                            month_list = month_search.group().split('/')
+                            if len(month_list) == 3:
+                                month = month_list[1]
+                        #yyyy mm dd
+                        elif re.search(r'\d{4} \d{2} \d{2}', date):
+                            month_search = re.search(r'\d{4} \d{2} \d{2}', date)
+                            month_list = month_search.group().split(' ')
+                            if len(month_list) == 3:
+                                month = month_list[1]
+                        elif re.search(r'\d{4}-\d{2}-\d{2}', date):
+                            month_search = re.search(r'\d{4}-\d{2}-\d{2}', date)
+                            month_list = month_search.group().split('-')
+                            if len(month_list) == 3:
+                                month = month_list[1]
+                        #yyyy.mm.dd
+                        elif re.search(r'\d{4}.\d{2}.\d{2}', date):
+                            month_search = re.search(r'\d{4}.\d{2}.\d{2}', date)
+                            month_list = month_search.group().split('.')
+                            if len(month_list) == 3:
+                                month = month_list[1]
+                                
+                        else:
+                            continue
+                        if not month:
+                            continue
+
+                        month_int = int(month)
+                        month_metadata = item['month']
+                        month_metadata_int = int(month_metadata)
+                        if month_int == 10 and month_metadata_int == 10:
+                            object_save = {
+                                'mes_metadata': month_metadata,
+                                'institution': item['establishment_identification'],
+                                'numeral': item['numeral'],
+                                'year': item['year'],
+                                'mes': month,
+                                'id': item['_id'],
+                                'mensaje': '',
+                                'tiene_publicacion_septiembre': 'Si'
+                            }
+                            
+                            object_find = TransparencyActive.objects.filter(
+                                establishment__identification=item['establishment_identification'],
+                                month=9,
+                                numeral__name=item['numeral']
+                            ).first()
+                            if not object_find:
+                                object_save['tiene_publicacion_septiembre'] = 'No'
+                                copy = TransparencyActive.objects.filter(
+                                    establishment__identification=item['establishment_identification'],
+                                    month=10,
+                                    numeral__name=item['numeral']
+                                ).first()
+                                
+                                if copy:
+                                    #crear un nuevo registro a partir de copy
+                                    max_date = datetime(year=copy.year, month=9, day=get_day_for_publish())
+                                    max_date_aware = timezone.make_aware(max_date)
+                                    obj = TransparencyActive.objects.create(
+                                        establishment_id=copy.establishment_id,
+                                        numeral_id=copy.numeral_id,
+                                        month=9,
+                                        year=copy.year,
+                                        status=copy.status,
+                                        published=copy.published,
+                                        published_at=copy.published_at,
+                                        max_date_to_publish=max_date_aware,
+                                    )
+                                    try:
+                                        for file in copy.files.all():
+                                            #abrir el archivo y copiarlo
+                                            root = 'media/transparencia/' + \
+                                                str(copy.establishment.identification) + '/' + \
+                                                str(copy.numeral.name) + '/' + \
+                                                str(copy.year) + '/' + \
+                                                str(9)
+                                                
+                                            os.makedirs(root, exist_ok=True)
+
+                                            original_file_path = file.url_download.path
+                                            root = os.path.join(root, file.description+'.csv')
+                                            shutil.copy(original_file_path, root)
+                                            print(root,original_file_path)
+                                            new_file_pub = FilePublication.objects.create(
+                                                name=file.name,
+                                                description=file.description,
+                                                url_download=root,
+                                                is_active=True,
+                                                is_colab=False
+                                            )
+                                            
+                                            obj.files.add(new_file_pub)
+                                        lista_creada.append(object_save)
+                                    except Exception as e:
+                                        print(e)
+
+                                        object_save['mensaje'] = e.__str__()
+                                        lista_creada.append(object_save)  
+                            else:
+                                if not object_find.published:
+                                    exist = True
+                                    for file in object_find.files.all():
+                                        path = os.path.join(settings.MEDIA_ROOT, file.url_download.url)
+                                        if not os.path.exists(path):
+                                            object_save['mensaje'] = 'No existe el archivo'
+                                            lista_creada.append(object_save)
+                                            exist = False
+                                            break
+                                    
+                                    if exist:
+                                        object_find.published = True
+                                        object_find.published_at = object_find.created_at
+                                        object_find.save()
+                                        
+                                        lista_creada.append(object_save)
+                                     
+
+        except Exception as e:
+            print(e)
+        path = os.path.dirname(__file__)
+        path = os.path.join(path, 'casos_septiembre.json')
+
+        with open(path, 'w') as file:
+            json.dump(lista_creada, file, indent=4)
+
+
                     
                     
