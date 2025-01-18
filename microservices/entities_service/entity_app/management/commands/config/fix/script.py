@@ -295,10 +295,9 @@ class ScriptService:
             dir = os.path.join(dir, 'public_api_service.c_s_v_data_13_1_2024.json')
             with open(dir, encoding='utf-8') as file:
                 data = json.load(file)
-                data = data
                 for x, item in enumerate(data):
                     second_column = item['second_column']
-                    print("Procesando: {} de {} entidad {}".format(x, len(data), item['establishment_identification']))
+                    print("Procesando: {} de {} entidad {} con fecha {}".format(x, len(data), item['establishment_identification'],second_column))
                     if second_column:
                         
                         date = second_column.strip()
@@ -327,8 +326,18 @@ class ScriptService:
                             month_list = month_search.group().split('.')
                             if len(month_list) == 3:
                                 month = month_list[1]
-                                
+                        elif re.search(r'\d{2}/\d{2}/\d{4}', date):
+                            month_search = re.search(r'\d{2}/\d{2}/\d{4}', date)
+                            month_list = month_search.group().split('/')
+                            if len(month_list) == 3:
+                                month = month_list[1]
+                        elif re.search(r'\d{2}-\d{2}-\d{4}', date):
+                            month_search = re.search(r'\d{2}-\d{2}-\d{4}', date)
+                            month_list = month_search.group().split('/')
+                            if len(month_list) == 3:
+                                month = month_list[1]
                         else:
+                            print('no se pudo extraer la fecha')
                             continue
                         if not month:
                             continue
@@ -410,8 +419,12 @@ class ScriptService:
 
                                     object_find.published = True
                                     object_find.published_at = object_find.created_at
+                                    object_find.status = 'aproved'
                                     object_find.save()
-                                     
+                                    lista_creada.append(object_save)
+                                else:
+                                    object_save['mensaje'] = 'Ya se encuentra publicado'
+                                    lista_creada.append(object_save)
 
         except Exception as e:
             print(e)
