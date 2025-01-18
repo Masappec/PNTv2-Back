@@ -50,6 +50,9 @@ class Command(BaseCommand):
         parser.add_argument(
             '-fix_diccionario', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
         )
+        parser.add_argument(
+            '-move_september', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
+        )
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
@@ -92,3 +95,6 @@ class Command(BaseCommand):
 
         if options.get('fix_diccionario', False):
             self.config_service.fix_diccionario()
+            
+        if options.get('move_september', False):
+            self.config_service.move_september()

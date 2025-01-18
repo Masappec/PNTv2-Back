@@ -11,8 +11,8 @@ class AnualReport(BaseModel):
 
     # ARTICULO 10
     have_public_records = models.BooleanField()
-    norme_archive_utility = models.CharField(max_length=255)
-    comment_aclaration = models.TextField()
+    norme_archive_utility = models.CharField(max_length=255, blank= True)
+    comment_aclaration = models.TextField(blank= True)
 
     # ARTICULO 11
     # Ingrese el número de solicitudes de acceso a la información 
@@ -22,12 +22,13 @@ class AnualReport(BaseModel):
     did_you_entity_receive = models.BooleanField()
     total_saip_in_portal = models.IntegerField()
     total_saip_no_portal = models.IntegerField()
-    description_rason_no_portal = models.TextField()
+    description_rason_no_portal = models.TextField(blank= True)
     
     # ¿Las solicitudes de acceso a la información pública que NO fueron registradas en el
     # Portal Nacional de Transparencia, fueron respondidas?
+    have_responded_solicities_no_portal = models.BooleanField(default=False)
     total_no_registered = models.IntegerField()
-    comment_aclaration_no_registered = models.TextField()
+    comment_aclaration_no_registered = models.TextField(blank= True)
     
 
     # Artículo 11
@@ -60,7 +61,7 @@ class AnualReport(BaseModel):
 
     have_quality_problems = models.BooleanField()
     total_quality_problems = models.IntegerField()
-    description_quality_problems = models.TextField()
+    description_quality_problems = models.TextField(blank= True)
     
 
     # Artículo 42 de la LOTAIP
@@ -71,20 +72,20 @@ class AnualReport(BaseModel):
     
     have_sanctions = models.BooleanField()
     total_organic_law_public_service = models.IntegerField()
-    description_organic_law_public_service = models.TextField()
+    description_organic_law_public_service = models.TextField(blank=True)
     total_organic_law_contraloria = models.IntegerField()
-    description_organic_law_contraloria = models.TextField()
+    description_organic_law_contraloria = models.TextField(blank=True)
     total_organic_law_national_system = models.IntegerField()
-    description_organic_law_national_system = models.TextField()
+    description_organic_law_national_system = models.TextField(blank= True)
     total_organic_law_citizen_participation = models.IntegerField()
-    description_organic_law_citizen_participation = models.TextField()
+    description_organic_law_citizen_participation = models.TextField(blank= True)
     
 
     # Disposición transitoria séptima
     # su entidad implementó programas de difución
     implemented_programs = models.BooleanField()
     total_programs = models.IntegerField()
-    description_programs = models.TextField()
+    description_programs = models.TextField(blank= True)
     
 
     # Disposición transitoria octava
@@ -94,11 +95,28 @@ class AnualReport(BaseModel):
     # transparencia sus garantías y referente a la transparencia colaborativa?
     have_activities = models.BooleanField()
     total_activities = models.IntegerField()
-    description_activities = models.TextField()
+    description_activities = models.TextField(blank= True)
+    
+    solicity_infor_anual_report = models.ManyToManyField('SolicityInforAnualReport', blank=True, related_name='anual_report_solicity_infor_anual_report')
     
     objects = models.Manager()
     
 
+                
+class SolicityInforAnualReport(BaseModel):
+    month = models.IntegerField()
+    total = models.IntegerField()
+    total_response_to_10_days = models.IntegerField()
+    total_reponse_to_11_days = models.IntegerField()
+    total_response_plus_15_days = models.IntegerField()
+    total_no_response = models.IntegerField()
+    percent_response_to_10_days = models.DecimalField(max_digits=5, decimal_places=2)
+    percent_reponse_to_11_days = models.DecimalField(max_digits=5, decimal_places=2)
+    percent_response_plus_15_days = models.DecimalField(max_digits=5, decimal_places=2)
+    percent_no_response = models.DecimalField(max_digits=5, decimal_places=2)
+    anual_report = models.ForeignKey('AnualReport', on_delete=models.CASCADE)
+    objects = models.Manager()
+    
 
 class IndexInformationClassified(BaseModel):
     topic = models.CharField(max_length=255)
@@ -110,4 +128,25 @@ class IndexInformationClassified(BaseModel):
     ampliation_date = models.DateField()
     ampliation_period_of_validity = models.CharField(max_length=255)
     anual_report = models.ForeignKey('AnualReport', on_delete=models.CASCADE)
+    objects = models.Manager()
+
+
+
+
+
+class GenerateAnualReport(BaseModel):
+    
+    establishment = models.ForeignKey(
+        'EstablishmentExtended', on_delete=models.CASCADE,
+        null=True, blank=True,
+        related_name='generate_anual_report_establishment')
+    
+    year = models.IntegerField()
+    
+    file = models.FileField(
+        upload_to='generate_anual_report/{}/'.format(year), null=True, blank=True,
+        max_length=255)
+    
+    is_global = models.BooleanField(default=False)
+    
     objects = models.Manager()

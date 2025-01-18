@@ -51,7 +51,9 @@ class AnualReportReposity(ABC):
             description_programs: str,
             have_activities: bool,
             total_activities: int,
-            description_activities: str) -> AnualReport:
+            description_activities: str,
+            solicity_infor_anual_report
+            ) -> AnualReport:
         pass
 
     @abstractmethod
@@ -89,5 +91,5 @@ class AnualReportReposity(ABC):
                description_programs: str,
                have_activities: bool,
                total_activities: int,
-               description_activities: str) -> AnualReport:
+               description_activities: str,) -> AnualReport:
         pass

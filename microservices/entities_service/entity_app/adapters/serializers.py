@@ -7,7 +7,7 @@ from entity_app.domain.models.transparency_active import EstablishmentNumeral, N
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
 from entity_app.domain.models.transparecy_colab import TransparencyColab
-from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified
+from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified, SolicityInforAnualReport
 from django.db.models import Q
 
 
@@ -524,9 +524,15 @@ class IndexInformationClassiferCreateSerializer(serializers.ModelSerializer):
         model = IndexInformationClassified
         exclude = ('id', 'created_at', 'updated_at', 'deleted_at', 'deleted', 'anual_report')
 
+
+class SolicityInforAnualReportCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SolicityInforAnualReport
+        exclude = ('id', 'created_at', 'updated_at', 'deleted_at', 'deleted','anual_report')
 class AnualReportCreateSerializer(serializers.ModelSerializer):
 
     information_classified = IndexInformationClassiferCreateSerializer(many=True)
+    solicity_infor_anual_report = SolicityInforAnualReportCreateSerializer(many=True)
     class Meta:
         model = AnualReport
         exclude = ('id', 'created_at', 'updated_at', 'deleted_at', 'deleted')

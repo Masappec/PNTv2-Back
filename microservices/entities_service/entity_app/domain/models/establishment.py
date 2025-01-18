@@ -98,9 +98,22 @@ class EstablishmentManager(models.Manager):
             'nearly_updated': tota_near_updated
         }
 
-class EstablishmentExtended(models.Model):
+
+class FunctionOrganizationExt(BaseModel):
     name = models.CharField(max_length=255)
-    code = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
+
+    class Meta:
+        managed = False
+        db_table = 'app_admin_functionorganization'
+        verbose_name = 'Función de Organización'
+        verbose_name_plural = 'Funciones de Organización'
+
+class EstablishmentExtended(models.Model):
+    name = models.CharField(max_length=255,db_index=True)
+    code = models.CharField(max_length=255, null=True, blank=True, unique=True,db_index=True)
     abbreviation = models.CharField(max_length=255)
     logo = models.ImageField(upload_to='establishment')
     highest_authority = models.CharField(max_length=255)
@@ -109,11 +122,12 @@ class EstablishmentExtended(models.Model):
     job_authority = models.CharField(max_length=255)
     email_authority = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
-    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True,db_index=True)
     identification = models.CharField(max_length=255, null=True, blank=True)
     objects = EstablishmentManager()
     visits = models.IntegerField(default=0)
-
+    function_organization = models.ForeignKey(
+        'FunctionOrganizationExt', on_delete=models.CASCADE, null=True, blank=True)
     class Meta:
         managed = False
         db_table = 'app_admin_establishment'

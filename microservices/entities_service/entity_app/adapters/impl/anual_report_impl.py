@@ -1,6 +1,6 @@
 from typing import List, Optional
 from entity_app.ports.repositories.anual_report_reposity import AnualReportReposity
-from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified
+from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified, SolicityInforAnualReport
 
 
 class AnualReportImpl(AnualReportReposity):
@@ -50,6 +50,7 @@ class AnualReportImpl(AnualReportReposity):
         have_activities: bool,
         total_activities: int,
         description_activities: str,
+            solicity_infor_anual_report
     ):
         
         created = AnualReport.objects.create(
@@ -96,7 +97,9 @@ class AnualReportImpl(AnualReportReposity):
         if information_classified:
             for info in information_classified:
                 obj = IndexInformationClassified.objects.create(**info,anual_report_id=created.id)
-
+        if solicity_infor_anual_report:
+            for info in solicity_infor_anual_report:
+                obj = SolicityInforAnualReport.objects.create(**info, anual_report_id=created.id)
         return created
         
 

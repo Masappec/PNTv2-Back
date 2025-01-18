@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+import shutil
 from entity_app.domain.models import TransparencyActive, TransparencyColab, FilePublication
 import os
 import json
@@ -6,7 +7,7 @@ from django.db.models import Q
 import pandas as pd
 from django.core.files.base import ContentFile
 import calendar
-
+import re
 from entity_app.domain.models.transparency_active import Numeral
 from entity_app.utils.functions import get_day_for_publish
 from django.utils import timezone
@@ -406,21 +407,10 @@ class ScriptService:
                                         lista_creada.append(object_save)  
                             else:
                                 if not object_find.published:
-                                    exist = True
-                                    for file in object_find.files.all():
-                                        path = os.path.join(settings.MEDIA_ROOT, file.url_download.url)
-                                        if not os.path.exists(path):
-                                            object_save['mensaje'] = 'No existe el archivo'
-                                            lista_creada.append(object_save)
-                                            exist = False
-                                            break
-                                    
-                                    if exist:
-                                        object_find.published = True
-                                        object_find.published_at = object_find.created_at
-                                        object_find.save()
-                                        
-                                        lista_creada.append(object_save)
+
+                                    object_find.published = True
+                                    object_find.published_at = object_find.created_at
+                                    object_find.save()
                                      
 
         except Exception as e:
@@ -430,7 +420,3 @@ class ScriptService:
 
         with open(path, 'w') as file:
             json.dump(lista_creada, file, indent=4)
-
-
-                    
-                    

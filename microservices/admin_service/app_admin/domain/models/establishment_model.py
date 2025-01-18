@@ -54,11 +54,11 @@ class FunctionOrganization(BaseModel):
 
 class Establishment(BaseModel):
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255,db_index=True)
     identification = models.CharField(
-        max_length=255, unique=True, null=True, blank=True)
+        max_length=255, unique=True, null=True, blank=True,db_index=True)
     alias = models.CharField(max_length=255, null=True, blank=True)
-    code = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    code = models.CharField(max_length=255, null=True, blank=True, unique=True,db_index=True)
     abbreviation = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     type_organization = models.ForeignKey(
@@ -66,7 +66,7 @@ class Establishment(BaseModel):
     function_organization = models.ForeignKey(
         FunctionOrganization, on_delete=models.CASCADE, null=True, blank=True)
     type_institution = models.ForeignKey(
-        TypeInstitution, on_delete=models.CASCADE, null=True, blank=True)
+        TypeInstitution, on_delete=models.CASCADE, null=True, blank=True,db_index=True)
     logo = models.ImageField(upload_to='establishment')
     highest_authority = models.CharField(max_length=255)
     first_name_authority = models.CharField(max_length=255)
@@ -77,7 +77,7 @@ class Establishment(BaseModel):
 
     objects = models.Manager()
 
-    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True,db_index=True)
 
     visits = models.IntegerField(default=0)
 
