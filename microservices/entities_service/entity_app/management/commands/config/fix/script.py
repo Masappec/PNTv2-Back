@@ -399,13 +399,15 @@ class ScriptService:
                                                 str(copy.numeral.name) + '/' + \
                                                 str(copy.year) + '/' + \
                                                 str(9)
-                                                
-                                            os.makedirs(root, exist_ok=True)
 
+                                            
                                             original_file_path = file.url_download.path
                                             root = os.path.join(root, file.description+'.csv')
-                                            shutil.copy(original_file_path, root)
-                                            print(root,original_file_path)
+                                            
+                                            if not os.path.exists(root):
+                                                
+                                                shutil.copy(original_file_path, root)
+                                                
                                             new_file_pub = FilePublication.objects.create(
                                                 name=file.name,
                                                 description=file.description,
@@ -413,6 +415,8 @@ class ScriptService:
                                                 is_active=True,
                                                 is_colab=False
                                             )
+                                           
+                                                
                                             
                                             obj.files.add(new_file_pub)
                                         lista_creada.append(object_save)
