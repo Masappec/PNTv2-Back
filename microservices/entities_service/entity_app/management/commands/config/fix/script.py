@@ -295,7 +295,7 @@ class ScriptService:
             dir = os.path.join(dir, 'public_api_service.c_s_v_data_13_1_2024.json')
             with open(dir, encoding='utf-8') as file:
                 data = json.load(file)
-                #data = [item for item in data if item['establishment_identification'] == '760030920001']
+                #data = [ item for item in data if item['establishment_identification'] == '1768151240001']
                 for x, item in enumerate(data):
                     second_column = item['second_column']
                     print("Procesando: {} de {} entidad {} con fecha {}".format(x, len(data), item['establishment_identification'],second_column))
@@ -429,16 +429,40 @@ class ScriptService:
                                             
                                             
                             else:
+                                
+                                
                                 if not object_find.published:
 
                                     object_find.published = True
                                     object_find.published_at = object_find.created_at
                                     object_find.status = 'aproved'
-                                    object_find.save()
-                                    lista_creada.append(object_save)
-                                else:
-                                    object_save['mensaje'] = 'Ya se encuentra publicado'
-                                    lista_creada.append(object_save)
+                                
+                                for file in object_find.files.all():
+                                    root = 'media/transparencia/' + \
+                                        str(object_find.establishment.identification) + '/' + \
+                                        str(object_find.numeral.name) + '/' + \
+                                        str(object_find.year) + '/' + \
+                                        str(9)+ '/'+ \
+                                        file.description+".csv"
+                                    #verificar que el archivo exista
+                                    if os.path.exists(root):
+                                        new_file_pub = FilePublication.objects.create(
+                                            name=file.name,
+                                            description=file.description,
+                                            url_download=root.replace('media/', ''),
+                                            is_active=True,
+                                            is_colab=False
+                                        )
+                                        
+                                        object_find.files.filter(description=file.description).delete()
+                                        
+                                        object_find.files.add(new_file_pub)
+                                    else:
+                                        object_save['mensaje'] = 'No se encuentra el archivo '  +root
+                                    
+                                
+                                object_find.save()
+                                lista_creada.append(object_save)
 
         except Exception as e:
             print(e)
@@ -447,3 +471,39 @@ class ScriptService:
 
         with open(path, 'w') as file:
             json.dump(lista_creada, file, indent=4)
+
+
+
+
+
+
+    def fix_september(self):
+        
+        ta = TransparencyActive.objects.filter(
+            month=9)
+        for x, i in enumerate(ta):
+            
+            files = i.files.all()
+            
+            
+            print("Procesando: {} de {} entidad {} con fecha {}".format(x, len(ta), i.establishment.identification, i.created_at))
+            for file in files:
+                
+                path_like = i.establishment.identification + '/' + i.numeral.name + '/' + str(i.year) + '/9'
+                
+                if path_like not in file.url_download.url:
+                    
+                    root = 'media/transparencia/' + path_like + '/' + file.description + '.csv'
+                    
+                    if os.path.exists(root):
+                        new_file_pub = FilePublication.objects.create(
+                            name=file.name,
+                            description=file.description,
+                            url_download=root.replace('media/', ''),
+                            is_active=True,
+                            is_colab=False
+                        )
+                        i.files.filter(description=file.description).delete()
+                        i.files.add(new_file_pub)
+                    else:
+                        print('No se encuentra el archivo ' + root)

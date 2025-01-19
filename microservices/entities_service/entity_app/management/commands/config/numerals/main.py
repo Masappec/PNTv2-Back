@@ -12,6 +12,7 @@ from entity_app.models import TemplateFile, Numeral, ColumnFile
 from django.contrib.auth.models import Permission, ContentType
 from entity_app.domain.models import TransparencyActive, TransparencyFocal, TransparencyColab, Solicity, EstablishmentExtended
 from entity_app.domain.models.transparency_active import EstablishmentNumeral
+from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Reservada
 
 
 class NumeralServiceData:
@@ -496,3 +497,85 @@ class NumeralServiceData:
                 except IntegrityError:
                     print(f"Registro duplicado para TransparencyFocal - {activity.establishment}, {activity.numeral}, {activity.year}, octubre")
                     continue
+
+                    
+    def read_pnt1(self):
+        
+        df = pd.read_excel('./DatosPNT1.xlsx',sheet_name=None)
+
+        
+        for sheet_name, sheet_data in df.items():
+            if 'Activa' in sheet_name:
+                for index, row in sheet_data.iterrows():
+                    numeral_name = row['Numeral']
+                    numeral_name = numeral_name.replace('y','-')
+                    numeral_name = numeral_name.strip()
+                    Pnt1_Active.objects.create(
+                        identification=row['RUC'],
+                        function=row['Función'],
+                        type=row['Tipo'],
+                        establishment_name=row['nombre_entidad'],
+                        art=row['articulo'],
+                        numeral=numeral_name,
+                        enero = row['Enero'].lower() == 'si',
+                        febrero = row['Febrero'].lower() == 'si',
+                        marzo = row['Marzo'].lower() == 'si',
+                        abril = row['Abril'].lower() == 'si',
+                        mayo = row['Mayo'].lower() == 'si',
+                        junio = row['Junio'].lower() == 'si',
+                        julio = row['Julio'].lower() == 'si',
+                        agosto = row['Agosto'].lower() == 'si'
+                        
+                    )
+            elif 'Focalizada' in sheet_name:
+                
+                for index, row in sheet_data.iterrows():
+                    Pnt1_Focal.objects.create(
+                        identification=row['RUC'],
+                        function=row['Función_de_la_institucion'],
+                        type=row['Tipo_Institucion'],
+                        establishment_name=row['Nombre_Entidad'],
+                        art=row['Articulo'],
+                        numeral=row['Numeral'],
+                        enero=row['Enero'].lower() == 'si',
+                        febrero=row['Febrero'].lower() == 'si',
+                        marzo=row['Marzo'].lower() == 'si',
+                        abril=row['Abril'].lower() == 'si',
+                        mayo=row['Mayo'].lower() == 'si',
+                        junio=row['Junio'].lower() == 'si',
+                        julio=row['Julio'].lower() == 'si',
+                        agosto=row['Agosto'].lower() == 'si'
+                    )
+            elif 'Colaborativa' in sheet_name:
+                for index, row in sheet_data.iterrows():
+                    Pnt1_Colab.objects.create(
+                        identification=row['RUC'],
+                        function=row['Función_de_la_institucion'],
+                        type=row['Tipo_Institucion'],
+                        establishment_name=row['Nombre_Entidad'],
+                        art=row['Articulo'],
+                        numeral=row['Numeral'],
+                        enero=row['enero'].lower() == 'si',
+                        febrero=row['febrero'].lower() == 'si',
+                        marzo=row['marzo'].lower() == 'si',
+                        abril=row['abril'].lower() == 'si',
+                        mayo=row['mayo'].lower() == 'si',
+                        junio=row['junio'].lower() == 'si',
+                        julio=row['julio'].lower() == 'si',
+                        agosto=row['agosto'].lower() == 'si'
+                    )
+            elif 'Reservada' in sheet_name:
+                for index, row in sheet_data.iterrows():
+                    Pnt1_Reservada.objects.create(
+                        identification=row['RUC'],
+                        function=row['Entidad'],
+                        classification='Clasificación de la información',
+                        theme=row['Tema'],
+                        base_legal=row['Base Legal'],
+                        date_classification=row['Fecha de la clasificación de la información reservada - semestral'],
+                        period=row['Periodo de vigencia de la clasificación de la reserva'],
+                        extension=row['Se ha efectuado ampliación'],
+                        description=row['Descripción de la ampliación'],
+                        date_extension=row['Fecha de la ampliación'],
+                        period_extension=row['Período de vigencia de la ampliación']
+                    )
