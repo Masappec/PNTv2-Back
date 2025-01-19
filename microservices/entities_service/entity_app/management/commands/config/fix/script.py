@@ -295,6 +295,7 @@ class ScriptService:
             dir = os.path.join(dir, 'public_api_service.c_s_v_data_13_1_2024.json')
             with open(dir, encoding='utf-8') as file:
                 data = json.load(file)
+                #data = [item for item in data if item['establishment_identification'] == '760030920001']
                 for x, item in enumerate(data):
                     second_column = item['second_column']
                     print("Procesando: {} de {} entidad {} con fecha {}".format(x, len(data), item['establishment_identification'],second_column))
@@ -336,6 +337,12 @@ class ScriptService:
                             month_list = month_search.group().split('/')
                             if len(month_list) == 3:
                                 month = month_list[1]
+                        elif re.search(r'\d{1}.\d{2}.\d{4}', date):
+                            month_search = re.search(r'\d{1}.\d{2}.\d{4}', date)
+                            month_list = month_search.group().split('.')
+                            if len(month_list) == 3:
+                                month = month_list[1]
+                        
                         else:
                             print('no se pudo extraer la fecha')
                             continue
@@ -402,7 +409,7 @@ class ScriptService:
                                             new_file_pub = FilePublication.objects.create(
                                                 name=file.name,
                                                 description=file.description,
-                                                url_download=root,
+                                                url_download=root.replace('media/', ''),
                                                 is_active=True,
                                                 is_colab=False
                                             )
@@ -410,10 +417,17 @@ class ScriptService:
                                             obj.files.add(new_file_pub)
                                         lista_creada.append(object_save)
                                     except Exception as e:
-                                        print(e)
-
-                                        object_save['mensaje'] = e.__str__()
-                                        lista_creada.append(object_save)  
+                                        #[Errno 2] No such file or directory:
+                                        if e.__str__().find('No such file or directory') != -1:
+                                            #buscar en otros meses4
+                                            obj.delete()
+                                        else:
+                                            if not obj.files.all().exists():
+                                                obj.delete()
+                                            object_save['mensaje'] = e.__str__()
+                                            lista_creada.append(object_save)
+                                            
+                                            
                             else:
                                 if not object_find.published:
 
