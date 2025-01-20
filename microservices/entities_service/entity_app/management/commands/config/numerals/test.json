@@ -4555,6 +4555,7 @@
                         "type": "str",
                         "format": null,
                         "regex": null
+                        
                     },
                     {
                         "name": "Temática de la información",
@@ -4636,7 +4637,8 @@
                         "name": "Institución",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"{INTITUCION}"
                     },
                     {
                         "name": "Descripción",
@@ -4649,31 +4651,36 @@
                         "name": "Nombre del campo",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Descripción del campo"
                     },
                     {
                         "name": "Nombre de entidad ",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Nombre de la entidad que publica proactivamente la información"
                     },
                     {
                         "name": "Temática de la información",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Temática de la información que la entidad publica proactivamente"
                     },
                     {
                         "name": "Fecha de publicación de la información ",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Fecha en la que la entidad publica la información"
                     },
                     {
                         "name": "Enlace a archivo que contiene la información ",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Enlace que permite acceder a la publicación de la información"
                     }
                 ]
             }
@@ -4786,7 +4793,8 @@
                         "name": "Institución",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"{INSTITUCION}"
                     },
                     {
                         "name": "Descripción",
@@ -4799,43 +4807,50 @@
                         "name": "Nombre del campo",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Descripción del campo"
                     },
                     {
                         "name": "Nombre de entidad ",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Nombre de la entidad a cargo del espacio de colaboración"
                     },
                     {
                         "name": "Fecha en la que se realizó espacio de colaboración",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Fecha en la que se realiza el espacio de colaboración"
                     },
                     {
                         "name": "Modalidad del espacio de colaboración",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Modalidad del espacio de colaboración. Puede ser virtual o presencial"
                     },
                     {
                         "name": "Lugar o plataforma en la que se realizó espacio de colaboración ",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Nombre del lugar (en caso de ser presencial) o plataforma (en caso de ser virtual) en el que se realiza el espacio de colaboración"
                     },
                     {
                         "name": "Persona u organización proponente del espacio de colaboración",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Persona u organización que propone y participa dentro del espacio de colaboración"
                     },
                     {
                         "name": "Enlace al archivo de avances o resultados del espacio de colaboración",
                         "type": "str",
                         "format": null,
-                        "regex": null
+                        "regex": null,
+                        "value":"Enlace para acceder a los avances o resultados co-creados del espacio de colaboración"
                     }
                 ]
             }

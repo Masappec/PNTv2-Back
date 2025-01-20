@@ -74,7 +74,8 @@ class ReportService:
 
         # Obtener las solicitudes del usuario para el año específico
         solicity = self.solicity_service.get_entity_user_solicities(user_id)
-        #solicity = solicity.filter(created_at__year=year)  # Mantén el filtro por año si es necesario
+
+        #solicity = solicity.filter(created_at__year=year)  
 
         # Crear un libro de Excel
         wb = openpyxl.Workbook()

@@ -16,6 +16,9 @@ class TransparencyActiveRepository(ABC):
         pass
 
     @abstractmethod
+    def get_by_year_all(self, year: int, establishment_id: int):
+        pass
+    @abstractmethod
     def get_search(self, search: str, establishment_id: int):
         pass
 

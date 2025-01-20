@@ -3,7 +3,8 @@ from django.core.management.base import BaseCommand
 from core.models import TransparencyActive, CSVData, Metadata, FilePublication
 from core.tasks.ta_tasks import on_update_ta
 from pathlib import Path
-
+import os
+import json
 class Command(BaseCommand):
 
 
@@ -17,7 +18,9 @@ class Command(BaseCommand):
             self.run_generate_file()
     
     def run_generate_file(self):
-        all = TransparencyActive.objects.all()
+        all = TransparencyActive.objects.filter(month=10,
+                                                max_date_to_publish__month=10
+                                                )
         list_files = FilePublication.objects.all()
         for x, item in enumerate(all):
             print(f'Procesando {x + 1} de {len(all)}', end='\r')
@@ -36,3 +39,5 @@ class Command(BaseCommand):
                 item.establishment.name,
                 item.numeral.description
             )
+
+    

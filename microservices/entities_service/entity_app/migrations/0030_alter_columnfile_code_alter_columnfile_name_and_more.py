@@ -60,4 +60,5 @@ class Migration(migrations.Migration):
             name='year',
             field=models.IntegerField(db_index=True),
         ),
+
     ]

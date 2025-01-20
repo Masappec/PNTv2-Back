@@ -155,7 +155,6 @@ class EstablishmentStats(ListAPIView):
                     ((est.total_TR * 100) / est.total_TS) * 50
         else:
             score = 0
-        print(score )
         if est.total_TC > 0:
             score *= 1.05
         if est.total_TF > 0:
