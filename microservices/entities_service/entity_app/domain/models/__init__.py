@@ -6,3 +6,4 @@ from .solicity import *
 from .transparency_active import *
 from .transparecy_colab import *
 from .transparecy_foc import *
+from .pnt1 import *

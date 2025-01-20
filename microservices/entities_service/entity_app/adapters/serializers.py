@@ -7,7 +7,10 @@ from entity_app.domain.models.transparency_active import EstablishmentNumeral, N
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
 from entity_app.domain.models.transparecy_colab import TransparencyColab
+from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified, SolicityInforAnualReport
 from django.db.models import Q
+
+from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Pasive,Pnt1_Colab,Pnt1_Focal,Pnt1_Reservada
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -516,3 +519,63 @@ class ListTransparencyColaborative(serializers.ModelSerializer):
             'name': numeral.name,
             'description': numeral.description
         }
+
+
+class IndexInformationClassiferCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IndexInformationClassified
+        exclude = ('id', 'created_at', 'updated_at', 'deleted_at', 'deleted', 'anual_report')
+
+
+class SolicityInforAnualReportCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SolicityInforAnualReport
+        exclude = ('id', 'created_at', 'updated_at', 'deleted_at', 'deleted','anual_report')
+class AnualReportCreateSerializer(serializers.ModelSerializer):
+
+    information_classified = IndexInformationClassiferCreateSerializer(many=True)
+    solicity_infor_anual_report = SolicityInforAnualReportCreateSerializer(many=True)
+    class Meta:
+        model = AnualReport
+        exclude = ('id', 'created_at', 'updated_at', 'deleted_at', 'deleted')
+        
+class AnualReportSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AnualReport
+        fields = '__all__'
+        
+
+class Pnt1ActiveSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Active
+        fields = '__all__'
+        
+class  Pnt1_PasiveSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Pasive
+        fields = '__all__'
+
+
+class Pnt1_ColabSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Colab
+        fields = '__all__'
+        
+        
+class Pnt1_FocalSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Focal
+        fields = '__all__'
+        
+
+class Pnt1_ReservadaSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Reservada
+        fields = '__all__'
+    

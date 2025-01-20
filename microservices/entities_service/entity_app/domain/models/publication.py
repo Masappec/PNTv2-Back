@@ -55,7 +55,8 @@ class FilePublication(BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     url_download = models.FileField(
-        upload_to='publications/', null=True, blank=True)
+        upload_to='publications/', null=True, blank=True,
+        max_length=255)
     is_active = models.BooleanField(default=True, null=True, blank=True)
     is_colab = models.BooleanField(default=False, null=True, blank=True)
     objects = models.Manager()

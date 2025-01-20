@@ -5,6 +5,7 @@ from rest_framework import status
 from typing import Any
 from entity_app.domain.services.numeral_service import NumeralService
 from entity_app.adapters.impl.numeral_impl import NumeralImpl
+import logging
 
 class DeleteNumeralView(APIView):
     def __init__(self, **kwargs: Any) -> None:
@@ -16,6 +17,7 @@ class DeleteNumeralView(APIView):
         """
         Endpoint para eliminar un numeral.
         """
+        logging.info(f"Eliminando numeral con ID {numeral_id} del establecimiento con ID {establishment_id}.")
         try:
             self.service.delete_numeral(numeral_id, establishment_id)
             return Response({

@@ -79,7 +79,7 @@ class EstablishmentManager(models.Manager):
         total_establishments = 0
         total_updated = 0
         total_no_updated = 0
-
+        tota_near_updated = 0
         # Execute the raw SQL query using Django's database connection
         with connection.cursor() as cursor:
             cursor.execute(self.SQL_STATS_ACTIVE(), [year, month, year, month])
@@ -98,6 +98,20 @@ class EstablishmentManager(models.Manager):
             'nearly_updated': tota_near_updated
         }
 
+
+
+class FunctionOrganizationExt(BaseModel):
+    name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+
+    objects = models.Manager()
+
+    class Meta:
+        managed = False
+        db_table = 'app_admin_functionorganization'
+        verbose_name = 'Función de Organización'
+        verbose_name_plural = 'Funciones de Organización'
+
 class EstablishmentExtended(models.Model):
     name = models.CharField(max_length=255,db_index=True)
     code = models.CharField(max_length=255, null=True, blank=True, unique=True,db_index=True)
@@ -113,7 +127,8 @@ class EstablishmentExtended(models.Model):
     identification = models.CharField(max_length=255, null=True, blank=True)
     objects = EstablishmentManager()
     visits = models.IntegerField(default=0)
-
+    function_organization = models.ForeignKey(
+        'FunctionOrganizationExt', on_delete=models.CASCADE, null=True, blank=True)
     class Meta:
         managed = False
         db_table = 'app_admin_establishment'

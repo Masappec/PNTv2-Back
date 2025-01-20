@@ -59,4 +59,3 @@ class NumeralService:
             raise ValueError("El numeral no existe.")
         numeral = self.numeral_repository.delete_numeral(numeral_id, establishment_id)
         return numeral
-    

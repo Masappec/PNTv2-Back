@@ -69,4 +69,3 @@ class NumeralRepository(ABC):
         Eliminamos el numeral de la base de datos para actualizacion en el front
         """
         pass
-    

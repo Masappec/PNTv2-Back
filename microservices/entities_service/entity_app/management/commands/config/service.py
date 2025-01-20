@@ -42,3 +42,12 @@ class ConfigDataService:
 
     def fix_diccionario(self):
         self.fix_script.fix_diccionario()
+
+    def move_september(self):
+        self.fix_script.move_september()
+        
+    def fix_september(self):
+        self.fix_script.fix_september()
+        
+    def save_pnt1(self):
+        self.numeral_service.read_pnt1()

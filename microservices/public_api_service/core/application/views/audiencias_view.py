@@ -56,6 +56,38 @@ class AudienciasView(APIView):
             
             
         return Response(lista)
+    
+    
+class Numeral16View(APIView):
+
+
+    def get(self, request):
+        ruc = request.query_params.get('ruc')
+        year = request.query_params.get('year')
+        if ruc is None:
+            return Response("Error, ruc is required", status=400) 
+
+        res = CSVData.objects(
+            metadata__numeral='Numeral 16',
+            metadata__year=str(year),
+            metadata__establishment_identification=ruc
+        )
+        lista = []
+        for doc in res:
+            print(doc.metadata.establishment_name )
+            for data in doc.data:
+
+                lista.append({
+                    "institucion":doc.metadata.establishment_name,
+                    "tema": data[0],
+                    "numero_resolucion":data[1],
+                    "fecha_clasificacion":data[2],
+                    "periodo_vigencia":data[3],
+                    "enlace":data[4]
+                })
+            
+            
+        return Response(lista)
             
         
         
