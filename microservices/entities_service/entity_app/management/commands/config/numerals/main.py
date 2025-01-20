@@ -519,8 +519,10 @@ class NumeralServiceData:
                     numeral_name = str(numeral_name)
                     numeral_name = numeral_name.replace('y','-')
                     numeral_name = numeral_name.strip()
+                    identifier = row['RUC']
+                    identification = f"{identifier[:-1]}1"
                     Pnt1_Active.objects.create(
-                        identification=row['RUC'],
+                        identification=identification,
                         function=row['Función'],
                         type=row['Tipo'],
                         establishment_name=row['nombre_entidad'],
@@ -544,8 +546,10 @@ class NumeralServiceData:
             elif 'Focalizada' in sheet_name:
                 
                 for index, row in sheet_data.iterrows():
+                    identifier = str(row['RUC'])
+                    identification = f"{identifier[:-1]}1"
                     Pnt1_Focal.objects.create(
-                        identification=str(row['RUC']),
+                        identification=identification,
                         function=str(row['Función_de_la_institucion']),
                         type=str(row['Tipo_Institucion']),
                         establishment_name=str(row['Nombre_Entidad']),
@@ -564,8 +568,10 @@ class NumeralServiceData:
 
             elif 'Colaborativa' in sheet_name:
                 for index, row in sheet_data.iterrows():
+                    identifier = str(row['RUC'])
+                    identification = f"{identifier[:-1]}1"
                     Pnt1_Colab.objects.create(
-                        identification=row['RUC'],
+                        identification=identifier,
                         function=row['Función_de_la_institucion'],
                         type=row['Tipo_Institucion'],
                         establishment_name=row['Nombre_Entidad'],
@@ -585,8 +591,10 @@ class NumeralServiceData:
             elif 'Pasiva' in sheet_name:
 
                 for index, row in sheet_data.iterrows():
+                    identifier = str(row['RUC'])
+                    identification = f"{identifier[:-1]}1"
                     Pnt1_Pasive.objects.create(
-                        identification=str(row['RUC']),
+                        identification=identification,
                         function=str(row['Función']),
                         type=str(row['Tipo']),
                         establishment_name=str(row['nombre_entidad']),
@@ -600,8 +608,10 @@ class NumeralServiceData:
             
             elif 'Reservada' in sheet_name:
                 for index, row in sheet_data.iterrows():
+                    identifier = str(row['RUC'])
+                    identification = f"{identifier[:-1]}1"
                     Pnt1_Reservada.objects.create(
-                        identification=str(row['RUC']),
+                        identification=identification,
                         establishment_name=str(row['Entidad']),
                         classification=str(row['Clasificación de la información']),
                         theme=str(row['Tema']),

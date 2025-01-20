@@ -297,7 +297,7 @@ class DataPnt1(APIView):
             return Response({'message':'El ruc es requerido'},400)
         
         
-        ruc_modificado = f"{ruc[:-1]}0"
+        ruc_modificado = f"{ruc[:-1]}1"
 
         # Filtrar utilizando Q para buscar tanto el RUC original como el modificado
         data = Pnt1_Active.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
@@ -310,7 +310,7 @@ class DataPnt1Pasive(APIView):
     def get(self, request):
         
         ruc = request.query_params.get('ruc')
-        ruc_modificado = f"{ruc[:-1]}0"
+        ruc_modificado = f"{ruc[:-1]}1"
 
         if ruc is None:
             return Response({'message':'El ruc es requerido'},400)
@@ -326,7 +326,7 @@ class DataPnt1Colab(APIView):
     def get(self, request):
         
         ruc = request.query_params.get('ruc')
-        ruc_modificado = f"{ruc[:-1]}0"
+        ruc_modificado = f"{ruc[:-1]}1"
 
         if ruc is None:
             return Response({'message':'El ruc es requerido'},400)
@@ -342,7 +342,7 @@ class DataPnt1Focal(APIView):
     def get(self, request):
         
         ruc = request.query_params.get('ruc')
-        ruc_modificado = f"{ruc[:-1]}0"
+        ruc_modificado = f"{ruc[:-1]}1"
 
         if ruc is None:
             return Response({'message':'El ruc es requerido'},400)
@@ -358,7 +358,7 @@ class DataPnt1Reservada(APIView):
     def get(self, request):
         
         ruc = request.query_params.get('ruc')
-        ruc_modificado = f"{ruc[:-1]}0"
+        ruc_modificado = f"{ruc[:-1]}1"
 
         if ruc is None:
             return Response({'message':'El ruc es requerido'},400)
