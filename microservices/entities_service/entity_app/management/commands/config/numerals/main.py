@@ -504,6 +504,12 @@ class NumeralServiceData:
         dir = os.path.join(dir, 'DatosPNT1.xlsx')
         df = pd.read_excel(dir,sheet_name=None)
 
+        Pnt1_Active.objects.all().delete()
+        Pnt1_Focal.objects.all().delete()
+        Pnt1_Colab.objects.all().delete()
+        Pnt1_Pasive.objects.all().delete()
+        Pnt1_Reservada.objects.all().delete()
+        
         for sheet_name, sheet_data in df.items():
             
             print('Guardando datos de la hoja', sheet_name)
@@ -596,7 +602,7 @@ class NumeralServiceData:
                 for index, row in sheet_data.iterrows():
                     Pnt1_Reservada.objects.create(
                         identification=str(row['RUC']),
-                        function=str(row['Entidad']),
+                        establishment_name=str(row['Entidad']),
                         classification=str(row['Clasificación de la información']),
                         theme=str(row['Tema']),
                         base_legal=str(row['Base Legal ']),
