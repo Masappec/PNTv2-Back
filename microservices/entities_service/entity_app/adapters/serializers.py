@@ -10,6 +10,8 @@ from entity_app.domain.models.transparecy_colab import TransparencyColab
 from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified, SolicityInforAnualReport
 from django.db.models import Q
 
+from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Pasive,Pnt1_Colab,Pnt1_Focal,Pnt1_Reservada
+
 
 class TagSerializer(serializers.ModelSerializer):
     """Tag serializer."""
@@ -542,3 +544,38 @@ class AnualReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = AnualReport
         fields = '__all__'
+        
+
+class Pnt1ActiveSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Active
+        fields = '__all__'
+        
+class  Pnt1_PasiveSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Pasive
+        fields = '__all__'
+
+
+class Pnt1_ColabSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Colab
+        fields = '__all__'
+        
+        
+class Pnt1_FocalSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Focal
+        fields = '__all__'
+        
+
+class Pnt1_ReservadaSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Pnt1_Reservada
+        fields = '__all__'
+    

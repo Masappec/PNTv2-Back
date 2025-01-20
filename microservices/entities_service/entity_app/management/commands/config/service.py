@@ -48,3 +48,6 @@ class ConfigDataService:
         
     def fix_september(self):
         self.fix_script.fix_september()
+        
+    def save_pnt1(self):
+        self.numeral_service.read_pnt1()

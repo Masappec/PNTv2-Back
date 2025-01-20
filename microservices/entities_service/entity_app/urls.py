@@ -26,6 +26,8 @@ from entity_app.application.views.reports import ArchivosSubidos, ReporteArchivo
 from entity_app.application.views.public import MonthForTransparency
 from entity_app.application.views.numeral_update import DeleteNumeralView
 from entity_app.application.views.anual_report import AnualReportSolicityStats, AnualReportGenerate, AnualReportView, AnualReportTA, AnualReportTC, AnualReportTF, TaskView
+from entity_app.application.views.anual_report import DataPnt1Pasive, DataPnt1Colab, DataPnt1, DataPnt1Focal, DataPnt1Reservada
+
 
 urlpatterns = [
 
@@ -184,5 +186,13 @@ urlpatterns = [
      path('anual-report/generate', AnualReportGenerate.as_view(), name='anual-report-generate'),
      
      path('task/status/<task_id>', TaskView.as_view(), name='task-status'),
+     
+     
+     path('pnt1/pasive', DataPnt1Pasive.as_view(), name='pnt1-pasive'),
+     path('pnt1/active', DataPnt1.as_view(), name='pnt1-active'),
+     path('pnt1/colab', DataPnt1Colab.as_view(), name='pnt1-colab'),
+     path('pnt1/focal', DataPnt1Focal.as_view(), name='pnt1-focal'),
+     path('pnt1/reservada', DataPnt1Reservada.as_view(), name='pnt1-reservada'),
+     
 
 ]

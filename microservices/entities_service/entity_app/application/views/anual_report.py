@@ -1,4 +1,6 @@
-from entity_app.adapters.serializers import AnualReportCreateSerializer, AnualReportSerializer, ListTransparencyColaborative, ListTransparencyFocus, TransparencyActiveListSerializer
+from entity_app.adapters.serializers import AnualReportCreateSerializer, AnualReportSerializer, \
+    ListTransparencyColaborative, ListTransparencyFocus, TransparencyActiveListSerializer, \
+    Pnt1ActiveSerializer, Pnt1_PasiveSerializer, Pnt1_ColabSerializer, Pnt1_FocalSerializer, Pnt1_ReservadaSerializer
 from rest_framework.views import APIView
 from entity_app.domain.services.anual_report_service import AnualReportService
 from entity_app.adapters.impl.anual_report_impl import AnualReportImpl
@@ -10,6 +12,7 @@ from rest_framework.generics import ListAPIView
 from entity_app.adapters.impl.solicity_impl import SolicityImpl
 from entity_app.domain.services.solicity_service import SolicityService
 from datetime import datetime
+from django.db.models import Q
 
 from entity_app.adapters.impl.transparency_active_impl import TransparencyActiveImpl
 from entity_app.domain.services.transparency_active_service import TransparencyActiveService
@@ -18,6 +21,7 @@ from entity_app.domain.services.transparency_focus_service import TransparencyFo
 from entity_app.utils.pagination import StandardResultsSetPagination
 from entity_app.adapters.impl.transparency_colaborative_impl import TransparencyColaborativeImpl
 from entity_app.domain.services.transparency_colaborative_service import TransparencyColaborativeService
+from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Pasive, Pnt1_Reservada
 from shared.tasks.anual_report import generate_anual_report, generate_unique_report
 from rest_framework import status
 from entities_service.celery import app
@@ -281,3 +285,86 @@ class TaskView(APIView):
         elif task.status == 'FAILURE':
             return Response({'data': response_data}, status=status.HTTP_400_BAD_REQUEST, headers={'Access-Control-Allow-Origin': '*'})
         return Response({'data': response_data}, status=status.HTTP_202_ACCEPTED, headers={'Access-Control-Allow-Origin': '*'})
+
+
+class DataPnt1(APIView):
+    permission_classes = []
+    def get(self, request):
+        
+        ruc = request.query_params.get('ruc')
+        
+        if ruc is None:
+            return Response({'message':'El ruc es requerido'},400)
+        
+        
+        ruc_modificado = f"{ruc[:-1]}0"
+
+        # Filtrar utilizando Q para buscar tanto el RUC original como el modificado
+        data = Pnt1_Active.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        
+        return Response(Pnt1ActiveSerializer(data, many=True).data)
+
+
+class DataPnt1Pasive(APIView):
+    permission_classes = []
+    def get(self, request):
+        
+        ruc = request.query_params.get('ruc')
+        ruc_modificado = f"{ruc[:-1]}0"
+
+        if ruc is None:
+            return Response({'message':'El ruc es requerido'},400)
+        
+        
+        data = Pnt1_Pasive.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        
+        return Response(Pnt1_PasiveSerializer(data, many=True).data)
+    
+
+class DataPnt1Colab(APIView):
+    permission_classes = []
+    def get(self, request):
+        
+        ruc = request.query_params.get('ruc')
+        ruc_modificado = f"{ruc[:-1]}0"
+
+        if ruc is None:
+            return Response({'message':'El ruc es requerido'},400)
+        
+        
+        data = Pnt1_Colab.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        
+        return Response(Pnt1_ColabSerializer(data, many=True).data)
+
+
+class DataPnt1Focal(APIView):
+    permission_classes = []
+    def get(self, request):
+        
+        ruc = request.query_params.get('ruc')
+        ruc_modificado = f"{ruc[:-1]}0"
+
+        if ruc is None:
+            return Response({'message':'El ruc es requerido'},400)
+        
+        
+        data = Pnt1_Focal.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        
+        return Response(Pnt1_FocalSerializer(data, many=True).data)
+    
+
+class DataPnt1Reservada(APIView):
+    permission_classes = []
+    def get(self, request):
+        
+        ruc = request.query_params.get('ruc')
+        ruc_modificado = f"{ruc[:-1]}0"
+
+        if ruc is None:
+            return Response({'message':'El ruc es requerido'},400)
+        
+        
+        data = Pnt1_Reservada.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        
+        return Response(Pnt1_ReservadaSerializer(data, many=True).data)
+    

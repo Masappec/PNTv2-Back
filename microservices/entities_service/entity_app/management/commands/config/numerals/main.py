@@ -12,7 +12,7 @@ from entity_app.models import TemplateFile, Numeral, ColumnFile
 from django.contrib.auth.models import Permission, ContentType
 from entity_app.domain.models import TransparencyActive, TransparencyFocal, TransparencyColab, Solicity, EstablishmentExtended
 from entity_app.domain.models.transparency_active import EstablishmentNumeral
-from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Reservada
+from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Pasive, Pnt1_Reservada
 
 
 class NumeralServiceData:
@@ -500,14 +500,17 @@ class NumeralServiceData:
 
                     
     def read_pnt1(self):
-        
-        df = pd.read_excel('./DatosPNT1.xlsx',sheet_name=None)
+        dir = os.path.dirname(__file__)
+        dir = os.path.join(dir, 'DatosPNT1.xlsx')
+        df = pd.read_excel(dir,sheet_name='Pasiva')
 
-        
         for sheet_name, sheet_data in df.items():
+            
+            print('Guardando datos de la hoja', sheet_name)
             if 'Activa' in sheet_name:
                 for index, row in sheet_data.iterrows():
                     numeral_name = row['Numeral']
+                    numeral_name = str(numeral_name)
                     numeral_name = numeral_name.replace('y','-')
                     numeral_name = numeral_name.strip()
                     Pnt1_Active.objects.create(
@@ -527,25 +530,32 @@ class NumeralServiceData:
                         agosto = row['Agosto'].lower() == 'si'
                         
                     )
+                    print('Guardando fila {} de la hoja {}'.format(index, sheet_name))
+
+            
+            
+            
             elif 'Focalizada' in sheet_name:
                 
                 for index, row in sheet_data.iterrows():
                     Pnt1_Focal.objects.create(
-                        identification=row['RUC'],
-                        function=row['Función_de_la_institucion'],
-                        type=row['Tipo_Institucion'],
-                        establishment_name=row['Nombre_Entidad'],
-                        art=row['Articulo'],
-                        numeral=row['Numeral'],
-                        enero=row['Enero'].lower() == 'si',
-                        febrero=row['Febrero'].lower() == 'si',
-                        marzo=row['Marzo'].lower() == 'si',
-                        abril=row['Abril'].lower() == 'si',
-                        mayo=row['Mayo'].lower() == 'si',
-                        junio=row['Junio'].lower() == 'si',
-                        julio=row['Julio'].lower() == 'si',
-                        agosto=row['Agosto'].lower() == 'si'
+                        identification=str(row['RUC']),
+                        function=str(row['Función_de_la_institucion']),
+                        type=str(row['Tipo_Institucion']),
+                        establishment_name=str(row['Nombre_Entidad']),
+                        art=str(row['Articulo']),
+                        numeral=str(row['Numeral']),
+                        enero=str(row['Enero']).lower() == 'si',
+                        febrero=str(row['Febrero']).lower() == 'si',
+                        marzo=str(row['Marzo']).lower() == 'si',
+                        abril=str(row['Abril']).lower() == 'si',
+                        mayo=str(row['Mayo']).lower() == 'si',
+                        junio=str(row['Junio']).lower() == 'si',
+                        julio=str(row['Julio']).lower() == 'si',
+                        agosto=str(row['Agosto']).lower() == 'si'
                     )
+                    print('Guardando fila {} de la hoja {}'.format(index, sheet_name))
+
             elif 'Colaborativa' in sheet_name:
                 for index, row in sheet_data.iterrows():
                     Pnt1_Colab.objects.create(
@@ -555,27 +565,47 @@ class NumeralServiceData:
                         establishment_name=row['Nombre_Entidad'],
                         art=row['Articulo'],
                         numeral=row['Numeral'],
-                        enero=row['enero'].lower() == 'si',
-                        febrero=row['febrero'].lower() == 'si',
-                        marzo=row['marzo'].lower() == 'si',
-                        abril=row['abril'].lower() == 'si',
-                        mayo=row['mayo'].lower() == 'si',
-                        junio=row['junio'].lower() == 'si',
-                        julio=row['julio'].lower() == 'si',
-                        agosto=row['agosto'].lower() == 'si'
+                        enero=str(row['enero']).lower() == 'si',
+                        febrero=str(row['febrero']).lower() == 'si',
+                        marzo=str(row['marzo']).lower() == 'si',
+                        abril=str(row['abril']).lower() == 'si',
+                        mayo=str(row['mayo']).lower() == 'si',
+                        junio=str(row['junio']).lower() == 'si',
+                        julio=str(row['julio']).lower() == 'si',
+                        agosto=str(row['agosto']).lower() == 'si'
                     )
+                    print('Guardando fila {} de la hoja {}'.format(index, sheet_name))
+
+            elif 'Pasiva' in sheet_name:
+
+                for index, row in sheet_data.iterrows():
+                    Pnt1_Pasive.objects.create(
+                        identification=str(row['RUC']),
+                        function=str(row['Función']),
+                        type=str(row['Tipo']),
+                        establishment_name=str(row['nombre_entidad']),
+                        saip=str(row['Numero SAIP']),
+                        name_solicitant=str(row['Nombre Solicitante']),
+                        date=str(row['Fecha Envío']),
+                        date_response=str(row['Fecha Respuesta']),
+                        state=str(row['Estado'])
+                    )
+                    print('Guardando fila {} de la hoja {}'.format(index, sheet_name))
+            
             elif 'Reservada' in sheet_name:
                 for index, row in sheet_data.iterrows():
                     Pnt1_Reservada.objects.create(
-                        identification=row['RUC'],
-                        function=row['Entidad'],
-                        classification='Clasificación de la información',
-                        theme=row['Tema'],
-                        base_legal=row['Base Legal'],
-                        date_classification=row['Fecha de la clasificación de la información reservada - semestral'],
-                        period=row['Periodo de vigencia de la clasificación de la reserva'],
-                        extension=row['Se ha efectuado ampliación'],
-                        description=row['Descripción de la ampliación'],
-                        date_extension=row['Fecha de la ampliación'],
-                        period_extension=row['Período de vigencia de la ampliación']
+                        identification=str(row['RUC']),
+                        function=str(row['Entidad']),
+                        classification=str(row['Clasificación de la información']),
+                        theme=str(row['Tema']),
+                        base_legal=str(row['Base Legal ']),
+                        date_classification=str(row['Fecha de la clasificación de la información reservada - semestral']),
+                        period=str(row['Periodo de vigencia de la clasificación de la reserva']),
+                        extension=str(row['Se ha efectuado ampliación']),
+                        description=str(row['Descripción de la ampliación']),
+                        date_extension=str(row['Fecha de la ampliación']),
+                        period_extension=str(row['Período de vigencia de la ampliación'])
                     )
+                    print('Guardando fila {} de la hoja {}'.format(
+                        index, sheet_name))

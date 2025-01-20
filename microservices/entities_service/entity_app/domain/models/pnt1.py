@@ -7,8 +7,8 @@ class Pnt1_Pasive(models.Model):
     establishment_name = models.CharField(max_length=255)
     saip = models.CharField(max_length=255)
     name_solicitant = models.CharField(max_length=255)
-    date = models.DateField()
-    date_response = models.DateField()
+    date = models.CharField(max_length=255)
+    date_response = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
     
     
@@ -74,5 +74,5 @@ class Pnt1_Reservada(models.Model):
     period = models.CharField(max_length=255)
     extension = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    date_extension = models.DateField()
+    date_extension = models.CharField(max_length=255)
     period_extension = models.CharField(max_length=255)
