@@ -502,7 +502,7 @@ class NumeralServiceData:
     def read_pnt1(self):
         dir = os.path.dirname(__file__)
         dir = os.path.join(dir, 'DatosPNT1.xlsx')
-        df = pd.read_excel(dir,sheet_name='Pasiva')
+        df = pd.read_excel(dir,sheet_name=None)
 
         for sheet_name, sheet_data in df.items():
             
