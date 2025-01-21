@@ -74,17 +74,22 @@ class Numeral16View(APIView):
         )
         lista = []
         for doc in res:
-            print(doc.metadata.establishment_name )
             for data in doc.data:
-
-                lista.append({
-                    "institucion":doc.metadata.establishment_name,
-                    "tema": data[0],
-                    "numero_resolucion":data[1],
-                    "fecha_clasificacion":data[2],
-                    "periodo_vigencia":data[3],
-                    "enlace":data[4]
-                })
+                
+                tema = data[0].lower() if data.__len__() > 0 else ""
+                numero_resolucion = data[1].lower() if data.__len__() > 1 else ""
+                fecha_clasificacion = data[2].lower() if data.__len__() > 2 else ""
+                periodo_vigencia = data[3].lower() if data.__len__() > 3 else ""
+                enlace = data[4].lower() if data.__len__() > 4 else ""
+                if tema != "" or numero_resolucion != "" or fecha_clasificacion != "" or periodo_vigencia != "" or enlace != "":
+                    lista.append({
+                        "institucion":doc.metadata.establishment_name,
+                        "tema": tema,
+                        "numero_resolucion": numero_resolucion,
+                        "fecha_clasificacion": fecha_clasificacion,
+                        "periodo_vigencia": periodo_vigencia,
+                        "enlace": enlace
+                    })
             
             
         return Response(lista)
