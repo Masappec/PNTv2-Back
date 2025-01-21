@@ -501,7 +501,7 @@ class NumeralServiceData:
                     
     def read_pnt1(self):
         dir = os.path.dirname(__file__)
-        dir = os.path.join(dir, 'DatosPNT1.xlsx')
+        dir = os.path.join(dir, 'DatosPNT1Prev.xlsx')
         df = pd.read_excel(dir,sheet_name=['Focalizada','Colaborativa','Pasiva','Reservada'])
 
         Pnt1_Focal.objects.all().delete()
