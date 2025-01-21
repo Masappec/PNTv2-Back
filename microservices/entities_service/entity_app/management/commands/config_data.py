@@ -59,6 +59,12 @@ class Command(BaseCommand):
         parser.add_argument(
             '-save_pnt1',   help='Guarda los datos de transparencia activa en un archivo', action='store_true'
         )
+        parser.add_argument(
+            '-fix_colab_september', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
+        )
+        parser.add_argument(
+            '-fix_focal_september', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
+        )
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
@@ -109,3 +115,7 @@ class Command(BaseCommand):
             self.config_service.fix_september()
         if options.get('save_pnt1', False):
             self.config_service.save_pnt1()
+        if options.get('fix_colab_september', False):
+            self.config_service.fix_colab_september()
+        if options.get('fix_focal_september', False):
+            self.config_service.fix_focal_september()
