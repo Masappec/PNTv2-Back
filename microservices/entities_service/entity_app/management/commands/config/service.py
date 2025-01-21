@@ -51,3 +51,10 @@ class ConfigDataService:
         
     def save_pnt1(self):
         self.numeral_service.read_pnt1()
+        
+    def fix_colab_september(self):
+        self.fix_script.fix_colab_september()
+
+    
+    def fix_focal_september(self):
+        self.fix_script.fix_focal_september()
