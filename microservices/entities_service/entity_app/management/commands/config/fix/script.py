@@ -501,10 +501,11 @@ class ScriptService:
                     establishment_id=i.establishment_id,
                     month=9,
                     year=i.year,
-                    status=i.status,
-                    published=i.published,
-                    published_at=i.published_at,
+                    status='aproved',
+                    published=True,
+                    published_at=i.created_at,
                     max_date_to_publish=max_date_aware,
+                    numeral_id=i.numeral_id
                 )
                 
                 for file in i.files.all():
@@ -555,10 +556,12 @@ class ScriptService:
                     establishment_id=i.establishment_id,
                     month=9,
                     year=i.year,
-                    status=i.status,
-                    published=i.published,
-                    published_at=i.published_at,
+                    status='aproved',
+                    published=True,
+                    published_at=i.created_at,
                     max_date_to_publish=max_date_aware,
+                    numeral_id=i.numeral_id
+
                 )
                 
                 for file in i.files.all():
