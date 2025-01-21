@@ -297,10 +297,9 @@ class DataPnt1(APIView):
             return Response({'message':'El ruc es requerido'},400)
         
         
-        ruc_modificado = f"{ruc[:-1]}1"
 
         # Filtrar utilizando Q para buscar tanto el RUC original como el modificado
-        data = Pnt1_Active.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        data = Pnt1_Active.objects.filter(identification=ruc)
         
         return Response(Pnt1ActiveSerializer(data, many=True).data)
 
@@ -310,13 +309,12 @@ class DataPnt1Pasive(APIView):
     def get(self, request):
         
         ruc = request.query_params.get('ruc')
-        ruc_modificado = f"{ruc[:-1]}1"
 
         if ruc is None:
             return Response({'message':'El ruc es requerido'},400)
         
         
-        data = Pnt1_Pasive.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        data = Pnt1_Pasive.objects.filter(identification=ruc)
         
         return Response(Pnt1_PasiveSerializer(data, many=True).data)
     
@@ -326,13 +324,12 @@ class DataPnt1Colab(APIView):
     def get(self, request):
         
         ruc = request.query_params.get('ruc')
-        ruc_modificado = f"{ruc[:-1]}1"
 
         if ruc is None:
             return Response({'message':'El ruc es requerido'},400)
         
         
-        data = Pnt1_Colab.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        data = Pnt1_Colab.objects.filter(identification=ruc)
         
         return Response(Pnt1_ColabSerializer(data, many=True).data)
 
@@ -342,13 +339,12 @@ class DataPnt1Focal(APIView):
     def get(self, request):
         
         ruc = request.query_params.get('ruc')
-        ruc_modificado = f"{ruc[:-1]}1"
 
         if ruc is None:
             return Response({'message':'El ruc es requerido'},400)
         
         
-        data = Pnt1_Focal.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        data = Pnt1_Focal.objects.filter(identification=ruc)
         
         return Response(Pnt1_FocalSerializer(data, many=True).data)
     
@@ -358,13 +354,12 @@ class DataPnt1Reservada(APIView):
     def get(self, request):
         
         ruc = request.query_params.get('ruc')
-        ruc_modificado = f"{ruc[:-1]}1"
 
         if ruc is None:
             return Response({'message':'El ruc es requerido'},400)
         
         
-        data = Pnt1_Reservada.objects.filter(Q(identification=ruc) | Q(identification=ruc_modificado))
+        data = Pnt1_Reservada.objects.filter(identification=ruc)
         
         return Response(Pnt1_ReservadaSerializer(data, many=True).data)
     
