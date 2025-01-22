@@ -493,7 +493,7 @@ class ScriptService:
                 establishment__identification=i.establishment.identification,
                 year=i.year
             ).exists()
-            if not existe_en_septiembre and i.published_at.month == 10:
+            if not existe_en_septiembre and i.published_at and i.published_at.month == 10:
                 #crea una copia
                 max_date = datetime(year=i.year, month=9, day=get_day_for_publish())
                 max_date_aware = timezone.make_aware(max_date)
@@ -551,7 +551,7 @@ class ScriptService:
                 establishment__identification=i.establishment.identification,
                 year=i.year
             ).exists()
-            if not existe_en_septiembre and i.published_at.month == 10:
+            if not existe_en_septiembre and i.published_at and i.published_at.month == 10:
                 #crea una copia
                 max_date = datetime(year=i.year, month=9, day=get_day_for_publish())
                 max_date_aware = timezone.make_aware(max_date)
