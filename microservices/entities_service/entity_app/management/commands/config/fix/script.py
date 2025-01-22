@@ -14,6 +14,8 @@ from django.utils import timezone
 #import settings
 from django.conf import settings
 
+from entity_app.domain.models.transparecy_foc import TransparencyFocal
+
 class ScriptService:
 
 
@@ -286,6 +288,7 @@ class ScriptService:
 
         print(list_to_fix)
                     
+
                     
     def move_september(self):
         lista_creada = []
@@ -477,9 +480,126 @@ class ScriptService:
             json.dump(lista_creada, file, indent=4)
 
 
+    
+    def fix_focal_september(self):
+        focal = TransparencyFocal.objects.filter(
+            month=10, year=2024)
+        
+        focal_sep = TransparencyFocal.objects.filter(
+            month=9, year=2024)
+        
+        for x, i in enumerate(focal):
+            existe_en_septiembre = focal_sep.filter(
+                establishment__identification=i.establishment.identification,
+                year=i.year
+            ).exists()
+            if not existe_en_septiembre and i.published_at and i.published_at.month == 10:
+                #crea una copia
+                max_date = datetime(year=i.year, month=9, day=get_day_for_publish())
+                max_date_aware = timezone.make_aware(max_date)
+                obj = TransparencyFocal.objects.create(
+                    establishment_id=i.establishment_id,
+                    month=9,
+                    year=i.year,
+                    status='aproved',
+                    published=True,
+                    published_at=i.created_at,
+                    max_date_to_publish=max_date_aware,
+                    numeral_id=i.numeral_id
+                )
+                i.published = False
+                i.status = 'ingress'
+                i.save()
+                
+                for file in i.files.all():
+                    #abrir el archivo y copiarlo
+                    
+                    parent = 'media/transparencia/' + \
+                        str(i.establishment.identification) + '/' + \
+                        str(i.year) + '/' + \
+                        str(9) + \
+                        '/Focalizada'
+                        
+                    original_file_path = file.url_download.path
 
+                    root = os.path.join(parent, file.description+'.csv')
 
+                    if not os.path.exists(root):
+                        os.makedirs(parent, exist_ok=False)
+                        shutil.copy(original_file_path, root)
 
+                    new_file_pub = FilePublication.objects.create(
+                        name=file.name,
+                        description=file.description,
+                        url_download=root.replace('media/', ''),
+                        is_active=True,
+                        is_colab=False
+                    )
+
+                    obj.files.add(new_file_pub)
+                    
+    
+    def fix_colab_september(self):
+        
+        colab = TransparencyColab.objects.filter(
+            month=10, year=2024)
+
+        colab_sep = TransparencyColab.objects.filter(
+            month=9, year=2024)
+        for x, i in enumerate(colab):
+            existe_en_septiembre = colab_sep.filter(
+                establishment__identification=i.establishment.identification,
+                year=i.year
+            ).exists()
+            if not existe_en_septiembre and i.published_at and i.published_at.month == 10:
+                #crea una copia
+                max_date = datetime(year=i.year, month=9, day=get_day_for_publish())
+                max_date_aware = timezone.make_aware(max_date)
+                obj = TransparencyColab.objects.create(
+                    establishment_id=i.establishment_id,
+                    month=9,
+                    year=i.year,
+                    status='aproved',
+                    published=True,
+                    published_at=i.created_at,
+                    max_date_to_publish=max_date_aware,
+                    numeral_id=i.numeral_id
+
+                )
+                i.published = False
+                i.status = 'ingress'
+                i.save()
+                for file in i.files.all():
+                    #abrir el archivo y copiarlo
+                    parent = 'media/transparencia/' + \
+                        str(i.establishment.identification) + '/' + \
+                        str(i.year) + '/' + \
+                        str(9) + \
+                        '/Colaborativa'
+                    
+                    original_file_path = file.url_download.path
+                    
+                    root = os.path.join(parent, file.description+'.csv')
+                    
+                    if not os.path.exists(root):
+                        os.makedirs(parent, exist_ok=False)
+                        shutil.copy(original_file_path, root)
+                        
+                    new_file_pub = FilePublication.objects.create(
+                        name=file.name,
+                        description=file.description,
+                        url_download=root.replace('media/', ''),
+                        is_active=True,
+                        is_colab=False
+                    )
+                    
+                    obj.files.add(new_file_pub)
+                    
+            
+            
+            
+            
+            
 
     def fix_september(self):
         
@@ -511,3 +631,4 @@ class ScriptService:
                         i.files.add(new_file_pub)
                     else:
                         print('No se encuentra el archivo ' + root)
+                        
