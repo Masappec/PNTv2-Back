@@ -483,17 +483,17 @@ class ScriptService:
     
     def fix_focal_september(self):
         focal = TransparencyFocal.objects.filter(
-            month=10)
+            month=10, year=2024)
         
         focal_sep = TransparencyFocal.objects.filter(
-            month=9)
+            month=9, year=2024)
         
         for x, i in enumerate(focal):
             existe_en_septiembre = focal_sep.filter(
                 establishment__identification=i.establishment.identification,
                 year=i.year
             ).exists()
-            if not existe_en_septiembre:
+            if not existe_en_septiembre and i.published_at.month == 10:
                 #crea una copia
                 max_date = datetime(year=i.year, month=9, day=get_day_for_publish())
                 max_date_aware = timezone.make_aware(max_date)
@@ -507,6 +507,9 @@ class ScriptService:
                     max_date_to_publish=max_date_aware,
                     numeral_id=i.numeral_id
                 )
+                i.published = False
+                i.status = 'ingress'
+                i.save()
                 
                 for file in i.files.all():
                     #abrir el archivo y copiarlo
@@ -539,16 +542,16 @@ class ScriptService:
     def fix_colab_september(self):
         
         colab = TransparencyColab.objects.filter(
-            month=10)
+            month=10, year=2024)
 
         colab_sep = TransparencyColab.objects.filter(
-            month=9)
+            month=9, year=2024)
         for x, i in enumerate(colab):
             existe_en_septiembre = colab_sep.filter(
                 establishment__identification=i.establishment.identification,
                 year=i.year
             ).exists()
-            if not existe_en_septiembre:
+            if not existe_en_septiembre and i.published_at.month == 10:
                 #crea una copia
                 max_date = datetime(year=i.year, month=9, day=get_day_for_publish())
                 max_date_aware = timezone.make_aware(max_date)
@@ -563,7 +566,9 @@ class ScriptService:
                     numeral_id=i.numeral_id
 
                 )
-                
+                i.published = False
+                i.status = 'ingress'
+                i.save()
                 for file in i.files.all():
                     #abrir el archivo y copiarlo
                     parent = 'media/transparencia/' + \
@@ -626,3 +631,4 @@ class ScriptService:
                         i.files.add(new_file_pub)
                     else:
                         print('No se encuentra el archivo ' + root)
+                        
