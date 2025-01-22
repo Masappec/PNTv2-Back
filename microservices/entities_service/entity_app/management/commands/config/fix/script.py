@@ -725,7 +725,7 @@ class ScriptService:
             month=10,
             year=2024,
 
-
+        )
         sep = TransparencyActive.objects.filter(
             establishment__identification='1760000310001',
             month=9,
@@ -735,7 +735,7 @@ class ScriptService:
 
         for i in nu:
             exist = sep.filter(numeral_id=i.numeral_id).exists()
-            if not exist and i.numeral.name in numeral__name__in:
+            if not exist:
                 new = TransparencyActive.objects.create(
                     establishment_id=i.establishment_id,
                     month=9,
