@@ -522,7 +522,7 @@ class ScriptService:
                     root = os.path.join(parent, file.description+'.csv')
 
                     if not os.path.exists(root):
-                        os.makedirs(parent, exist_ok=False)
+                        os.makedirs(parent, exist_ok=True)
                         shutil.copy(original_file_path, root)
 
                     new_file_pub = FilePublication.objects.create(
