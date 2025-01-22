@@ -58,3 +58,6 @@ class ConfigDataService:
     
     def fix_focal_september(self):
         self.fix_script.fix_focal_september()
+        
+    def fix_focal_files(self):
+        self.fix_script.fix_focal_files()
