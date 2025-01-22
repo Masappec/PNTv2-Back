@@ -61,3 +61,6 @@ class ConfigDataService:
         
     def fix_focal_files(self):
         self.fix_script.fix_focal_files()
+        
+    def fix_presidencia(self):
+        self.fix_script.fix_presidencia()
