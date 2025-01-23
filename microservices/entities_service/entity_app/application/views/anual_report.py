@@ -49,11 +49,13 @@ class AnualReportView(APIView):
     def get(self, request):
         establishment_id = request.query_params.get('establishment_id')
         year = request.query_params.get('year')
-        month = request.query_params.get('month')
-        if establishment_id is None or year is None or month is None:
-            return Response(status=400)
-        
-        anual_reports = self.service.get(establishment_id, year, month)
+        if establishment_id is None or year is None:
+            return Response(status=400, data={'message': 'Los parametros son requeridos'})
+       
+        anual_reports = self.service.get(establishment_id, year)
+        print(anual_reports )
+        if anual_reports is None:
+            return Response({'message':'No se encontraron registros'},404)
         return Response(AnualReportSerializer(anual_reports).data)
 
     
