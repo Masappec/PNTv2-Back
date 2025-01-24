@@ -184,12 +184,32 @@ class ReportService:
         lista_solicity = []
         # Write data rows
         for row_num, row_data in enumerate(solicity):
+            # Determinar la fecha de fin (end_date) según el estado de la solicitud
+            if row_data.status in ["RESPONSED", "INSISTENCY_RESPONSED"]:
+                end_date = row_data.updated_at
+            elif row_data.status in ["PRORROGA", "NO_RESPONSED", "INSISTENCY_NO_RESPONSED"]:
+                end_date = row_data.expiry_date
+            else:
+                end_date = datetime.now()  # Fecha actual para estados no especificados
+
+            # Asegurarse de que las fechas sean válidas
+            if row_data.created_at and end_date:
+                # Calcular la diferencia en días y horas
+                diff_in_seconds = (end_date - row_data.created_at).total_seconds()
+                days = diff_in_seconds // (24 * 3600)
+                # En caso de que se requiera ser mas exacto
+                # hours = (diff_in_seconds % (24 * 3600)) // 3600
+            else:
+                days = 0
+                hours = 0
+
+            # Construir el resultado para cada solicitud
             row_ = {
                 'index': row_num,
                 'no_saip': row_data.number_saip,
                 'applicant': row_data.first_name + ' ' + row_data.last_name,
-                'created_at': row_data.created_at.strftime('%Y-%m-%d'),
-                'days': (datetime.now().date() - row_data.created_at.date()).days,
+                'created_at': row_data.created_at.strftime('%Y-%m-%d') if row_data.created_at else 'N/A',
+                'days': int(days),  # Convertir a entero
             }
 
             lista_solicity.append(row_)
