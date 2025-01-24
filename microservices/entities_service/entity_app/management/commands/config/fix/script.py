@@ -721,13 +721,13 @@ class ScriptService:
 
     def fix_presidencia(self):
         nu = TransparencyActive.objects.filter(
-            establishment__identification='1760000310001',
+            establishment__identification='1768147720001',
             month=10,
             year=2024,
 
         )
         sep = TransparencyActive.objects.filter(
-            establishment__identification='1760000310001',
+            establishment__identification='1768147720001',
             month=9,
             year=2024,
         )
