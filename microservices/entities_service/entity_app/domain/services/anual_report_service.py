@@ -372,7 +372,8 @@ class AnualReportService:
     
     def generate(self, year, update_state):
         try:
-            
+            if type(year) == str:
+                year = int(year)
             
             
             meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -703,6 +704,8 @@ class AnualReportService:
                 
             path = os.path.join(path, report_name)
             
+            GenerateAnualReport.objects.filter(year=year).delete()
+            
             GeneralAnualReport.objects.create(
                 year=year,
                 file=path.replace('code/media/', '')
@@ -711,7 +714,7 @@ class AnualReportService:
             
 
             wb.save(path)
-            return {'path': path, 'url': path}
+            return {'path': path.replace('code/', ''), 'url': path.replace('code/', '')}
         except Exception as e:
             print(e)
             return {'error': str(e)}
