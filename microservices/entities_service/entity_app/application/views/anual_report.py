@@ -1,6 +1,7 @@
-from entity_app.adapters.serializers import AnualReportCreateSerializer, AnualReportSerializer, \
+from entity_app.adapters.serializers import AnualReportCreateSerializer, AnualReportSerializer, GenerateAnualReportSerializer, \
     ListTransparencyColaborative, ListTransparencyFocus, TransparencyActiveListSerializer, \
     Pnt1ActiveSerializer, Pnt1_PasiveSerializer, Pnt1_ColabSerializer, Pnt1_FocalSerializer, Pnt1_ReservadaSerializer
+from entity_app.domain.models.anual_report import GeneralAnualReport, GenerateAnualReport
 from rest_framework.views import APIView
 from entity_app.domain.services.anual_report_service import AnualReportService
 from entity_app.adapters.impl.anual_report_impl import AnualReportImpl
@@ -37,13 +38,15 @@ class AnualReportView(APIView):
     
     def post(self, request):
         data = self.serializer_class(data=request.data)
+        
         data.is_valid(raise_exception=True)
         year = data.validated_data['year']
         existe = self.service.get(establishment_id=data.validated_data['establishment_id'],year=data.validated_data['year'])
         if existe:
             return Response({'message':'Ya existe un informe anual para el año '+str(year)},400)
         res = self.service.create(data.validated_data)
-        return Response(AnualReportSerializer(res).data,status=201)
+        generate_unique_report.delay(year, res.establishment_id.id)
+        return Response(AnualReportSerializer(res).data, status=201)
     
 
     def get(self, request):
@@ -53,7 +56,6 @@ class AnualReportView(APIView):
             return Response(status=400, data={'message': 'Los parametros son requeridos'})
        
         anual_reports = self.service.get(establishment_id, year)
-        print(anual_reports )
         if anual_reports is None:
             return Response({'message':'No se encontraron registros'},404)
         return Response(AnualReportSerializer(anual_reports).data)
@@ -248,18 +250,15 @@ class AnualReportGenerate(APIView):
 
     def get(self,request):
         year = request.query_params.get('year')
-        establishment_id = request.query_params.get('establishment_id')
         if year is None:
             year = datetime.now().year
             month = datetime.now().month
             if month == 1:
                 year = year - 1
         
-        if establishment_id is not None:
-            task = generate_unique_report.delay(year, establishment_id)
-        else:
+
         
-            task = generate_anual_report.delay(year)
+        task = generate_anual_report.delay(year)
         context = {
             'task_id': task.id,
             'task_status': task.status,
@@ -365,3 +364,19 @@ class DataPnt1Reservada(APIView):
         
         return Response(Pnt1_ReservadaSerializer(data, many=True).data)
     
+    
+class GetAnualReportGenerate(APIView):
+    
+    permission_classes = []
+    serializer_class = GenerateAnualReportSerializer
+
+    def get(self,request):
+        establishment_id = request.query_params.get('establishment_id')
+        if  establishment_id is None:
+            return Response({'message':'Los parametros son requeridos'},400)
+        list = GenerateAnualReport.objects.filter(establishment_id=establishment_id)
+        general = GeneralAnualReport.objects.all()
+        return Response({
+            'list':GenerateAnualReportSerializer(list,many=True).data,
+            'general':GenerateAnualReportSerializer(general,many=True).data
+            },200)

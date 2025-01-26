@@ -64,3 +64,6 @@ class ConfigDataService:
         
     def fix_presidencia(self):
         self.fix_script.fix_presidencia()
+        
+    def generate_anual_report(self):
+        self.numeral_service.generate_anual_report()

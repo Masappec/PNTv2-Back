@@ -102,7 +102,7 @@ class AnualReportImpl(AnualReportReposity):
         if solicity_infor_anual_report:
             for info in solicity_infor_anual_report:
                 obj = SolicityInforAnualReport.objects.create(**info, anual_report_id=created.id)
-        return created
+        return AnualReport.objects.filter(id=created.id).first()
         
 
     def update(self, id:int, establishment_id: int,
