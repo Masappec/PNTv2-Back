@@ -258,8 +258,8 @@ class AnualReportService:
                     establishment=establishment, numeral__is_default=False).order_by('numeral__name')
 
                 if len(numerales_asignados_esp) > 0:
-                    append_row(ws, [function_type, "Pública",
-                                    establishment.name, 'Obligaciones Específicas'] + [''] * 12)
+                    '''append_row(ws, [function_type, "Pública",
+                                    establishment.name, 'Obligaciones Específicas'] + [''] * 12)'''
                     for i in numerales_asignados_esp:
                         mes_checks = ['si' if any(x['numeral'] == i.numeral.name and x['month'] == _x +
                                                   1 and x['published'] for x in list_check_ta) else 'no' for _x in range(12)]
@@ -293,7 +293,7 @@ class AnualReportService:
                                 
                                 
                         append_row_without_bold(ws, [function_type, "Pública",
-                                                establishment.name, i.numeral.name.replace('Numeral', ''), *mes_checks])
+                                                establishment.name, "Obligaciones Específicas: "+i.numeral.name.replace('Numeral', ''), *mes_checks])
 
             # Crear nueva hoja "Pasiva"
             ws = wb.create_sheet(title="Pasiva")
@@ -607,8 +607,8 @@ class AnualReportService:
                     establishment=establishment, numeral__is_default=False).order_by('numeral__name')
                 
                 if len(numerales_asignados_esp) > 0:
-                    append_row(ws, [function_type, "Pública",
-                                    establishment.name, 'Obligaciones Específicas'] + [''] * 12)
+                    '''append_row(ws, [function_type, "Pública",
+                                    establishment.name, 'Obligaciones Específicas'] + [''] * 12)'''
                     for i in numerales_asignados_esp:
                         mes_checks = ['si' if any(x['numeral'] == i.numeral.name and x['month'] == _x +
                                                 1 and x['published'] for x in list_check_ta) else 'no' for _x in range(12)]
@@ -641,7 +641,7 @@ class AnualReportService:
                                     mes_checks[7] = 'si'
                         
                         append_row_without_bold(ws, [function_type, "Pública",
-                                                establishment.name, i.numeral.name.replace('Numeral', ''), *mes_checks])
+                                                establishment.name, "Obligaciones Específicas: "+ i.numeral.name.replace('Numeral', ''), *mes_checks])
                 
             # Crear nueva hoja "Pasiva"
             ws = wb.create_sheet(title="Pasiva")
