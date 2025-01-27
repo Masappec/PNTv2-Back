@@ -13,8 +13,9 @@ from django.contrib.auth.models import Permission, ContentType
 from entity_app.domain.models import TransparencyActive, TransparencyFocal, TransparencyColab, Solicity, EstablishmentExtended
 from entity_app.domain.models.transparency_active import EstablishmentNumeral
 from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Pasive, Pnt1_Reservada
-
-
+from entity_app.domain.models.anual_report import AnualReport
+from shared.tasks.anual_report import generate_unique_report
+import time
 class NumeralServiceData:
 
     def __init__(self) -> None:
@@ -504,7 +505,6 @@ class NumeralServiceData:
         dir = os.path.join(dir, 'DatosPNT1.xlsx')
         df = pd.read_excel(dir,sheet_name=None)
 
-        Pnt1_Active.objects.all().delete()
         Pnt1_Focal.objects.all().delete()
         Pnt1_Colab.objects.all().delete()
         Pnt1_Pasive.objects.all().delete()
@@ -621,3 +621,19 @@ class NumeralServiceData:
                     )
                     print('Guardando fila {} de la hoja {}'.format(
                         index, sheet_name))
+
+    
+    
+    def generate_anual_report(self):
+        
+        
+        anual_reports = AnualReport.objects.all().distinct('year','establishment_id')
+        
+        establisments_id = [x.establishment_id.id for x in anual_reports]
+        #eliminamos los registros duplicados
+        set_establishments = set(establisments_id)
+        establisments_id = list(set_establishments)
+        
+        for establishment_id in establisments_id:
+            time.sleep(0.5)
+            generate_unique_report.delay(2024, establishment_id)
