@@ -150,3 +150,14 @@ class GenerateAnualReport(BaseModel):
     is_global = models.BooleanField(default=False)
     
     objects = models.Manager()
+    
+    
+    
+class GeneralAnualReport(BaseModel):
+    
+
+    year = models.IntegerField()
+    
+    file = models.FileField(max_length=255)
+        
+    objects = models.Manager()
