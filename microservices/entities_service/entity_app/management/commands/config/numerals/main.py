@@ -621,11 +621,8 @@ class NumeralServiceData:
                         date_extension=str(row['Fecha de la ampliación']),
                         period_extension=str(row['Período de vigencia de la ampliación'])
                     )
-                    print('Guardando fila {} de la hoja {}'.format(
 
 
-    
-    
     def generate_anual_report(self):
         
         
@@ -640,39 +637,3 @@ class NumeralServiceData:
             time.sleep(0.5)
             generate_unique_report.delay(2024, establishment_id)
 
-    
-    def generate_ta_of_files(self):
-        files = FilePublication.objects.filter(
-            url_download__contains='760043740001',
-            url_download__contains='/9/'
-        )
-        
-        ta = TransparencyActive.objects.filter(
-            establishment__identification='760043740001'
-        )
-        
-
-        for file in files:
-            
-           #encuentra la publicacion que tenga el mismo nombre del archivo
-            ta_file = ta.filter(files__id=file.id).first()
-            if ta_file:
-                print('Se encontro la publicacion para el archivo'+file.url_download)
-            else:
-                url_download = file.url_download.split('/')
-                
-                numeral = Numeral.objects.filter(
-                    name=url_download[3]
-                ).first()
-                
-                
-                if numeral:
-                    created = TransparencyActive.objects.get_or_create(
-                        establishment_id=ta.first().establishment_id,
-                        numeral_id=numeral.id,
-                        month=9,
-                        year=2024
-                    )
-                
-                
-                    created.files.add(file)
