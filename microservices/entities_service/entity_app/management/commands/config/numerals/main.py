@@ -14,8 +14,10 @@ from entity_app.domain.models import TransparencyActive, TransparencyFocal, Tran
 from entity_app.domain.models.transparency_active import EstablishmentNumeral
 from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Pasive, Pnt1_Reservada
 
+
 from entity_app.domain.models.anual_report import AnualReport
 from entity_app.domain.models.publication import FilePublication
+
 from shared.tasks.anual_report import generate_unique_report
 import time
 class NumeralServiceData:
@@ -504,8 +506,8 @@ class NumeralServiceData:
                     
     def read_pnt1(self):
         dir = os.path.dirname(__file__)
-        dir = os.path.join(dir, 'DatosPNT1Prev.xlsx')
-        df = pd.read_excel(dir,sheet_name=['Focalizada','Colaborativa','Pasiva','Reservada'])
+        dir = os.path.join(dir, 'DatosPNT1.xlsx')
+        df = pd.read_excel(dir,sheet_name=None)
 
         Pnt1_Focal.objects.all().delete()
         Pnt1_Colab.objects.all().delete()
@@ -623,6 +625,7 @@ class NumeralServiceData:
                     )
 
 
+
     def generate_anual_report(self):
         
         
@@ -636,4 +639,3 @@ class NumeralServiceData:
         for establishment_id in establisments_id:
             time.sleep(0.5)
             generate_unique_report.delay(2024, establishment_id)
-

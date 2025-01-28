@@ -72,12 +72,14 @@ class Command(BaseCommand):
             '-fix_presidencia', help='Arregla todas las publicaciones mal movida entre meses', action='store_true'
         )
 
+
         parser.add_argument(
             '-generate_anual_report', help='Generar reporte anual', action='store_true'
         )
         parser.add_argument(
             '-fix_active_files', help='Generar reporte anual', action='store_true'
         )
+
 
     def handle(self, *args: Any, **options: Any) -> str | None:
 
@@ -123,7 +125,6 @@ class Command(BaseCommand):
             
         if options.get('move_september', False):
             self.config_service.move_september()
-        
         if options.get('fix_september', False):
             self.config_service.fix_september()
         if options.get('save_pnt1', False):
@@ -135,11 +136,11 @@ class Command(BaseCommand):
         if options.get('fix_focal_files', False):
             self.config_service.fix_focal_files()
         if options.get('fix_presidencia', False):
-
             self.config_service.fix_presidencia()
         if options.get('generate_anual_report', False):
             self.config_service.generate_anual_report()
 
         if options.get('fix_active_files', False):
             self.config_service.fix_active_files()
+
 
