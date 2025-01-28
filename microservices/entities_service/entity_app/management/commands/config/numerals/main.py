@@ -13,7 +13,11 @@ from django.contrib.auth.models import Permission, ContentType
 from entity_app.domain.models import TransparencyActive, TransparencyFocal, TransparencyColab, Solicity, EstablishmentExtended
 from entity_app.domain.models.transparency_active import EstablishmentNumeral
 from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Pasive, Pnt1_Reservada
+
+
 from entity_app.domain.models.anual_report import AnualReport
+from entity_app.domain.models.publication import FilePublication
+
 from shared.tasks.anual_report import generate_unique_report
 import time
 class NumeralServiceData:
@@ -619,11 +623,9 @@ class NumeralServiceData:
                         date_extension=str(row['Fecha de la ampliación']),
                         period_extension=str(row['Período de vigencia de la ampliación'])
                     )
-                    print('Guardando fila {} de la hoja {}'.format(
-                        index, sheet_name))
 
-    
-    
+
+
     def generate_anual_report(self):
         
         
