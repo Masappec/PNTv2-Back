@@ -120,7 +120,7 @@ class SolicityInforAnualReport(BaseModel):
 
 class IndexInformationClassified(BaseModel):
     topic = models.CharField(max_length=255)
-    legal_basis = models.CharField(max_length=255)
+    legal_basis = models.TextField()
     classification_date = models.CharField(max_length=255)
     period_of_validity = models.CharField(max_length=255)
     amplation_effectuation = models.CharField(max_length=255)
