@@ -63,4 +63,12 @@ class ConfigDataService:
         self.fix_script.fix_focal_files()
         
     def fix_presidencia(self):
+
         self.fix_script.fix_presidencia()
+        
+    def generate_anual_report(self):
+        self.numeral_service.generate_anual_report()
+
+    def fix_active_files(self):
+        self.fix_script.fix_active_files()
+

@@ -643,6 +643,94 @@ class ScriptService:
                     else:
                         print('No se encuentra el archivo ' + root)
 
+    
+    def fix_active_files(self):
+
+        dir_ = os.path.dirname(__file__)
+        dir_ = os.path.join(dir_, 'Results.json')
+        est = EstablishmentExtended.objects.all()
+        files = FilePublication.objects.all()
+
+        with open(dir_, encoding='utf-8') as file:
+            data = json.load(file)
+            for item in data:
+                establishment = est.filter(
+                    identification=item['identification']).first()
+                if establishment:
+
+                    # "2024-10-07 09:42:05.607553-05
+                    published_at = item['published_at']
+                    if published_at == 'NULL':
+                        published_at = item['created_at']
+                    max_date = datetime(year=2024, month=9,
+                                        day=get_day_for_publish())
+
+                    
+                    validation = TransparencyActive.objects.filter(
+                        establishment_id=establishment.id,
+                        month=9,
+                        year=2024,
+                        numeral_id=item['numeral_id']
+                    ).first()
+                    if not validation:
+                        
+                        
+                    
+                        focal = TransparencyActive.objects.create(
+                            establishment_id=establishment.id,
+                            month=9,
+                            year=2024,
+                            status='aproved',
+                            published=True,
+                            published_at=published_at,
+                            numeral_id=item['numeral_id'],
+                            max_date_to_publish=max_date
+                        )
+
+                        for file in item['archivos']:
+
+                            if os.path.exists('media/'+file['url_download']):
+
+                                obj_file = files.filter(
+                                    url_download=file['url_download']).first()
+                                if obj_file:
+                                    focal.files.add(obj_file)
+
+                                else:
+                                    focal.delete()
+                                    print(
+                                        'No se encuentra el archivo en la base de datos' + file['url_download'])
+                            else:
+                                p = TransparencyActive.objects.filter(
+                                    establishment_id=establishment.id,
+                                    month=11,
+                                    year=2024,
+                                    numeral_id=item['numeral_id']
+                                ).first()
+                                if p:
+                                    _copy = p.files.filter(
+                                        description=file['description'])
+
+                                    # crear una copia del archivo
+                                    if _copy.exists():
+                                        _copy = _copy.first()
+
+                                        if os.path.exists(_copy.url_download.path):
+                                            os.makedirs('media/transparencia/' + str(
+                                                establishment.identification) + '/' + str(2024) + '/' + str(9), exist_ok=True)
+
+                                            shutil.copy(_copy.url_download.path, 'media/transparencia/' + str(
+                                                establishment.identification) + '/' + str(2024) + '/' + str(9) + '/' + file['description'] + '.csv')
+                                            new_file_pub = FilePublication.objects.create(
+                                                name=_copy.name,
+                                                description=_copy.description,
+                                                url_download=_copy.url_download.url.replace(
+                                                    'media/', ''),
+                                                is_active=True,
+                                                is_colab=False
+                                            )
+                                            focal.files.add(new_file_pub)
+                                        
     def fix_focal_files(self):
 
         dir_ = os.path.dirname(__file__)

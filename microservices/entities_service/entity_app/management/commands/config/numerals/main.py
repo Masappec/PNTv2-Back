@@ -14,7 +14,10 @@ from entity_app.domain.models import TransparencyActive, TransparencyFocal, Tran
 from entity_app.domain.models.transparency_active import EstablishmentNumeral
 from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Pasive, Pnt1_Reservada
 
-
+from entity_app.domain.models.anual_report import AnualReport
+from entity_app.domain.models.publication import FilePublication
+from shared.tasks.anual_report import generate_unique_report
+import time
 class NumeralServiceData:
 
     def __init__(self) -> None:
@@ -619,4 +622,57 @@ class NumeralServiceData:
                         period_extension=str(row['Período de vigencia de la ampliación'])
                     )
                     print('Guardando fila {} de la hoja {}'.format(
-                        index, sheet_name))
+
+
+    
+    
+    def generate_anual_report(self):
+        
+        
+        anual_reports = AnualReport.objects.all().distinct('year','establishment_id')
+        
+        establisments_id = [x.establishment_id.id for x in anual_reports]
+        #eliminamos los registros duplicados
+        set_establishments = set(establisments_id)
+        establisments_id = list(set_establishments)
+        
+        for establishment_id in establisments_id:
+            time.sleep(0.5)
+            generate_unique_report.delay(2024, establishment_id)
+
+    
+    def generate_ta_of_files(self):
+        files = FilePublication.objects.filter(
+            url_download__contains='760043740001',
+            url_download__contains='/9/'
+        )
+        
+        ta = TransparencyActive.objects.filter(
+            establishment__identification='760043740001'
+        )
+        
+
+        for file in files:
+            
+           #encuentra la publicacion que tenga el mismo nombre del archivo
+            ta_file = ta.filter(files__id=file.id).first()
+            if ta_file:
+                print('Se encontro la publicacion para el archivo'+file.url_download)
+            else:
+                url_download = file.url_download.split('/')
+                
+                numeral = Numeral.objects.filter(
+                    name=url_download[3]
+                ).first()
+                
+                
+                if numeral:
+                    created = TransparencyActive.objects.get_or_create(
+                        establishment_id=ta.first().establishment_id,
+                        numeral_id=numeral.id,
+                        month=9,
+                        year=2024
+                    )
+                
+                
+                    created.files.add(file)
