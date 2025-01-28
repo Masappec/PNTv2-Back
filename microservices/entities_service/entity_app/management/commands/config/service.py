@@ -67,3 +67,6 @@ class ConfigDataService:
         
     def generate_anual_report(self):
         self.numeral_service.generate_anual_report()
+
+    def fix_active_files(self):
+        self.fix_script.fix_active_files()

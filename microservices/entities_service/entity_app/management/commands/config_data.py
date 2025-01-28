@@ -74,6 +74,9 @@ class Command(BaseCommand):
         parser.add_argument(
             '-generate_anual_report', help='Generar reporte anual', action='store_true'
         )
+        parser.add_argument(
+            '-fix_active_files', help='Generar reporte anual', action='store_true'
+        )
     def handle(self, *args: Any, **options: Any) -> str | None:
 
         ta = options.get('an', False)
@@ -132,3 +135,6 @@ class Command(BaseCommand):
             self.config_service.fix_presidencia()
         if options.get('generate_anual_report', False):
             self.config_service.generate_anual_report()
+
+        if options.get('fix_active_files', False):
+            self.config_service.fix_active_files()
