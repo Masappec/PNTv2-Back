@@ -121,12 +121,12 @@ class SolicityInforAnualReport(BaseModel):
 class IndexInformationClassified(BaseModel):
     topic = models.CharField(max_length=255)
     legal_basis = models.TextField()
-    classification_date = models.CharField(max_length=255)
-    period_of_validity = models.CharField(max_length=255)
-    amplation_effectuation = models.CharField(max_length=255)
+    classification_date = models.TextField()
+    period_of_validity = models.TextField()
+    amplation_effectuation = models.TextField()
     ampliation_description = models.TextField()
-    ampliation_date = models.CharField(max_length=255)
-    ampliation_period_of_validity = models.CharField(max_length=255)
+    ampliation_date = models.TextField()
+    ampliation_period_of_validity = models.TextField()
     anual_report = models.ForeignKey('AnualReport', on_delete=models.CASCADE)
     objects = models.Manager()
 
