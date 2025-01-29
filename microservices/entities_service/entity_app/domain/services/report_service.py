@@ -2,6 +2,7 @@
 from openpyxl.utils import get_column_letter
 import openpyxl
 from datetime import datetime
+from django.utils import timezone
 
 from entity_app.domain.models.solicity import Status
 from entity_app.adapters.serializers import NumeralResponseSerializer, SolicityResponseSerializer
@@ -190,7 +191,7 @@ class ReportService:
             elif row_data.status in ["PRORROGA", "NO_RESPONSED", "INSISTENCY_NO_RESPONSED"]:
                 end_date = row_data.expiry_date
             else:
-                end_date = datetime.now()  # Fecha actual para estados no especificados
+                end_date = timezone.now()  # Fecha actual para estados no especificados
 
             # Asegurarse de que las fechas sean válidas
             if row_data.created_at and end_date:
