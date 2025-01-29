@@ -216,7 +216,16 @@ class AnualReportService:
                     establishment=establishment, numeral__is_default=True).order_by('numeral__name')
                 append_row(ws, [function_type, "Pública",
                                 establishment.name, 'Art. 19 T. Activa'] + [''] * 12)
-
+                publications = [
+                    ta for ta in establishment.ta if not ta.numeral.is_default]
+                publications = sorted(
+                    publications, key=lambda x: x.numeral.name)
+                for publication in publications:
+                    list_check_ta.append({
+                        'numeral': publication.numeral.name,
+                        'month': publication.month,
+                        'published': publication.published
+                    })
                 # Numerales asignados para Art. 19 T. Activa
                 for i in numerales_asignados:
                     mes_checks = ['si' if any(x['numeral'] == i.numeral.name and x['month'] == _x +
@@ -256,7 +265,16 @@ class AnualReportService:
 
                 numerales_asignados_esp = EstablishmentNumeral.objects.filter(
                     establishment=establishment, numeral__is_default=False).order_by('numeral__name')
-
+                publications = [
+                    ta for ta in establishment.ta if not ta.numeral.is_default]
+                publications = sorted(
+                    publications, key=lambda x: x.numeral.name)
+                for publication in publications:
+                    list_check_ta.append({
+                        'numeral': publication.numeral.name,
+                        'month': publication.month,
+                        'published': publication.published
+                    })
                 if len(numerales_asignados_esp) > 0:
                     '''append_row(ws, [function_type, "Pública",
                                     establishment.name, 'Obligaciones Específicas'] + [''] * 12)'''
@@ -374,6 +392,8 @@ class AnualReportService:
         try:
             if type(year) == str:
                 year = int(year)
+            
+            
             
             
             meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
@@ -606,7 +626,10 @@ class AnualReportService:
                 numerales_asignados_esp = EstablishmentNumeral.objects.filter(
                     establishment=establishment, numeral__is_default=False).order_by('numeral__name')
                 
+                
                 if len(numerales_asignados_esp) > 0:
+                    
+                    
                     '''append_row(ws, [function_type, "Pública",
                                     establishment.name, 'Obligaciones Específicas'] + [''] * 12)'''
                     for i in numerales_asignados_esp:
