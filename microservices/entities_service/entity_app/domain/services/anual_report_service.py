@@ -708,7 +708,7 @@ class AnualReportService:
 
             path = os.path.join(path, report_name)
 
-            GenerateAnualReport.objects.filter(year=year).delete()
+            GeneralAnualReport.objects.filter(year=year).delete()
 
             GeneralAnualReport.objects.create(
                 year=year,
