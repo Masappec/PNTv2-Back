@@ -11,7 +11,7 @@ class AnualReport(BaseModel):
 
     # ARTICULO 10
     have_public_records = models.BooleanField()
-    norme_archive_utility = models.CharField(max_length=255, blank= True)
+    norme_archive_utility = models.TextField(blank=True)
     comment_aclaration = models.TextField(blank= True)
 
     # ARTICULO 11
