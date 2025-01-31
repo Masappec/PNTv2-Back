@@ -508,14 +508,14 @@ class NumeralServiceData:
 
         Pnt1_Focal.objects.all().delete()
         Pnt1_Colab.objects.all().delete()
-        Pnt1_Pasive.objects.all().delete()
-        Pnt1_Reservada.objects.all().delete()
+        #Pnt1_Pasive.objects.all().delete()
+        #Pnt1_Reservada.objects.all().delete()
         
         for sheet_name, sheet_data in df.items():
             
             print('Guardando datos de la hoja', sheet_name)
             if 'Activa' in sheet_name:
-                for index, row in sheet_data.iterrows():
+                """for index, row in sheet_data.iterrows():
                     numeral_name = row['Numeral']
                     numeral_name = str(numeral_name)
                     numeral_name = numeral_name.replace('y','-')
@@ -538,7 +538,7 @@ class NumeralServiceData:
                         agosto = row['Agosto'].lower() == 'si'
                         
                     )
-                    print('Guardando fila {} de la hoja {}'.format(index, sheet_name))
+                    print('Guardando fila {} de la hoja {}'.format(index, sheet_name))"""
 
             
             
@@ -589,7 +589,7 @@ class NumeralServiceData:
 
             elif 'Pasiva' in sheet_name:
 
-                for index, row in sheet_data.iterrows():
+                """for index, row in sheet_data.iterrows():
                     identifier = str(row['RUC'])
                     Pnt1_Pasive.objects.create(
                         identification=identifier,
@@ -602,10 +602,10 @@ class NumeralServiceData:
                         date_response=str(row['Fecha Respuesta']),
                         state=str(row['Estado'])
                     )
-                    print('Guardando fila {} de la hoja {}'.format(index, sheet_name))
+                    print('Guardando fila {} de la hoja {}'.format(index, sheet_name))"""
             
             elif 'Reservada' in sheet_name:
-                for index, row in sheet_data.iterrows():
+                """for index, row in sheet_data.iterrows():
                     identifier = str(row['RUC'])
                     Pnt1_Reservada.objects.create(
                         identification=identifier,
@@ -621,7 +621,7 @@ class NumeralServiceData:
                         period_extension=str(row['Período de vigencia de la ampliación'])
                     )
                     print('Guardando fila {} de la hoja {}'.format(
-                        index, sheet_name))
+                        index, sheet_name))"""
 
     
     
