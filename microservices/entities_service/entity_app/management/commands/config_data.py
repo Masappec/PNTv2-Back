@@ -79,6 +79,9 @@ class Command(BaseCommand):
         parser.add_argument(
             '-fix_active_files', help='Generar reporte anual', action='store_true'
         )
+        parser.add_argument(
+            '-generate_topics', help='Generar reporte anual', action='store_true'
+        )
 
 
     def handle(self, *args: Any, **options: Any) -> str | None:
@@ -143,4 +146,5 @@ class Command(BaseCommand):
         if options.get('fix_active_files', False):
             self.config_service.fix_active_files()
 
-
+        if options.get('generate_topics', False):
+            self.config_service.generate_topics()
