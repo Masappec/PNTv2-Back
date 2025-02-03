@@ -70,3 +70,6 @@ class ConfigDataService:
 
     def fix_active_files(self):
         self.fix_script.fix_active_files()
+
+    def generate_topics(self):
+        self.fix_script.generate_topics()
