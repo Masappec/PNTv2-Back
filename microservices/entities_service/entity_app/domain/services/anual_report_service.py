@@ -3,7 +3,7 @@ from django.db.models import Prefetch
 from datetime import datetime
 from entity_app.ports.repositories.anual_report_reposity import AnualReportReposity
 import openpyxl
-from openpyxl.styles import Alignment, Font
+from openpyxl.styles import Alignment, Font, PatternFill
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_colab import TransparencyColab
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
@@ -723,10 +723,11 @@ class AnualReportService:
 
 
 
-    def template_anual_report_form(self):
+    def template_anual_report_form(self,establishment_id, year,
+                                   count_colab, count_focal, count_active, count_esp, count_pasive):
 
+        anual_report = self.get(establishment_id=establishment_id,year=year)
         
-
         wb = Workbook()
         ws = wb.active
         ws.title = "Informe Anual"
@@ -746,10 +747,10 @@ class AnualReportService:
         ws['A3'].font = Font(bold=True)
         ws['B3'].font = Font(bold=True)
 
-        ws.append(["Art. 4, número 9 T. Colaborativa",""])
-        ws.append(["Art. 4, número 10 T. Focalizada",""])
-        ws.append(["Art. 19 T. Activa",""])
-        ws.append(["Obligaciones Específicas",""])
+        ws.append(["Art. 4, número 9 T. Colaborativa",str(count_colab)])
+        ws.append(["Art. 4, número 10 T. Focalizada",str(count_focal)])
+        ws.append(["Art. 19 T. Activa",str(count_active)])
+        ws.append(["Obligaciones Específicas",str(count_esp)])
 
         ws.append([""])
 
@@ -766,9 +767,9 @@ class AnualReportService:
         ws['B13'].font = Font(bold=True)
 
 
-        ws.append(['Si/No',''])
-        ws.append(['Norma achivistica utilizada',''])
-        ws.append(['Comentario/Aclaración',''])
+        ws.append(['Si/No','Si' if anual_report.have_public_records else 'No'])
+        ws.append(['Norma achivistica utilizada',anual_report.norme_archive_utility])
+        ws.append(['Comentario/Aclaración',anual_report.comment_aclaration])
 
         ws.append([''])
         ws.append(['Artículo 17 y 18 de la LOTAIP'])
@@ -779,7 +780,7 @@ class AnualReportService:
         ws.append(['Descripción','Valor'])
         ws['A21'].font = Font(bold=True)
         ws['B21'].font = Font(bold=True)
-        ws.append(['Si/No',''])
+        ws.append(['Si/No','Sí' if anual_report.reserve_information else 'No'])
         ws.append([''])
         ws.append([''])
 
@@ -796,9 +797,9 @@ class AnualReportService:
         ws.append(['Descripción','Valor'])
         ws['A31'].font = Font(bold=True)
         ws['B31'].font = Font(bold=True)
-        ws.append(['Si/No',''])
-        ws.append(['Cantidad',''])
-        ws.append(['Descripción específica de la corrección de la información',''])
+        ws.append(['Si/No','Si' if anual_report.have_quality_problems else 'No'])
+        ws.append(['Cantidad',anual_report.total_quality_problems])
+        ws.append(['Descripción específica de la corrección de la información',anual_report.description_quality_problems])
         ws.append([''])
 
         ws.append(['Artículo 42 de la LOTAIP'])
@@ -810,16 +811,16 @@ class AnualReportService:
         ws.append(['Descripción','Valor'])
         ws['A39'].font = Font(bold=True)
         ws['B39'].font = Font(bold=True)
-        ws.append(['Si/No',''])
+        ws.append(['Si/No','Si' if anual_report.have_sanctions else 'No'])
 
         ws.append([''])
         ws.append(['Descripción','Cantidad','Descripción específica de la sanción administrativa'])
         ws['A42'].font = Font(bold=True)
         ws['B42'].font = Font(bold=True)
         ws['C42'].font = Font(bold=True)
-        ws.append(['Ley Orgánica del Servicio Público','',''])
-        ws.append(['Ley Orgánica de la Contraloría General del Estado','',''])
-        ws.append(['Ley Orgánica del Sistema Nacional de Contratación Pública','',''])
+        ws.append(['Ley Orgánica del Servicio Público',anual_report.total_organic_law_public_service,anual_report.description_organic_law_public_service])
+        ws.append(['Ley Orgánica de la Contraloría General del Estado',anual_report.total_organic_law_contraloria,anual_report.description_organic_law_contraloria])
+        ws.append(['Ley Orgánica del Sistema Nacional de Contratación Pública',anual_report.total_organic_law_national_system,anual_report.description_organic_law_national_system])
         ws.append(['Ley Orgánica de Participación Ciudadana','',''])
         ws.append([''])
         ws.append([''])
