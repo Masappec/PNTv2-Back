@@ -720,3 +720,200 @@ class AnualReportService:
         except Exception as e:
             print(e)
             return {'error': str(e)}
+
+
+
+    def template_anual_report_form(self):
+
+        
+
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Informe Anual"
+        
+        ws.append([''])
+        #ponerle color celeste de fondo a la celda con texto rojo
+        #azul enfasis 5. 50% claro
+        ws['A2'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A2'].font = Font(color="FF0000")
+        ws['A2'] = "LITERAL A"
+        #combinar celda de A1 a L1
+        ws.merge_cells('A2:L2')
+
+
+        ws.append(["Normativa","Número de meses publicados"])
+        #poner negrita
+        ws['A3'].font = Font(bold=True)
+        ws['B3'].font = Font(bold=True)
+
+        ws.append(["Art. 4, número 9 T. Colaborativa",""])
+        ws.append(["Art. 4, número 10 T. Focalizada",""])
+        ws.append(["Art. 19 T. Activa",""])
+        ws.append(["Obligaciones Específicas",""])
+
+        ws.append([""])
+
+
+        ws.append(["Artículo 10 de la LOTAIP"])
+        ws['A9'].font = Font(bold=True)
+        ws.append(['Custoria de la Información'])
+        ws['A10'].font = Font(bold=True)
+        ws.append(['¿Se ha creado y se mantiene registros públicos de manera profesional para el manejo y archivo de la información y documentación?'])
+        ws.append([''])
+
+        ws.append(['Descripción','Valor'])
+        ws['A13'].font = Font(bold=True)
+        ws['B13'].font = Font(bold=True)
+
+
+        ws.append(['Si/No',''])
+        ws.append(['Norma achivistica utilizada',''])
+        ws.append(['Comentario/Aclaración',''])
+
+        ws.append([''])
+        ws.append(['Artículo 17 y 18 de la LOTAIP'])
+        ws['A18'].font = Font(bold=True)
+        ws.append(['Información reservada'])
+        ws['A19'].font = Font(bold=True)
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A21'].font = Font(bold=True)
+        ws['B21'].font = Font(bold=True)
+        ws.append(['Si/No',''])
+        ws.append([''])
+        ws.append([''])
+
+
+        ws.append(['Artículo 40 de la LOTAIP'])
+        ws['A24'].font = Font(bold=True)
+        ws.append(['Gestión Oficiosa'])
+        ws['A25'].font = Font(bold=True)
+        ws.append(['¿Alguna persona que solicitó información indicó que la recibida no era de calidad, o existió ambigüedad en el manejo de la información registrada en el Portal Nacional de Transparencia o sobre la información que se difunde en la propia institución, y resolvió solicitar la corrección en la difusión de la información; o alguna persona solicitó la intervención del Defensor del Pueblo para que se corrija y se brinde mayor claridad y sistematización en la organización de la información ?'])
+        #combinar celdas de A20 a L30
+        ws.merge_cells('A28:L30')
+
+
+        ws.append(['Descripción','Valor'])
+        ws['A31'].font = Font(bold=True)
+        ws['B31'].font = Font(bold=True)
+        ws.append(['Si/No',''])
+        ws.append(['Cantidad',''])
+        ws.append(['Descripción específica de la corrección de la información',''])
+        ws.append([''])
+
+        ws.append(['Artículo 42 de la LOTAIP'])
+        ws['A35'].font = Font(bold=True)
+        ws.append(['Sanciones administrativas'])
+        ws['A36'].font = Font(bold=True)
+        ws.append(['¿Personas servidoras públicas de su entidad o personas del sector privado han recibido sanciones por omisión o negativa en el acceso a la información pública?'])
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A39'].font = Font(bold=True)
+        ws['B39'].font = Font(bold=True)
+        ws.append(['Si/No',''])
+
+        ws.append([''])
+        ws.append(['Descripción','Cantidad','Descripción específica de la sanción administrativa'])
+        ws['A42'].font = Font(bold=True)
+        ws['B42'].font = Font(bold=True)
+        ws['C42'].font = Font(bold=True)
+        ws.append(['Ley Orgánica del Servicio Público','',''])
+        ws.append(['Ley Orgánica de la Contraloría General del Estado','',''])
+        ws.append(['Ley Orgánica del Sistema Nacional de Contratación Pública','',''])
+        ws.append(['Ley Orgánica de Participación Ciudadana','',''])
+        ws.append([''])
+        ws.append([''])
+
+
+        ws.append(['Disposición transitoria septima LOTAIP'])
+        ws['A48'].font = Font(bold=True)
+        ws.append(['¿Su entidad implementó programas de difusión, capacitacion y fortalecimiento sobre la LOTAIP dirigido a las personas servidoras públicas de su institución?'])
+        ws.append(['Descripción','Valor'])
+        ws['A51'].font = Font(bold=True)
+        ws['B51'].font = Font(bold=True)
+        ws.append(['Si/No',''])
+        ws.append(['Cantidad',''])
+        ws.append(['Descripción específica del programa de difusión, capacitación y fortalecimiento sobre la LOTAIP',''])
+
+        ws.append([''])
+        ws.append([''])
+        ws.append([''])
+        ws.append(['Disposición transitoria octava LOTAIP'])
+        ws['A57'].font = Font(bold=True)
+        ws.append(['¿Sí su entidad es un establecimiento educativo público o privado, desarrolló actividades y programas de promoción del derecho de acceso a la información pública, sus garantías y referente a la transparencia sus garantías y referente a la transparencia colaborativa?'])
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A60'].font = Font(bold=True)
+        ws['B60'].font = Font(bold=True)
+        ws.append(['Si/No',''])
+        ws.append(['Cantidad',''])
+        ws.append(['Descripción específica de la actividad o programa desarrollado',''])
+        ws.append([''])
+
+
+        ws.append(['LITERAL "B"'])
+        
+        ws.merge_cells('A70:L70')
+        #ponerle color celeste de fondo a la celda con texto rojo
+        #azul enfasis 5. 50% claro
+        ws['A70'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A70'].font = Font(color="FF0000")
+        ws.append([''])
+        ws.append('Ingrese el número de solicitudes de acceso a la información pública que su entidad recibió y gestionó en el período enero-diciembre')
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A74'].font = Font(bold=True)
+        ws['B74'].font = Font(bold=True)
+        ws.append(['Cantidad',''])
+        ws.append([''])
+        ws.append(['¿Su entidad recibió y gestionó una cantidad  diferente de solicitudes de las que registro en el Portal Nacional de Transparencia?'])
+        ws.append([''])
+
+
+        ws.append(['Descripción','Valor'])
+        ws['A79'].font = Font(bold=True)
+        ws['B79'].font = Font(bold=True)
+        ws.append(['Si/No',''])
+        ws.append(['Cantidad de SAIP registradas en el portal',''])
+        ws.append(['Cantidad de SAIP NO registradas en el portal',''])
+        ws.append(['Descripción de las razones por las que no fueron ingresadas al portal',''])
+        ws.append([''])
+        ws.append([''])
+        ws.append(['¿Las solicitudes de acceso a la información pública que no fueron registradas en el Portal Nacional de Transparencia, fueron respondidas?'])
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A87'].font = Font(bold=True)
+        ws['B87'].font = Font(bold=True)
+        ws.append(['Cantidad',''])
+        ws.append(['Comentario/aclaración',''])
+        ws.append([''])
+        ws.append([''])
+        ws.append([''])
+
+        ws.append(['LITERAL "C"'])
+        ws['A92'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A92'].font = Font(color="FF0000")
+        ws.merge_cells('A95:L95')
+        ws.append([''])
+        ws.append(['c) Informe semestral actualizado sobre el listado índice de información reservada'])
+        ws.append([''])
+        ws.append(['Número de temas clasificados como:'])
+        ws.append(['Descripción','Valor'])
+        ws.append(['Reservado',''])
+        ws.append(['Confidencial (Ley Organica de Empresas Públicas)',''])
+        ws.append([''])
+        ws.append([''])
+
+
+        ws.append(['LITERAL "D"'])
+        ws['A105'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A105'].font = Font(color="FF0000")
+        ws.merge_cells('A105:L105')
+
+        ws.append([''])
+        ws.append(['d) El índice de la información clasificada como reservada, detallando la fecha de la resolución de clasificación de la reserva y el período de vigencia de la misma'])
+        ws.append([''])
+        
+        ws.append(['Tema','Base Legal','Fecha de clasificación de la información reservada - semestral','Periodo de vigencia de la clasificación de la reserva','Se ha efectuado ampliación','Descripción de la ampliación','Fecha de la ampliación','Periodo de vigencia de a ampliación'])
+
+
