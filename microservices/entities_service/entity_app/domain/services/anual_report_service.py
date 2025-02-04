@@ -12,7 +12,7 @@ from entity_app.domain.models.transparency_active import EstablishmentNumeral, T
 from entity_app.domain.models.solicity import Solicity, Status
 from django.conf import settings
 import os
-from entity_app.domain.models.anual_report import GeneralAnualReport, GenerateAnualReport
+from entity_app.domain.models.anual_report import GeneralAnualReport, GenerateAnualReport, IndexInformationClassified
 from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Pasive
 import re
 import traceback
@@ -749,7 +749,13 @@ class AnualReportService:
 
         ws.title = "Informe Anual"
         
+        
+        #hacer ancha la columnas
+        ws.column_dimensions['A'].width = 40
+        ws.column_dimensions['B'].width = 40
+        
         ws.append([''])
+        
         #ponerle color celeste de fondo a la celda con texto rojo
         #azul enfasis 5. 50% claro
         ws['A2'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
@@ -871,11 +877,11 @@ class AnualReportService:
 
         ws.append(['LITERAL "B"'])
         
-        ws.merge_cells('A70:L70')
+        ws.merge_cells('A67:L67')
         #ponerle color celeste de fondo a la celda con texto rojo
         #azul enfasis 5. 50% claro
-        ws['A70'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
-        ws['A70'].font = Font(color="FF0000")
+        ws['A67'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A67'].font = Font(color="FF0000")
         ws.append([''])
         ws.append(['Ingrese el número de solicitudes de acceso a la información pública que su entidad recibió y gestionó en el período enero-diciembre'])
         ws.append([''])
@@ -910,8 +916,8 @@ class AnualReportService:
         ws.append([''])
 
         ws.append(['LITERAL "C"'])
-        ws['A92'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
-        ws['A92'].font = Font(color="FF0000")
+        ws['A95'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A95'].font = Font(color="FF0000")
         ws.merge_cells('A95:L95')
         ws.append([''])
         ws.append(['c) Informe semestral actualizado sobre el listado índice de información reservada'])
@@ -934,9 +940,16 @@ class AnualReportService:
         ws.append([''])
         
         ws.append(['Tema','Base Legal','Fecha de clasificación de la información reservada - semestral','Periodo de vigencia de la clasificación de la reserva','Se ha efectuado ampliación','Descripción de la ampliación','Fecha de la ampliación','Periodo de vigencia de a ampliación'])
-        print('PASÓ MARCA AQUI')
-        for item in anual_report.information_classified.all():
-            
+        ws['A109'].font = Font(bold=True)
+        ws['B109'].font = Font(bold=True)
+        ws['C109'].font = Font(bold=True)
+        ws['D109'].font = Font(bold=True)
+        ws['E109'].font = Font(bold=True)
+        ws['F109'].font = Font(bold=True)
+        ws['G109'].font = Font(bold=True)
+        ws['H109'].font = Font(bold=True)
+        information_classified = IndexInformationClassified.objects.filter(anual_report=anual_report)
+        for item in information_classified:
             ws.append([
                 item.topic,
                 item.legal_basis,
