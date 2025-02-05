@@ -853,41 +853,45 @@ class ScriptService:
                         )
                         new.files.add(new_file_pub)
     def generate_topics(self):
-        url = 'http://transparencia.dpe.gob.ec/backend/v1/public/public/numeral-16?ruc={RUC}&year=2024'
+        url = 'http://transparencia.dpe.gob.ec/backend/v1/public/public/numeral-16?ruc='
         
         reports = AnualReport.objects.filter(year=2024)
         reservadas = Pnt1_Reservada.objects.all()
-        for i in reports:
+        IndexInformationClassified.objects.filter(anual_report_id__in=[x.id for x in reports]).delete()
+        for index, i in enumerate(reports):
             
-            if i.information_classified.count() == 0:
-                url = url.replace('{RUC}', i.establishment_id.identification)
-                response = requests.get(url)
-                if response.status_code == 200:
-                    data = response.json()
+            url_final = url+ i.establishment_id.identification + "&year=2024"
+            response = requests.get(url_final)
+            print("Obteniendo datos de "+i.establishment_id.identification +
+                  "entidad "+str(index) + "/"+str(len(reports)) + 
+                  "repuesta "+str(response.status_code)+" "+url_final)
 
-                    for item in data:
-                        index = IndexInformationClassified.objects.create(
-                            topic=item['tema'],
-                            legal_basis=item['numero_resolucion'],
-                            classification_date=item['fecha_clasificacion'],
-                            period_of_validity=item['periodo_vigencia'],
-                            amplation_effectuation='NO APLICA',
-                            ampliation_description='NO APLICA',
-                            ampliation_date='NO APLICA',
-                            ampliation_period_of_validity='NO APLICA',
-                            anual_report=i
-                        )
-                lista = reservadas.filter(identification=i.establishment_id.identification)
-                for _item in lista:
+            data = response.json()
+
+            for item in data:
+                index = IndexInformationClassified.objects.create(
+                    topic=item['tema'],
+                    legal_basis=item['numero_resolucion'],
+                    classification_date=item['fecha_clasificacion'],
+                    period_of_validity=item['periodo_vigencia'],
+                    amplation_effectuation='NO APLICA',
+                    ampliation_description='NO APLICA',
+                    ampliation_date='NO APLICA',
+                    ampliation_period_of_validity='NO APLICA',
+                    anual_report=i
+                )
+            lista = reservadas.filter(identification=i.establishment_id.identification)
+            for _item in lista:
+                
+                index = IndexInformationClassified.objects.create(
+                    topic=_item.theme,
+                    legal_basis=_item.base_legal,
+                    classification_date=_item.date_classification,
+                    period_of_validity=_item.period,
+                    amplation_effectuation=_item.extension,
+                    ampliation_description=_item.description,
+                    ampliation_date=_item.date_extension,
+                    ampliation_period_of_validity=_item.period_extension,
+                    anual_report=i
+                )
                     
-                    index = IndexInformationClassified.objects.create(
-                        topic=_item.theme,
-                        legal_basis=_item.base_legal,
-                        classification_date=_item.date_classification,
-                        period_of_validity=_item.period,
-                        amplation_effectuation=_item.extension,
-                        ampliation_description=_item.description,
-                        ampliation_date=_item.date_extension,
-                        ampliation_period_of_validity=_item.period_extension,
-                        anual_report=i
-                    )
