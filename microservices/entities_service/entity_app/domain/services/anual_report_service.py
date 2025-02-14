@@ -1,9 +1,10 @@
 from openpyxl import Workbook
+from openpyxl.worksheet.worksheet import Worksheet
 from django.db.models import Prefetch
 from datetime import datetime
 from entity_app.ports.repositories.anual_report_reposity import AnualReportReposity
 import openpyxl
-from openpyxl.styles import Alignment, Font
+from openpyxl.styles import Alignment, Font, PatternFill, Border, Side
 from entity_app.domain.models.establishment import EstablishmentExtended
 from entity_app.domain.models.transparecy_colab import TransparencyColab
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
@@ -11,10 +12,10 @@ from entity_app.domain.models.transparency_active import EstablishmentNumeral, T
 from entity_app.domain.models.solicity import Solicity, Status
 from django.conf import settings
 import os
-from entity_app.domain.models.anual_report import GeneralAnualReport, GenerateAnualReport
+from entity_app.domain.models.anual_report import GeneralAnualReport, GenerateAnualReport, IndexInformationClassified
 from entity_app.domain.models.pnt1 import Pnt1_Active, Pnt1_Colab, Pnt1_Focal, Pnt1_Pasive
 import re
-
+import traceback
 
 class AnualReportService:
     def __init__(self, anual_report_repository: AnualReportReposity):
@@ -38,7 +39,10 @@ class AnualReportService:
     def generate_unique(self, year, establishment_id, update_state):
 
         try:
-
+            count_colab =0
+            count_focal = 0
+            count_active = 0
+            count_active_esp = 0
             reporte_existente = GenerateAnualReport.objects.filter(
                 establishment_id=establishment_id, year=year).first()
             if reporte_existente:
@@ -144,6 +148,10 @@ class AnualReportService:
                                 list_transparency[meses[6]] = True
                             if t.agosto:
                                 list_transparency[meses[7]] = True
+                                
+
+                    count_colab = sum(
+                        1 for month in meses if list_transparency[month])
                     append_row(ws, [
                         function_type, "Pública", establishment.name, "Art. 4, número 9 T. Colaborativa",
                         *['si' if list_transparency[month] else 'no' for month in meses]
@@ -185,6 +193,9 @@ class AnualReportService:
                         ['si' if list_transparency[month]
                             else 'no' for month in meses]
                     ])
+                    count_focal = sum(
+                        1 for month in meses if list_transparency[month])
+                    
                 else:
                     append_row(ws, [function_type, "Pública", establishment.name,
                                     "Art. 4 número 10 T. Focalizada"] + ['no'] * 12)
@@ -242,6 +253,9 @@ class AnualReportService:
                             if _ta.agosto:
                                 mes_checks[7] = 'si'
 
+                    count_active = sum(
+                        1 for indice, month in enumerate(meses) if mes_checks[indice])
+                    
                     append_row_without_bold(ws, [function_type, "Pública",
                                             establishment.name, i.numeral.name.replace('Numeral', ''), *mes_checks])
 
@@ -290,7 +304,8 @@ class AnualReportService:
                                     mes_checks[6] = 'si'
                                 if _ta.agosto:
                                     mes_checks[7] = 'si'
-
+                        count_active_esp = sum(
+                            1 for indice, month in enumerate(meses) if mes_checks[indice])
                         append_row_without_bold(ws, [function_type, "Pública",
                                                 establishment.name, "Obligaciones Específicas: "+i.numeral.name.replace('Numeral', ''), *mes_checks])
 
@@ -346,7 +361,10 @@ class AnualReportService:
                             function_type, "Pública", establishment.name,
                             solicity.saip, solicity.name_solicitant, solicity.date, solicity.date_response, solicity.state
                         ])
-
+            
+            ws = wb.create_sheet(title="Informe Anual")
+            self.template_anual_report_form(ws,establishment_id,year,count_colab,count_focal,count_active,count_active_esp)
+            
             # Guardar archivo
             report_name = f'reporte_anual_{year}_{
                 datetime.now().strftime("%d-%m-%Y")}.xlsx'
@@ -364,7 +382,9 @@ class AnualReportService:
             )
             return {'path': path}
         except Exception as e:
-            print(e)
+            #imprimir la linea del error el stacktrace
+            print(traceback.format_exc())  # Imprime el rastreo completo del error
+
             return {'error': str(e)}
 
     def generate(self, year, update_state):
@@ -718,5 +738,232 @@ class AnualReportService:
             wb.save(path)
             return {'path': path.replace('code/', ''), 'url': path.replace('code/', '')}
         except Exception as e:
-            print(e)
-            return {'error': str(e)}
+            print(traceback.format_exc())  # Imprime el rastreo completo del error
+            return {'error': str(e), 'trace': traceback.format_exc()}
+
+
+    def template_anual_report_form(self, ws: Worksheet, establishment_id, year,
+                                   count_colab, count_focal, count_active, count_esp):
+
+        anual_report = self.get(establishment_id=establishment_id,year=year)
+
+        ws.title = "Informe Anual"
+        
+        
+        #hacer ancha la columnas
+        ws.column_dimensions['A'].width = 40
+        ws.column_dimensions['B'].width = 40
+        
+        ws.append([''])
+        
+        #ponerle color celeste de fondo a la celda con texto rojo
+        #azul enfasis 5. 50% claro
+        ws['A2'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A2'].font = Font(color="FF0000")
+        ws['A2'] = "LITERAL A"
+        #combinar celda de A1 a L1
+        ws.merge_cells('A2:L2')
+
+
+        ws.append(["Normativa","Número de meses publicados"])
+        #poner negrita
+        ws['A3'].font = Font(bold=True)
+        ws['B3'].font = Font(bold=True)
+
+        ws.append(["Art. 4, número 9 T. Colaborativa",str(count_colab)])
+        ws.append(["Art. 4, número 10 T. Focalizada",str(count_focal)])
+        ws.append(["Art. 19 T. Activa",str(count_active)])
+        ws.append(["Obligaciones Específicas",str(count_esp)])
+
+        ws.append([""])
+
+
+        ws.append(["Artículo 10 de la LOTAIP"])
+        ws['A9'].font = Font(bold=True)
+        ws.append(['Custoria de la Información'])
+        ws['A10'].font = Font(bold=True)
+        ws.append(['¿Se ha creado y se mantiene registros públicos de manera profesional para el manejo y archivo de la información y documentación?'])
+        ws.append([''])
+
+        ws.append(['Descripción','Valor'])
+        ws['A13'].font = Font(bold=True)
+        ws['B13'].font = Font(bold=True)
+
+
+        ws.append(['Si/No','Si' if anual_report.have_public_records else 'No'])
+        ws.append(['Norma achivistica utilizada',anual_report.norme_archive_utility])
+        ws.append(['Comentario/Aclaración',anual_report.comment_aclaration])
+
+        ws.append([''])
+        ws.append(['Artículo 17 y 18 de la LOTAIP'])
+        ws['A18'].font = Font(bold=True)
+        ws.append(['Información reservada'])
+        ws['A19'].font = Font(bold=True)
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A21'].font = Font(bold=True)
+        ws['B21'].font = Font(bold=True)
+        ws.append(['Si/No','Sí' if anual_report.reserve_information else 'No'])
+        ws.append([''])
+        ws.append([''])
+
+
+        ws.append(['Artículo 40 de la LOTAIP'])
+        ws['A24'].font = Font(bold=True)
+        ws.append(['Gestión Oficiosa'])
+        ws['A25'].font = Font(bold=True)
+        ws.append(['¿Alguna persona que solicitó información indicó que la recibida no era de calidad, o existió ambigüedad en el manejo de la información registrada en el Portal Nacional de Transparencia o sobre la información que se difunde en la propia institución, y resolvió solicitar la corrección en la difusión de la información; o alguna persona solicitó la intervención del Defensor del Pueblo para que se corrija y se brinde mayor claridad y sistematización en la organización de la información ?'])
+        #combinar celdas de A20 a L30
+        ws.merge_cells('A28:L30')
+
+
+        ws.append(['Descripción','Valor'])
+        ws['A31'].font = Font(bold=True)
+        ws['B31'].font = Font(bold=True)
+        ws.append(['Si/No','Si' if anual_report.have_quality_problems else 'No'])
+        ws.append(['Cantidad',anual_report.total_quality_problems])
+        ws.append(['Descripción específica de la corrección de la información',anual_report.description_quality_problems])
+        ws.append([''])
+
+        ws.append(['Artículo 42 de la LOTAIP'])
+        ws['A35'].font = Font(bold=True)
+        ws.append(['Sanciones administrativas'])
+        ws['A36'].font = Font(bold=True)
+        ws.append(['¿Personas servidoras públicas de su entidad o personas del sector privado han recibido sanciones por omisión o negativa en el acceso a la información pública?'])
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A39'].font = Font(bold=True)
+        ws['B39'].font = Font(bold=True)
+        ws.append(['Si/No','Si' if anual_report.have_sanctions else 'No'])
+
+        ws.append([''])
+        ws.append(['Descripción','Cantidad','Descripción específica de la sanción administrativa'])
+        ws['A42'].font = Font(bold=True)
+        ws['B42'].font = Font(bold=True)
+        ws['C42'].font = Font(bold=True)
+        ws.append(['Ley Orgánica del Servicio Público',anual_report.total_organic_law_public_service,anual_report.description_organic_law_public_service])
+        ws.append(['Ley Orgánica de la Contraloría General del Estado',anual_report.total_organic_law_contraloria,anual_report.description_organic_law_contraloria])
+        ws.append(['Ley Orgánica del Sistema Nacional de Contratación Pública',anual_report.total_organic_law_national_system,anual_report.description_organic_law_national_system])
+        ws.append(['Ley Orgánica de Participación Ciudadana',anual_report.total_organic_law_citizen_participation,anual_report.description_organic_law_citizen_participation])
+        ws.append([''])
+        ws.append([''])
+
+
+        ws.append(['Disposición transitoria septima LOTAIP'])
+        ws['A48'].font = Font(bold=True)
+        ws.append(['¿Su entidad implementó programas de difusión, capacitacion y fortalecimiento sobre la LOTAIP dirigido a las personas servidoras públicas de su institución?'])
+        ws.append(['Descripción','Valor'])
+        ws['A51'].font = Font(bold=True)
+        ws['B51'].font = Font(bold=True)
+        ws.append(['Si/No', 'Si' if anual_report.implemented_programs else 'No'])
+        ws.append(['Cantidad',anual_report.total_programs])
+        ws.append(['Descripción específica del programa de difusión, capacitación y fortalecimiento sobre la LOTAIP',anual_report.description_programs])
+
+        ws.append([''])
+        ws.append([''])
+        ws.append([''])
+        ws.append(['Disposición transitoria octava LOTAIP'])
+        ws['A57'].font = Font(bold=True)
+        ws.append(['¿Sí su entidad es un establecimiento educativo público o privado, desarrolló actividades y programas de promoción del derecho de acceso a la información pública, sus garantías y referente a la transparencia sus garantías y referente a la transparencia colaborativa?'])
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A60'].font = Font(bold=True)
+        ws['B60'].font = Font(bold=True)
+        ws.append(['Si/No','Si' if anual_report.have_activities else 'No'])
+        ws.append(['Cantidad',anual_report.total_activities])
+        ws.append(['Descripción específica de la actividad o programa desarrollado',anual_report.description_activities])
+        ws.append([''])
+
+
+        ws.append(['LITERAL "B"'])
+        
+        ws.merge_cells('A67:L67')
+        #ponerle color celeste de fondo a la celda con texto rojo
+        #azul enfasis 5. 50% claro
+        ws['A67'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A67'].font = Font(color="FF0000")
+        ws.append([''])
+        ws.append(['Ingrese el número de solicitudes de acceso a la información pública que su entidad recibió y gestionó en el período enero-diciembre'])
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A74'].font = Font(bold=True)
+        ws['B74'].font = Font(bold=True)
+        ws.append(['Cantidad',anual_report.total_saip])
+        ws.append([''])
+        ws.append(['¿Su entidad recibió y gestionó una cantidad  diferente de solicitudes de las que registro en el Portal Nacional de Transparencia?'])
+        ws.append([''])
+
+
+        ws.append(['Descripción','Valor'])
+        ws['A79'].font = Font(bold=True)
+        ws['B79'].font = Font(bold=True)
+        ws.append(['Si/No','Si' if anual_report.did_you_entity_receive else 'No'])
+        ws.append(['Cantidad de SAIP registradas en el portal',anual_report.total_saip_in_portal])
+        ws.append(['Cantidad de SAIP NO registradas en el portal',anual_report.total_saip_no_portal])
+        ws.append(['Descripción de las razones por las que no fueron ingresadas al portal',anual_report.description_rason_no_portal])
+        ws.append([''])
+        ws.append([''])
+        ws.append(['¿Las solicitudes de acceso a la información pública que no fueron registradas en el Portal Nacional de Transparencia, fueron respondidas?'])
+        ws.append([''])
+        ws.append(['Descripción','Valor'])
+        ws['A87'].font = Font(bold=True)
+        ws['B87'].font = Font(bold=True)
+        ws.append(['Si/No','Si' if anual_report.have_responded_solicities_no_portal else 'No'])
+        ws.append(['Cantidad',anual_report.total_no_registered])
+        ws.append(['Comentario/aclaración',anual_report.comment_aclaration_no_registered])
+        ws.append([''])
+        ws.append([''])
+        ws.append([''])
+
+        ws.append(['LITERAL "C"'])
+        ws['A95'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A95'].font = Font(color="FF0000")
+        ws.merge_cells('A95:L95')
+        ws.append([''])
+        ws.append(['c) Informe semestral actualizado sobre el listado índice de información reservada'])
+        ws.append([''])
+        ws.append(['Número de temas clasificados como:'])
+        ws.append(['Descripción','Valor'])
+        ws.append(['Reservado', anual_report.number_of_reserves])
+        ws.append(['Confidencial (Ley Organica de Empresas Públicas)',anual_report.number_of_confidential])
+        ws.append([''])
+        ws.append([''])
+
+
+        ws.append(['LITERAL "D"'])
+        ws['A105'].fill = PatternFill(start_color="00B0F0", end_color="00B0F0", fill_type = "solid")
+        ws['A105'].font = Font(color="FF0000")
+        ws.merge_cells('A105:L105')
+
+        ws.append([''])
+        ws.append(['d) El índice de la información clasificada como reservada, detallando la fecha de la resolución de clasificación de la reserva y el período de vigencia de la misma'])
+        ws.append([''])
+        
+        ws.append(['Tema','Base Legal','Fecha de clasificación de la información reservada - semestral','Periodo de vigencia de la clasificación de la reserva','Se ha efectuado ampliación','Descripción de la ampliación','Fecha de la ampliación','Periodo de vigencia de a ampliación'])
+        ws['A109'].font = Font(bold=True)
+        ws['B109'].font = Font(bold=True)
+        ws['C109'].font = Font(bold=True)
+        ws['D109'].font = Font(bold=True)
+        ws['E109'].font = Font(bold=True)
+        ws['F109'].font = Font(bold=True)
+        ws['G109'].font = Font(bold=True)
+        ws['H109'].font = Font(bold=True)
+        information_classified = IndexInformationClassified.objects.filter(anual_report=anual_report)
+        for item in information_classified:
+            ws.append([
+                item.topic,
+                item.legal_basis,
+                item.classification_date,
+                item.period_of_validity,
+                item.amplation_effectuation,
+                item.ampliation_description,
+                item.ampliation_date,
+                item.ampliation_period_of_validity
+            ])
+            
+        ## colocar border a todas las celdas de esta sección
+
+        ws.append([''])
+        
+        return ws
+

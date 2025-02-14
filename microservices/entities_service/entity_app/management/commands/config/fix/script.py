@@ -16,7 +16,10 @@ from django.conf import settings
 
 from entity_app.domain.models.transparecy_foc import TransparencyFocal
 from entity_app.domain.models.establishment import EstablishmentExtended
+from entity_app.domain.models.anual_report import AnualReport, IndexInformationClassified
+import requests
 
+from entity_app.domain.models.pnt1 import Pnt1_Reservada
 
 class ScriptService:
 
@@ -809,13 +812,13 @@ class ScriptService:
 
     def fix_presidencia(self):
         nu = TransparencyActive.objects.filter(
-            establishment__identification='1160048360001',
+            establishment__identification='660000360001',
             month=10,
             year=2024,
 
         )
         sep = TransparencyActive.objects.filter(
-            establishment__identification='1160048360001',
+            establishment__identification='660000360001',
             month=9,
             year=2024,
         )
@@ -849,3 +852,46 @@ class ScriptService:
                             is_colab=False
                         )
                         new.files.add(new_file_pub)
+    def generate_topics(self):
+        url = 'http://transparencia.dpe.gob.ec/backend/v1/public/public/numeral-16?ruc='
+        
+        reports = AnualReport.objects.filter(year=2024)
+        reservadas = Pnt1_Reservada.objects.all()
+        IndexInformationClassified.objects.filter(anual_report_id__in=[x.id for x in reports]).delete()
+        for index, i in enumerate(reports):
+            
+            url_final = url+ i.establishment_id.identification + "&year=2024"
+            response = requests.get(url_final)
+            print("Obteniendo datos de "+i.establishment_id.identification +
+                  "entidad "+str(index) + "/"+str(len(reports)) + 
+                  "repuesta "+str(response.status_code)+" "+url_final)
+
+            data = response.json()
+
+            for item in data:
+                index = IndexInformationClassified.objects.create(
+                    topic=item['tema'],
+                    legal_basis=item['numero_resolucion'],
+                    classification_date=item['fecha_clasificacion'],
+                    period_of_validity=item['periodo_vigencia'],
+                    amplation_effectuation='NO APLICA',
+                    ampliation_description='NO APLICA',
+                    ampliation_date='NO APLICA',
+                    ampliation_period_of_validity='NO APLICA',
+                    anual_report=i
+                )
+            lista = reservadas.filter(identification=i.establishment_id.identification)
+            for _item in lista:
+                
+                index = IndexInformationClassified.objects.create(
+                    topic=_item.theme,
+                    legal_basis=_item.base_legal,
+                    classification_date=_item.date_classification,
+                    period_of_validity=_item.period,
+                    amplation_effectuation=_item.extension,
+                    ampliation_description=_item.description,
+                    ampliation_date=_item.date_extension,
+                    ampliation_period_of_validity=_item.period_extension,
+                    anual_report=i
+                )
+                    
